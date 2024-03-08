@@ -1,1 +1,1 @@
-# lexicon-react-game
+# Sokoban game
