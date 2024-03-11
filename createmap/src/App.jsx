@@ -152,6 +152,15 @@ function App() {
 		}
 	}
 
+	function toggleGrid() {
+		const container = document.querySelector(".grid-container");
+		if (container.classList.contains("gridless")) {
+			container.classList.remove("gridless");
+		} else {
+			container.classList.add("gridless");
+		}
+	}
+
 	// Generate empty divs
 	function Emptydivs() {
 		const rows = [];
@@ -184,9 +193,15 @@ function App() {
 
 	return (
 		<>
-			<div id="generate" onClick={generateMap}>
-				Generate Map
+			<div id="buttons">
+				<div id="generate" onClick={generateMap}>
+					Generate Map
+				</div>
+				<div id="togglegrid" onClick={toggleGrid}>
+					Toggle Grid Look
+				</div>
 			</div>
+
 			<div id="container">
 				<Emptydivs />
 			</div>

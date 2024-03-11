@@ -137,7 +137,8 @@ body,
 	}
 }
 
-#generate {
+#generate,
+#togglegrid {
 	z-index: 100;
 	position: relative;
 	display: block;
@@ -149,7 +150,23 @@ body,
 	font-family: Arial;
 }
 
-#generate:hover {
+#generate:hover,
+#togglegrid:hover {
 	background-color: black;
 	cursor: pointer;
+}
+
+#togglegrid {
+	background-color: gray;
+}
+
+#buttons {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
+}
+
+.gridless .grid-item,
+.gridless .grid-row {
+	border: none;
 }
