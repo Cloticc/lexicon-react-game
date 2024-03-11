@@ -5,14 +5,47 @@ function App() {
 	const [count, setCount] = useState(0);
 
 	function generateMap() {
-		const data = document.querySelector("#container").innerHTML;
-		console.log(data);
+		const data = {
+			mapdata: [],
+			html: "",
+		};
+
+		const rows = document.querySelectorAll(".grid-row");
+
+		rows.forEach((row) => {
+			const columns = row.querySelectorAll(".grid-item");
+			const array = [];
+			data.mapdata.push(array);
+			columns.forEach((column) => {
+				let symbol;
+				if (column.classList.length <= 1 && column.classList.contains("grid-item")) {
+					symbol = "-";
+				} else if (column.classList.contains("player1")) {
+					symbol = "P";
+				} else if (column.classList.contains("boxed")) {
+					symbol = "B";
+				} else if (column.classList.contains("ground")) {
+					symbol = ",";
+				} else if (column.classList.contains("indicator")) {
+					symbol = "I";
+				} else if (column.classList.contains("wall")) {
+					symbol = "#";
+				}
+				array.push(symbol);
+			});
+		});
+
+		const dataHTML = document.querySelector("#container").innerHTML;
+
+		data.html = dataHTML;
+
 		// Convert the JSON data to a Blob
 		const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-
+		console.log(data);
 		// Create a temporary link element
 		const link = document.createElement("a");
 		link.href = window.URL.createObjectURL(blob);
+		console.log(blob);
 		var filename = prompt("Name map");
 		filename += ".json";
 		link.download = filename;
@@ -54,7 +87,7 @@ function App() {
 			thisEl.classList.add("player1");
 		} else if (thisEl.classList.contains("player1")) {
 			thisEl.innerHTML = "";
-			thisEl.classList.remove("player");
+			thisEl.classList.remove("player1");
 			thisEl.classList.remove("ground2");
 		}
 	}
@@ -85,7 +118,11 @@ function App() {
 			thisEl.classList.remove("ground");
 			thisEl.classList.remove("ground2");
 			thisEl.classList.remove("boxed");
+			thisEl.classList.add("ground");
+		} else if (thisEl.classList.contains("ground")) {
+			thisEl.innerHTML = "";
 			thisEl.classList.add("wall");
+			thisEl.classList.remove("ground");
 		} else if (thisEl.classList.contains("wall")) {
 			thisEl.innerHTML = "";
 			thisEl.classList.remove("wall");
