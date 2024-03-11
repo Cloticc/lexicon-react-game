@@ -1,0 +1,96 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html,
+body,
+#root {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	background: lightgray;
+}
+
+#container {
+	width: 640px;
+	height: 480px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	padding: 4rem;
+	position: relative;
+}
+
+.grid-container {
+	min-width: 640px;
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.grid-row {
+	border: 1px solid rgb(189, 189, 189);
+	border-bottom: none;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	width: 100%;
+	height: 100%;
+}
+
+.grid-item {
+	aspect-ratio: 1/1;
+	border: 1px solid rgb(189, 189, 189);
+	border-top: none;
+}
+
+.wall {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 50% 100%;
+	background-repeat: no-repeat;
+	background-size: 960px;
+}
+
+.ground {
+	background-image: url("/src/assets/sokoban_vector.svg");
+	background-position: 91% 86%;
+	background-repeat: no-repeat;
+	background-size: 1080px;
+}
+
+.box {
+	width: 100%;
+	height: 100%;
+	display: block;
+	content: "";
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 50% 29%;
+	background-repeat: no-repeat;
+	background-size: 960px;
+}
+
+.player {
+	width: 100%;
+	height: 100%;
+	display: block;
+	content: "";
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 0% 57%;
+	background-repeat: no-repeat;
+	background-size: 960px;
+}
+
+.boxindicator {
+	width: 100%;
+	height: 100%;
+	display: block;
+	content: "";
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 99.8% 57.5%;
+	background-repeat: no-repeat;
+	background-size: 960px;
+}
