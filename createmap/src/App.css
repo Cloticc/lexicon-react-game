@@ -50,9 +50,9 @@ body,
 
 .wall {
 	background-image: url("assets/sokoban_vector.svg");
-	background-position: 50% 100%;
+	background-position: 50% 99.75%;
 	background-repeat: no-repeat;
-	background-size: 960px;
+	background-size: 1000px;
 }
 
 .ground {
@@ -68,9 +68,9 @@ body,
 	display: block;
 	content: "";
 	background-image: url("assets/sokoban_vector.svg");
-	background-position: 50% 29%;
+	background-position: 50% 0%;
 	background-repeat: no-repeat;
-	background-size: 960px;
+	background-size: 940px;
 }
 
 .player {
@@ -93,4 +93,25 @@ body,
 	background-position: 99.8% 57.5%;
 	background-repeat: no-repeat;
 	background-size: 960px;
+}
+
+.level10 .wall {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 58.25% 99.75%;
+	background-repeat: no-repeat;
+	background-size: 1000px;
+}
+
+.level10 .box {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 58.3% 0%;
+	background-repeat: no-repeat;
+	background-size: 940px;
+}
+
+.level10 .ground {
+	background-image: url("/src/assets/sokoban_vector.svg");
+	background-position: 83% 86%;
+	background-repeat: no-repeat;
+	background-size: 1080px;
 }
