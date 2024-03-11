@@ -12,6 +12,9 @@ function App() {
 
 		const rows = document.querySelectorAll(".grid-row");
 
+		let playerAmount = 0;
+		let boxAmount = 0;
+		let boxIndicator = 0;
 		rows.forEach((row) => {
 			const columns = row.querySelectorAll(".grid-item");
 			const array = [];
@@ -22,18 +25,38 @@ function App() {
 					symbol = "-";
 				} else if (column.classList.contains("player1")) {
 					symbol = "P";
+					++playerAmount;
 				} else if (column.classList.contains("boxed")) {
 					symbol = "B";
+					++boxAmount;
 				} else if (column.classList.contains("ground")) {
 					symbol = ",";
 				} else if (column.classList.contains("indicator")) {
 					symbol = "I";
+					++boxIndicator;
 				} else if (column.classList.contains("wall")) {
 					symbol = "#";
 				}
 				array.push(symbol);
 			});
 		});
+
+		if (playerAmount > 1 || playerAmount <= 0) {
+			alert("Can/must only have 1 player, please fix...");
+			return;
+		}
+
+		if (boxAmount <= 0) {
+			alert("Must have at least one box, please fix...");
+			return;
+		}
+
+		if (boxIndicator <= 0 && boxIndicator !== boxAmount) {
+			alert(
+				"You must have the same amount of Box indicators as you have boxes, please fix..."
+			);
+			return;
+		}
 
 		const dataHTML = document.querySelector("#container").innerHTML;
 
