@@ -131,3 +131,19 @@ body,
 		filter: brightness(1);
 	}
 }
+
+#generate {
+	position: absolute;
+	display: block;
+	top: 2rem;
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	padding: 1rem;
+	font-family: Arial;
+}
+
+#generate:hover {
+	background-color: black;
+	cursor: pointer;
+}

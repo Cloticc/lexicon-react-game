@@ -4,6 +4,27 @@ import "./App.css";
 function App() {
 	const [count, setCount] = useState(0);
 
+	function generateMap() {
+		const data = document.querySelector("#container").innerHTML;
+		console.log(data);
+		// Convert the JSON data to a Blob
+		const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+
+		// Create a temporary link element
+		const link = document.createElement("a");
+		link.href = window.URL.createObjectURL(blob);
+		var filename = prompt("Name map");
+		filename += ".json";
+		link.download = filename;
+
+		// Trigger a click event on the link to start the download
+		link.click();
+
+		// Cleanup: remove the link and revoke the Blob URL
+		link.remove();
+		window.URL.revokeObjectURL(link.href);
+	}
+
 	function handleGridClick(e) {
 		e.stopPropagation();
 
@@ -103,6 +124,9 @@ function App() {
 
 	return (
 		<>
+			<div id="generate" onClick={generateMap}>
+				Generate Map
+			</div>
 			<div id="container">
 				<Emptydivs />
 			</div>
