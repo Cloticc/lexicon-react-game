@@ -37,8 +37,6 @@ body,
 }
 
 .grid-row {
-	border: 1px solid rgb(189, 189, 189);
-	border-bottom: none;
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
 	width: 100%;
@@ -61,9 +59,9 @@ body,
 .ground,
 .ground2 {
 	background-image: url("/src/assets/sokoban_vector.svg");
-	background-position: 91% 86%;
+	background-position: 91% 85%;
 	background-repeat: no-repeat;
-	background-size: 1080px;
+	background-size: 1060px;
 }
 
 .box {
@@ -117,7 +115,7 @@ body,
 	background-image: url("/src/assets/sokoban_vector.svg");
 	background-position: 83% 86%;
 	background-repeat: no-repeat;
-	background-size: 1080px;
+	background-size: 1060px;
 }
 
 .grid-item:hover {

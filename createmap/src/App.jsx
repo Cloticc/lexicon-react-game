@@ -96,6 +96,7 @@ function App() {
 			thisEl.innerHTML = "";
 			thisEl.innerHTML = '<div class="box"></div>';
 			thisEl.classList.add("boxed");
+			thisEl.classList.add("ground2");
 			thisEl.classList.remove("ground");
 		} else if (thisEl.classList.contains("boxed")) {
 			thisEl.innerHTML = "";
