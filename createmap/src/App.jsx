@@ -41,17 +41,19 @@ function App() {
 			});
 		});
 
-		if (playerAmount > 1 || playerAmount <= 0) {
+		if (playerAmount > 1 || playerAmount === 0) {
 			alert("Can/must only have 1 player, please fix...");
 			return;
 		}
 
-		if (boxAmount <= 0) {
+		if (boxAmount === 0) {
 			alert("Must have at least one box, please fix...");
 			return;
 		}
 
-		if (boxIndicator <= 0 && boxIndicator !== boxAmount) {
+		console.log(boxIndicator, boxAmount);
+
+		if (boxIndicator === 0 || boxIndicator !== boxAmount) {
 			alert(
 				"You must have the same amount of Box indicators as you have boxes, please fix..."
 			);
