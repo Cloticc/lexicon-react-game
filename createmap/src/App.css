@@ -55,7 +55,8 @@ body,
 	background-size: 1000px;
 }
 
-.ground {
+.ground,
+.ground2 {
 	background-image: url("/src/assets/sokoban_vector.svg");
 	background-position: 91% 86%;
 	background-repeat: no-repeat;
@@ -114,4 +115,19 @@ body,
 	background-position: 83% 86%;
 	background-repeat: no-repeat;
 	background-size: 1080px;
+}
+
+.grid-item:hover {
+	cursor: pointer;
+	animation: flash 0.4s ease-in-out;
+}
+
+@keyframes flash {
+	0% {
+		filter: brightness(2);
+	}
+
+	1000% {
+		filter: brightness(1);
+	}
 }
