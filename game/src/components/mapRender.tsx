@@ -6,6 +6,9 @@ import { useState } from 'react';
 interface MapRenderProps {
   initialMapData: string[][];
 }
+// example to add the map to the game add the following line to the App.tsx file
+// import map1 from './maps/map1.json';
+{/* <MapRender initialMapData={map1.mapdata} /> */ }
 
 export function MapRender({ initialMapData }: MapRenderProps) {
   const [mapData, setMapData] = useState(initialMapData);
@@ -19,20 +22,20 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     switch (symbol) {
       case '-': return 'empty';
       case 'P': return 'player';
-      case 'B': return 'boxed';
+      case 'B': return 'box';
       case ',': return 'ground';
-      case 'I': return 'indicator';
+      case 'I': return 'boxindicator';
       case '#': return 'wall';
       default: return '';
     }
   };
 
   return (
-    <div className="grid">
+    <div className="grid-container">
       {mapData.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
+        <div key={rowIndex} className="grid-row">
           {row.map((column, columnIndex) => (
-            <div key={columnIndex} className={`cell ${getClassNameForSymbol(column)}`}>{column}</div>
+            <div key={columnIndex} className={`grid-item ${getClassNameForSymbol(column)}`}></div>
           ))}
         </div>
       ))}
