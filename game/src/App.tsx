@@ -1,10 +1,14 @@
-import { useState } from "react";
 import "./App.css";
+import { MoveChar } from "./components/MoveChar";
 
 function App() {
-	const [count, setCount] = useState(0);
-
-	return <></>;
+  return (
+	<>
+  
+	<MoveChar />
+	</>
+	
+  )
 }
 
 export default App;
