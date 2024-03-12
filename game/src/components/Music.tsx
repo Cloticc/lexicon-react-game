@@ -23,7 +23,7 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
 	}, [music]);
 
 	return (
-		<audio autoPlay controls id="music" ref={audioRef}>
+		<audio autoPlay loop id="music" ref={audioRef}>
 			<source src={audio} type="audio/mpeg" />
 		</audio>
 	);

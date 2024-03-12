@@ -139,3 +139,7 @@
 	z-index: -2;
 	filter: brightness(4);
 }
+
+#music {
+	display: none;
+}
