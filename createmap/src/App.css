@@ -63,7 +63,7 @@ body,
 	background-image: url("/src/assets/sokoban_vector.svg");
 	background-position: 91% 85%;
 	background-repeat: no-repeat;
-	background-size: 1670%;
+	background-size: 1660%;
 }
 
 .box {
@@ -88,15 +88,144 @@ body,
 	background-size: 1490%;
 }
 
+.player-left {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 25% 86%;
+	background-repeat: no-repeat;
+	background-size: 1490%;
+}
+
+.player-right {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 0% 86%;
+	background-repeat: no-repeat;
+	background-size: 1490%;
+}
+
+.player-up {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 25% 57%;
+	background-repeat: no-repeat;
+	background-size: 1490%;
+}
+
+.player-down {
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: 0% 57%;
+	background-repeat: no-repeat;
+	background-size: 1490%;
+}
+
+.playerwalkup {
+	animation: walkup 0.5s infinite steps(1, jump-both);
+}
+
+.playerwalkdown {
+	animation: walkdown 0.5s infinite steps(1, jump-both);
+}
+
+.playerwalkleft {
+	animation: walkleft 0.5s infinite steps(1, jump-both);
+}
+
+.playerwalkright {
+	animation: walkright 0.5s infinite steps(1, jump-both);
+}
+
+@keyframes walkright {
+	0% {
+		background-position: 0% 86%;
+	}
+	50% {
+		background-position: 0% 86%;
+	}
+	100% {
+		background-position: 17% 86%;
+	}
+}
+
+@keyframes walkleft {
+	0% {
+		background-position: 42% 86%;
+	}
+	50% {
+		background-position: 25% 86%;
+	}
+	100% {
+		background-position: 25% 86%;
+	}
+}
+
+@keyframes walkup {
+	0% {
+		background-position: 25% 57%;
+	}
+	50% {
+		background-position: 42% 57%;
+	}
+	100% {
+		background-position: 42% 57%;
+	}
+}
+
+@keyframes walkdown {
+	0% {
+		background-position: 0% 57%;
+	}
+	50% {
+		background-position: 16% 57%;
+	}
+	100% {
+		background-position: 17% 57%;
+	}
+}
+
 .boxindicator {
 	width: 100%;
 	height: 100%;
 	display: block;
 	content: "";
+	position: relative;
+}
+
+.boxindicator:after {
+	display: block;
+	width: 100%;
+	height: 100%;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-image: url("assets/sokoban_vector.svg");
+	background-position: -0.15% 28.5%;
+	background-repeat: no-repeat;
+	background-size: 1430%;
+	animation: opacitydrop 0.5s ease infinite alternate;
+}
+
+.boxindicator:before {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
 	background-image: url("assets/sokoban_vector.svg");
 	background-position: 99.8% 57.5%;
 	background-repeat: no-repeat;
 	background-size: 1590%;
+	animation: flash 0.5s ease infinite alternate;
+}
+
+@keyframes opacitydrop {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0.6;
+	}
 }
 
 .level10 .wall {
