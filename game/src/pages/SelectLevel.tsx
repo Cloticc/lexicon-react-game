@@ -3,13 +3,14 @@ interface SelectPageProps {
 }
 
 export function SelectLevel({ onPageChange }: SelectPageProps) {
+	console.log("---SELECT LEVEL---");
+
 	const handleButtonClick = () => {
 		onPageChange("start");
 	};
 
 	return (
 		<>
-			{console.log("Select Level...")}
 			<div id="startpageui">
 				<div id="btn-start" onClick={handleButtonClick}>
 					Back

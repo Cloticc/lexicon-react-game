@@ -6,6 +6,7 @@ interface SelectPageProps {
 }
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
+	console.log("---START---");
 	const handleButtonClick = () => {
 		onPageChange("selectlevel");
 	};
