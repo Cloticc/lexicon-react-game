@@ -8,7 +8,15 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: linear-gradient(0deg, rgba(11, 44, 87, 1) 0%, rgba(144, 192, 255, 1) 100%);
+	background: linear-gradient(
+		0deg,
+		rgba(84, 0, 89, 1) 0%,
+		rgba(120, 0, 128, 1) 16%,
+		rgba(37, 129, 255, 1) 37%,
+		rgba(185, 214, 255, 1) 51%,
+		rgba(37, 129, 255, 1) 66%,
+		rgba(0, 15, 33, 1) 100%
+	);
 }
 
 #player {
@@ -26,17 +34,32 @@
 
 #startpageui h1 {
 	position: absolute;
-	bottom: 0;
+	bottom: -1rem;
 	left: 50%;
 	transform: translateX(-50%);
 	color: white;
-	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)
-		drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 1px black);
-	letter-spacing: -1vw;
-	font-size: clamp(2rem, 16vw, 10rem);
-	font-family: "Archivo Black", sans-serif;
-}
 
+	font-size: clamp(2rem, 15vw, 10rem);
+	font-family: "Gajraj One", sans-serif;
+
+	color: transparent;
+	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
+	background-size: contain;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-stroke: 0.001rem rgb(246, 246, 246);
+	filter: drop-shadow(0px 5px 0px black) drop-shadow(0px 12px 24px black)
+		drop-shadow(1px 1px 1px magenta);
+	animation: bg-shift 0.5s ease-in-out infinite alternate;
+}
+@keyframes bg-shift {
+	0% {
+		background-position: 0 -25px;
+	}
+	100% {
+		background-position: 0 25px;
+	}
+}
 #startplay {
 	margin-top: 2rem;
 	content: "";
