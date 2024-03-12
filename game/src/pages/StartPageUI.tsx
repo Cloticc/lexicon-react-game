@@ -11,6 +11,7 @@ export function StartPageUI() {
 					<div className="player playerwalkdown"></div>
 				</div>
 				<div id="startplay"></div>
+				<div id="retrogrid"></div>
 				<div id="copyright">© 2024 Studio5</div>
 			</div>
 		</>
