@@ -14,7 +14,7 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
 		const music = audioRef.current;
 
 		if (music) {
-			music.volume = 0.2;
+			music.volume = 0.15;
 			// Play music if paused
 			if (music.paused) {
 				music.play();
