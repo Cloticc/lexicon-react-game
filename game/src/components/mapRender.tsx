@@ -2,9 +2,10 @@ import '../css/MapRender.css';
 
 import { useState } from 'react';
 
-type MapRenderProps = {
+//Check if array is an array of arrays
+interface MapRenderProps {
   initialMapData: string[][];
-};
+}
 
 export function MapRender({ initialMapData }: MapRenderProps) {
   const [mapData, setMapData] = useState(initialMapData);
