@@ -1,0 +1,22 @@
+#startpageui {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: linear-gradient(0deg, rgba(11, 44, 87, 1) 0%, rgba(144, 192, 255, 1) 100%);
+}
+
+#startpageui h1 {
+	color: white;
+	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)
+		drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 1px black)
+		drop-shadow(0 0 1px black) drop-shadow(0 0 1px black);
+	letter-spacing: -1.2vw;
+	font-size: 16vw;
+	font-family: "Archivo Black", sans-serif;
+}

@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { StartPageUI } from "./pages/StartPageUI";
 import "./App.css";
 
 function App() {
-	const [count, setCount] = useState(0);
-
-	return <></>;
+	return (
+		<>
+			<StartPageUI />
+		</>
+	);
 }
 
 export default App;
