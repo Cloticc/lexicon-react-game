@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { StartPageUI } from "./pages/StartPageUI";
+import { Music } from "./components/Music";
+import neonGaming from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
 
 function App() {
-	const [count, setCount] = useState(0);
+	return (
+		<>
+			{/* Music Player */}
+			<Music audio={neonGaming} />
 
-	return <></>;
+			{/* StartPage UI */}
+			<StartPageUI />
+		</>
+	);
 }
 
 export default App;
