@@ -13,10 +13,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     return <div>Loading...</div>;
   }
 
+  //will be used to get the class name for each symbol in the map
   const getClassNameForSymbol = (symbol: string) => {
     switch (symbol) {
       case '-': return 'empty';
-      // case 'P': return 'player';
+      case 'P': return 'player';
       case 'B': return 'boxed';
       case ',': return 'ground';
       case 'I': return 'indicator';
