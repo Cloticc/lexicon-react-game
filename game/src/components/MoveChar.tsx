@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export function MoveChar() {
   // Set up the game map and player's starting position
@@ -36,6 +36,7 @@ export function MoveChar() {
     } else if (direction === "RIGHT") {
       newPosition.x += 1;
     }
+    
 
     // Check if the new position is within the game boundaries
     if (
@@ -77,6 +78,33 @@ export function MoveChar() {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowUp":
+          movePlayer("UP");
+          break;
+        case "ArrowDown":
+          movePlayer("DOWN");
+          break;
+        case "ArrowLeft":
+          movePlayer("LEFT");
+          break;
+        case "ArrowRight":
+          movePlayer("RIGHT");
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [movePlayer]);
+
   // Render the game map
   return (
     <>
@@ -94,7 +122,13 @@ export function MoveChar() {
                   alignItems: "center",
                   justifyContent: "center",
                   background:
-                    cell === "#" ? "#333" : cell === "P" ? "#00f" : cell === "I" ? "green" :  "#fff",
+                    cell === "#"
+                      ? "#333"
+                      : cell === "P"
+                      ? "#00f"
+                      : cell === "I"
+                      ? "green"
+                      : "#fff",
                   color: cell === "#" ? "#fff" : "#000",
                 }}
               >
@@ -107,7 +141,7 @@ export function MoveChar() {
 
       {/* Buttons for player movement */}
       <div>
-        <button onClick={() => movePlayer("UP")}>Move Up</button>
+        <button onClick={() => movePlayer("UP")} >Move Up</button>
         <button onClick={() => movePlayer("DOWN")}>Move Down</button>
         <button onClick={() => movePlayer("LEFT")}>Move Left</button>
         <button onClick={() => movePlayer("RIGHT")}>Move Right</button>
@@ -115,5 +149,5 @@ export function MoveChar() {
     </>
   );
 }
-// event list for buttons
+
 // add mobile button touch start?
