@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Roboto", sans-serif;
+	user-select: none;
+}
+
+html,
+body,
+#root {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	background: linear-gradient(
+		0deg,
+		rgba(84, 0, 89, 1) 0%,
+		rgba(120, 0, 128, 1) 16%,
+		rgba(37, 129, 255, 1) 37%,
+		rgba(185, 214, 255, 1) 51%,
+		rgba(37, 129, 255, 1) 66%,
+		rgba(0, 15, 33, 1) 100%
+	);
+}
+
+#root {
+	flex-direction: column;
+}
