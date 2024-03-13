@@ -150,4 +150,3 @@ export function MoveChar() {
   );
 }
 
-// add mobile button touch start?
