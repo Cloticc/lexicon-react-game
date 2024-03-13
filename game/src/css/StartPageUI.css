@@ -277,6 +277,29 @@
 	bottom: 3rem;
 }
 
+#selectlevel #btn-levels {
+	position: absolute;
+	left: 3rem;
+	bottom: 3rem;
+}
+
+#selectlevel #btn-levels:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	rotate: 180deg;
+	height: 100%;
+	content: "";
+	filter: drop-shadow(0 -1px 0 white);
+	background-image: url("../assets/icon-play.svg");
+	background-repeat: no-repeat;
+	background-position: 38% center;
+	background-size: 3.5rem;
+	position: absolute;
+	right: 3rem;
+}
+
 #selectlevel #btn-credits {
 	position: absolute;
 	left: 12rem;
@@ -472,4 +495,20 @@
 }
 .button:hover:before {
 	animation: buttonhover 0.4s ease-out;
+}
+
+#credits {
+	padding: 2rem;
+}
+
+#credits h2 {
+	margin-top: 2rem;
+	font-family: "Gajraj One", sans-serif;
+	font-size: 2rem;
+}
+
+#credits h5,
+#credits a {
+	font-size: 1.2rem;
+	color: black;
 }

@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-
-interface SelectPageProps {
-	onPageChange: (page: "start" | "selectlevel" | "play" | "credits") => void;
-}
+import { SelectPageProps } from "./../components/InterfacePages";
 
 export function SelectLevel({ onPageChange }: SelectPageProps) {
 	const [mapFiles, setMapFiles] = useState<string[]>([]);

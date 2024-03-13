@@ -1,9 +1,6 @@
 import "./../css/StartPageUI.css";
 import "./../css/Map.css";
-
-interface SelectPageProps {
-	onPageChange: (page: "start" | "selectlevel" | "play" | "credits") => void;
-}
+import { SelectPageProps } from "./../components/InterfacePages";
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
 	const handleButtonClick = () => {
