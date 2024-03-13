@@ -10,8 +10,7 @@
 	align-items: center;
 	background: linear-gradient(
 		0deg,
-		rgba(84, 0, 89, 1) 0%,
-		rgba(120, 0, 128, 1) 16%,
+		rgb(0, 20, 86) 16%,
 		rgba(37, 129, 255, 1) 37%,
 		rgba(185, 214, 255, 1) 51%,
 		rgba(37, 129, 255, 1) 66%,
@@ -43,7 +42,14 @@
 	font-family: "Gajraj One", sans-serif;
 
 	color: transparent;
-	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
+	background: linear-gradient(
+		0deg,
+		rgb(0, 20, 86) 16%,
+		rgba(37, 129, 255, 1) 37%,
+		rgba(185, 214, 255, 1) 51%,
+		rgba(37, 129, 255, 1) 66%,
+		rgba(0, 15, 33, 1) 100%
+	);
 	background-size: contain;
 	-webkit-background-clip: text;
 	background-clip: text;
@@ -70,7 +76,11 @@
 	border-radius: 0.8rem;
 	outline: 4px solid black;
 	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
+	background: linear-gradient(
+		rgb(144, 183, 255) 30%,
+
+		rgb(3, 101, 198) 60%
+	);
 }
 
 #startplay:after {
@@ -92,9 +102,8 @@
 	cursor: pointer;
 	background: linear-gradient(
 		rgb(187, 211, 255) 30%,
-		white,
-		rgb(255, 44, 255) 60%,
-		rgb(189, 212, 255) 100%
+
+		rgb(20, 113, 205) 60%
 	) !important;
 }
 
@@ -344,7 +353,11 @@
 	outline: 3px solid black;
 	outline: 4px solid black;
 	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
+	background: linear-gradient(
+		rgb(144, 183, 255) 30%,
+
+		rgb(3, 101, 198) 60%
+	);
 }
 
 #selectlevel h1 {
@@ -453,9 +466,8 @@
 	z-index: 10;
 	background: linear-gradient(
 		rgb(187, 211, 255) 30%,
-		white,
-		rgb(255, 44, 255) 60%,
-		rgb(189, 212, 255) 100%
+
+		rgb(20, 113, 205) 60%
 	) !important;
 }
 .button:hover:before {
