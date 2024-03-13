@@ -1,125 +1,15 @@
 {
-  "mapdata": [
-    [
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-"
-    ],
-    [
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-"
-    ],
-    [
-      "-",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "-",
-      "-",
-      "-"
-    ],
-    [
-      "-",
-      "#",
-      "I",
-      ",",
-      ",",
-      "I",
-      "#",
-      "#",
-      "-",
-      "-"
-    ],
-    [
-      "-",
-      "#",
-      ",",
-      "#",
-      ",",
-      ",",
-      ",",
-      "#",
-      "-",
-      "-"
-    ],
-    [
-      "-",
-      "#",
-      ",",
-      ",",
-      ",",
-      "P",
-      "B",
-      "#",
-      "#",
-      "-"
-    ],
-    [
-      "-",
-      "#",
-      "#",
-      "#",
-      "#",
-      ",",
-      "B",
-      ",",
-      "#",
-      "-"
-    ],
-    [
-      "-",
-      "-",
-      "-",
-      "-",
-      "#",
-      ",",
-      ",",
-      ",",
-      "#",
-      "-"
-    ],
-    [
-      "-",
-      "-",
-      "-",
-      "-",
-      "#",
-      "#",
-      "#",
-      "#",
-      "#",
-      "-"
-    ],
-    [
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-",
-      "-"
-    ]
-  ],
-  "html": "<div class=\"grid-container\"><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground2 indicator\"><div class=\"boxindicator\"></div></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground2 indicator\"><div class=\"boxindicator\"></div></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground2 player1\"><div class=\"player\"></div></div><div class=\"grid-item boxed ground2\"><div class=\"box\"></div></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item boxed ground2\"><div class=\"box\"></div></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div></div>"
+	"mapdata": [
+		["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+		["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+		["-", "#", "#", "#", "#", "#", "#", "-", "-", "-"],
+		["-", "#", "I", ",", ",", "I", "#", "#", "-", "-"],
+		["-", "#", ",", "#", ",", ",", ",", "#", "-", "-"],
+		["-", "#", ",", ",", ",", "P", "B", "#", "#", "-"],
+		["-", "#", "#", "#", "#", ",", "B", ",", "#", "-"],
+		["-", "-", "-", "-", "#", ",", ",", ",", "#", "-"],
+		["-", "-", "-", "-", "#", "#", "#", "#", "#", "-"],
+		["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
+	],
+	"html": "<div class=\"grid-container\"><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground2 indicator\"><div class=\"boxindicator\"></div></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground2 indicator\"><div class=\"boxindicator\"></div></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground2 player1\"><div class=\"player\"></div></div><div class=\"grid-item boxed ground2\"><div class=\"box\"></div></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item boxed ground2\"><div class=\"box\"></div></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item ground\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item wall\"></div><div class=\"grid-item\"></div></div><div class=\"grid-row\"><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div><div class=\"grid-item\"></div></div></div>"
 }
