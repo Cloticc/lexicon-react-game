@@ -5,11 +5,9 @@ import { Music } from "./components/Music";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
 
-type Page = "start" | "selectlevel";
+type Page = "start" | "selectlevel" | "play" | "credits";
 
 function App() {
-	console.log("----SOKOBAN----");
-
 	const [currentPage, setCurrentPage] = useState("start");
 
 	const handlePageChange = (page: Page) => {

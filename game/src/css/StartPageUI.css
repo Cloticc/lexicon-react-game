@@ -69,8 +69,8 @@
 	padding: 4rem;
 	border-radius: 0.8rem;
 	outline: 4px solid black;
-	box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(0deg, rgba(168, 168, 168, 1) 0%, rgba(208, 208, 208, 1) 100%);
+	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
+	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
 }
 
 #startplay:after {
@@ -84,11 +84,18 @@
 	background-position: 40% center;
 	background-size: 60%;
 	background-repeat: no-repeat;
+	filter: drop-shadow(0 1px 0px white);
 }
 
 #startplay:hover {
 	scale: 1.08;
 	cursor: pointer;
+	background: linear-gradient(
+		rgb(187, 211, 255) 30%,
+		white,
+		rgb(255, 44, 255) 60%,
+		rgb(189, 212, 255) 100%
+	) !important;
 }
 
 #startplay:before {
@@ -116,7 +123,7 @@
 #startplay:active {
 	scale: 0.98;
 	cursor: pointer;
-	box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 4px black, 0 1rem 2rem 0 rgba(0, 0, 0, 0.8);
+	box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 3px black, 0 1rem 1rem 0 rgba(0, 0, 0, 0.8);
 }
 
 #copyright {
@@ -142,4 +149,315 @@
 
 #music {
 	display: none;
+}
+
+#selectlevel {
+	background: rgba(255, 255, 255, 0.6);
+	backdrop-filter: blur(0.5rem);
+	width: 80vw;
+	max-width: 50rem;
+	padding: 2rem;
+	border-radius: 0.8rem;
+	outline: 3px solid black;
+	box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
+	z-index: 10;
+	position: relative;
+	height: 75vh;
+	border: 2px solid white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+#selectlevel .levels {
+	width: 100%;
+}
+
+#selectlevel .levels ul {
+	list-style: none;
+	height: 90%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-gap: 2rem;
+	margin-top: 2rem;
+	justify-content: center;
+	align-items: center;
+}
+
+#selectlevel .levels ul li {
+	justify-content: center;
+
+	display: flex;
+	border-radius: 0.4rem;
+	outline: 3px solid black;
+	box-shadow: 0 1px 0 1px white inset, 0 4px 0 3px black, 0 1rem 2rem 0 rgba(0, 0, 0, 0.8);
+	background: linear-gradient(0deg, rgba(168, 168, 168, 1) 0%, rgba(208, 208, 208, 1) 100%);
+	font-weight: 900;
+	font-size: 3rem;
+	backdrop-filter: blur(0.5rem);
+	position: relative;
+	min-height: 4.5rem;
+	z-index: 0;
+}
+#selectlevel .levels ul li span {
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	font-weight: 500;
+	padding: 0.2rem;
+	display: block;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	border-top: 2px solid rgba(255, 255, 255, 0.6);
+	color: white;
+	position: absolute;
+	bottom: 0;
+}
+
+#selectlevel .levels ul li:before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 0.4rem;
+}
+
+#selectlevel .levels ul li:hover {
+	cursor: pointer;
+	scale: 1.1;
+	z-index: 10;
+}
+#selectlevel .levels ul li:hover:before {
+	animation: buttonhover 0.4s ease-out;
+}
+
+#selectlevel .levels .done {
+	background: gold;
+}
+
+#selectlevel .levels .notplayable {
+	opacity: 0.3;
+}
+
+#selectlevel .levels .notplayable:hover:before {
+	animation: none;
+}
+
+#selectlevel .levels .notplayable:hover {
+	cursor: default;
+	scale: 1;
+}
+#selectlevel #menubuttons {
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 3rem;
+}
+
+#selectlevel #btn-play {
+	position: absolute;
+	right: 3rem;
+	bottom: 3rem;
+}
+
+#selectlevel #btn-start {
+	position: absolute;
+	left: 3rem;
+	bottom: 3rem;
+}
+
+#selectlevel #btn-credits {
+	position: absolute;
+	left: 12rem;
+	bottom: 3rem;
+}
+
+#selectlevel #btn-play:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
+	filter: drop-shadow(0 1px 0 white);
+	background-image: url("../assets/icon-play.svg");
+	background-repeat: no-repeat;
+	background-position: 38% center;
+	background-size: 3.5rem;
+	position: absolute;
+	right: 3rem;
+}
+
+#selectlevel #btn-credits:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
+	filter: drop-shadow(0 1px 0 white);
+	background-image: url("../assets/icon-info.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 1.2rem;
+	position: absolute;
+	right: 3rem;
+}
+
+#selectlevel #btn-start:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	content: "";
+	filter: drop-shadow(0 1px 0 white);
+	background-image: url("../assets/icon-home.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 4rem;
+	position: absolute;
+	right: 3rem;
+}
+
+#selectlevel #menubuttons span {
+	position: absolute;
+	top: -8rem;
+	font-weight: 600;
+	font-size: 1.2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 100%;
+	background: rgba(0, 0, 0, 0.1);
+	padding: 0.5rem;
+}
+
+#selectlevel .button {
+	width: 6rem;
+	height: 6rem;
+	border-radius: 0.4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	outline: 3px solid black;
+	outline: 4px solid black;
+	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
+	background: linear-gradient(rgb(78, 139, 252) 30%, white, darkmagenta 60%, cornflowerblue 100%);
+}
+
+#selectlevel h1 {
+	font-size: clamp(2rem, 10vw, 5rem) !important;
+	white-space: nowrap;
+	bottom: auto;
+	top: -4.2rem;
+	filter: drop-shadow(0 0.5rem 0 black);
+}
+
+/*
+#selectlevel .button {
+	transform-origin: top left;
+	position: absolute;
+	width: 8rem;
+	height: 8rem;
+	outline: 3px solid black;
+	box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 3px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
+	background: #d7d7d7;
+	border-radius: 0.8rem;
+	transform: translateX(-50%) translateY(-50%);
+}
+*/
+
+#selectlevel .arrow {
+	border: none;
+	position: absolute;
+	transform: translateY(-50%);
+	width: 6rem;
+	height: 6rem;
+	filter: invert(1) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
+		drop-shadow(0 0 0px black) drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
+	transform-origin: top center;
+	background: transparent;
+	transition: scale 0.2s ease-out;
+}
+
+#selectlevel .arrow:after {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	content: "";
+	background: url("../assets/icon-arrow.svg");
+	background-repeat: no-repeat;
+	background-size: 70%;
+	background-position: center center;
+	animation: arrowmove 0.5s ease-in infinite alternate;
+}
+
+@keyframes arrowmove {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(1rem);
+	}
+}
+
+#selectlevel .arrow:disabled {
+	display: none;
+}
+
+#selectlevel .prev {
+	left: -15%;
+	top: 50%;
+}
+
+#selectlevel .next {
+	right: -15%;
+	top: 50%;
+}
+
+#selectlevel .next:after {
+	rotate: 180deg;
+}
+
+.button:before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 0.4rem;
+}
+#selectlevel .arrow:hover {
+	cursor: pointer;
+	scale: 1.3;
+	z-index: 10;
+}
+
+#selectlevel .arrow:hover:after {
+	animation: none;
+}
+#selectlevel .arrow:active {
+	cursor: pointer;
+	scale: 1;
+	z-index: 10;
+}
+.button:hover {
+	cursor: pointer;
+	scale: 1.1;
+	z-index: 10;
+	background: linear-gradient(
+		rgb(187, 211, 255) 30%,
+		white,
+		rgb(255, 44, 255) 60%,
+		rgb(189, 212, 255) 100%
+	) !important;
+}
+.button:hover:before {
+	animation: buttonhover 0.4s ease-out;
 }

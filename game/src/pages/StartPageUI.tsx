@@ -2,11 +2,10 @@ import "./../css/StartPageUI.css";
 import "./../css/Map.css";
 
 interface SelectPageProps {
-	onPageChange: (page: "start" | "selectlevel") => void;
+	onPageChange: (page: "start" | "selectlevel" | "play" | "credits") => void;
 }
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
-	console.log("---START---");
 	const handleButtonClick = () => {
 		onPageChange("selectlevel");
 	};
