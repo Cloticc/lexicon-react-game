@@ -74,7 +74,7 @@ const [boxPositions, setBoxPositions] = useState(boxStartPositions);
     <div className="grid-container">
       {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
       <MoveChar
-        initialMapData={mapData}
+        mapData={mapData}
         setMapData={setMapData}
         setPlayerDirection={setPlayerDirection}
         indicatorPositions={indicatorPositions}
