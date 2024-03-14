@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 
 interface MoveCharProps {
-  initialMapData: string[][];
+  mapData: string[][];
   setMapData: (mapData: string[][]) => void;
   setPlayerDirection: (direction: string) => void;
   playerPosition: { x: number, y: number };
@@ -25,28 +25,34 @@ const directionMap: Record<Direction, { x: number, y: number }> = {
  * @param {MoveCharProps}  - The `MoveChar` function takes in several props as parameters:
  */
 
-export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, boxPositions, setBoxPositions }: MoveCharProps) {
+export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, boxPositions, setBoxPositions }: MoveCharProps) {
   const handlePlayerMove = useCallback((direction: string) => {
     setPlayerDirection(direction.toLowerCase());
 
+    // console.log(mapData);
 
-// console.log(boxPositions);
+    // console.log(boxPositions);
 
     const newPosition = {
       x: playerPosition.x + directionMap[direction as Direction].x,
       y: playerPosition.y + directionMap[direction as Direction].y
     };
 
+
     if (
+      mapData.length > 0 &&
+      mapData[0] &&
       newPosition.x >= 0 &&
-      newPosition.x < initialMapData[0].length &&
+      newPosition.x < mapData[0].length &&
       newPosition.y >= 0 &&
-      newPosition.y < initialMapData.length
+      newPosition.y < mapData.length
     ) {
-      const newMapData = initialMapData.map((row: string[]) => [...row]);
+      const newMapData = mapData.map((row: string[]) => [...row]);
 
       if (newMapData[newPosition.y][newPosition.x] !== "#") {
         const boxIndex = boxPositions.findIndex(pos => pos.x === newPosition.x && pos.y === newPosition.y);
+        // console.log('Before update:', newMapData, boxPositions);
+
         if (boxIndex !== -1) {
           const beyondBoxPosition = {
             x: newPosition.x + directionMap[direction as Direction].x,
@@ -68,11 +74,20 @@ export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playe
               newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = ',';
             }
 
+            if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
+              newMapData[playerPosition.y][playerPosition.x] = 'I';
+            } else {
+              newMapData[playerPosition.y][playerPosition.x] = ',';
+            }
+            newMapData[newPosition.y][newPosition.x] = "P";
+
             setMapData(newMapData);
 
             const newBoxPositions = [...boxPositions];
             newBoxPositions[boxIndex] = beyondBoxPosition;
             setBoxPositions(newBoxPositions);
+
+            setPlayerPosition(newPosition);
           }
         } else {
           if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
@@ -81,14 +96,14 @@ export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playe
             newMapData[playerPosition.y][playerPosition.x] = ',';
           }
           newMapData[newPosition.y][newPosition.x] = "P";
-
           setMapData(newMapData);
 
           setPlayerPosition(newPosition);
         }
+        // console.log('After update:', newMapData, boxPositions);
       }
     }
-  }, [playerPosition, setPlayerDirection, initialMapData, indicatorPositions, setMapData, setPlayerPosition, setBoxPositions, boxPositions]);
+  }, [mapData, playerPosition, setPlayerDirection, indicatorPositions, setMapData, setPlayerPosition, setBoxPositions, boxPositions]);
 
 
   //check if the player is pressing the arrow keys and move the player accordingly
