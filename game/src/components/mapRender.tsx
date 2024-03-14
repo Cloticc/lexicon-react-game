@@ -47,8 +47,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     const isIndicator = indicatorPositions.some(pos => pos.x === x && pos.y === y);
     switch (symbol) {
       case '-': return 'empty';
-      case 'P': return isIndicator ? `boxindicator player player-${playerDirection} playerwalk${playerDirection}` : `player-${playerDirection} playerwalk${playerDirection}`;
-      case 'B': return 'box';
+      case 'P': return`player-${playerDirection} playerwalk${playerDirection}`;
+      case 'B': return isIndicator ? 'box box-on-indicator' : 'box';
       case ',': return 'ground';
       case 'I': return 'boxindicator';
       case '#': return 'wall';
