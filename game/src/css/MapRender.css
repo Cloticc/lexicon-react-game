@@ -65,6 +65,7 @@ body,
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 7;
 }
 
 .box::before {
@@ -78,7 +79,7 @@ body,
   background-position: 91% 85%;
   background-repeat: no-repeat;
   background-size: 1660%;
-  z-index: 1;
+  z-index: 8;
 }
 
 .box::after {
@@ -92,13 +93,13 @@ body,
   background-position: 50% 0%;
   background-repeat: no-repeat;
   background-size: 1490%;
-  z-index: 2;
+  z-index: 9;
 }
 
-.player,
-.box {
-  z-index: 2;
+.box-on-indicator {
+  /* not in used more for div */
 }
+
 .player {
   position: relative;
   width: 100%;
