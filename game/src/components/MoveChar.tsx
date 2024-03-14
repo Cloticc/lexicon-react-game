@@ -9,8 +9,16 @@ interface MoveCharProps {
 
 export function MoveChar({ initialMapData, setMapData, setPlayerDirection }: MoveCharProps) {
 
-  const [playerPosition, setPlayerPosition] = useState({ x: 5, y: 6 }); // player starting position on the map
-
+  // This is for finding the initial position of the player ('P') on the game map. 
+  let playerStartPosition = { x: 5, y: 5 };
+  for (let y = 0; y < initialMapData.length; y++) {
+    const x = initialMapData[y].indexOf('P');
+    if (x !== -1) {
+      playerStartPosition = { x, y };
+      break;
+    }
+  }
+  const [playerPosition, setPlayerPosition] = useState(playerStartPosition);
 
 
   const handlePlayerMove = useCallback((direction: string) => {
