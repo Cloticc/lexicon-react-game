@@ -135,85 +135,91 @@ body,
   z-index: 2;
 }
 
-.player-left, .player-right, .player-up, .player-down {
-	position: relative;					
+.player-left,
+.player-right,
+.player-up,
+.player-down {
+  position: relative;
 }
 
-.player-left::before, .player-right::before, .player-up::before, .player-down::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91% 85%; 
-	background-repeat: no-repeat;
-	background-size: 1660%;
-	z-index: 1;
+.player-left::before,
+.player-right::before,
+.player-up::before,
+.player-down::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/sokoban_vector.svg");
+  background-position: 91% 85%;
+  background-repeat: no-repeat;
+  background-size: 1660%;
+  z-index: 1;
 }
 
 .player-left::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 25% 86%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	z-index: 2;
-	animation: walkleft 0.5s infinite steps(1, jump-both);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/sokoban_vector.svg");
+  background-position: 25% 86%;
+  background-repeat: no-repeat;
+  background-size: 1490%;
+  z-index: 2;
+  animation: walkleft 0.5s steps(1, jump-both);
 }
 
 .player-right::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 0% 86%; 
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	z-index: 2;
-	animation: walkright 0.5s infinite steps(1, jump-both);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/sokoban_vector.svg");
+  background-position: 0% 86%;
+  background-repeat: no-repeat;
+  background-size: 1490%;
+  z-index: 2;
+  animation: walkright 0.5s steps(1, jump-both);
 }
 
 .player-up::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 25% 57%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	z-index: 2;
-	animation: walkup 0.5s infinite steps(1, jump-both);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/sokoban_vector.svg");
+  background-position: 25% 57%;
+  background-repeat: no-repeat;
+  background-size: 1490%;
+  z-index: 2;
+  animation: walkup 0.5s steps(1, jump-both);
 }
 
 .player-down::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 0% 57%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	z-index: 2;
-	animation: walkdown 0.5s infinite steps(1, jump-both);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/sokoban_vector.svg");
+  background-position: 0% 57%;
+  background-repeat: no-repeat;
+  background-size: 1490%;
+  z-index: 2;
+  animation: walkdown 0.5s steps(1, jump-both);
 }
 
-.playerwalkup {
+/* .playerwalkup {
   animation: walkup 0.5s infinite steps(1, jump-both);
 }
 
@@ -227,7 +233,7 @@ body,
 
 .playerwalkright {
   animation: walkright 0.5s infinite steps(1, jump-both);
-}
+} */
 
 @keyframes walkright {
   0% {
