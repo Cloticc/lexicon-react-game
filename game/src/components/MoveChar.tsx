@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 interface MoveCharProps {
   initialMapData: string[][];
@@ -12,7 +12,7 @@ interface MoveCharProps {
   setBoxPosition: (position: { x: number, y: number }) => void;
 }
 
-export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, setIndicatorPositions, boxPosition, setBoxPosition }: MoveCharProps) {
+export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, boxPosition, setBoxPosition }: MoveCharProps) {
 
   const handlePlayerMove = useCallback((direction: string) => {
     // Copy the current player's position
@@ -55,7 +55,6 @@ export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playe
             beyondBoxPosition.x += 1;
           }
 
-
           if (
             beyondBoxPosition.x >= 0 &&
             beyondBoxPosition.x < newMapData[0].length &&
@@ -66,37 +65,41 @@ export function MoveChar({ initialMapData, setMapData, setPlayerDirection, playe
           ) {
             // Move the box to the cell beyond the box
             newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-            // Move the player to the box's original position
-            newMapData[newPosition.y][newPosition.x] = "P";
-            // Clear the player's previous position
-            newMapData[playerPosition.y][playerPosition.x] = ",";
+            // Clear the box's previous position
+            if (indicatorPositions.some(pos => pos.x === boxPosition.x && pos.y === boxPosition.y)) {
+              newMapData[boxPosition.y][boxPosition.x] = 'I';
+            } else {
+              newMapData[boxPosition.y][boxPosition.x] = ',';
+            }
 
             // Update the game map
             setMapData(newMapData);
 
-            // Update the player's position
-            setPlayerPosition(newPosition);
-
             // Update the box's position
             setBoxPosition(newPosition);
           }
-        } else {
-          // Clear the previous player's position
-          newMapData[playerPosition.y][playerPosition.x] = ",";
-          // Set the new player's position
-          newMapData[newPosition.y][newPosition.x] = "P";
-
-          // Update the game map
-          setMapData(newMapData);
-
-          // Update the player's position
-          setPlayerPosition(newPosition);
         }
+
+        // Clear the previous player's position
+        if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
+          newMapData[playerPosition.y][playerPosition.x] = 'I';
+        } else {
+          newMapData[playerPosition.y][playerPosition.x] = ',';
+        }
+        // Set the new player's position
+        newMapData[newPosition.y][newPosition.x] = "P";
+
+        // Update the game map
+        setMapData(newMapData);
+
+        // Update the player's position
+        setPlayerPosition(newPosition);
       }
+
     }
     setPlayerDirection(direction.toLowerCase());
 
-  }, [playerPosition, initialMapData, setMapData, setPlayerDirection, indicatorPositions, setIndicatorPositions, boxPosition, setBoxPosition]);
+  }, [playerPosition, setPlayerDirection, initialMapData, indicatorPositions, setMapData, setPlayerPosition, setBoxPosition, boxPosition.x, boxPosition.y]);
 
 
 
