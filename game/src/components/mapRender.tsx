@@ -70,7 +70,6 @@ export function MapRender({ initialMapData }: MapRenderProps) {
           (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
             newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
         ) {
-          console.log("🚀 ~ handlePlayerMove ~ beyondBoxPosition:", beyondBoxPosition)
           // Move the box to the cell beyond the box
           newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
           // Move the player to the box's original position
