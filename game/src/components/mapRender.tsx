@@ -22,68 +22,73 @@ export function MapRender({ initialMapData }: MapRenderProps) {
   const handlePlayerMove = (direction: string) => {
     // Copy the current player's position
     const newPosition = { ...playerPosition };
-
+    // console.log(playerPosition);
     setPlayerDirection(direction.toLowerCase());
 
-  // Update player's position based on the chosen direction
-  if (direction === "UP") {
-    newPosition.y -= 1;
-  } else if (direction === "DOWN") {
-    newPosition.y += 1;
-  } else if (direction === "LEFT") {
-    newPosition.x -= 1;
-  } else if (direction === "RIGHT") {
-    newPosition.x += 1;
-  }
-
-  // Check if the new position is within the game boundaries
-  if (
-    newPosition.x >= 0 &&
-    newPosition.x < mapData[0].length &&
-    newPosition.y >= 0 &&
-    newPosition.y < mapData.length
-  ) {
-    // Create a copy of the current game map
-    const newMapData = mapData.map(row => [...row]);
-
-    // Check if the new position is a box ('B')
-    if (newMapData[newPosition.y][newPosition.x] === "B") {
-      // Calculate the position of the cell beyond the box
-      const beyondBoxPosition = { x: newPosition.x, y: newPosition.y };
-      if (direction === "UP") {
-        beyondBoxPosition.y -= 1;
-      } else if (direction === "DOWN") {
-        beyondBoxPosition.y += 1;
-      } else if (direction === "LEFT") {
-        beyondBoxPosition.x -= 1;
-      } else if (direction === "RIGHT") {
-        beyondBoxPosition.x += 1;
-      }
-
-      // Check if the cell beyond the box is within the game boundaries and is empty or a box indicator ('I')
-      if (
-        beyondBoxPosition.x >= 0 &&
-        beyondBoxPosition.x < newMapData[0].length &&
-        beyondBoxPosition.y >= 0 &&
-        beyondBoxPosition.y < newMapData.length &&
-        (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
-          newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
-      ) {
-        // Move the box to the cell beyond the box
-        newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-        // Move the player to the box's original position
-        newMapData[newPosition.y][newPosition.x] = "P";
-        // Clear the player's previous position
-        newMapData[playerPosition.y][playerPosition.x] = ",";
-
-        // Update the game map
-        setMapData(newMapData);
-        // Update the player's position
-        setPlayerPosition(newPosition);
-      }
+    // Update player's position based on the chosen direction
+    if (direction === "UP") {
+      newPosition.y -= 1;
+    } else if (direction === "DOWN") {
+      newPosition.y += 1;
+    } else if (direction === "LEFT") {
+      newPosition.x -= 1;
+    } else if (direction === "RIGHT") {
+      newPosition.x += 1;
     }
-    // Check if the new position is not a wall ('#')
-    else if (newMapData[newPosition.y][newPosition.x] !== "#") {
+
+    // Check if the new position is within the game boundaries
+    if (
+      newPosition.x >= 0 &&
+      newPosition.x < mapData[0].length &&
+      newPosition.y >= 0 &&
+      newPosition.y < mapData.length
+    ) {
+      // Create a copy of the current game map
+      const newMapData = mapData.map(row => [...row]);
+
+      // Check if the new position is a box ('B')
+      if (newMapData[newPosition.y][newPosition.x] === "B") {
+        // Calculate the position of the cell beyond the box
+        const beyondBoxPosition = { x: newPosition.x, y: newPosition.y };
+        if (direction === "UP") {
+          beyondBoxPosition.y -= 1;
+        } else if (direction === "DOWN") {
+          beyondBoxPosition.y += 1;
+        } else if (direction === "LEFT") {
+          beyondBoxPosition.x -= 1;
+        } else if (direction === "RIGHT") {
+          beyondBoxPosition.x += 1;
+        }
+
+
+        // Check if the cell beyond the box is within the game boundaries and is empty or a box indicator ('I')
+        if (
+          beyondBoxPosition.x >= 0 &&
+          beyondBoxPosition.x < newMapData[0].length &&
+          beyondBoxPosition.y >= 0 &&
+          beyondBoxPosition.y < newMapData.length &&
+          (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
+            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+        ) {
+          console.log("🚀 ~ handlePlayerMove ~ beyondBoxPosition:", beyondBoxPosition)
+          // Move the box to the cell beyond the box
+          newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+          // Move the player to the box's original position
+          newMapData[newPosition.y][newPosition.x] = "P";
+          // Clear the player's previous position
+          newMapData[playerPosition.y][playerPosition.x] = ",";
+
+          // Update the game map
+          setMapData(newMapData);
+          // Update the player's position
+          setPlayerPosition(newPosition);
+        }
+        // console.log(beyondBoxPosition);
+        // console.log(newMapData[beyondBoxPosition.y][beyondBoxPosition.x]);
+
+      }
+      // Check if the new position is not a wall ('#')
+      else if (newMapData[newPosition.y][newPosition.x] !== "#") {
         // Clear the previous player's position
         newMapData[playerPosition.y][playerPosition.x] = ",";
         // Set the new player's position
@@ -91,12 +96,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
         // Update the player's position
         setPlayerPosition(newPosition);
-    }
+      }
 
-    // Update the game map
-    setMapData(newMapData);
-  }
-};
+      // Update the game map
+      setMapData(newMapData);
+    }
+  };
   //will be used to get the class name for each symbol in the map
   const getClassNameForSymbol = (symbol: string) => {
     switch (symbol) {
