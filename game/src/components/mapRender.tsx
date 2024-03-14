@@ -17,7 +17,7 @@ interface MapRenderProps {
 export function MapRender({ initialMapData }: MapRenderProps) {
   const [mapData, setMapData] = useState(initialMapData);
   const [playerDirection, setPlayerDirection] = useState('down');
-  const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 }); // box starting position on the map
+  // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
 
   // Find the 'P' symbol in initialMapData
@@ -42,13 +42,27 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
   const [indicatorPositions, setIndicatorPositions] = useState(indicatorStartPositions);
 
+const boxStartPositions = []; // Array of positions
+for (let y = 0; y < initialMapData.length; y++) {
+  for (let x = 0; x < initialMapData[y].length; x++) {
+    if (initialMapData[y][x] === 'B') {
+      boxStartPositions.push({ x, y });
+    }
+  }
+}
+
+const [boxPositions, setBoxPositions] = useState(boxStartPositions);
+// console.log(boxPositions , "boxPositions");
+
+
   //will be used to get the class name for each symbol in the map
   const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
     const isIndicator = indicatorPositions.some(pos => pos.x === x && pos.y === y);
+    const isBox = boxPositions.some(pos => pos.x === x && pos.y === y);
     switch (symbol) {
       case '-': return 'empty';
       case 'P': return`player-${playerDirection} playerwalk${playerDirection}`;
-      case 'B': return isIndicator ? 'box box-on-indicator' : 'box';
+      case 'B': return isIndicator && isBox ? 'box box-on-indicator' : 'box';
       case ',': return 'ground';
       case 'I': return 'boxindicator';
       case '#': return 'wall';
@@ -65,8 +79,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setPlayerDirection={setPlayerDirection}
         indicatorPositions={indicatorPositions}
         setIndicatorPositions={setIndicatorPositions}
-        boxPosition={boxPosition}
-        setBoxPosition={setBoxPosition}
+        boxPositions={boxPositions} 
+        setBoxPositions={setBoxPositions}
         playerPosition={playerPosition}
         setPlayerPosition={setPlayerPosition}
       />
