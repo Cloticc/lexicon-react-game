@@ -1,3 +1,4 @@
+type Page = "start" | "selectlevel" | "play" | "credits";
 export interface SelectPageProps {
-	onPageChange: (page: "start" | "selectlevel" | "play" | "credits") => void;
+	onPageChange: (page: Page) => void;
 }
