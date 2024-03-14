@@ -1,6 +1,7 @@
 import '../css/MapRender.css';
 
-import { useEffect, useState } from 'react';
+import { MoveChar } from './MoveChar';
+import { useState } from 'react';
 
 //Check if array is an array of arrays
 interface MapRenderProps {
@@ -12,16 +13,21 @@ interface MapRenderProps {
 
 
 
+
 export function MapRender({ initialMapData }: MapRenderProps) {
   const [mapData, setMapData] = useState(initialMapData);
-  // const [playerDirection, setPlayerDirection] = useState('down');
+  const [playerDirection, setPlayerDirection] = useState('down');
+
 
   //will be used to get the class name for each symbol in the map
+
+
   const getClassNameForSymbol = (symbol: string) => {
     switch (symbol) {
       case '-': return 'empty';
+      case 'P': return `player-${playerDirection} playerwalk${playerDirection}`;
       // case 'P': return `player-${playerDirection} playerwalk${playerDirection}`;
-      case 'P': return `player`;
+      // case 'P': return `player`;
       case 'B': return 'box';
       case ',': return 'ground';
       case 'I': return 'boxindicator';
@@ -30,34 +36,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     }
   };
 
-  
-  // useEffect(() => {
-  //   const handleKeyDown = (event: KeyboardEvent) => {
-  //     switch (event.key) {
-  //       case 'ArrowUp':
-  //         setPlayerDirection('up');
-  //         break;
-  //       case 'ArrowDown':
-  //         setPlayerDirection('down');
-  //         break;
-  //       case 'ArrowLeft':
-  //         setPlayerDirection('left');
-  //         break;
-  //       case 'ArrowRight':
-  //         setPlayerDirection('right');
-  //         break;
-  //     }
-  //   };
-
-  //   window.addEventListener('keydown', handleKeyDown);
-
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, []);
-
   return (
     <div className="grid-container">
+      {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
+      <MoveChar initialMapData={mapData} setMapData={setMapData} setPlayerDirection={setPlayerDirection} />
       {mapData.map((row, rowIndex) => (
         <div key={rowIndex} className="grid-row">
           {row.map((column, columnIndex) => {

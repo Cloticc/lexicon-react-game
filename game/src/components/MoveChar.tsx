@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-export function MoveChar() {
-  // Set up the game map and player's starting position
-  const [gameMap, setGameMap] = useState([
-    ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-    ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-    ["-", "-", "-", "#", "#", "#", "-", "-", "-", "-"],
-    ["-", "-", "-", "#", "I", "#", "-", "-", "-", "-"],
-    ["-", "-", "-", "#", ",", "#", "#", "-", "-", "-"],
-    ["-", "#", "#", "#", "B", ",", "#", "-", "-", "-"],
-    ["-", "#", "I", ",", "B", "P", "#", "-", "-", "-"],
-    ["-", "#", "#", "#", "#", "#", "#", "-", "-", "-"],
-    ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-    ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
-  ]);
+interface MoveCharProps {
+  initialMapData: string[][];
+  setMapData: (mapData: string[][]) => void;
+  setPlayerDirection: (direction: string) => void;
+}
 
-  // Set the player's initial position
-  const [playerPosition, setPlayerPosition] = useState({
-    x: 5, // Horizontal position
-    y: 6, // Vertical position
-  });
 
-  // Function to handle player movement
-  const movePlayer = (direction: string) => {
+export function MoveChar({ initialMapData, setMapData, setPlayerDirection }: MoveCharProps) {
+
+  const [playerPosition, setPlayerPosition] = useState({ x: 5, y: 6 }); // player starting position on the map
+
+
+
+  const handlePlayerMove = useCallback((direction: string) => {
     // Copy the current player's position
     const newPosition = { ...playerPosition };
+    setPlayerDirection(direction.toLowerCase());
 
     // Update player's position based on the chosen direction
     if (direction === "UP") {
@@ -36,62 +28,95 @@ export function MoveChar() {
     } else if (direction === "RIGHT") {
       newPosition.x += 1;
     }
-    
-
     // Check if the new position is within the game boundaries
     if (
       newPosition.x >= 0 &&
-      newPosition.x < gameMap[0].length &&
+      newPosition.x < initialMapData[0].length &&
       newPosition.y >= 0 &&
-      newPosition.y < gameMap.length
+      newPosition.y < initialMapData.length
     ) {
-      // Check if the new position is not a wall ('#')
-      if (gameMap[newPosition.y][newPosition.x] !== "#") {
-        // Update the game map with the new player's position
-        const newGameMap = gameMap.map(function (row, rowIndex) {
-          return row.map(function (cell, columnIndex) {
-            // Clear the previous player's position
-            if (
-              rowIndex === playerPosition.y &&
-              columnIndex === playerPosition.x
-            ) {
-              return " ";
-            }
-            // Set the new player's position
-            else if (
-              rowIndex === newPosition.y &&
-              columnIndex === newPosition.x
-            ) {
-              return "P";
-            }
-            // Keep the existing cell value if it's not related to the player
-            else {
-              return cell;
-            }
-          });
-        });
+      // Create a copy of the current game map
+      const newMapData = initialMapData.map((row: string[]) => [...row]);
 
-        // Update the game map and player's position
-        setGameMap(newGameMap);
+      // Check if the new position is a box ('B')
+      if (newMapData[newPosition.y][newPosition.x] === "B") {
+        // Calculate the position of the cell beyond the box
+        const beyondBoxPosition = { x: newPosition.x, y: newPosition.y };
+        if (direction === "UP") {
+          beyondBoxPosition.y -= 1;
+        } else if (direction === "DOWN") {
+          beyondBoxPosition.y += 1;
+        } else if (direction === "LEFT") {
+          beyondBoxPosition.x -= 1;
+        } else if (direction === "RIGHT") {
+          beyondBoxPosition.x += 1;
+        }
+
+
+        // Check if the cell beyond the box is within the game boundaries and is empty or a box indicator ('I')
+        if (
+          beyondBoxPosition.x >= 0 &&
+          beyondBoxPosition.x < newMapData[0].length &&
+          beyondBoxPosition.y >= 0 &&
+          beyondBoxPosition.y < newMapData.length &&
+          (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
+            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+        ) {
+          // Move the box to the cell beyond the box
+          newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+          // Move the player to the box's original position
+          newMapData[newPosition.y][newPosition.x] = "P";
+          // Clear the player's previous position
+          newMapData[playerPosition.y][playerPosition.x] = ",";
+
+          // Update the game map
+          setMapData(newMapData);
+          // Update the player's position
+          setPlayerPosition(newPosition);
+        }
+
+
+        // console.log(`Box position: ${newPosition.x}, ${newPosition.y}`);
+
+      }
+      // Check if the new position is not a wall ('#')
+      else if (newMapData[newPosition.y][newPosition.x] !== "#") {
+        // Clear the previous player's position
+        newMapData[playerPosition.y][playerPosition.x] = ",";
+        // Set the new player's position
+        newMapData[newPosition.y][newPosition.x] = "P";
+
+        // Update the player's position
         setPlayerPosition(newPosition);
       }
-    }
-  };
 
+      // Update the game map
+      setMapData(newMapData);
+    }
+    setPlayerDirection(direction.toLowerCase());
+  }, [playerPosition, initialMapData, setMapData, setPlayerDirection]);
+
+
+
+  //check if the player is pressing the arrow keys and move the player accordingly
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "ArrowUp":
-          movePlayer("UP");
+      switch (event.key.toUpperCase()) {
+        case "ARROWUP":
+        case "W":
+          handlePlayerMove("UP");
           break;
-        case "ArrowDown":
-          movePlayer("DOWN");
+        case "ARROWDOWN":
+        case "S":
+          handlePlayerMove("DOWN");
           break;
-        case "ArrowLeft":
-          movePlayer("LEFT");
+        case "ARROWLEFT":
+        case "A":
+          handlePlayerMove("LEFT");
           break;
-        case "ArrowRight":
-          movePlayer("RIGHT");
+        case "ARROWRIGHT":
+        case "D":
+          handlePlayerMove("RIGHT");
           break;
         default:
           break;
@@ -103,50 +128,7 @@ export function MoveChar() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [movePlayer]);
+  }, [handlePlayerMove]);
 
-  // Render the game map
-  return (
-    <>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(10, 30px)" }}>
-        {gameMap.map(function (row, rowIndex) {
-          return row.map(function (cell, columnIndex) {
-            return (
-              <div
-                key={`${rowIndex}-${columnIndex}`}
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  border: "1px solid #ccc",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background:
-                    cell === "#"
-                      ? "#333"
-                      : cell === "P"
-                      ? "#00f"
-                      : cell === "I"
-                      ? "green"
-                      : "#fff",
-                  color: cell === "#" ? "#fff" : "#000",
-                }}
-              >
-                {cell === "B" ? "Box" : ""}
-              </div>
-            );
-          });
-        })}
-      </div>
-
-      {/* Buttons for player movement */}
-      <div>
-        <button onClick={() => movePlayer("UP")} >Move Up</button>
-        <button onClick={() => movePlayer("DOWN")}>Move Down</button>
-        <button onClick={() => movePlayer("LEFT")}>Move Left</button>
-        <button onClick={() => movePlayer("RIGHT")}>Move Right</button>
-      </div>
-    </>
-  );
+  return null; // No need to render anything
 }
-
