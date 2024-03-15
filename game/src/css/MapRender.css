@@ -377,10 +377,10 @@ body,
 }
 
 .grid-item:hover {
-  outline: 2px solid white;
+  outline: none;
   z-index: 100;
-  cursor: pointer;
-  animation: flash 0.4s ease-in-out;
+  cursor: default;
+  animation: none;
 }
 
 @keyframes flash {
