@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
-import { SelectPageProps } from "./../components/InterfacePages";
-import { Highscore } from "./Highscore";
-
 import "./../css/Play.css";
+
+import { useEffect, useState } from "react";
+
+import { Highscore } from "./Highscore";
+import { MapRender } from "../components/mapRender";
+import { SelectPageProps } from "./../components/InterfacePages";
+import map1 from '../maps/map1.json';
 
 export function Play({ onPageChange }: SelectPageProps) {
 	const [gameFinish, setFinish] = useState(false);
@@ -34,6 +37,7 @@ export function Play({ onPageChange }: SelectPageProps) {
 					onClick={handleSelectLevelClick}
 				></button>
 
+ <MapRender initialMapData={map1.mapdata} />
 				{gameFinish && <Highscore />}
 				<div id="retrogrid"></div>
 				<div id="copyright">© 2024 Studio5</div>

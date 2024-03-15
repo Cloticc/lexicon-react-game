@@ -75,6 +75,8 @@ export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPositi
               newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
           ) {
             newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+            /* This code block is checking if the position of a box (identified by
+            `boxPositions[boxIndex]`) matches any of the positions in the `indicatorPositions` array. */
             if (indicatorPositions.some(pos => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)) {
               newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = 'I';
             } else {
@@ -95,6 +97,14 @@ export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPositi
             setBoxPositions(newBoxPositions);
 
             setPlayerPosition(newPosition);
+      
+            // const win = newBoxPositions.every(boxPos =>
+            //   indicatorPositions.some(indicatorPos => indicatorPos.x === boxPos.x && indicatorPos.y === boxPos.y)
+            // );
+
+            // if (win) {
+            //   console.log('You win!');
+            // }
           }
         } else {
           if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
@@ -106,9 +116,12 @@ export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPositi
           setMapData(newMapData);
 
           setPlayerPosition(newPosition);
+
         }
         // console.log('After update:', newMapData, boxPositions);
+
       }
+
     }
   }, [mapData, playerPosition, setPlayerDirection, indicatorPositions, setMapData, setPlayerPosition, setBoxPositions, boxPositions]);
 
