@@ -7,48 +7,33 @@ import { Music } from "./components/Music";
 import { Settings } from "./pages/Settings";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
+import { MapRender } from "./components/mapRender";
+import map8 from "./maps/map8.json"; //import the map data
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
 function App() {
-	const [currentPage, setCurrentPage] = useState("start");
-	const [settings, toggleSettings] = useState(false);
+  const [currentPage, setCurrentPage] = useState("start");
+  const [settings, toggleSettings] = useState(false);
 
-	function handleToggleSettings() {
-		if (settings) {
-			toggleSettings(false);
-		} else {
-			toggleSettings(true);
-		}
-	}
+  function handleToggleSettings() {
+    if (settings) {
+      toggleSettings(false);
+    } else {
+      toggleSettings(true);
+    }
+  }
 
-	const handlePageChange = (page: Page) => {
-		setCurrentPage(page);
-	};
+  const handlePageChange = (page: Page) => {
+    setCurrentPage(page);
+  };
 
-	return (
-		<>
-			<button id="btn-settings" className="button" onClick={handleToggleSettings}></button>
-			{settings && <Settings />}
-
-			<button id="btn-fullscreen" className="button"></button>
-
-			{/* Music Player */}
-			<Music audio={musicSong} />
-
-			{/* StartPage UI */}
-			{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
-
-			{/* Select Level */}
-			{currentPage === "selectlevel" && <SelectLevel onPageChange={handlePageChange} />}
-
-			{/* Credits */}
-			{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
-
-			{/* Play */}
-			{currentPage === "play" && <Play onPageChange={handlePageChange} />}
-		</>
-	);
+  return (
+    <>
+      <MapRender initialMapData={map8.mapdata} /> //place in the app component
+      to render the map
+    </>
+  );
 }
 
 export default App;
