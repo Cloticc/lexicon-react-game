@@ -1,109 +1,129 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 interface MoveCharProps {
-  initialMapData: string[][];
+  mapData: string[][];
   setMapData: (mapData: string[][]) => void;
   setPlayerDirection: (direction: string) => void;
+  playerPosition: { x: number, y: number };
+  setPlayerPosition: (position: { x: number, y: number }) => void;
+  indicatorPositions: { x: number, y: number }[];
+  setIndicatorPositions: (positions: { x: number, y: number }[]) => void;
+  boxPositions: { x: number, y: number }[];
+  setBoxPositions: (positions: { x: number, y: number }[]) => void;
 }
+type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
+const directionMap: Record<Direction, { x: number, y: number }> = {
+  UP: { x: 0, y: -1 },
+  DOWN: { x: 0, y: 1 },
+  LEFT: { x: -1, y: 0 },
+  RIGHT: { x: 1, y: 0 },
+};
+/**
+ * The function `MoveChar` handles the movement of a character on a map grid, including interactions
+ * with boxes and indicators.
+ * @param {MoveCharProps}  - The `MoveChar` function takes in several props as parameters:
+ */
 
-export function MoveChar({ initialMapData, setMapData, setPlayerDirection }: MoveCharProps) {
-
-  // This is for finding the initial position of the player ('P') on the game map. 
-  let playerStartPosition = { x: 5, y: 5 };
-  for (let y = 0; y < initialMapData.length; y++) {
-    const x = initialMapData[y].indexOf('P');
-    if (x !== -1) {
-      playerStartPosition = { x, y };
-      break;
-    }
-  }
-  const [playerPosition, setPlayerPosition] = useState(playerStartPosition);
-
-
+export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, boxPositions, setBoxPositions }: MoveCharProps) {
   const handlePlayerMove = useCallback((direction: string) => {
-    // Copy the current player's position
-    const newPosition = { ...playerPosition };
     setPlayerDirection(direction.toLowerCase());
+    // console.log(mapData);
+    // console.log(boxPositions);
 
-    // Update player's position based on the chosen direction
-    if (direction === "UP") {
-      newPosition.y -= 1;
-    } else if (direction === "DOWN") {
-      newPosition.y += 1;
-    } else if (direction === "LEFT") {
-      newPosition.x -= 1;
-    } else if (direction === "RIGHT") {
-      newPosition.x += 1;
-    }
-    // Check if the new position is within the game boundaries
+
+    /* The commented code block you provided is calculating the new position that the player would move to
+    based on the current player position and the direction of movement. It uses the `directionMap`
+    object to determine the change in x and y coordinates based on the specified direction (UP, DOWN,
+    LEFT, RIGHT). */
+    // 
+    const newPosition = {
+      x: playerPosition.x + directionMap[direction as Direction].x,
+      y: playerPosition.y + directionMap[direction as Direction].y
+    };
+
+
     if (
+      mapData.length > 0 &&
+      mapData[0] &&
       newPosition.x >= 0 &&
-      newPosition.x < initialMapData[0].length &&
+      newPosition.x < mapData[0].length &&
       newPosition.y >= 0 &&
-      newPosition.y < initialMapData.length
+      newPosition.y < mapData.length
     ) {
-      // Create a copy of the current game map
-      const newMapData = initialMapData.map((row: string[]) => [...row]);
+      const newMapData = mapData.map((row: string[]) => [...row]);
 
-      // Check if the new position is a box ('B')
-      if (newMapData[newPosition.y][newPosition.x] === "B") {
-        // Calculate the position of the cell beyond the box
-        const beyondBoxPosition = { x: newPosition.x, y: newPosition.y };
-        if (direction === "UP") {
-          beyondBoxPosition.y -= 1;
-        } else if (direction === "DOWN") {
-          beyondBoxPosition.y += 1;
-        } else if (direction === "LEFT") {
-          beyondBoxPosition.x -= 1;
-        } else if (direction === "RIGHT") {
-          beyondBoxPosition.x += 1;
-        }
+      if (newMapData[newPosition.y][newPosition.x] !== "#") {
+        const boxIndex = boxPositions.findIndex(pos => pos.x === newPosition.x && pos.y === newPosition.y);
+        // console.log('Before update:', newMapData, boxPositions);
 
+        /*
+        This will check what's beyond the box and see if you can move it there.
+        */
+        if (boxIndex !== -1) {
+          const beyondBoxPosition = {
+            x: newPosition.x + directionMap[direction as Direction].x,
+            y: newPosition.y + directionMap[direction as Direction].y
+          };
 
-        // Check if the cell beyond the box is within the game boundaries and is empty or a box indicator ('I')
-        if (
-          beyondBoxPosition.x >= 0 &&
-          beyondBoxPosition.x < newMapData[0].length &&
-          beyondBoxPosition.y >= 0 &&
-          beyondBoxPosition.y < newMapData.length &&
-          (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
-            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
-        ) {
-          // Move the box to the cell beyond the box
-          newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-          // Move the player to the box's original position
+          if (
+            beyondBoxPosition.x >= 0 &&
+            beyondBoxPosition.x < newMapData[0].length &&
+            beyondBoxPosition.y >= 0 &&
+            beyondBoxPosition.y < newMapData.length &&
+            (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
+              newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+          ) {
+            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+            /* This code block is checking if the position of a box (identified by
+            `boxPositions[boxIndex]`) matches any of the positions in the `indicatorPositions` array. */
+            if (indicatorPositions.some(pos => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)) {
+              newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = 'I';
+            } else {
+              newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = ',';
+            }
+
+            if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
+              newMapData[playerPosition.y][playerPosition.x] = 'I';
+            } else {
+              newMapData[playerPosition.y][playerPosition.x] = ',';
+            }
+            newMapData[newPosition.y][newPosition.x] = "P";
+
+            setMapData(newMapData);
+
+            const newBoxPositions = [...boxPositions];
+            newBoxPositions[boxIndex] = beyondBoxPosition;
+            setBoxPositions(newBoxPositions);
+
+            setPlayerPosition(newPosition);
+      
+            // const win = newBoxPositions.every(boxPos =>
+            //   indicatorPositions.some(indicatorPos => indicatorPos.x === boxPos.x && indicatorPos.y === boxPos.y)
+            // );
+
+            // if (win) {
+            //   console.log('You win!');
+            // }
+          }
+        } else {
+          if (indicatorPositions.some(pos => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
+            newMapData[playerPosition.y][playerPosition.x] = 'I';
+          } else {
+            newMapData[playerPosition.y][playerPosition.x] = ',';
+          }
           newMapData[newPosition.y][newPosition.x] = "P";
-          // Clear the player's previous position
-          newMapData[playerPosition.y][playerPosition.x] = ",";
-
-          // Update the game map
           setMapData(newMapData);
-          // Update the player's position
+
           setPlayerPosition(newPosition);
+
         }
-
-
-        // console.log(`Box position: ${newPosition.x}, ${newPosition.y}`);
+        // console.log('After update:', newMapData, boxPositions);
 
       }
-      // Check if the new position is not a wall ('#')
-      else if (newMapData[newPosition.y][newPosition.x] !== "#") {
-        // Clear the previous player's position
-        newMapData[playerPosition.y][playerPosition.x] = ",";
-        // Set the new player's position
-        newMapData[newPosition.y][newPosition.x] = "P";
 
-        // Update the player's position
-        setPlayerPosition(newPosition);
-      }
-
-      // Update the game map
-      setMapData(newMapData);
     }
-    setPlayerDirection(direction.toLowerCase());
-  }, [playerPosition, initialMapData, setMapData, setPlayerDirection]);
-
+  }, [mapData, playerPosition, setPlayerDirection, indicatorPositions, setMapData, setPlayerPosition, setBoxPositions, boxPositions]);
 
 
   //check if the player is pressing the arrow keys and move the player accordingly
