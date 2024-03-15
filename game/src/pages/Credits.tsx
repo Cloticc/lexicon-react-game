@@ -1,9 +1,16 @@
 import { SelectPageProps } from "./../components/InterfacePages";
+import { playSound } from "./../components/playSound";
 
 export function Credits({ onPageChange }: SelectPageProps) {
 	const handleBackClick = () => {
 		onPageChange("selectlevel");
+		playSound("click", 0.25);
+		playSound("swoosh", 0.15);
 	};
+
+	function handleMouseOver() {
+		playSound("hover", 0.15);
+	}
 
 	return (
 		<>
@@ -33,7 +40,12 @@ export function Credits({ onPageChange }: SelectPageProps) {
 					</div>
 
 					<div id="menubuttons">
-						<div id="btn-levels" className="button" onClick={handleBackClick}></div>
+						<div
+							id="btn-levels"
+							className="button"
+							onClick={handleBackClick}
+							onMouseOver={handleMouseOver}
+						></div>
 					</div>
 				</div>
 				<div id="retrogrid"></div>
