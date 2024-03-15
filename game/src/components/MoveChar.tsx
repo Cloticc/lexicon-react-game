@@ -19,11 +19,6 @@ const directionMap: Record<Direction, { x: number; y: number }> = {
   LEFT: { x: -1, y: 0 },
   RIGHT: { x: 1, y: 0 },
 };
-/**
- * The function `MoveChar` handles the movement of a character on a map grid, including interactions
- * with boxes and indicators.
- * @param {MoveCharProps}  - The `MoveChar` function takes in several props as parameters:
- */
 
 export function MoveChar({
   mapData,
@@ -35,18 +30,6 @@ export function MoveChar({
   boxPositions,
   setBoxPositions,
 }: MoveCharProps) {
-  const handlePlayerMove = useCallback(
-    (direction: string) => {
-      setPlayerDirection(direction.toLowerCase());
-      // console.log(mapData);
-      // console.log(boxPositions);
-
-      /* The commented code block you provided is calculating the new position that the player would move to
-    based on the current player position and the direction of movement. It uses the `directionMap`
-    object to determine the change in x and y coordinates based on the specified direction (UP, DOWN,
-    LEFT, RIGHT). */
-      //
-  /////////////////////////////////////////////////////////////////////
   const [gameWon, setGameWon] = useState(false);
   const [counter, setCounter] = useState(0);
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -78,21 +61,16 @@ export function MoveChar({
   const startGame = useCallback(() => {
     setStartTime(new Date());
     setGameRunning(true);
-  }, [startTime]);
+  }, []);
 
   const stopGame = useCallback(() => {
     setStartTime(null);
     setGameRunning(false);
-  }, [startTime]);
-  /////////////////////////////////////////////////////////////////////
+  }, []);
 
   const handlePlayerMove = useCallback(
     (direction: string) => {
       setPlayerDirection(direction.toLowerCase());
-
-      // console.log(mapData);
-
-      // console.log(boxPositions);
 
       const newPosition = {
         x: playerPosition.x + directionMap[direction as Direction].x,
@@ -113,11 +91,7 @@ export function MoveChar({
           const boxIndex = boxPositions.findIndex(
             (pos) => pos.x === newPosition.x && pos.y === newPosition.y
           );
-          // console.log('Before update:', newMapData, boxPositions);
 
-          /*
-        This will check what's beyond the box and see if you can move it there.
-        */
           if (boxIndex !== -1) {
             const beyondBoxPosition = {
               x: newPosition.x + directionMap[direction as Direction].x,
@@ -133,8 +107,6 @@ export function MoveChar({
                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
             ) {
               newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-              /* This code block is checking if the position of a box (identified by
-            `boxPositions[boxIndex]`) matches any of the positions in the `indicatorPositions` array. */
 
               if (
                 indicatorPositions.some(
@@ -162,9 +134,7 @@ export function MoveChar({
               }
               newMapData[newPosition.y][newPosition.x] = "P";
 
-              /////////////////////////////////////////////////////////////////////
               setCounter((prevCounter) => prevCounter + 1);
-              /////////////////////////////////////////////////////////////////////
               setMapData(newMapData);
 
               const newBoxPositions = [...boxPositions];
@@ -172,14 +142,6 @@ export function MoveChar({
               setBoxPositions(newBoxPositions);
 
               setPlayerPosition(newPosition);
-
-              // const win = newBoxPositions.every(boxPos =>
-              //   indicatorPositions.some(indicatorPos => indicatorPos.x === boxPos.x && indicatorPos.y === boxPos.y)
-              // );
-
-              // if (win) {
-              //   console.log('You win!');
-              // }
             }
           } else {
             if (
@@ -193,19 +155,15 @@ export function MoveChar({
               newMapData[playerPosition.y][playerPosition.x] = ",";
             }
             newMapData[newPosition.y][newPosition.x] = "P";
-            /////////////////////////////////////////////////////////////////////
             setCounter((prevCounter) => prevCounter + 1);
-            /////////////////////////////////////////////////////////////////////
             setMapData(newMapData);
 
             setPlayerPosition(newPosition);
           }
-          /////////////////////////////////////////////////////////////////////
+
           if (!gameRunning && counter === 1) {
             startGame(); // Start the game when the first move is made
           }
-          /////////////////////////////////////////////////////////////////////
-          // console.log('After update:', newMapData, boxPositions);
         }
       }
     },
@@ -218,10 +176,12 @@ export function MoveChar({
       setPlayerPosition,
       setBoxPositions,
       boxPositions,
+      gameRunning,
+      counter,
+      startGame,
     ]
   );
 
-  //check if the player is pressing the arrow keys and move the player accordingly
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       switch (event.key.toUpperCase()) {
@@ -252,7 +212,54 @@ export function MoveChar({
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [handlePlayerMove]);
-  /////////////////////////////////////////////////////////////////////
+
+  useEffect(() => {
+    let startTouchX: number | null = null;
+    let startTouchY: number | null = null;
+    const threshold = 10; // Threshold value for touch movement
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      startTouchX = touch.clientX;
+      startTouchY = touch.clientY;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
+
+      const touch = event.touches[0];
+      const distX = touch.clientX - startTouchX;
+      const distY = touch.clientY - startTouchY;
+
+      // Check if the touch movement exceeds the threshold
+      if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
+
+      let direction: Direction | null = null;
+
+      // Determine the swipe direction
+      if (Math.abs(distX) > Math.abs(distY)) {
+        direction = distX > 0 ? 'RIGHT' : 'LEFT';
+      } else {
+        direction = distY > 0 ? 'DOWN' : 'UP';
+      }
+
+      if (direction) {
+        handlePlayerMove(direction);
+        // Reset the initial touch position after each successful move
+        startTouchX = touch.clientX;
+        startTouchY = touch.clientY;
+      }
+    };
+
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchmove', handleTouchMove);
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [handlePlayerMove]);
+
   useEffect(() => {
     let allIndicatorsCovered = true;
 
@@ -267,58 +274,6 @@ export function MoveChar({
       }
     }
 
-
-  
-    useEffect(() => {
-      let startTouchX: number | null = null;
-      let startTouchY: number | null = null;
-      const threshold = 10; // Threshold value for touch movement
-    
-      const handleTouchStart = (event: TouchEvent) => {
-        const touch = event.touches[0];
-        startTouchX = touch.clientX;
-        startTouchY = touch.clientY;
-      };
-    
-      const handleTouchMove = (event: TouchEvent) => {
-        if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
-    
-        const touch = event.touches[0];
-        const distX = touch.clientX - startTouchX;
-        const distY = touch.clientY - startTouchY;
-    
-        // Check if the touch movement exceeds the threshold
-        if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
-    
-        let direction: Direction | null = null;
-    
-        // Determine the swipe direction
-        if (Math.abs(distX) > Math.abs(distY)) {
-          direction = distX > 0 ? 'RIGHT' : 'LEFT';
-        } else {
-          direction = distY > 0 ? 'DOWN' : 'UP';
-        }
-    
-        if (direction) {
-          handlePlayerMove(direction);
-          // Reset the initial touch position after each successful move
-          startTouchX = touch.clientX;
-          startTouchY = touch.clientY;
-        }
-      };
-    
-      window.addEventListener('touchstart', handleTouchStart);
-      window.addEventListener('touchmove', handleTouchMove);
-    
-      return () => {
-        window.removeEventListener('touchstart', handleTouchStart);
-        window.removeEventListener('touchmove', handleTouchMove);
-      };
-    }, [handlePlayerMove]);
-    
-
-
-   // No need to render anything
     // If all indicators are covered, declare victory
     if (allIndicatorsCovered) {
       setGameWon(true);
@@ -340,7 +295,7 @@ export function MoveChar({
       }
     }
   }, [mapData, gameWon, counter, elapsedTime, currentLevel, highestScores]);
-  /////////////////////////////////////////////////////////////////////
+
   return (
     <>
       {gameWon && (
@@ -356,5 +311,4 @@ export function MoveChar({
       </div>
     </>
   );
-  
 }
