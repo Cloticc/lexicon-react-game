@@ -1,7 +1,7 @@
 import "../css/MapRender.css";
 
 import { MoveChar } from "./MoveChar";
-import { useState } from 'react';
+import { useState } from "react";
 
 //Check if array is an array of arrays
 interface MapRenderProps {
@@ -98,16 +98,15 @@ export function MapRender({ initialMapData }: MapRenderProps) {
       {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
       <MoveChar
         mapData={mapData}
-        playerPosition={playerPosition}
-        setPlayerPosition={setPlayerPosition}
-        playerDirection={playerDirection}
+        setMapData={setMapData}
         setPlayerDirection={setPlayerDirection}
-        boxPositions={boxPositions}
-        setBoxPositions={setBoxPositions}
         indicatorPositions={indicatorPositions}
         setIndicatorPositions={setIndicatorPositions}
+        boxPositions={boxPositions}
+        setBoxPositions={setBoxPositions}
+        playerPosition={playerPosition}
+        setPlayerPosition={setPlayerPosition}
       />
-
 
       {mapData.map((row, rowIndex) => (
         <div key={rowIndex} className="grid-row">
@@ -131,10 +130,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                   )}
               </div>
             );
-          }
-          )}
+          })}
         </div>
       ))}
+
     </div>
   );
 }
