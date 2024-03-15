@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
-import map1 from '../maps/map1.json';
+import map1 from "../maps/map1.json";
 
 export function Play({ onPageChange }: SelectPageProps) {
 	const [gameFinish, setFinish] = useState(false);
@@ -14,13 +14,14 @@ export function Play({ onPageChange }: SelectPageProps) {
 		onPageChange("selectlevel");
 	};
 
+	/*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
 		setTimeout(() => {
 			setFinish(true);
 		}, 3000);
 	});
-
+*/
 	return (
 		<>
 			<div id="startpageui">
@@ -37,7 +38,7 @@ export function Play({ onPageChange }: SelectPageProps) {
 					onClick={handleSelectLevelClick}
 				></button>
 
- <MapRender initialMapData={map1.mapdata} />
+				<MapRender initialMapData={map1.mapdata} />
 				{gameFinish && <Highscore />}
 				<div id="retrogrid"></div>
 				<div id="copyright">© 2024 Studio5</div>
