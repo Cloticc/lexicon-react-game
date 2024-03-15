@@ -24,13 +24,16 @@ body,
 }
 
 .grid-container {
-  width: 70%;
-  min-width: 320px;
-  max-height: 90vh;
-  outline: 4px solid black;
-  display: grid;
-  grid-template-rows: repeat(10, 1fr);
-  max-width: 800px;
+	width: 70%;
+	min-width: 320px;
+	max-height: 90vh;
+	outline: none;
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
+	max-width: 800px;
+	filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+		drop-shadow(0 2rem 3rem black);
 }
 
 .grid-row {
@@ -42,15 +45,16 @@ body,
 
 .grid-item {
   aspect-ratio: 1/1;
-  border: 1px solid rgb(189, 189, 189);
+  border: none;
   border-top: none;
 }
 
 .wall {
-  background-image: url("../assets/sokoban_vector.svg");
-  background-position: 50% 99.75%;
-  background-repeat: no-repeat;
-  background-size: 1590%;
+	background-color: gray;
+	background-image: url("../assets/sokoban_vector.svg");
+	background-position: 50% 99.75%;
+	background-repeat: no-repeat;
+	background-size: 1550%;
 }
 
 .ground,
@@ -70,31 +74,47 @@ body,
 }
 
 .box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/sokoban_vector.svg");
-  background-position: 91% 85%;
-  background-repeat: no-repeat;
-  background-size: 1660%;
-  z-index: 6;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("../assets/sokoban_vector.svg");
+	background-position: 91% 85%;
+	background-repeat: no-repeat;
+	background-size: 1660%;
+	z-index: 8;
 }
 
 .box::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/sokoban_vector.svg");
-  background-position: 50% 0%;
-  background-repeat: no-repeat;
-  background-size: 1490%;
-  z-index: 7;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("../assets/sokoban_vector.svg");
+	background-position: 50% 0%;
+	background-repeat: no-repeat;
+	background-size: 1490%;
+	z-index: 9;
+}
+
+
+.box-on-indicator {
+	overflow: hidden;
+	filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow);
+	animation: boxonindicator 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes boxonindicator {
+	0% {
+		filter: brightness(0.5) drop-shadow(0 0 0.1rem white);
+	}
+	100% {
+		filter: brightness(0.6) drop-shadow(0 0 0.5rem white);
+	}
 }
 
 .player {
@@ -278,16 +298,16 @@ body,
 
 .boxindicator-container::before {
   content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/sokoban_vector.svg");
-  background-position: 91% 85%;
-  background-repeat: no-repeat;
-  background-size: 1660%;
-  z-index: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url("../assets/sokoban_vector.svg");
+	background-position: 91% 85%;
+	background-repeat: no-repeat;
+	background-size: 1660%;
+	z-index: 1;
 }
 
 .boxindicator {
@@ -319,20 +339,20 @@ body,
 }
 
 .boxindicator::after {
-  background-position: -0.15% 28.5%;
-  background-size: 1430%;
-  animation: opacitydrop 0.5s ease infinite alternate;
-  z-index: 1;
+	background-position: -0.15% 28.5%;
+	background-size: 1430%;
+	animation: opacitydrop 0.5s ease infinite alternate;
+	z-index: 1;
 }
 
 @keyframes opacitydrop {
-  0% {
-    opacity: 1;
-  }
+	0% {
+		opacity: 1;
+	}
 
-  100% {
-    opacity: 0.6;
-  }
+	100% {
+		opacity: 0.6;
+	}
 }
 
 .level10 .wall {
