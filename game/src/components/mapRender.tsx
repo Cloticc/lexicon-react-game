@@ -1,6 +1,7 @@
 import '../css/MapRender.css';
 
 import { MoveChar } from './MoveChar';
+import { ResetButton } from './ResetButton';
 import { useState } from 'react';
 
 //Check if array is an array of arrays
@@ -113,6 +114,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     })}
   </div>
 ))}
+
     </div>
   );
 }
