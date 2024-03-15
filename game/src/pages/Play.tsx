@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
+import { playSound } from "./../components/playSound";
 import map1 from "../maps/map1.json";
 
 export function Play({ onPageChange }: SelectPageProps) {
@@ -12,8 +13,13 @@ export function Play({ onPageChange }: SelectPageProps) {
 
 	const handleSelectLevelClick = () => {
 		onPageChange("selectlevel");
+		playSound("click", 0.25);
+		playSound("swoosh", 0.15);
 	};
 
+	function handleMouseOver() {
+		playSound("hover", 0.15);
+	}
 	/*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
@@ -35,6 +41,7 @@ export function Play({ onPageChange }: SelectPageProps) {
 				<button
 					id="btn-selectlevel"
 					className="button"
+					onMouseOver={handleMouseOver}
 					onClick={handleSelectLevelClick}
 				></button>
 

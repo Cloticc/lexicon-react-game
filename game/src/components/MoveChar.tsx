@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface MoveCharProps {
   mapData: string[][];
@@ -46,6 +46,54 @@ export function MoveChar({
     object to determine the change in x and y coordinates based on the specified direction (UP, DOWN,
     LEFT, RIGHT). */
       //
+  /////////////////////////////////////////////////////////////////////
+  const [gameWon, setGameWon] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [gameRunning, setGameRunning] = useState<boolean>(false);
+  const [highestScores, setHighestScores] = useState<{
+    [level: string]: { score: number; elapsedTime: number };
+  }>({});
+  const [currentLevel, setCurrentLevel] = useState<string>("1");
+
+  useEffect(() => {
+    const storedScores = localStorage.getItem("highestScores");
+    if (storedScores) {
+      setHighestScores(JSON.parse(storedScores));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (startTime && gameRunning) {
+      const intervalId = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
+        setElapsedTime(elapsed);
+      }, 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [startTime, gameRunning]);
+
+  const startGame = useCallback(() => {
+    setStartTime(new Date());
+    setGameRunning(true);
+  }, [startTime]);
+
+  const stopGame = useCallback(() => {
+    setStartTime(null);
+    setGameRunning(false);
+  }, [startTime]);
+  /////////////////////////////////////////////////////////////////////
+
+  const handlePlayerMove = useCallback(
+    (direction: string) => {
+      setPlayerDirection(direction.toLowerCase());
+
+      // console.log(mapData);
+
+      // console.log(boxPositions);
+
       const newPosition = {
         x: playerPosition.x + directionMap[direction as Direction].x,
         y: playerPosition.y + directionMap[direction as Direction].y,
@@ -87,6 +135,7 @@ export function MoveChar({
               newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
               /* This code block is checking if the position of a box (identified by
             `boxPositions[boxIndex]`) matches any of the positions in the `indicatorPositions` array. */
+
               if (
                 indicatorPositions.some(
                   (pos) =>
@@ -113,6 +162,9 @@ export function MoveChar({
               }
               newMapData[newPosition.y][newPosition.x] = "P";
 
+              /////////////////////////////////////////////////////////////////////
+              setCounter((prevCounter) => prevCounter + 1);
+              /////////////////////////////////////////////////////////////////////
               setMapData(newMapData);
 
               const newBoxPositions = [...boxPositions];
@@ -141,10 +193,18 @@ export function MoveChar({
               newMapData[playerPosition.y][playerPosition.x] = ",";
             }
             newMapData[newPosition.y][newPosition.x] = "P";
+            /////////////////////////////////////////////////////////////////////
+            setCounter((prevCounter) => prevCounter + 1);
+            /////////////////////////////////////////////////////////////////////
             setMapData(newMapData);
 
             setPlayerPosition(newPosition);
           }
+          /////////////////////////////////////////////////////////////////////
+          if (!gameRunning && counter === 1) {
+            startGame(); // Start the game when the first move is made
+          }
+          /////////////////////////////////////////////////////////////////////
           // console.log('After update:', newMapData, boxPositions);
         }
       }
@@ -192,57 +252,109 @@ export function MoveChar({
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [handlePlayerMove]);
-
+  /////////////////////////////////////////////////////////////////////
   useEffect(() => {
-    let startTouchX: number | null = null;
-    let startTouchY: number | null = null;
-    const threshold = 10; // Threshold value for touch movement
-  
-    const handleTouchStart = (event: TouchEvent) => {
-      const touch = event.touches[0];
-      startTouchX = touch.clientX;
-      startTouchY = touch.clientY;
-    };
-  
-    const handleTouchMove = (event: TouchEvent) => {
-      if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
-  
-      const touch = event.touches[0];
-      const distX = touch.clientX - startTouchX;
-      const distY = touch.clientY - startTouchY;
-  
-      // Check if the touch movement exceeds the threshold
-      if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
-  
-      let direction: Direction | null = null;
-  
-      // Determine the swipe direction
-      if (Math.abs(distX) > Math.abs(distY)) {
-        direction = distX > 0 ? 'RIGHT' : 'LEFT';
-      } else {
-        direction = distY > 0 ? 'DOWN' : 'UP';
+    let allIndicatorsCovered = true;
+
+    // Iterate through all indicator positions
+    for (const position of indicatorPositions) {
+      const { x, y } = position;
+
+      // Check if the cell indicated by the position is not a box
+      if (mapData[y][x] !== "B") {
+        allIndicatorsCovered = false;
+        break; // If any indicator position is not covered, break the loop
       }
+    }
+
+
   
-      if (direction) {
-        handlePlayerMove(direction);
-        // Reset the initial touch position after each successful move
+    useEffect(() => {
+      let startTouchX: number | null = null;
+      let startTouchY: number | null = null;
+      const threshold = 10; // Threshold value for touch movement
+    
+      const handleTouchStart = (event: TouchEvent) => {
+        const touch = event.touches[0];
         startTouchX = touch.clientX;
         startTouchY = touch.clientY;
+      };
+    
+      const handleTouchMove = (event: TouchEvent) => {
+        if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
+    
+        const touch = event.touches[0];
+        const distX = touch.clientX - startTouchX;
+        const distY = touch.clientY - startTouchY;
+    
+        // Check if the touch movement exceeds the threshold
+        if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
+    
+        let direction: Direction | null = null;
+    
+        // Determine the swipe direction
+        if (Math.abs(distX) > Math.abs(distY)) {
+          direction = distX > 0 ? 'RIGHT' : 'LEFT';
+        } else {
+          direction = distY > 0 ? 'DOWN' : 'UP';
+        }
+    
+        if (direction) {
+          handlePlayerMove(direction);
+          // Reset the initial touch position after each successful move
+          startTouchX = touch.clientX;
+          startTouchY = touch.clientY;
+        }
+      };
+    
+      window.addEventListener('touchstart', handleTouchStart);
+      window.addEventListener('touchmove', handleTouchMove);
+    
+      return () => {
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+      };
+    }, [handlePlayerMove]);
+    
+
+
+   // No need to render anything
+    // If all indicators are covered, declare victory
+    if (allIndicatorsCovered) {
+      setGameWon(true);
+      stopGame();
+      const levelData = highestScores[currentLevel] || {
+        score: Infinity,
+        elapsedTime: 0,
+      };
+      if (
+        counter < levelData.score ||
+        (counter === levelData.score && elapsedTime < levelData.elapsedTime)
+      ) {
+        const updatedScores = {
+          ...highestScores,
+          [currentLevel]: { score: counter, elapsedTime },
+        };
+        setHighestScores(updatedScores);
+        localStorage.setItem("highestScores", JSON.stringify(updatedScores));
       }
-    };
+    }
+  }, [mapData, gameWon, counter, elapsedTime, currentLevel, highestScores]);
+  /////////////////////////////////////////////////////////////////////
+  return (
+    <>
+      {gameWon && (
+        <div className="victory-alert">
+          <h1>Congratulations! You've won the game!</h1>
+        </div>
+      )}
+      <div>
+        <h2>Counter: {counter}</h2>
+        <p>
+          Elapsed Time: {startTime && gameRunning ? `${elapsedTime}s` : "0s"}
+        </p>
+      </div>
+    </>
+  );
   
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove);
-  
-    return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [handlePlayerMove]);
-  
-  
-
-
-
-  return null; // No need to render anything
 }

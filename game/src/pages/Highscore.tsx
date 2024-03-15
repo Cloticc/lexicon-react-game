@@ -1,4 +1,16 @@
+import { playSound } from "./../components/playSound";
+
 export function Highscore() {
+	function handleMouseOver() {
+		playSound("hover", 0.15);
+	}
+
+	function handleReplay() {
+		playSound("click", 0.25);
+	}
+	function handleNextLevel() {
+		playSound("click", 0.25);
+	}
 	return (
 		<>
 			<div id="highscore">
@@ -24,8 +36,18 @@ export function Highscore() {
 					</div>
 				</div>
 				<div className="content-container">
-					<button id="btn-replay-again" className="button"></button>
-					<button id="btn-nextlevel" className="button"></button>
+					<button
+						id="btn-replay-again"
+						className="button"
+						onClick={handleReplay}
+						onMouseOver={handleMouseOver}
+					></button>
+					<button
+						id="btn-nextlevel"
+						className="button"
+						onClick={handleNextLevel}
+						onMouseOver={handleMouseOver}
+					></button>
 				</div>
 			</div>
 		</>
