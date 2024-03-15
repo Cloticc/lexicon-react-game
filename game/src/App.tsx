@@ -8,14 +8,13 @@ import { Music } from "./components/Music";
 import { playSound } from "./components/playSound";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
+import "./css/MediaQueries.css";
 
 import { LevelDisplay } from "./components/LevelDisplay";
-
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
 function App() {
-
 	const [currentPage, setCurrentPage] = useState("start");
 	const [settings, toggleSettings] = useState(false);
 
@@ -76,7 +75,6 @@ function App() {
 			{currentPage === "play" && <Play onPageChange={handlePageChange} />}
 		</>
 	);
-
 }
 
 export default App;
