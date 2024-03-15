@@ -9,6 +9,7 @@ import { playSound } from "./components/playSound";
 import { FullscreenToggle } from "./components/fullscrenToggle";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
+import "./css/MediaQueries.css";
 
 import { LevelDisplay } from "./components/LevelDisplay";
 

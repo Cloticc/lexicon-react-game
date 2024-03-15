@@ -20,7 +20,6 @@ export function Play({ onPageChange }: SelectPageProps) {
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
-
 	/*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
