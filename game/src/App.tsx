@@ -8,6 +8,7 @@ import { Music } from "./components/Music";
 import { playSound } from "./components/playSound";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
+import { LevelDisplay } from "./components/LevelDisplay";
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
@@ -49,6 +50,7 @@ function App() {
 			></button>
 			{settings && <Settings />}
 
+
 			<button
 				id="btn-fullscreen"
 				className="button"
@@ -56,20 +58,22 @@ function App() {
 				onMouseOver={handleMouseOver}
 			></button>
 
+			{/* <LevelDisplay/> */}
+
 			{/* Music Player */}
-			<Music audio={musicSong} />
+			{/* <Music audio={musicSong} /> */}
 
 			{/* StartPage UI */}
-			{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
+			{/* {currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />} */}
 
 			{/* Select Level */}
-			{currentPage === "selectlevel" && <SelectLevel onPageChange={handlePageChange} />}
+			{/* {currentPage === "selectlevel" && <SelectLevel onPageChange={handlePageChange} />} */}
 
 			{/* Credits */}
-			{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
+			{/* {currentPage === "credits" && <Credits onPageChange={handlePageChange} />} */}
 
 			{/* Play */}
-			{currentPage === "play" && <Play onPageChange={handlePageChange} />}
+			{/* {currentPage === "play" && <Play onPageChange={handlePageChange} />} */}
 		</>
 	);
 }
