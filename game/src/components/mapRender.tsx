@@ -1,7 +1,7 @@
-import '../css/MapRender.css';
+import "../css/MapRender.css";
 
-import { MoveChar } from './MoveChar';
-import { useState } from 'react';
+import { MoveChar } from "./MoveChar";
+import { useState } from "react";
 
 //Check if array is an array of arrays
 interface MapRenderProps {
@@ -9,24 +9,20 @@ interface MapRenderProps {
 }
 // example to add the map to the game add the following line to the App.tsx file
 // import map1 from './maps/map1.json';
-{/* <MapRender initialMapData={map1.mapdata} /> */ }
-
-
-
+{
+  /* <MapRender initialMapData={map1.mapdata} /> */
+}
 
 export function MapRender({ initialMapData }: MapRenderProps) {
   const [mapData, setMapData] = useState(initialMapData);
-  const [playerDirection, setPlayerDirection] = useState('down');
+  const [playerDirection, setPlayerDirection] = useState("down");
   // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
-
-
-
 
   /* This code snippet is finding the initial position of the player ('P') on the map by iterating
   through the `initialMapData` array. */
   let playerStartPosition = { x: 5, y: 6 };
   for (let y = 0; y < initialMapData.length; y++) {
-    const x = initialMapData[y].indexOf('P');
+    const x = initialMapData[y].indexOf("P");
     if (x !== -1) {
       playerStartPosition = { x, y };
       break;
@@ -43,13 +39,15 @@ export function MapRender({ initialMapData }: MapRenderProps) {
   const indicatorStartPositions = []; // Array of positions
   for (let y = 0; y < initialMapData.length; y++) {
     for (let x = 0; x < initialMapData[y].length; x++) {
-      if (initialMapData[y][x] === 'I') {
+      if (initialMapData[y][x] === "I") {
         indicatorStartPositions.push({ x, y });
       }
     }
   }
 
-  const [indicatorPositions, setIndicatorPositions] = useState(indicatorStartPositions);
+  const [indicatorPositions, setIndicatorPositions] = useState(
+    indicatorStartPositions
+  );
 
   /* This code snippet is initializing an empty array called `boxStartPositions` and then looping through
   the `initialMapData` array to find positions where the symbol 'B' (representing a box) is located.
@@ -60,7 +58,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
   const boxStartPositions = []; // Array of positions
   for (let y = 0; y < initialMapData.length; y++) {
     for (let x = 0; x < initialMapData[y].length; x++) {
-      if (initialMapData[y][x] === 'B') {
+      if (initialMapData[y][x] === "B") {
         boxStartPositions.push({ x, y });
       }
     }
@@ -69,19 +67,29 @@ export function MapRender({ initialMapData }: MapRenderProps) {
   const [boxPositions, setBoxPositions] = useState(boxStartPositions);
   // console.log(boxPositions , "boxPositions");
 
-
   //will be used to get the class name for each symbol in the map
   const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
-    const isIndicator = indicatorPositions.some(pos => pos.x === x && pos.y === y);
-    const isBox = boxPositions.some(pos => pos.x === x && pos.y === y);
+    const isIndicator = indicatorPositions.some(
+      (pos) => pos.x === x && pos.y === y
+    );
+    const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
     switch (symbol) {
-      case '-': return 'empty';
-      case 'P': return isIndicator ? 'boxindicator' : `ground player-${playerDirection} playerwalk${playerDirection}`;
-      case 'B': return isIndicator && isBox ? 'box box-on-indicator' : 'box';
-      case ',': return 'ground';
-      case 'I': return 'boxindicator';
-      case '#': return 'wall';
-      default: return '';
+      case "-":
+        return "empty";
+      case "P":
+        return isIndicator
+          ? "boxindicator"
+          : `ground player-${playerDirection} playerwalk${playerDirection}`;
+      case "B":
+        return isIndicator && isBox ? "box box-on-indicator" : "box";
+      case ",":
+        return "ground";
+      case "I":
+        return "boxindicator";
+      case "#":
+        return "wall";
+      default:
+        return "";
     }
   };
 
@@ -99,20 +107,33 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         playerPosition={playerPosition}
         setPlayerPosition={setPlayerPosition}
       />
- {mapData.map((row, rowIndex) => (
-  <div key={rowIndex} className="grid-row">
-    {row.map((column, columnIndex) => {
-      const className = getClassNameForSymbol(column, columnIndex, rowIndex);
-      return (
-        <div key={columnIndex} className={`grid-item ${className}`}>
-          {className === 'boxindicator' && <div className="boxindicator-container"></div>}
-          {className === 'box' && <div className="box-container"></div>}
-          {className === 'boxindicator' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && <div className={`player-${playerDirection}`}></div>}
+
+      {mapData.map((row, rowIndex) => (
+        <div key={rowIndex} className="grid-row">
+          {row.map((column, columnIndex) => {
+            const className = getClassNameForSymbol(
+              column,
+              columnIndex,
+              rowIndex
+            );
+
+            return (
+              <div key={columnIndex} className={`grid-item ${className}`}>
+                {className === "boxindicator" && (
+                  <div className="boxindicator-container"></div>
+                )}
+                {className === "box" && <div className="box-container"></div>}
+                {className === "boxindicator" &&
+                  playerPosition.x === columnIndex &&
+                  playerPosition.y === rowIndex && (
+                    <div className={`player-${playerDirection}`}></div>
+                  )}
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-))}
+      ))}
+     
     </div>
   );
 }
