@@ -6,16 +6,16 @@ import { Settings } from "./pages/Settings";
 import { Play } from "./pages/Play";
 import { Music } from "./components/Music";
 import { playSound } from "./components/playSound";
+import { FullscreenToggle } from "./components/fullscrenToggle";
 import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
+import "./css/MediaQueries.css";
 
 import { LevelDisplay } from "./components/LevelDisplay";
-
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
 function App() {
-
 	const [currentPage, setCurrentPage] = useState("start");
 	const [settings, toggleSettings] = useState(false);
 
@@ -51,14 +51,9 @@ function App() {
 				onClick={handleToggleSettings}
 				onMouseOver={handleMouseOver}
 			></button>
-			{settings && <Settings />}
 
-			<button
-				id="btn-fullscreen"
-				className="button"
-				onClick={handleToggleFullscreen}
-				onMouseOver={handleMouseOver}
-			></button>
+			<FullscreenToggle />
+			{settings && <Settings />}
 
 			{/* Music Player */}
 			{<Music audio={musicSong} />}
@@ -76,7 +71,6 @@ function App() {
 			{currentPage === "play" && <Play onPageChange={handlePageChange} />}
 		</>
 	);
-
 }
 
 export default App;
