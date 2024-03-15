@@ -33,7 +33,7 @@ function App() {
 			{settings && <Settings />}
 
 			<button id="btn-fullscreen" className="button"></button>
-			<LevelDisplay/>
+			{/* <LevelDisplay/> */}
 			{/* Music Player */}
 			{/* <Music audio={musicSong} /> */}
 
