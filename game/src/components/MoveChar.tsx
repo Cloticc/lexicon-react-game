@@ -28,11 +28,15 @@ const directionMap: Record<Direction, { x: number, y: number }> = {
 export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPosition, setPlayerPosition, indicatorPositions, boxPositions, setBoxPositions }: MoveCharProps) {
   const handlePlayerMove = useCallback((direction: string) => {
     setPlayerDirection(direction.toLowerCase());
-
     // console.log(mapData);
-
     // console.log(boxPositions);
 
+
+    /* The commented code block you provided is calculating the new position that the player would move to
+    based on the current player position and the direction of movement. It uses the `directionMap`
+    object to determine the change in x and y coordinates based on the specified direction (UP, DOWN,
+    LEFT, RIGHT). */
+    // 
     const newPosition = {
       x: playerPosition.x + directionMap[direction as Direction].x,
       y: playerPosition.y + directionMap[direction as Direction].y
@@ -53,6 +57,9 @@ export function MoveChar({ mapData, setMapData, setPlayerDirection, playerPositi
         const boxIndex = boxPositions.findIndex(pos => pos.x === newPosition.x && pos.y === newPosition.y);
         // console.log('Before update:', newMapData, boxPositions);
 
+        /*
+        This will check what's beyond the box and see if you can move it there.
+        */
         if (boxIndex !== -1) {
           const beyondBoxPosition = {
             x: newPosition.x + directionMap[direction as Direction].x,
