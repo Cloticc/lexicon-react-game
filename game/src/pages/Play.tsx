@@ -23,6 +23,8 @@ export function Play({ onPageChange }: SelectPageProps) {
 
 	function handleUndoStepClick() {
 		/* put function here?*/
+		playSound("click", 0.25);
+		playSound("reverse", 0.35);
 	}
 
 	/*
