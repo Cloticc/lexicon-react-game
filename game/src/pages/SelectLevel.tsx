@@ -41,6 +41,7 @@ export function SelectLevel({ onPageChange }: SelectPageProps) {
 	const handlePlayClick = () => {
 		onPageChange("play");
 		playSound("click", 0.25);
+		playSound("levelstart", 0.5);
 	};
 
 	const handleCreditsClick = () => {

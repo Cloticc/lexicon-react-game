@@ -29,12 +29,6 @@ function App() {
 		playSound("swoosh", 0.25);
 	}
 
-	function handleToggleFullscreen() {
-		// Someone fix the full function here
-		playSound("click", 0.25);
-		playSound("swoosh", 0.25);
-	}
-
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
