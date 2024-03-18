@@ -133,7 +133,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
           })}
         </div>
       ))}
-     
+
     </div>
   );
 }
