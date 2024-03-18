@@ -1,7 +1,8 @@
 @media screen and (max-height: 890px) {
 	.grid-container {
-		scale: 0.8;
-		margin-top: -3rem;
+		margin-top: 2rem;
+		max-height: calc(100vh - 6rem);
+		max-width: calc(100vh - 6rem);
 	}
 	#showlevel {
 		font-size: 2rem;
@@ -16,12 +17,7 @@
 		font-size: 1rem;
 	}
 }
-@media screen and (max-height: 690px) {
-	.grid-container {
-		scale: 0.6;
-		margin-top: -7rem;
-	}
-}
+
 @media screen and (max-width: 1240px) {
 	.button {
 		width: 4.5rem;
