@@ -222,6 +222,11 @@ body,
 	animation: walkdown 0.5s steps(1, jump-both);
 	z-index: 1;
 }
+
+#startpageui #player .playerwalkdown {
+	animation: walkdown 0.5s infinite steps(1, jump-both);
+}
+
 .boxindicator .player-up,
 .boxindicator .player-down,
 .boxindicator .player-left,

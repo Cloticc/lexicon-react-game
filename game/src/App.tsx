@@ -29,12 +29,6 @@ function App() {
 		playSound("swoosh", 0.25);
 	}
 
-	function handleToggleFullscreen() {
-		// Someone fix the full function here
-		playSound("click", 0.25);
-		playSound("swoosh", 0.25);
-	}
-
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
@@ -58,17 +52,29 @@ function App() {
 			{/* Music Player */}
 			{<Music audio={musicSong} />}
 
-			{/* StartPage UI */}
-			{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
+			<div id="startpageui">
+				{/* StartPage UI */}
+				{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
 
-			{/* Select Level */}
-			{currentPage === "selectlevel" && <SelectLevel onPageChange={handlePageChange} />}
+				{/* Select Level */}
+				{currentPage === "selectlevel" && <SelectLevel onPageChange={handlePageChange} />}
 
-			{/* Credits */}
-			{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
+				{/* Credits */}
+				{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
 
-			{/* Play */}
-			{currentPage === "play" && <Play onPageChange={handlePageChange} />}
+				{/* Play */}
+				{currentPage === "play" && <Play onPageChange={handlePageChange} />}
+
+				<div id="space">
+					<div className="stars"></div>
+					<div className="stars"></div>
+					<div className="stars"></div>
+					<div className="stars"></div>
+					<div className="stars"></div>
+				</div>
+				<div id="retrogrid"></div>
+				<div id="copyright">© 2024 Studio5</div>
+			</div>
 		</>
 	);
 }
