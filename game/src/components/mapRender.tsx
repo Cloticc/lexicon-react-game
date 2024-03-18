@@ -109,22 +109,23 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 					{row.map((column, columnIndex) => {
 						const className = getClassNameForSymbol(column, columnIndex, rowIndex);
 
-						return (
-							<div key={columnIndex} className={`grid-item ${className}`}>
-								{className === "boxindicator" && (
-									<div className="boxindicator-container"></div>
-								)}
-								{className === "box" && <div className="box-container"></div>}
-								{className === "boxindicator" &&
-									playerPosition.x === columnIndex &&
-									playerPosition.y === rowIndex && (
-										<div className={`player-${playerDirection}`}></div>
-									)}
-							</div>
-						);
-					})}
-				</div>
-			))}
-		</div>
-	);
+            return (
+              <div key={columnIndex} className={`grid-item ${className}`}>
+                {className === "boxindicator" && (
+                  <div className="boxindicator-container"></div>
+                )}
+                {className === "box" && <div className="box-container"></div>}
+                {className === "boxindicator" &&
+                  playerPosition.x === columnIndex &&
+                  playerPosition.y === rowIndex && (
+                    <div className={`player-${playerDirection}`}></div>
+                  )}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+
+    </div>
+  );
 }
