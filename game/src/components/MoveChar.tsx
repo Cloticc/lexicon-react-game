@@ -3,16 +3,18 @@ import { useCallback, useEffect, useState } from "react";
 import { playSound } from "../components/playSound";
 
 interface MoveCharProps {
-	mapData: string[][];
-	setMapData: (mapData: string[][]) => void;
-	setPlayerDirection: (direction: string) => void;
-	playerPosition: { x: number; y: number };
-	setPlayerPosition: (position: { x: number; y: number }) => void;
-	indicatorPositions: { x: number; y: number }[];
-	setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
-	boxPositions: { x: number; y: number }[];
-	setBoxPositions: (positions: { x: number; y: number }[]) => void;
+  mapData: string[][];
+  setMapData: (mapData: string[][]) => void;
+  playerDirection: string;
+  setPlayerDirection: (direction: string) => void;
+  playerPosition: { x: number; y: number };
+  setPlayerPosition: (position: { x: number; y: number }) => void;
+  indicatorPositions: { x: number; y: number }[];
+  setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
+  boxPositions: { x: number; y: number }[];
+  setBoxPositions: (positions: { x: number; y: number }[]) => void;
 }
+
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
 const directionMap: Record<Direction, { x: number; y: number }> = {
