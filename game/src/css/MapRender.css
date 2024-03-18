@@ -24,14 +24,15 @@ body,
 }
 
 .grid-container {
+	scale: 0.8;
 	margin-top: 5rem;
 	width: 100%;
 	min-width: 320px;
-	max-height: calc(100vh - 12rem);
+	max-height: 90vh;
 	outline: none;
 	display: grid;
 	grid-template-rows: repeat(10, 1fr);
-	max-width: calc(100vh - 12rem);
+	max-width: 800px;
 	filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 2rem 3rem black);
