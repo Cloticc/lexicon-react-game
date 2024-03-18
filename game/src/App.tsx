@@ -34,9 +34,13 @@ function App() {
     const [indicatorPositions, setIndicatorPositions] = useState<{ x: number; y: number }[]>([]);
     const [boxPositions, setBoxPositions] = useState<{ x: number; y: number }[]>([]);
 
+
+
+    /* This `useEffect` hook is responsible for initializing the game state based on the initial map data
+    when the component mounts or when the `initialMapData` changes.*/
     useEffect(() => {
         setMapData(initialMapData);
-
+        //Gets the player start position
         let playerStartPosition = { x: 5, y: 6 };
         for (let y = 0; y < initialMapData.length; y++) {
             const x = initialMapData[y].indexOf("P");
@@ -46,7 +50,7 @@ function App() {
             }
         }
         setPlayerPosition(playerStartPosition);
-
+        //Gets the indicator start positions
         const indicatorStartPositions = [];
         for (let y = 0; y < initialMapData.length; y++) {
             for (let x = 0; x < initialMapData[y].length; x++) {
@@ -56,7 +60,7 @@ function App() {
             }
         }
         setIndicatorPositions(indicatorStartPositions);
-
+        //Gets the box start positions
         const boxStartPositions = [];
         for (let y = 0; y < initialMapData.length; y++) {
             for (let x = 0; x < initialMapData[y].length; x++) {
