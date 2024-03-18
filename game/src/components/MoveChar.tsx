@@ -73,7 +73,7 @@ export function MoveChar({
 	const handlePlayerMove = useCallback(
 		(direction: string) => {
 			setPlayerDirection(direction.toLowerCase());
-			playSound("walk", 0.3);
+
 			const newPosition = {
 				x: playerPosition.x + directionMap[direction as Direction].x,
 				y: playerPosition.y + directionMap[direction as Direction].y,
@@ -93,6 +93,8 @@ export function MoveChar({
 					const boxIndex = boxPositions.findIndex(
 						(pos) => pos.x === newPosition.x && pos.y === newPosition.y
 					);
+
+					playSound("walk", 0.3);
 
 					if (boxIndex !== -1) {
 						const beyondBoxPosition = {
