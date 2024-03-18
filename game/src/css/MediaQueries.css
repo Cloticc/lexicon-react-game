@@ -1,7 +1,43 @@
+@media screen and (max-height: 890px) {
+	.grid-container {
+		scale: 0.8;
+		margin-top: -3rem;
+	}
+	#showlevel {
+		font-size: 2rem;
+		top: 1rem;
+	}
+	#status {
+		top: 3.5rem;
+	}
+	#status span,
+	#timer,
+	#stepstaken {
+		font-size: 1rem;
+	}
+}
+@media screen and (max-height: 690px) {
+	.grid-container {
+		scale: 0.6;
+		margin-top: -7rem;
+	}
+}
 @media screen and (max-width: 1240px) {
 	.button {
 		width: 4.5rem;
 		height: 4.5rem;
+	}
+
+	#showlevel {
+		font-size: 3rem;
+		top: 1rem;
+	}
+
+	.grid-container {
+		scale: 0.85;
+	}
+	#status {
+		top: 4.5rem;
 	}
 
 	#btn-settings:after,
@@ -111,9 +147,10 @@
 
 	#showlevel {
 		font-size: 2rem;
+		top: 1rem;
 	}
 	#status {
-		top: 4.5rem;
+		top: 3.5rem;
 	}
 
 	#timer,
