@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import HighScore from "./highscore";
 
 interface MoveCharProps {
   mapData: string[][];
@@ -10,6 +11,9 @@ interface MoveCharProps {
   setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
   boxPositions: { x: number; y: number }[];
   setBoxPositions: (positions: { x: number; y: number }[]) => void;
+  onGameWonChange: (won: boolean) => void;
+  onCounterChange: (counter: number) => void;
+  onElapsedTimeChange: (elapsedTime: number) => void;
 }
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
@@ -29,43 +33,43 @@ export function MoveChar({
   indicatorPositions,
   boxPositions,
   setBoxPositions,
+  onGameWonChange,
+  onCounterChange,
+  onElapsedTimeChange,
 }: MoveCharProps) {
-  const [gameWon, setGameWon] = useState(false);
   const [counter, setCounter] = useState(0);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [gameRunning, setGameRunning] = useState<boolean>(false);
-  const [highestScores, setHighestScores] = useState<{
-    [level: string]: { score: number; elapsedTime: number };
-  }>({});
+  const [wonGame, setWonGame] = useState<boolean>(false);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
 
   useEffect(() => {
-    const storedScores = localStorage.getItem("highestScores");
-    if (storedScores) {
-      setHighestScores(JSON.parse(storedScores));
-    }
-  }, []);
+    onCounterChange(counter);
+  }, [counter, onCounterChange]);
 
   useEffect(() => {
     if (startTime && gameRunning) {
       const intervalId = setInterval(() => {
-        const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
+        const elapsed = Math.floor(Date.now() - startTime.getTime());
         setElapsedTime(elapsed);
-      }, 1000);
+        onElapsedTimeChange(elapsed);
+      }, 100);
 
       return () => clearInterval(intervalId);
     }
-  }, [startTime, gameRunning]);
+  }, [startTime, gameRunning, onElapsedTimeChange]);
 
   const startGame = useCallback(() => {
     setStartTime(new Date());
     setGameRunning(true);
+    setWonGame(false);
   }, []);
 
   const stopGame = useCallback(() => {
     setStartTime(null);
     setGameRunning(false);
+    setWonGame(true);
   }, []);
 
   const handlePlayerMove = useCallback(
@@ -161,7 +165,7 @@ export function MoveChar({
             setPlayerPosition(newPosition);
           }
 
-          if (!gameRunning && counter === 1) {
+          if (!gameRunning && counter === 0) {
             startGame(); // Start the game when the first move is made
           }
         }
@@ -238,9 +242,9 @@ export function MoveChar({
 
       // Determine the swipe direction
       if (Math.abs(distX) > Math.abs(distY)) {
-        direction = distX > 0 ? 'RIGHT' : 'LEFT';
+        direction = distX > 0 ? "RIGHT" : "LEFT";
       } else {
-        direction = distY > 0 ? 'DOWN' : 'UP';
+        direction = distY > 0 ? "DOWN" : "UP";
       }
 
       if (direction) {
@@ -251,12 +255,12 @@ export function MoveChar({
       }
     };
 
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
 
     return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
     };
   }, [handlePlayerMove]);
 
@@ -276,39 +280,27 @@ export function MoveChar({
 
     // If all indicators are covered, declare victory
     if (allIndicatorsCovered) {
-      setGameWon(true);
       stopGame();
-      const levelData = highestScores[currentLevel] || {
-        score: Infinity,
-        elapsedTime: 0,
-      };
-      if (
-        counter < levelData.score ||
-        (counter === levelData.score && elapsedTime < levelData.elapsedTime)
-      ) {
-        const updatedScores = {
-          ...highestScores,
-          [currentLevel]: { score: counter, elapsedTime },
-        };
-        setHighestScores(updatedScores);
-        localStorage.setItem("highestScores", JSON.stringify(updatedScores));
-      }
+      onGameWonChange(true);
     }
-  }, [mapData, gameWon, counter, elapsedTime, currentLevel, highestScores]);
+  }, [
+    onGameWonChange,
+    mapData,
+    counter,
+    elapsedTime,
+    currentLevel,
+    onCounterChange,
+  ]);
 
   return (
     <>
-      {gameWon && (
-        <div className="victory-alert">
-          <h1>Congratulations! You've won the game!</h1>
-        </div>
+      {wonGame && (
+        <HighScore
+          currentLevel={currentLevel}
+          counter={counter}
+          elapsedTime={elapsedTime}
+        />
       )}
-      <div>
-        <h2>Counter: {counter}</h2>
-        <p>
-          Elapsed Time: {startTime && gameRunning ? `${elapsedTime}s` : "0s"}
-        </p>
-      </div>
     </>
   );
 }
