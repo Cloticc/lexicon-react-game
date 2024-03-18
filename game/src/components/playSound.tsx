@@ -7,8 +7,19 @@ import pushboxSound from "./../assets/push-100769.mp3";
 import swooshSound from "./../assets/swoosh-transition-with-metal-overtones-142375.mp3";
 import boxindicationSound from "./../assets/rightanswer-95219.mp3";
 import leveldoneSound from "./../assets/cute-level-up-1-189852.mp3";
+import levelstartSound from "./../assets/game-start-6104.mp3";
+import reverseSound from "./../assets/cinematic-whoosh-reverse-161307.mp3";
 
-type SoundName = "click" | "hover" | "walk" | "pushbox" | "swoosh" | "boxindication" | "leveldone"; // Define sound names as string literals
+type SoundName =
+	| "click"
+	| "hover"
+	| "walk"
+	| "pushbox"
+	| "swoosh"
+	| "boxindication"
+	| "leveldone"
+	| "levelstart"
+	| "reverse"; // Define sound names as string literals
 
 const soundFiles: Record<SoundName, string> = {
 	click: clickSound,
@@ -18,6 +29,8 @@ const soundFiles: Record<SoundName, string> = {
 	swoosh: swooshSound,
 	boxindication: boxindicationSound,
 	leveldone: leveldoneSound,
+	levelstart: levelstartSound,
+	reverse: reverseSound,
 	// Add more mappings as needed
 };
 

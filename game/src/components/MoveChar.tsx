@@ -2,15 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 import HighScore from "./highscore";
 
 interface MoveCharProps {
-  mapData: string[][];
-  setMapData: (mapData: string[][]) => void;
-  setPlayerDirection: (direction: string) => void;
-  playerPosition: { x: number; y: number };
-  setPlayerPosition: (position: { x: number; y: number }) => void;
-  indicatorPositions: { x: number; y: number }[];
-  setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
-  boxPositions: { x: number; y: number }[];
-  setBoxPositions: (positions: { x: number; y: number }[]) => void;
+	mapData: string[][];
+	setMapData: (mapData: string[][]) => void;
+	setPlayerDirection: (direction: string) => void;
+	playerPosition: { x: number; y: number };
+	setPlayerPosition: (position: { x: number; y: number }) => void;
+	indicatorPositions: { x: number; y: number }[];
+	setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
+	boxPositions: { x: number; y: number }[];
+	setBoxPositions: (positions: { x: number; y: number }[]) => void;
   onGameWonChange: (won: boolean) => void;
   onCounterChange: (counter: number) => void;
   onElapsedTimeChange: (elapsedTime: number) => void;
@@ -18,21 +18,21 @@ interface MoveCharProps {
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
 const directionMap: Record<Direction, { x: number; y: number }> = {
-  UP: { x: 0, y: -1 },
-  DOWN: { x: 0, y: 1 },
-  LEFT: { x: -1, y: 0 },
-  RIGHT: { x: 1, y: 0 },
+	UP: { x: 0, y: -1 },
+	DOWN: { x: 0, y: 1 },
+	LEFT: { x: -1, y: 0 },
+	RIGHT: { x: 1, y: 0 },
 };
 
 export function MoveChar({
-  mapData,
-  setMapData,
-  setPlayerDirection,
-  playerPosition,
-  setPlayerPosition,
-  indicatorPositions,
-  boxPositions,
-  setBoxPositions,
+	mapData,
+	setMapData,
+	setPlayerDirection,
+	playerPosition,
+	setPlayerPosition,
+	indicatorPositions,
+	boxPositions,
+	setBoxPositions,
   onGameWonChange,
   onCounterChange,
   onElapsedTimeChange,

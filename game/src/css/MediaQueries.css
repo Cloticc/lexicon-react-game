@@ -1,39 +1,39 @@
-@media screen and (max-width: 640px) {
+@media screen and (max-height: 890px) {
 	.grid-container {
-		width: 100%;
+		margin-top: 2rem;
+		max-height: calc(100vh - 6rem);
+		max-width: calc(100vh - 6rem);
+	}
+	#showlevel {
+		font-size: 2rem;
+		top: 1rem;
+	}
+	#status {
+		top: 3.5rem;
+	}
+	#status span,
+	#timer,
+	#stepstaken {
+		font-size: 1rem;
+	}
+}
+
+@media screen and (max-width: 1240px) {
+	.button {
+		width: 4.5rem;
+		height: 4.5rem;
 	}
 
 	#showlevel {
-		font-size: 2rem;
+		font-size: 3rem;
+		top: 1rem;
+	}
+
+	.grid-container {
+		scale: 0.85;
 	}
 	#status {
 		top: 4.5rem;
-	}
-
-	#timer,
-	#stepstaken,
-	#status span {
-		font-size: 1rem;
-	}
-	.button {
-		outline: 2px solid black;
-		width: 3rem;
-		height: 3rem;
-		box-shadow: 0 1px 0 1px white inset, 0 4px 0 2px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
-	}
-
-	#btn-settings {
-		top: 1rem;
-		right: 1rem;
-	}
-	#btn-selectlevel {
-		top: 1rem;
-		left: 1rem;
-	}
-
-	#btn-fullscreen {
-		bottom: 1rem;
-		right: 1rem;
 	}
 
 	#btn-settings:after,
@@ -46,8 +46,9 @@
 	#btn-levels:after,
 	#btn-selectlevel:after,
 	#btn-replay-again:after,
-	#btn-nextlevel:after {
-		background-size: 2rem !important;
+	#btn-nextlevel:after,
+	#btn-undostep:after {
+		background-size: 2.5rem !important;
 	}
 
 	#btn-play,
@@ -64,12 +65,129 @@
 	}
 
 	#btn-credits:after {
-		background-size: 0.7rem !important;
+		background-size: 0.8rem !important;
 	}
 
 	#btn-credits {
 		bottom: 1.5rem !important;
-		left: 6rem !important;
+		left: 7rem !important;
+	}
+
+	#btn-settings {
+		top: 1rem;
+		right: 1rem;
+	}
+	#btn-undostep {
+		top: 1rem;
+		right: 7rem;
+	}
+	#btn-selectlevel {
+		top: 1rem;
+		left: 1rem;
+	}
+
+	#btn-fullscreen {
+		bottom: 1rem;
+		right: 1rem;
+	}
+
+	#startplay {
+		width: 4.5rem;
+		height: 4.5rem;
+		padding: 3.5rem;
+	}
+	#selectlevel {
+		padding: 1rem;
+		height: 67vh;
+	}
+	#selectlevel h1,
+	#settings h1,
+	#highscore h1 {
+		font-size: clamp(2rem, 8vw, 4rem) !important;
+		top: -3.5rem;
+	}
+	#selectlevel .arrow {
+		width: 4rem;
+		height: 4rem;
+	}
+
+	#selectlevel .next {
+		right: -10%;
+	}
+
+	#selectlevel .prev {
+		left: -10%;
+	}
+
+	#selectlevel #menubuttons span {
+		top: -3.5rem;
+		font-size: 1rem;
+	}
+
+	#selectlevel .levels ul {
+		gap: 1rem;
+	}
+
+	#selectlevel .levels {
+		height: calc(100% - 9.5rem);
+	}
+
+	#selectlevel .levels ul li {
+		font-size: 2rem;
+		height: 100%;
+		min-height: 100%;
+		align-items: center;
+		padding-bottom: 1rem;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.grid-container {
+		width: 100%;
+	}
+
+	#showlevel {
+		font-size: 2rem;
+		top: 1rem;
+	}
+	#status {
+		top: 3.5rem;
+	}
+
+	#timer,
+	#stepstaken,
+	#status span {
+		font-size: 1rem;
+	}
+	.button {
+		outline: 2px solid black;
+		width: 3rem;
+		height: 3rem;
+		box-shadow: 0 1px 0 1px white inset, 0 4px 0 2px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
+	}
+
+	#btn-credits:after {
+		background-size: 0.7rem !important;
+	}
+
+	#btn-undostep {
+		top: 1rem;
+		right: 5rem;
+	}
+
+	#btn-settings:after,
+	#btn-fullscreen:after,
+	#btn-sound:after,
+	#btn-replay:after,
+	#btn-solution:after,
+	#btn-start:after,
+	#btn-play:after,
+	#btn-levels:after,
+	#btn-selectlevel:after,
+	#btn-replay-again:after,
+	#btn-nextlevel:after,
+	#btn-undostep:after {
+		background-size: 2rem !important;
 	}
 
 	#selectlevel {
@@ -101,7 +219,7 @@
 	#selectlevel .next {
 		right: -4%;
 		top: auto;
-		bottom: 3%;
+		bottom: 9%;
 		z-index: 10;
 		scale: 0.7;
 	}
@@ -109,7 +227,7 @@
 		right: auto;
 		left: -4%;
 		top: auto;
-		bottom: 3%;
+		bottom: 9%;
 		z-index: 10;
 		scale: 0.7;
 	}
