@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
+import { playSound } from '../components/playSound';
+
 interface MoveCharProps {
   mapData: string[][];
   setMapData: (mapData: string[][]) => void;
@@ -71,7 +73,7 @@ export function MoveChar({
   const handlePlayerMove = useCallback(
     (direction: string) => {
       setPlayerDirection(direction.toLowerCase());
-
+      playSound("walk", 0.4)
       const newPosition = {
         x: playerPosition.x + directionMap[direction as Direction].x,
         y: playerPosition.y + directionMap[direction as Direction].y,
@@ -107,13 +109,8 @@ export function MoveChar({
                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
             ) {
               newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-
-              if (
-                indicatorPositions.some(
-                  (pos) =>
-                    pos.x === boxPositions[boxIndex].x &&
-                    pos.y === boxPositions[boxIndex].y
-                )
+              playSound("pushbox", 0.4)
+              if (indicatorPositions.some((pos) => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)
               ) {
                 newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] =
                   "I";
@@ -124,10 +121,12 @@ export function MoveChar({
 
               if (
                 indicatorPositions.some(
-                  (pos) =>
-                    pos.x === playerPosition.x && pos.y === playerPosition.y
+                  (pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y
                 )
               ) {
+                playSound("boxindication", 0.4);
+              }
+              if (indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
                 newMapData[playerPosition.y][playerPosition.x] = "I";
               } else {
                 newMapData[playerPosition.y][playerPosition.x] = ",";
@@ -145,14 +144,11 @@ export function MoveChar({
             }
           } else {
             if (
-              indicatorPositions.some(
-                (pos) =>
-                  pos.x === playerPosition.x && pos.y === playerPosition.y
-              )
-            ) {
+              indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)) {
               newMapData[playerPosition.y][playerPosition.x] = "I";
             } else {
               newMapData[playerPosition.y][playerPosition.x] = ",";
+
             }
             newMapData[newPosition.y][newPosition.x] = "P";
             setCounter((prevCounter) => prevCounter + 1);
