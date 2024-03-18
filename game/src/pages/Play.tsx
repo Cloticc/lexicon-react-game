@@ -20,6 +20,13 @@ export function Play({ onPageChange }: SelectPageProps) {
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
+
+	function handleUndoStepClick() {
+		/* put function here?*/
+		playSound("click", 0.25);
+		playSound("reverse", 0.35);
+	}
+
 	/*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
@@ -36,6 +43,13 @@ export function Play({ onPageChange }: SelectPageProps) {
 				<span>in</span>
 				<div id="timer">1:32</div>
 			</div>
+
+			<button
+				id="btn-undostep"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleUndoStepClick}
+			></button>
 
 			<button
 				id="btn-selectlevel"

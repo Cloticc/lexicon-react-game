@@ -1,7 +1,43 @@
+@media screen and (max-height: 890px) {
+	.grid-container {
+		scale: 0.8;
+		margin-top: -3rem;
+	}
+	#showlevel {
+		font-size: 2rem;
+		top: 1rem;
+	}
+	#status {
+		top: 3.5rem;
+	}
+	#status span,
+	#timer,
+	#stepstaken {
+		font-size: 1rem;
+	}
+}
+@media screen and (max-height: 690px) {
+	.grid-container {
+		scale: 0.6;
+		margin-top: -7rem;
+	}
+}
 @media screen and (max-width: 1240px) {
 	.button {
 		width: 4.5rem;
 		height: 4.5rem;
+	}
+
+	#showlevel {
+		font-size: 3rem;
+		top: 1rem;
+	}
+
+	.grid-container {
+		scale: 0.85;
+	}
+	#status {
+		top: 4.5rem;
 	}
 
 	#btn-settings:after,
@@ -14,7 +50,8 @@
 	#btn-levels:after,
 	#btn-selectlevel:after,
 	#btn-replay-again:after,
-	#btn-nextlevel:after {
+	#btn-nextlevel:after,
+	#btn-undostep:after {
 		background-size: 2.5rem !important;
 	}
 
@@ -43,6 +80,10 @@
 	#btn-settings {
 		top: 1rem;
 		right: 1rem;
+	}
+	#btn-undostep {
+		top: 1rem;
+		right: 7rem;
 	}
 	#btn-selectlevel {
 		top: 1rem;
@@ -111,9 +152,10 @@
 
 	#showlevel {
 		font-size: 2rem;
+		top: 1rem;
 	}
 	#status {
-		top: 4.5rem;
+		top: 3.5rem;
 	}
 
 	#timer,
@@ -132,6 +174,11 @@
 		background-size: 0.7rem !important;
 	}
 
+	#btn-undostep {
+		top: 1rem;
+		right: 5rem;
+	}
+
 	#btn-settings:after,
 	#btn-fullscreen:after,
 	#btn-sound:after,
@@ -142,7 +189,8 @@
 	#btn-levels:after,
 	#btn-selectlevel:after,
 	#btn-replay-again:after,
-	#btn-nextlevel:after {
+	#btn-nextlevel:after,
+	#btn-undostep:after {
 		background-size: 2rem !important;
 	}
 
