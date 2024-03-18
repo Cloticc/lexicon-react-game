@@ -30,26 +30,22 @@ export function Play({ onPageChange }: SelectPageProps) {
 */
 	return (
 		<>
-			<div id="startpageui">
-				<div id="showlevel">Level 1</div>
-				<div id="status">
-					<div id="stepstaken">0</div>
-					<span>in</span>
-					<div id="timer">1:32</div>
-				</div>
-
-				<button
-					id="btn-selectlevel"
-					className="button"
-					onMouseOver={handleMouseOver}
-					onClick={handleSelectLevelClick}
-				></button>
-
-				<MapRender initialMapData={map1.mapdata} />
-				{gameFinish && <Highscore />}
-				<div id="retrogrid"></div>
-				<div id="copyright">© 2024 Studio5</div>
+			<div id="showlevel">Level 1</div>
+			<div id="status">
+				<div id="stepstaken">0</div>
+				<span>in</span>
+				<div id="timer">1:32</div>
 			</div>
+
+			<button
+				id="btn-selectlevel"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleSelectLevelClick}
+			></button>
+
+			<MapRender initialMapData={map1.mapdata} />
+			{gameFinish && <Highscore />}
 		</>
 	);
 }
