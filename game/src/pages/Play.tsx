@@ -1,38 +1,14 @@
 import "./../css/Play.css";
 
+import { useEffect, useState } from "react";
+
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
-import { useState } from "react";
+import map1 from "../maps/map1.json";
 
-interface PlayProps extends SelectPageProps {
-	mapData: string[][];
-	setMapData: React.Dispatch<React.SetStateAction<string[][]>>;
-	playerDirection: string;
-	setPlayerDirection: React.Dispatch<React.SetStateAction<string>>;
-	playerPosition: { x: number; y: number };
-	setPlayerPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number }>>;
-	indicatorPositions: { x: number; y: number }[];
-	setIndicatorPositions: React.Dispatch<React.SetStateAction<{ x: number; y: number }[]>>;
-	boxPositions: { x: number; y: number }[];
-	setBoxPositions: React.Dispatch<React.SetStateAction<{ x: number; y: number }[]>>;
-}
-
-export function Play({
-	onPageChange,
-	mapData,
-	setMapData,
-	playerDirection,
-	setPlayerDirection,
-	playerPosition,
-	setPlayerPosition,
-	indicatorPositions,
-	setIndicatorPositions,
-	boxPositions,
-	setBoxPositions,
-}: PlayProps) {
-
+export function Play({ onPageChange }: SelectPageProps) {
 	const [gameFinish, setFinish] = useState(false);
 
 	const handleSelectLevelClick = () => {
@@ -82,18 +58,7 @@ export function Play({
 				onClick={handleSelectLevelClick}
 			></button>
 
-			<MapRender
-				mapData={mapData}
-				setMapData={setMapData}
-				playerDirection={playerDirection}
-				setPlayerDirection={setPlayerDirection}
-				playerPosition={playerPosition}
-				setPlayerPosition={setPlayerPosition}
-				indicatorPositions={indicatorPositions}
-				setIndicatorPositions={setIndicatorPositions}
-				boxPositions={boxPositions}
-				setBoxPositions={setBoxPositions}
-			/>
+			<MapRender initialMapData={map1.mapdata} />
 			{gameFinish && <Highscore />}
 		</>
 	);
