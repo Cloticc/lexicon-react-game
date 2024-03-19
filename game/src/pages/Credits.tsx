@@ -32,7 +32,7 @@ export function Credits({ onPageChange }: SelectPageProps) {
 					<h5>Andreas</h5>
 					<h5>Konstantios</h5>
 					<h5>Abbe</h5>
-					<h5>Alireza</h5>
+					<h5>Alireza Kafshdartoosi</h5>
 				</div>
 
 				<div id="menubuttons">

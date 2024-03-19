@@ -1,28 +1,43 @@
 import { createContext, useState } from "react";
 
 interface GameContextProps {
-	test: string;
-	setTest: (test: string) => void;
-	otherTest: string;
-	setOtherTest: (otherTest: string) => void;
+  test: string;
+  setTest: (test: string) => void;
+  wonGame: boolean;
+  setWonGame: (wonGame: boolean) => void;
+  counter: number;
+  setCounter: (counter: number) => void;
+  elapsedTime: number;
+  setElapsedTime: (elapsedTime: number) => void;
 }
 
 interface ChildrenProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
-	const [test, setTest] = useState("Test");
-	const [otherTest, setOtherTest] = useState("OtherTest");
+  const [state, setState] = useState("Test");
+  const [counter, setCounter] = useState<number>(0);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [wonGame, setWonGame] = useState<boolean>(false);
+  console.log(state);
 
-	const value: GameContextProps = {
-		test,
-		setTest,
-		otherTest,
-		setOtherTest,
-	};
-
-	return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
+  return (
+    <MyContext.Provider
+      value={{
+        test: state,
+        setTest: setState,
+        counter: counter,
+        setCounter: setCounter,
+        elapsedTime: elapsedTime,
+        setElapsedTime: setElapsedTime,
+        wonGame: wonGame,
+        setWonGame: setWonGame,
+      }}
+    >
+      {children}
+    </MyContext.Provider>
+  );
 };
