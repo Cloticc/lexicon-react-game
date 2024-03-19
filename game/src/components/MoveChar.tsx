@@ -280,18 +280,13 @@ export function MoveChar({
 
 	useEffect(() => {
 		let allIndicatorsCovered = true;
-
-		// Iterate through all indicator positions
 		for (const position of indicatorPositions) {
 			const { x, y } = position;
-
-			// Check if the cell indicated by the position is not a box
 			if (mapData[y][x] !== "B") {
 				allIndicatorsCovered = false;
-				break; // If any indicator position is not covered, break the loop
+				break; 
 			}
 		}
-
     // If all indicators are covered, declare victory
     if (allIndicatorsCovered) {
       stopGame();
@@ -308,7 +303,7 @@ export function MoveChar({
 
   return (
     <>
-      {wonGame && (
+      {wonGame && (counter > 0 && elapsedTime > 0) && (
         <HighScore
           currentLevel={currentLevel}
           counter={counter}

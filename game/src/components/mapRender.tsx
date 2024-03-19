@@ -16,9 +16,9 @@ interface MapRenderProps {
 	setIndicatorPositions: React.Dispatch<React.SetStateAction<{ x: number; y: number }[]>>;
 	boxPositions: { x: number; y: number }[];
 	setBoxPositions: React.Dispatch<React.SetStateAction<{ x: number; y: number }[]>>;
-  handleGameFinish: (isGameWon: boolean) => void;
-  handleCounter: (newCounter: number) => void;
-  handleElapsed: (newElapsedTime: number) => void;
+    handleGameFinish: (isGameWon: boolean) => void;
+    handleCounter: (newCounter: number) => void;
+    handleElapsed: (newElapsedTime: number) => void;
 }
 
 
@@ -33,9 +33,9 @@ export function MapRender({
 	setIndicatorPositions,
 	boxPositions,
 	setBoxPositions,
-  handleGameFinish,
-  handleCounter,
-  handleElapsed,
+    handleGameFinish,
+    handleCounter,
+    handleElapsed,
 }: MapRenderProps) {
 
 	// const [mapData, setMapData] = useState(initialMapData);
@@ -92,9 +92,9 @@ export function MapRender({
 				setIndicatorPositions={setIndicatorPositions}
 				boxPositions={boxPositions}
 				setBoxPositions={setBoxPositions}
-        onGameWonChange={handleGameWonChange}
-        onCounterChange={handleCounterChange} 
-        onElapsedTimeChange={handleElapsedTimeChange}
+                onGameWonChange={handleGameWonChange}
+                onCounterChange={handleCounterChange} 
+                onElapsedTimeChange={handleElapsedTimeChange}
 			/>
 
 

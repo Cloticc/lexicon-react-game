@@ -83,16 +83,6 @@ export function Play({
           <span>in</span>
           <div id="timer">{formatElapsedTime(elapsedTime)}</div>
         </div>
-
-		<button
-				id="btn-undostep"
-				className="button"
-				onMouseOver={handleMouseOver}
-				onClick={handleUndoStepClick}
-			></button>
-
-
-	
 			<button
 				id="btn-undostep"
 				className="button"
@@ -105,7 +95,6 @@ export function Play({
 					onMouseOver={handleMouseOver}
 					onClick={handleSelectLevelClick}
 				></button>
-
 			<MapRender
 				mapData={mapData}
 				setMapData={setMapData}
@@ -122,6 +111,7 @@ export function Play({
                 handleElapsed={handleElapsedTime}
 			/>
 			{gameFinish && <Highscore />}
+			</div>
 		</>
 	);
 }
