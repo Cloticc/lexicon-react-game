@@ -16,8 +16,8 @@ import { useState } from "react";
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
-
 function App() {
+
     const [currentPage, setCurrentPage] = useState<Page>("start");
     const [settings, toggleSettings] = useState<boolean>(false);
     const [level, setLevel] = useState<number >(1); // lvl state starts at 1
@@ -91,6 +91,7 @@ function App() {
             </div>
         </>
     );
+
 }
  
 export default App;

@@ -62,6 +62,7 @@ export function Highscore() {
 					></button>
 				</div>
 			</div>
+			<div id="darkoverlay"></div>
 		</>
 	);
 }
