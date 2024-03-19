@@ -100,9 +100,11 @@
 	z-index: 2500;
 	font-size: 2rem;
 	filter: none;
+	width: 12rem;
 }
 
 #status {
+	justify-content: center;
 	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
 		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
 	position: absolute;
@@ -125,11 +127,20 @@
 	font-size: 2rem;
 	top: auto;
 	position: relative;
+	align-self: flex-end;
+	width: 10rem;
+	text-align: left;
+	margin-left: 1rem;
 }
 
 #highscore h2 {
-	margin-top: 2rem;
 	margin-bottom: 1rem;
+}
+#highscore h2:nth-child(2) {
+	margin-top: 2rem;
+	font-weight: 900;
+	font-size: 4rem;
+	font-family: "Gajraj One", sans-serif;
 }
 
 .showhighscore {
@@ -137,6 +148,9 @@
 	border: 2px solid black;
 	padding: 1rem;
 	border-radius: 0.4rem;
+	background: black;
+	color: white;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 .showhighscore .result {
 	width: 100%;
@@ -147,6 +161,11 @@
 	text-align: left;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
+	font-size: 1.5rem;
+}
+
+.showhighscore .thead {
+	font-size: 0.9rem !important;
 }
 
 .showhighscore .result .row div:nth-child(2) {

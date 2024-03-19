@@ -193,7 +193,7 @@
 
 #selectlevel .levels ul {
 	list-style: none;
-	height: 90%;
+	height: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 1rem;
@@ -217,10 +217,11 @@
 	font-size: 2.5rem;
 	backdrop-filter: blur(0.5rem);
 	position: relative;
+	max-height: 9vh;
 
 	z-index: 0;
 }
-#selectlevel .levels ul li span {
+#selectlevel .levels ul li .highest {
 	font-size: 0.8rem;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -232,6 +233,28 @@
 	color: white;
 	position: absolute;
 	bottom: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+.highest .highmoves {
+	float: left;
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	align-self: flex-start;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 0.3rem;
+}
+
+.highest .hightime {
+	display: inline-block;
+	margin-left: 0.5rem;
+	padding: 0.2rem 0.4rem;
+	border-radius: 0.2rem;
+	align-self: flex-end;
 }
 
 #selectlevel .levels ul li:before {
@@ -373,7 +396,7 @@
 
 #selectlevel #menubuttons span {
 	position: absolute;
-	top: -8rem;
+	top: -7rem;
 	font-weight: 600;
 	font-size: 1.2rem;
 	left: 50%;
@@ -594,7 +617,8 @@
 	}
 }
 
-#settings h1 {
+#settings h1,
+#highscore h1 {
 	position: absolute;
 	top: -5rem;
 	left: 50%;
@@ -653,7 +677,7 @@
 	position: absolute;
 	right: 11rem;
 	top: 3rem;
-	z-index: 80;
+	z-index: 10;
 }
 #btn-undostep:after {
 	display: block;
