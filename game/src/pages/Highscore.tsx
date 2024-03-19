@@ -12,7 +12,7 @@ export function Highscore() {
 		if (storedScores) {
 			setHighestScores(JSON.parse(storedScores));
 		}
-	}, [highestScores]);
+	}, []); // Empty dependency array to run the effect only once
 
 	function handleMouseOver() {
 		playSound("hover", 0.15);
