@@ -1,6 +1,6 @@
 import "./../css/Play.css";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
@@ -8,14 +8,12 @@ import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
 import { formatElapsedTime } from "../utils/TimeUtils";
 import map1 from "../maps/map1.json";
-import { MyContext } from '../ContextProvider/ContextProvider';
-
+import { MyContext } from "../ContextProvider/ContextProvider";
 
 export function Play({ onPageChange }: SelectPageProps) {
- 
   const { counter } = useContext(MyContext);
-  const {elapsedTime} = useContext(MyContext);
-  const {wonGame} = useContext(MyContext);
+  const { elapsedTime } = useContext(MyContext);
+  const { wonGame } = useContext(MyContext);
 
   const handleSelectLevelClick = () => {
     onPageChange("selectlevel");
@@ -64,9 +62,7 @@ export function Play({ onPageChange }: SelectPageProps) {
           onClick={handleSelectLevelClick}
         ></button>
 
-        <MapRender
-          initialMapData={map1.mapdata}
-        />
+        <MapRender initialMapData={map1.mapdata} />
         {wonGame && <Highscore />}
       </div>
     </>
