@@ -16,12 +16,20 @@
 	#stepstaken {
 		font-size: 1rem;
 	}
+
+	#btn-credit {
+		left: 7rem !important;
+	}
+	#selectlevel #menubuttons span {
+		top: -4rem !important;
+	}
 }
 
 @media screen and (max-width: 1240px) {
 	.button {
-		width: 4.5rem;
-		height: 4.5rem;
+		width: 4.5rem !important;
+		height: 4.5rem !important;
+		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.8);
 	}
 
 	#showlevel {
@@ -70,7 +78,7 @@
 
 	#btn-credits {
 		bottom: 1.5rem !important;
-		left: 7rem !important;
+		left: 8rem !important;
 	}
 
 	#btn-settings {
@@ -120,7 +128,7 @@
 	}
 
 	#selectlevel #menubuttons span {
-		top: -3.5rem;
+		top: -5rem !important;
 		font-size: 1rem;
 	}
 
@@ -129,7 +137,7 @@
 	}
 
 	#selectlevel .levels {
-		height: calc(100% - 9.5rem);
+		height: calc(100% - 12rem);
 	}
 
 	#selectlevel .levels ul li {
@@ -154,6 +162,11 @@
 		top: 3.5rem;
 	}
 
+	#btn-credits {
+		bottom: 1.5rem !important;
+		left: 6rem !important;
+	}
+
 	#timer,
 	#stepstaken,
 	#status span {
@@ -161,9 +174,9 @@
 	}
 	.button {
 		outline: 2px solid black;
-		width: 3rem;
-		height: 3rem;
-		box-shadow: 0 1px 0 1px white inset, 0 4px 0 2px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
+		width: 3rem !important;
+		height: 3rem !important;
+		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.8) !important;
 	}
 
 	#btn-credits:after {
@@ -200,8 +213,8 @@
 		height: calc(100% - 6rem) !important;
 	}
 	#selectlevel #menubuttons span {
-		top: -2rem;
-		font-size: 0.9rem;
+		top: -2rem !important;
+		font-size: 0.9rem !important;
 	}
 	#selectlevel .levels ul {
 		margin-top: 1rem;

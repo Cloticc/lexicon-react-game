@@ -1,5 +1,6 @@
-import "./../css/StartPageUI.css";
 import "./../css/Map.css";
+import "./../css/StartPageUI.css";
+
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
 
