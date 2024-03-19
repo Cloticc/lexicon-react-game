@@ -1,16 +1,18 @@
-import { useState } from "react";
-import { StartPageUI } from "./pages/StartPageUI";
-import { SelectLevel } from "./pages/SelectLevel";
-import { Credits } from "./pages/Credits";
-import { Settings } from "./pages/Settings";
-import { Play } from "./pages/Play";
-import { Music } from "./components/Music";
-import { playSound } from "./components/playSound";
-import { FullscreenToggle } from "./components/fullscrenToggle";
-import musicSong from "./assets/neon-gaming-128925.mp3";
 import "./App.css";
 import "./css/MediaQueries.css";
+
+import { Credits } from "./pages/Credits";
+import { FullscreenToggle } from "./components/fullscrenToggle";
+import { Music } from "./components/Music";
+import {MyComponent} from "./pages/MyComponent";
+import { Play } from "./pages/Play";
+import { SelectLevel } from "./pages/SelectLevel";
+import { Settings } from "./pages/Settings";
+import { StartPageUI } from "./pages/StartPageUI";
 import allMaps from "./maps/maps";
+import musicSong from "./assets/neon-gaming-128925.mp3";
+import { playSound } from "./components/playSound";
+import { useState } from "react";
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
@@ -19,6 +21,8 @@ function App() {
     const [currentPage, setCurrentPage] = useState<Page>("start");
     const [settings, toggleSettings] = useState<boolean>(false);
     const [level, setLevel] = useState<number >(1); // lvl state starts at 1
+
+
 
     function handleToggleSettings() {
         toggleSettings(!settings);
@@ -46,6 +50,7 @@ function App() {
 
     return (
         <>
+        <MyComponent />
             <button
                 id="btn-settings"
                 className="button"
@@ -87,5 +92,6 @@ function App() {
         </>
     );
 }
-
+ 
 export default App;
+
