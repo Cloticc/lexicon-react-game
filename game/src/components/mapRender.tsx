@@ -6,6 +6,9 @@ import { useState } from "react";
 //Check if array is an array of arrays
 interface MapRenderProps {
 	initialMapData: string[][];
+	handleGameFinish: (isGameWon: boolean) => void;
+    handleCounter: (newCounter: number) => void;
+    handleElapsed: (newElapsedTime: number) => void;
 }
 // example to add the map to the game add the following line to the App.tsx file
 // import map1 from './maps/map1.json';
@@ -13,9 +16,25 @@ interface MapRenderProps {
 	/* <MapRender initialMapData={map1.mapdata} /> */
 }
 
-export function MapRender({ initialMapData }: MapRenderProps) {
+export function MapRender({ initialMapData,
+	handleGameFinish,
+    handleCounter,
+    handleElapsed, }: MapRenderProps) {
 	const [mapData, setMapData] = useState(initialMapData);
 	const [playerDirection, setPlayerDirection] = useState("down");
+
+	const handleGameWonChange = (isGameWon: boolean) => {
+		handleGameFinish(isGameWon);
+	  };
+	
+	  const handleCounterChange = (newCounter: number) => {
+		handleCounter(newCounter);
+	  };
+	
+	  const handleElapsedTimeChange = (newElapsedTime: number) => {
+		handleElapsed(newElapsedTime);
+	  };
+
 	// const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
 	/* This code snippet is finding the initial position of the player ('P') on the map by iterating
@@ -102,6 +121,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setBoxPositions={setBoxPositions}
 				playerPosition={playerPosition}
 				setPlayerPosition={setPlayerPosition}
+				onGameWonChange={handleGameWonChange}
+                onCounterChange={handleCounterChange} 
+                onElapsedTimeChange={handleElapsedTimeChange}
 			/>
 
 			{mapData.map((row, rowIndex) => (

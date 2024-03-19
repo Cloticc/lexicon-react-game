@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { playSound } from "../components/playSound";
+import HighScore from "./highscore";
 
 interface MoveCharProps {
 	mapData: string[][];
@@ -12,6 +13,9 @@ interface MoveCharProps {
 	setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
 	boxPositions: { x: number; y: number }[];
 	setBoxPositions: (positions: { x: number; y: number }[]) => void;
+	onGameWonChange: (won: boolean) => void;
+	onCounterChange: (counter: number) => void;
+	onElapsedTimeChange: (elapsedTime: number) => void;
 }
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
@@ -31,44 +35,44 @@ export function MoveChar({
 	indicatorPositions,
 	boxPositions,
 	setBoxPositions,
+  onGameWonChange,
+  onCounterChange,
+  onElapsedTimeChange,
 }: MoveCharProps) {
-	const [gameWon, setGameWon] = useState(false);
-	const [counter, setCounter] = useState(0);
-	const [startTime, setStartTime] = useState<Date | null>(null);
-	const [elapsedTime, setElapsedTime] = useState<number>(0);
-	const [gameRunning, setGameRunning] = useState<boolean>(false);
-	const [highestScores, setHighestScores] = useState<{
-		[level: string]: { score: number; elapsedTime: number };
-	}>({});
-	const [currentLevel, setCurrentLevel] = useState<string>("1");
+  const [counter, setCounter] = useState(0);
+  const [startTime, setStartTime] = useState<Date | null>(null);
+  const [elapsedTime, setElapsedTime] = useState<number>(0);
+  const [gameRunning, setGameRunning] = useState<boolean>(false);
+  const [wonGame, setWonGame] = useState<boolean>(false);
+  const [currentLevel, setCurrentLevel] = useState<string>("1");
 
-	useEffect(() => {
-		const storedScores = localStorage.getItem("highestScores");
-		if (storedScores) {
-			setHighestScores(JSON.parse(storedScores));
-		}
-	}, []);
+  useEffect(() => {
+    onCounterChange(counter);
+  }, [counter, onCounterChange]);
 
-	useEffect(() => {
-		if (startTime && gameRunning) {
-			const intervalId = setInterval(() => {
-				const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
-				setElapsedTime(elapsed);
-			}, 1000);
+  useEffect(() => {
+    if (startTime && gameRunning) {
+      const intervalId = setInterval(() => {
+        const elapsed = Math.floor(Date.now() - startTime.getTime());
+        setElapsedTime(elapsed);
+        onElapsedTimeChange(elapsed);
+      }, 100);
 
-			return () => clearInterval(intervalId);
-		}
-	}, [startTime, gameRunning]);
+      return () => clearInterval(intervalId);
+    }
+  }, [startTime, gameRunning, onElapsedTimeChange]);
 
-	const startGame = useCallback(() => {
-		setStartTime(new Date());
-		setGameRunning(true);
-	}, []);
+  const startGame = useCallback(() => {
+    setStartTime(new Date());
+    setGameRunning(true);
+    setWonGame(false);
+  }, []);
 
-	const stopGame = useCallback(() => {
-		setStartTime(null);
-		setGameRunning(false);
-	}, []);
+  const stopGame = useCallback(() => {
+    setStartTime(null);
+    setGameRunning(false);
+    setWonGame(true);
+  }, []);
 
 	const handlePlayerMove = useCallback(
 		(direction: string) => {
@@ -173,26 +177,26 @@ export function MoveChar({
 						setPlayerPosition(newPosition);
 					}
 
-					if (!gameRunning && counter === 1) {
-						startGame(); // Start the game when the first move is made
-					}
-				}
-			}
-		},
-		[
-			mapData,
-			playerPosition,
-			setPlayerDirection,
-			indicatorPositions,
-			setMapData,
-			setPlayerPosition,
-			setBoxPositions,
-			boxPositions,
-			gameRunning,
-			counter,
-			startGame,
-		]
-	);
+          if (!gameRunning && counter === 0) {
+            startGame(); // Start the game when the first move is made
+          }
+        }
+      }
+    },
+    [
+      mapData,
+      playerPosition,
+      setPlayerDirection,
+      indicatorPositions,
+      setMapData,
+      setPlayerPosition,
+      setBoxPositions,
+      boxPositions,
+      gameRunning,
+      counter,
+      startGame,
+    ]
+  );
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -274,51 +278,37 @@ export function MoveChar({
 
 	useEffect(() => {
 		let allIndicatorsCovered = true;
-
-		// Iterate through all indicator positions
 		for (const position of indicatorPositions) {
 			const { x, y } = position;
-
-			// Check if the cell indicated by the position is not a box
 			if (mapData[y][x] !== "B") {
 				allIndicatorsCovered = false;
-				break; // If any indicator position is not covered, break the loop
+				break; 
 			}
 		}
+    // If all indicators are covered, declare victory
+    if (allIndicatorsCovered) {
+      stopGame();
+      onGameWonChange(true);
+    }
+  }, [
+    onGameWonChange,
+    mapData,
+    counter,
+    elapsedTime,
+    currentLevel,
+    onCounterChange,
+  ]);
 
-		// If all indicators are covered, declare victory
-		if (allIndicatorsCovered) {
-			setGameWon(true);
-			stopGame();
-			const levelData = highestScores[currentLevel] || {
-				score: Infinity,
-				elapsedTime: 0,
-			};
-			if (
-				counter < levelData.score ||
-				(counter === levelData.score && elapsedTime < levelData.elapsedTime)
-			) {
-				const updatedScores = {
-					...highestScores,
-					[currentLevel]: { score: counter, elapsedTime },
-				};
-				setHighestScores(updatedScores);
-				localStorage.setItem("highestScores", JSON.stringify(updatedScores));
-			}
-		}
-	}, [mapData, gameWon, counter, elapsedTime, currentLevel, highestScores]);
-
-	return (
-		<>
-			{gameWon && (
-				<div className="victory-alert">
-					<h1>Congratulations! You've won the game!</h1>
-				</div>
-			)}
-			<div>
-				<h2>Counter: {counter}</h2>
-				<p>Elapsed Time: {startTime && gameRunning ? `${elapsedTime}s` : "0s"}</p>
-			</div>
-		</>
-	);
+  return (
+    <>
+      {wonGame && (counter > 0 && elapsedTime > 0) && (
+        <HighScore
+          currentLevel={currentLevel}
+          counter={counter}
+          elapsedTime={elapsedTime}
+        />
+      )}
+    </>
+  );
 }
+
