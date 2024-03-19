@@ -35,44 +35,44 @@ export function MoveChar({
 	indicatorPositions,
 	boxPositions,
 	setBoxPositions,
-  onGameWonChange,
-  onCounterChange,
-  onElapsedTimeChange,
+	onGameWonChange,
+	onCounterChange,
+	onElapsedTimeChange,
 }: MoveCharProps) {
-  const [counter, setCounter] = useState(0);
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [elapsedTime, setElapsedTime] = useState<number>(0);
-  const [gameRunning, setGameRunning] = useState<boolean>(false);
-  const [wonGame, setWonGame] = useState<boolean>(false);
-  const [currentLevel, setCurrentLevel] = useState<string>("1");
+	const [counter, setCounter] = useState(0);
+	const [startTime, setStartTime] = useState<Date | null>(null);
+	const [elapsedTime, setElapsedTime] = useState<number>(0);
+	const [gameRunning, setGameRunning] = useState<boolean>(false);
+	const [wonGame, setWonGame] = useState<boolean>(false);
+	const [currentLevel, setCurrentLevel] = useState<string>("1");
 
-  useEffect(() => {
-    onCounterChange(counter);
-  }, [counter, onCounterChange]);
+	useEffect(() => {
+		onCounterChange(counter);
+	}, [counter, onCounterChange]);
 
-  useEffect(() => {
-    if (startTime && gameRunning) {
-      const intervalId = setInterval(() => {
-        const elapsed = Math.floor(Date.now() - startTime.getTime());
-        setElapsedTime(elapsed);
-        onElapsedTimeChange(elapsed);
-      }, 100);
+	useEffect(() => {
+		if (startTime && gameRunning) {
+			const intervalId = setInterval(() => {
+				const elapsed = Math.floor(Date.now() - startTime.getTime());
+				setElapsedTime(elapsed);
+				onElapsedTimeChange(elapsed);
+			}, 100);
 
-      return () => clearInterval(intervalId);
-    }
-  }, [startTime, gameRunning, onElapsedTimeChange]);
+			return () => clearInterval(intervalId);
+		}
+	}, [startTime, gameRunning, onElapsedTimeChange]);
 
-  const startGame = useCallback(() => {
-    setStartTime(new Date());
-    setGameRunning(true);
-    setWonGame(false);
-  }, []);
+	const startGame = useCallback(() => {
+		setStartTime(new Date());
+		setGameRunning(true);
+		setWonGame(false);
+	}, []);
 
-  const stopGame = useCallback(() => {
-    setStartTime(null);
-    setGameRunning(false);
-    setWonGame(true);
-  }, []);
+	const stopGame = useCallback(() => {
+		setStartTime(null);
+		setGameRunning(false);
+		setWonGame(true);
+	}, []);
 
 	const handlePlayerMove = useCallback(
 		(direction: string) => {
@@ -177,26 +177,26 @@ export function MoveChar({
 						setPlayerPosition(newPosition);
 					}
 
-          if (!gameRunning && counter === 0) {
-            startGame(); // Start the game when the first move is made
-          }
-        }
-      }
-    },
-    [
-      mapData,
-      playerPosition,
-      setPlayerDirection,
-      indicatorPositions,
-      setMapData,
-      setPlayerPosition,
-      setBoxPositions,
-      boxPositions,
-      gameRunning,
-      counter,
-      startGame,
-    ]
-  );
+					if (!gameRunning && counter === 0) {
+						startGame(); // Start the game when the first move is made
+					}
+				}
+			}
+		},
+		[
+			mapData,
+			playerPosition,
+			setPlayerDirection,
+			indicatorPositions,
+			setMapData,
+			setPlayerPosition,
+			setBoxPositions,
+			boxPositions,
+			gameRunning,
+			counter,
+			startGame,
+		]
+	);
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -282,33 +282,26 @@ export function MoveChar({
 			const { x, y } = position;
 			if (mapData[y][x] !== "B") {
 				allIndicatorsCovered = false;
-				break; 
+				break;
 			}
 		}
-    // If all indicators are covered, declare victory
-    if (allIndicatorsCovered) {
-      stopGame();
-      onGameWonChange(true);
-    }
-  }, [
-    onGameWonChange,
-    mapData,
-    counter,
-    elapsedTime,
-    currentLevel,
-    onCounterChange,
-  ]);
+		// If all indicators are covered, declare victory
+		if (allIndicatorsCovered) {
+			stopGame();
+			onGameWonChange(true);
+			playSound("leveldone", 0.45);
+		}
+	}, [onGameWonChange, mapData, counter, elapsedTime, currentLevel, onCounterChange]);
 
-  return (
-    <>
-      {wonGame && (counter > 0 && elapsedTime > 0) && (
-        <HighScore
-          currentLevel={currentLevel}
-          counter={counter}
-          elapsedTime={elapsedTime}
-        />
-      )}
-    </>
-  );
+	return (
+		<>
+			{wonGame && counter > 0 && elapsedTime > 0 && (
+				<HighScore
+					currentLevel={currentLevel}
+					counter={counter}
+					elapsedTime={elapsedTime}
+				/>
+			)}
+		</>
+	);
 }
-
