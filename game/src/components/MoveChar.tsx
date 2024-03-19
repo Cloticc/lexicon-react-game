@@ -6,7 +6,6 @@ import HighScore from "./highscore";
 interface MoveCharProps {
 	mapData: string[][];
 	setMapData: (mapData: string[][]) => void;
-    playerDirection: string;
 	setPlayerDirection: (direction: string) => void;
 	playerPosition: { x: number; y: number };
 	setPlayerPosition: (position: { x: number; y: number }) => void;
@@ -18,7 +17,6 @@ interface MoveCharProps {
 	onCounterChange: (counter: number) => void;
 	onElapsedTimeChange: (elapsedTime: number) => void;
 }
-
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
 const directionMap: Record<Direction, { x: number; y: number }> = {
