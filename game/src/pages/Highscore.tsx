@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import { playSound } from "./../components/playSound";
+import {formatElapsedTime } from "../utils/TimeUtils";
 
 export function Highscore() {
+	const [highestScores, setHighestScores] = useState<{ [level: string]: { score: number; elapsedTime: number } }>({});
+
+  useEffect(() => {
+    const storedScores = localStorage.getItem("highestScores");
+    if (storedScores) {
+      setHighestScores(JSON.parse(storedScores));
+    }
+  }, [highestScores]);
+
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
@@ -15,26 +26,27 @@ export function Highscore() {
 		<>
 			<div id="highscore">
 				<h1>Highscore</h1>
-				<h2>Level 1 Complete</h2>
-				<input type="text" placeholder="Enter Alias" />
+				<h2>Level 1 Completed</h2>
+				<h2>High Score</h2>
 				<div className="showhighscore">
 					<div className="result">
 						<div className="row">
-							<div>Alias</div>
+							<div>Level</div>
 							<div>Steps</div>
 							<div>Time</div>
 						</div>
 					</div>
 				</div>
-				<div className="showhighscore">
-					<div className="result">
-						<div className="row">
-							<div>Player1</div>
-							<div>3</div>
-							<div>3:22</div>
-						</div>
-					</div>
-				</div>
+				{Object.keys(highestScores).map((level, index) => (
+          <div key={index} className="showhighscore">
+            <div className="result">
+              <div className="row">
+                <div>{level}</div>
+                <div>{highestScores[level].score}</div>
+				<div>{formatElapsedTime (highestScores[level].elapsedTime)}</div>              </div>
+            </div>
+          </div>
+        ))}
 				<div className="content-container">
 					<button
 						id="btn-replay-again"

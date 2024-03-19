@@ -6,20 +6,35 @@ import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
+import { formatElapsedTime } from "../utils/TimeUtils";
 import map1 from "../maps/map1.json";
 
 export function Play({ onPageChange }: SelectPageProps) {
-	const [gameFinish, setFinish] = useState(false);
+  const [gameFinish, setFinish] = useState(false);
+  const [counter, setCounter] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(0);
 
-	const handleSelectLevelClick = () => {
-		onPageChange("selectlevel");
-		playSound("click", 0.25);
-		playSound("swoosh", 0.15);
-	};
+  const handleGameFinish = (isGameWon: boolean) => {
+    if (isGameWon) {
+      setFinish(true);
+    }
+  };
+  const handleCounter = (newCounter: number) => {
+    setCounter(newCounter);
+  };
+  const handleElapsedTime = (newElapsedTime: number) => {
+    setElapsedTime(newElapsedTime);
+  };
 
-	function handleMouseOver() {
-		playSound("hover", 0.15);
-	}
+  const handleSelectLevelClick = () => {
+    onPageChange("selectlevel");
+    playSound("click", 0.25);
+    playSound("swoosh", 0.15);
+  };
+
+  function handleMouseOver() {
+    playSound("hover", 0.15);
+  }
 
 	function handleUndoStepClick() {
 		/* put function here?*/
@@ -27,23 +42,23 @@ export function Play({ onPageChange }: SelectPageProps) {
 		playSound("reverse", 0.35);
 	}
 
-	/*
-	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
-	useEffect(() => {
-		setTimeout(() => {
-			setFinish(true);
-		}, 3000);
-	});
+  /*
+  // Can remove this useEffect. It's just to show the highscore element after 3 seconds
+  useEffect(() => {
+    setTimeout(() => {
+      setFinish(true);
+    }, 3000);
+  });
 */
-	return (
-		<>
-			<div id="showlevel">Level 1</div>
-			<div id="status">
-				<div id="stepstaken">0</div>
-				<span>in</span>
-				<div id="timer">1:32</div>
-			</div>
-
+  return (
+    <>
+      <div id="startpageui">
+        <div id="showlevel">Level 1</div>
+        <div id="status">
+          <div id="stepstaken">{counter} steps</div>
+          <span>in</span>
+          <div id="timer">{formatElapsedTime(elapsedTime)}</div>
+        </div>
 			<button
 				id="btn-undostep"
 				className="button"
@@ -58,8 +73,13 @@ export function Play({ onPageChange }: SelectPageProps) {
 				onClick={handleSelectLevelClick}
 			></button>
 
-			<MapRender initialMapData={map1.mapdata} />
+			<MapRender initialMapData={map1.mapdata} 
+					handleGameFinish={handleGameFinish}
+						handleCounter={handleCounter}
+						  handleElapsed={handleElapsedTime}
+			/>
 			{gameFinish && <Highscore />}
+			</div>
 		</>
 	);
 }
