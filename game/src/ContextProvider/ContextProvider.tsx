@@ -68,6 +68,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setElapsedTime(0);
     setWonGame(false);
     setMapData(initialMapData);
+    setMusic("play");
   }
 
   const value: GameContextProps = {
