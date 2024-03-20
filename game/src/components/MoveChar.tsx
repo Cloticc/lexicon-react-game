@@ -1,7 +1,8 @@
-import { useContext, useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+
+import HighScore from "./highscore";
 import { MyContext } from "../ContextProvider/ContextProvider";
 import { playSound } from "../components/playSound";
-import HighScore from "./highscore";
 
 interface MoveCharProps {
   mapData: string[][];

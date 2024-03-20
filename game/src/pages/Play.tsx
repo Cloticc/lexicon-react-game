@@ -1,16 +1,13 @@
 import "./../css/Play.css";
 
-import { useContext } from "react";
-
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
-import { SelectPageProps } from "./../components/InterfacePages";
-import { playSound } from "./../components/playSound";
-import { formatElapsedTime } from "../utils/TimeUtils";
-
-import map1 from "../maps/map1.json";
 import { MyContext } from "../ContextProvider/ContextProvider";
-
+import { SelectPageProps } from "./../components/InterfacePages";
+import { formatElapsedTime } from "../utils/TimeUtils";
+import map1 from "../maps/map1.json";
+import { playSound } from "./../components/playSound";
+import { useContext } from "react";
 
 export function Play({ onPageChange }: SelectPageProps) {
   const { counter } = useContext(MyContext);

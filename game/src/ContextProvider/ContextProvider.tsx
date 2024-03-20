@@ -1,5 +1,15 @@
 import { createContext, useState } from "react";
 
+interface PlayerPosition {
+  x: number;
+  y: number;
+}
+
+interface BoxPosition {
+  x: number;
+  y: number;
+}
+
 interface GameContextProps {
   test: string;
   setTest: (test: string) => void;
@@ -9,6 +19,21 @@ interface GameContextProps {
   setCounter: (counter: number) => void;
   elapsedTime: number;
   setElapsedTime: (elapsedTime: number) => void;
+  resetGame: () => void;
+  mapData: string[][];
+  setMapData: (mapData: string[][]) => void;
+  boxPositions: { x: number; y: number }[];
+  setBoxPositions: (boxPositions: { x: number; y: number }[]) => void;
+  playerPosition: { x: number; y: number };
+  setPlayerPosition: (playerPosition: { x: number; y: number }) => void;
+  indicatorPositions: { x: number; y: number }[];
+  setIndicatorPositions: (indicatorPositions: { x: number; y: number }[]) => void;
+  initialMapData: string[][];
+  setInitialMapData: (initialMapData: string[][]) => void;
+  initialPlayerPosition: PlayerPosition;
+  setInitialPlayerPosition: (position: PlayerPosition) => void;
+  initialBoxPositions: BoxPosition[];
+  setInitialBoxPositions: (positions: BoxPosition[]) => void;
 }
 
 interface ChildrenProps {
@@ -22,21 +47,53 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   const [counter, setCounter] = useState<number>(0);
   const [elapsedTime, setElapsedTime] = useState<number>(0);
   const [wonGame, setWonGame] = useState<boolean>(false);
-  console.log(state);
+  const [mapData, setMapData] = useState<string[][]>([[]]);
+  const [boxPositions, setBoxPositions] = useState<{ x: number; y: number }[]>([]);
+  const [playerPosition, setPlayerPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+const [indicatorPositions, setIndicatorPositions] = useState<{ x: number; y: number }[]>([]);
+  const [initialMapData, setInitialMapData] = useState<string[][]>([[]]);
+  const [initialPlayerPosition, setInitialPlayerPosition] = useState<PlayerPosition>({ x: 0, y: 0 });
+  const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
+ 
+
+  const resetGame = () => {
+    setState("Test");
+    setCounter(0);
+    setElapsedTime(0);
+    setWonGame(false);
+    setMapData(initialMapData);
+  }
+
+  const value: GameContextProps = {
+    test: state,
+    setTest: setState,
+    counter: counter,
+    setCounter: setCounter,
+    elapsedTime: elapsedTime,
+    setElapsedTime: setElapsedTime,
+    wonGame: wonGame,
+    setWonGame: setWonGame,
+    resetGame: resetGame,
+    mapData: mapData,
+    setMapData: setMapData,
+    boxPositions: boxPositions,
+    setBoxPositions: setBoxPositions,
+    playerPosition: playerPosition,
+    setPlayerPosition: setPlayerPosition,
+    indicatorPositions: indicatorPositions,
+    setIndicatorPositions: setIndicatorPositions,
+    initialMapData: initialMapData,
+    setInitialMapData: setInitialMapData,
+    initialPlayerPosition: initialPlayerPosition,
+    setInitialPlayerPosition: setInitialPlayerPosition,
+    initialBoxPositions: initialBoxPositions,
+    setInitialBoxPositions: setInitialBoxPositions,
+     
+  };
 
   return (
     <MyContext.Provider
-      value={{
-        test: state,
-        setTest: setState,
-        counter: counter,
-        setCounter: setCounter,
-        elapsedTime: elapsedTime,
-        setElapsedTime: setElapsedTime,
-        wonGame: wonGame,
-        setWonGame: setWonGame,
-      }}
-    >
+      value={value}>
       {children}
     </MyContext.Provider>
   );

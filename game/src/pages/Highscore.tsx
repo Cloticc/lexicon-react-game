@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
-import { playSound } from "./../components/playSound";
+import { useContext, useEffect, useState } from "react";
+
+import { MyContext } from "../ContextProvider/ContextProvider";
 import { formatElapsedTime } from "../utils/TimeUtils";
+import { playSound } from "./../components/playSound";
 
 export function Highscore() {
 	const [highestScores, setHighestScores] = useState<{
 		[level: string]: { score: number; elapsedTime: number };
 	}>({});
+
+	const { setMapData, setBoxPositions, setPlayerPosition, initialMapData, resetGame, initialPlayerPosition, initialBoxPositions } = useContext(MyContext);
+
 
 	useEffect(() => {
 		const storedScores = localStorage.getItem("highestScores");
@@ -21,6 +26,11 @@ export function Highscore() {
 	function handleReplay() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		setMapData(initialMapData);
+		setPlayerPosition(initialPlayerPosition);
+		setBoxPositions(initialBoxPositions);
+		resetGame();
+		
 	}
 	function handleNextLevel() {
 		playSound("click", 0.25);
