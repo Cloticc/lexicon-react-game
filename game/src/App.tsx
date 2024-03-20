@@ -7,14 +7,13 @@ import { Credits } from "./pages/Credits";
 import { FullscreenToggle } from "./components/fullscrenToggle";
 import { Music } from "./components/Music";
 import { MyComponent } from "./pages/MyComponent";
+import { MyContext } from "./ContextProvider/ContextProvider";
 import { Play } from "./pages/Play";
 import { SelectLevel } from "./pages/SelectLevel";
 import { Settings } from "./pages/Settings";
 import { StartPageUI } from "./pages/StartPageUI";
-import { playSound } from "./components/playSound";
-import { useContext, useEffect, useState } from "react";
-import { MyContext } from "./ContextProvider/ContextProvider";
 import allMaps from "./maps/maps";
+import { playSound } from "./components/playSound";
 
 type Page = "start" | "selectlevel" | "play" | "credits";
 
