@@ -1,7 +1,7 @@
 import "../css/MapRender.css";
 
 import { useContext, useEffect, useRef, useState } from "react";
-
+import { playSound } from "./../components/playSound";
 import { MoveChar } from "./MoveChar";
 import { MyContext } from "../ContextProvider/ContextProvider";
 
@@ -18,6 +18,7 @@ interface MapRenderProps {
 export function MapRender({ initialMapData }: MapRenderProps) {
 	const {
 		showGameContainer,
+		setShowGameContainer,
 		mapData,
 		setMapData,
 		boxPositions,
@@ -95,6 +96,13 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setMapData(initialMapData);
 				setBoxPositions(boxStartPositions.current);
 				setPlayerPosition(playerStartPosition.current);
+				playSound("click", 0.25);
+				playSound("reverse", 0.5);
+				setShowGameContainer(false);
+				setTimeout(() => {
+					setShowGameContainer(true);
+				}, 1);
+
 				resetGame();
 			}
 		};
