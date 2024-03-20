@@ -2,6 +2,7 @@
 	position: absolute;
 	left: 3rem;
 	top: 3rem;
+	z-index: 80;
 }
 
 #btn-selectlevel:after {

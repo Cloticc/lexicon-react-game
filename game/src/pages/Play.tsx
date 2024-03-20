@@ -7,8 +7,10 @@ import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
 import { formatElapsedTime } from "../utils/TimeUtils";
+
 import map1 from "../maps/map1.json";
 import { MyContext } from "../ContextProvider/ContextProvider";
+
 
 export function Play({ onPageChange }: SelectPageProps) {
   const { counter } = useContext(MyContext);
@@ -39,6 +41,7 @@ export function Play({ onPageChange }: SelectPageProps) {
     }, 3000);
   });
 */
+
   return (
     <>
       <div id="startpageui">
@@ -67,4 +70,5 @@ export function Play({ onPageChange }: SelectPageProps) {
       </div>
     </>
   );
+
 }
