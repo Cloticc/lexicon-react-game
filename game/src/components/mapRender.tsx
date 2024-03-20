@@ -35,6 +35,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
   const [playerDirection, setPlayerDirection] = useState("down");
   // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
+  //set useRef to store the initial positions of the player, boxes and indicators
   const playerStartPosition = useRef({ x: 5, y: 6 });
   const boxStartPositions = useRef<{ x: number, y: number }[]>([]);
   const IndicatorPositions = useRef<{ x: number, y: number }[]>([]);
