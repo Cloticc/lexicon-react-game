@@ -16,12 +16,14 @@ export function Play({ onPageChange }: SelectPageProps) {
 	const { wonGame } = useContext(MyContext);
 	const { level } = useContext(MyContext);
 	const { setMusic } = useContext(MyContext);
+	const { resetGame } = useContext(MyContext);
 
 	useEffect(() => {
 		setMusic("play");
 	}, []);
 
 	const handleSelectLevelClick = () => {
+		resetGame();
 		onPageChange("selectlevel");
 		playSound("click", 0.25);
 		playSound("swoosh", 0.15);
@@ -38,12 +40,12 @@ export function Play({ onPageChange }: SelectPageProps) {
 	}
 
 	/*
-  // Can remove this useEffect. It's just to show the highscore element after 3 seconds
-  useEffect(() => {
-    setTimeout(() => {
-      setFinish(true);
-    }, 3000);
-  });
+	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
+	useEffect(() => {
+		setTimeout(() => {
+			setFinish(true);
+		}, 3000);
+	});
 */
 
 	return (
