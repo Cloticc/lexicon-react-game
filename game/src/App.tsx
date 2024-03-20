@@ -23,6 +23,19 @@ function App() {
 	const [level, setLevel] = useState(0);
 	const { settings, toggleSettings } = useContext(MyContext);
 	const { music, setMusic } = useContext(MyContext);
+	const [isReady, setIsReady] = useState(false);
+
+	useEffect(() => {
+		// Simulate loading by setting a timeout
+		const timeout = setTimeout(() => {
+			setIsReady(true);
+		}, 1000); // Adjust the duration as needed
+
+		// Cleanup by clearing the timeout when the component unmounts
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, []);
 
 	useEffect(() => {
 		setMusic("ui");
@@ -54,50 +67,54 @@ function App() {
 
 	return (
 		<>
+			{/* Show loader while document is not ready */}
+			{!isReady && <div className="loader"></div>}
+
 			{/* <MyComponent /> */}
-			<button
-				id="btn-settings"
-				className="button"
-				onClick={handleToggleSettings}
-				onMouseOver={handleMouseOver}
-			></button>
+			{isReady && (
+				<>
+					<button
+						id="btn-settings"
+						className="button"
+						onClick={handleToggleSettings}
+						onMouseOver={handleMouseOver}
+					></button>
+					<FullscreenToggle />
+					{settings && <Settings />}
+					{/* Music Player */}
+					{<Music audio={music} />}
+					<div id="startpageui">
+						{/* StartPage UI */}
+						{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
 
-			<FullscreenToggle />
-			{settings && <Settings />}
+						{/* Select Level*/}
+						{currentPage === "selectlevel" && (
+							<SelectLevel
+								onPageChange={handlePageChange}
+								mapCount={mapCount}
+								currentLevel={level}
+								onLevelChange={handleLevelChange}
+							/>
+						)}
 
-			{/* Music Player */}
-			{<Music audio={music} />}
+						{/* Credits */}
+						{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
 
-			<div id="startpageui">
-				{/* StartPage UI */}
-				{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
+						{/* Play */}
+						{currentPage === "play" && <Play onPageChange={handlePageChange} />}
 
-				{/* Select Level*/}
-				{currentPage === "selectlevel" && (
-					<SelectLevel
-						onPageChange={handlePageChange}
-						mapCount={mapCount}
-						currentLevel={level}
-						onLevelChange={handleLevelChange}
-					/>
-				)}
-
-				{/* Credits */}
-				{currentPage === "credits" && <Credits onPageChange={handlePageChange} />}
-
-				{/* Play */}
-				{currentPage === "play" && <Play onPageChange={handlePageChange} />}
-
-				<div id="space">
-					<div className="stars"></div>
-					<div className="stars"></div>
-					<div className="stars"></div>
-					<div className="stars"></div>
-					<div className="stars"></div>
-				</div>
-				<div id="retrogrid"></div>
-				<div id="copyright">© 2024 Studio5</div>
-			</div>
+						<div id="space">
+							<div className="stars"></div>
+							<div className="stars"></div>
+							<div className="stars"></div>
+							<div className="stars"></div>
+							<div className="stars"></div>
+						</div>
+						<div id="retrogrid"></div>
+						<div id="copyright">© 2024 Studio5</div>
+					</div>
+				</>
+			)}
 		</>
 	);
 }
