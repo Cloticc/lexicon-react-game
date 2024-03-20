@@ -10,7 +10,7 @@ export function Highscore() {
 	const [highestScores, setHighestScores] = useState<{
 		[level: string]: { score: number; elapsedTime: number };
 	}>({});
-
+const { level, setLevel } = useContext(MyContext);
 	const {
 		setMapData,
 		setBoxPositions,
@@ -48,8 +48,15 @@ export function Highscore() {
 	function handleNextLevel() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		setLevel(level + 1); 
+    setMapData(initialMapData);
+    setPlayerPosition(initialPlayerPosition);
+    setBoxPositions(initialBoxPositions);
+    resetGame();
+    setShowGameContainer(true);
 		setShowGameContainer(true);
 	}
+
 	return (
 		<>
 			<div id="highscore">
