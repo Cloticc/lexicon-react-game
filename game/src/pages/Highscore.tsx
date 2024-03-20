@@ -33,6 +33,21 @@ export function Highscore() {
 		setMusic("ui");
 	}, []); // Empty dependency array to run the effect only once
 
+	useEffect(() => {
+		// Define the function to run when Enter key is pressed
+		const handleEnterPress = (event) => {
+			if (event.key === "Enter") {
+				handleNextLevel();
+			}
+		};
+		// Attach the event listener to the document body
+		document.body.addEventListener("keydown", handleEnterPress);
+		// Remove the event listener when the component unmounts
+		return () => {
+			document.body.removeEventListener("keydown", handleEnterPress);
+		};
+	}, []);
+
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
@@ -60,7 +75,7 @@ export function Highscore() {
 		<>
 			<div id="highscore">
 				<h1>Completed</h1>
-				<h2>Level 1</h2>
+				<h2>Level {level + 1}</h2>
 				<h2>High Score</h2>
 				<div className="showhighscore">
 					<div className="result">
