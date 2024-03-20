@@ -49,7 +49,7 @@ export function Play({ onPageChange }: SelectPageProps) {
 	return (
 		<>
 			<div id="startpageui">
-				<div id="showlevel">Level 1</div>
+				<div id="showlevel">Level {level + 1}</div>
 				<div id="status">
 					<div id="stepstaken">{counter} steps</div>
 					<span>in</span>
