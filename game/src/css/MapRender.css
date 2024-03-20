@@ -35,8 +35,30 @@ body,
 	filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 2rem 3rem black);
+	animation: intro 0.5s ease-out 1 forwards;
 }
 
+.hide {
+	display: none;
+}
+
+@keyframes intro {
+	0% {
+		scale: 0.1;
+		filter: brightness(3) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+			drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+			drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
+	}
+	50% {
+		scale: 1.2;
+	}
+	100% {
+		filter: brightness(1) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+			drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+			drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
+		scale: 1;
+	}
+}
 .grid-row {
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);

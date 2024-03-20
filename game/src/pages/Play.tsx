@@ -16,10 +16,12 @@ export function Play({ onPageChange }: SelectPageProps) {
 	const { wonGame } = useContext(MyContext);
 	const { level } = useContext(MyContext);
 	const { setMusic } = useContext(MyContext);
+	const { showGameContainer, setShowGameContainer } = useContext(MyContext);
 	const { resetGame } = useContext(MyContext);
 
 	useEffect(() => {
 		setMusic("play");
+		setShowGameContainer(true);
 	}, []);
 
 	const handleSelectLevelClick = () => {
@@ -50,30 +52,27 @@ export function Play({ onPageChange }: SelectPageProps) {
 
 	return (
 		<>
-			<div id="startpageui">
-				<div id="showlevel">Level {level + 1}</div>
-				<div id="status">
-					<div id="stepstaken">{counter} steps</div>
-					<span>in</span>
-					<div id="timer">{formatElapsedTime(elapsedTime)}</div>
-				</div>
-				<button
-					id="btn-undostep"
-					className="button"
-					onMouseOver={handleMouseOver}
-					onClick={handleUndoStepClick}
-				></button>
-
-				<button
-					id="btn-selectlevel"
-					className="button"
-					onMouseOver={handleMouseOver}
-					onClick={handleSelectLevelClick}
-				></button>
-
-				<MapRender initialMapData={allMaps[level].mapdata} />
-				{wonGame && <Highscore />}
+			<div id="showlevel">Level {level + 1}</div>
+			<div id="status">
+				<div id="stepstaken">{counter} steps</div>
+				<div id="timer">{formatElapsedTime(elapsedTime)}</div>
 			</div>
+			<button
+				id="btn-undostep"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleUndoStepClick}
+			></button>
+
+			<button
+				id="btn-selectlevel"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleSelectLevelClick}
+			></button>
+
+			<MapRender initialMapData={allMaps[level].mapdata} />
+			{wonGame && <Highscore />}
 		</>
 	);
 }

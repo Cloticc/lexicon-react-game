@@ -142,6 +142,9 @@
 	font-weight: 900;
 	font-size: 4rem;
 	font-family: "Gajraj One", sans-serif;
+	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+	color: white;
 }
 
 .showhighscore {
@@ -254,6 +257,13 @@
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: 3rem;
+}
+
+#btn-sound.muted:after {
+	background-image: url("../assets/icon-mute.svg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 3.5rem;
 }
 
 #btn-replay:after {

@@ -19,8 +19,9 @@ type Page = "start" | "selectlevel" | "play" | "credits";
 
 function App() {
 	const [currentPage, setCurrentPage] = useState<Page>("start");
-	const [settings, toggleSettings] = useState<boolean>(false);
+
 	const [level, setLevel] = useState(0);
+	const { settings, toggleSettings } = useContext(MyContext);
 	const { music, setMusic } = useContext(MyContext);
 
 	useEffect(() => {
