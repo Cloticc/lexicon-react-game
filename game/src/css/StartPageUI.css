@@ -172,6 +172,7 @@
 	width: 80vw;
 	max-width: 50rem;
 	padding: 2rem;
+	min-height: 36rem;
 	border-radius: 0.8rem;
 	outline: 3px solid black;
 	box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
@@ -193,7 +194,6 @@
 
 #selectlevel .levels ul {
 	list-style: none;
-	height: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 	grid-gap: 1rem;
@@ -217,7 +217,7 @@
 	font-size: 2.5rem;
 	backdrop-filter: blur(0.5rem);
 	position: relative;
-	max-height: 9vh;
+	padding-bottom: 1.7rem;
 
 	z-index: 0;
 }
@@ -238,6 +238,7 @@
 	justify-content: space-between;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
+	pointer-events: none;
 }
 
 .highest .highmoves {

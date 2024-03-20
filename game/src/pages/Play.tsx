@@ -7,7 +7,7 @@ import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
 import { formatElapsedTime } from "../utils/TimeUtils";
-import map1 from "../maps/map1.json";
+import map from "../maps/map2.json";
 
 export function Play({ onPageChange }: SelectPageProps) {
 	const [gameFinish, setFinish] = useState(false);
@@ -52,34 +52,32 @@ export function Play({ onPageChange }: SelectPageProps) {
 */
 	return (
 		<>
-			<div id="startpageui">
-				<div id="showlevel">Level 1</div>
-				<div id="status">
-					<div id="stepstaken">{counter} steps</div>
-					<div id="timer">{formatElapsedTime(elapsedTime)}</div>
-				</div>
-				<button
-					id="btn-undostep"
-					className="button"
-					onMouseOver={handleMouseOver}
-					onClick={handleUndoStepClick}
-				></button>
-
-				<button
-					id="btn-selectlevel"
-					className="button"
-					onMouseOver={handleMouseOver}
-					onClick={handleSelectLevelClick}
-				></button>
-
-				<MapRender
-					initialMapData={map1.mapdata}
-					handleGameFinish={handleGameFinish}
-					handleCounter={handleCounter}
-					handleElapsed={handleElapsedTime}
-				/>
-				{gameFinish && <Highscore />}
+			<div id="showlevel">Level 1</div>
+			<div id="status">
+				<div id="stepstaken">{counter} steps</div>
+				<div id="timer">{formatElapsedTime(elapsedTime)}</div>
 			</div>
+			<button
+				id="btn-undostep"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleUndoStepClick}
+			></button>
+
+			<button
+				id="btn-selectlevel"
+				className="button"
+				onMouseOver={handleMouseOver}
+				onClick={handleSelectLevelClick}
+			></button>
+
+			<MapRender
+				initialMapData={map.mapdata}
+				handleGameFinish={handleGameFinish}
+				handleCounter={handleCounter}
+				handleElapsed={handleElapsedTime}
+			/>
+			{gameFinish && <Highscore />}
 		</>
 	);
 }

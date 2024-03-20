@@ -9,19 +9,43 @@ interface SelectLevelProps extends SelectPageProps {
 	onLevelChange: () => void;
 }
 
+var playedMaps: { mapId: number; score: number; elapsedTime: number }[] = []; // Declare playedMaps globally
+
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	const [mapFiles, setMapFiles] = useState<string[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(0);
-
 	const perPage = 20;
 	const startIndex = currentPage * perPage;
 	const endIndex = Math.min((currentPage + 1) * perPage, mapFiles.length);
 
 	useEffect(() => {
-		// Set mapFiles with some map data
+		const highestScoresJSON = localStorage.getItem("highestScores");
+
+		if (highestScoresJSON) {
+			const highestScores = JSON.parse(highestScoresJSON);
+
+			if (highestScores && Object.keys(highestScores).length > 0) {
+				const mapKeys = Object.keys(highestScores);
+
+				// Clear the existing entries in playedMaps
+				playedMaps.splice(0, playedMaps.length);
+
+				mapKeys.forEach((key) => {
+					const highscoreEntry = highestScores[key];
+					playedMaps.push({
+						mapId: parseInt(key),
+						score: highscoreEntry.score,
+						elapsedTime: highscoreEntry.elapsedTime,
+					});
+				});
+			}
+		}
+	}, []);
+
+	useEffect(() => {
 		const mapFilesData: string[] = [];
-		for (let i = 1; i <= mapCount; i++) {
-			mapFilesData.push(`map${i}.json`);
+		for (let i = 1; i <= allMaps.length; i++) {
+			mapFilesData.push(`${i - 1}`);
 		}
 		setMapFiles(mapFilesData);
 	}, [mapCount]);
@@ -59,6 +83,11 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 		playSound("hover", 0.15);
 	}
 
+	function handleMapClick() {
+		playSound("click", 0.25);
+		playSound("levelstart", 0.5);
+	}
+
 	return (
 		<>
 			<div id="selectlevel">
@@ -66,20 +95,38 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 
 				<div className="levels">
 					<ul>
-						{mapFiles.slice(startIndex, endIndex).map((map, index) => (
-							<li
-								key={startIndex + index}
-								data-name={map}
-								onMouseOver={map === "map1.json" ? handleMouseOver : undefined}
-								className={map !== "map1.json" ? "notplayable" : ""}
-							>
-								{startIndex + index + 1}
-								<div className="highest">
-									<span className="highmoves">2</span>
-									<span className="hightime">0:423</span>
-								</div>
-							</li>
-						))}
+						{mapFiles.slice(startIndex, endIndex).map((map, index) => {
+							// Find the corresponding highscore data for the current map
+							const highscoreData = playedMaps.find(
+								(entry) => entry.mapId - 1 === parseInt(map)
+							);
+
+							return (
+								<li
+									key={startIndex + index}
+									data-mapid={map}
+									onMouseOver={
+										playedMaps.length >= map ? handleMouseOver : undefined
+									}
+									onClick={playedMaps.length >= map ? handleMapClick : undefined}
+									className={playedMaps.length >= map ? "" : "notplayable"}
+								>
+									{startIndex + index + 1}
+									<div className="highest">
+										{highscoreData && (
+											<>
+												<span className="highmoves">
+													{highscoreData.score}
+												</span>
+												<span className="hightime">
+													{highscoreData.elapsedTime}
+												</span>
+											</>
+										)}
+									</div>
+								</li>
+							);
+						})}
 					</ul>
 					<button
 						className="arrow prev"
