@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { MyContext } from "../ContextProvider/ContextProvider";
-import { useContext } from "react";
 import { SelectPageProps } from "./../components/InterfacePages";
-import { playSound } from "./../components/playSound";
-import { formatElapsedTime } from "../utils/TimeUtils";
 import allMaps from "../maps/maps";
+import { formatElapsedTime } from "../utils/TimeUtils";
+import { playSound } from "./../components/playSound";
+import { useContext } from "react";
 
 interface SelectLevelProps extends SelectPageProps {
 	mapCount: number;
@@ -17,7 +18,7 @@ var playedMaps: { mapId: number; score: number; elapsedTime: number }[] = []; //
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	const [mapFiles, setMapFiles] = useState<string[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(0);
-
+	const { resetGame } = useContext(MyContext);
 	const { level, setLevel } = useContext(MyContext);
 	const { music, setMusic } = useContext(MyContext);
 
@@ -81,6 +82,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	const handlePlayClick = () => {
 		let id = playedMaps.length;
 		setLevel(id);
+		resetGame();
 		onPageChange("play");
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
