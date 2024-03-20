@@ -34,7 +34,6 @@ export function Settings() {
 	}
 
 	function handleReplay() {
-		setShowGameContainer(false);
 		playSound("click", 0.25);
 		playSound("reverse", 0.25);
 		setMapData(initialMapData);
@@ -42,7 +41,10 @@ export function Settings() {
 		setBoxPositions(initialBoxPositions);
 		resetGame();
 		toggleSettings(false);
-		setShowGameContainer(true);
+		setShowGameContainer(false);
+		setTimeout(() => {
+			setShowGameContainer(true);
+		}, 1);
 	}
 
 	function handleSolution() {
