@@ -15,6 +15,7 @@ export function Highscore() {
 		level,
 		setLevel,
 		setMapData,
+		setMusic,
 		setBoxPositions,
 		setPlayerPosition,
 		initialMapData,
@@ -65,6 +66,7 @@ export function Highscore() {
 	function handleNextLevel() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		setMusic("play");
 		setShowGameContainer(true);
 		let newLevel = level + 1;
 		setLevel(newLevel);
