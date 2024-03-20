@@ -50,7 +50,7 @@ function App() {
 
     return (
         <>
-        <MyComponent />
+        {/* <MyComponent /> */}
             <button
                 id="btn-settings"
                 className="button"
