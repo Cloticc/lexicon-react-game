@@ -3,7 +3,19 @@ import { playSound } from "./../components/playSound";
 import { useContext } from "react";
 
 export function Settings() {
-	const { setMapData, setBoxPositions, setPlayerPosition, initialMapData, resetGame, initialPlayerPosition, initialBoxPositions } = useContext(MyContext);
+	const {
+		toggleSettings,
+		setShowGameContainer,
+		isMuted,
+		setMuted,
+		setMapData,
+		setBoxPositions,
+		setPlayerPosition,
+		initialMapData,
+		resetGame,
+		initialPlayerPosition,
+		initialBoxPositions,
+	} = useContext(MyContext);
 
 	function handleMouseOver() {
 		playSound("hover", 0.15);
@@ -11,13 +23,26 @@ export function Settings() {
 
 	function handleSoundToggle() {
 		playSound("click", 0.25);
+		if (isMuted) {
+			document.querySelector("#music").volume = 0.15;
+			setMuted(false);
+		} else {
+			setMuted(true);
+			document.querySelector("#music").volume = 0;
+		}
+		toggleSettings(false);
 	}
+
 	function handleReplay() {
+		setShowGameContainer(false);
 		playSound("click", 0.25);
+		playSound("reverse", 0.25);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
 		setBoxPositions(initialBoxPositions);
 		resetGame();
+		toggleSettings(false);
+		setShowGameContainer(true);
 	}
 
 	function handleSolution() {
@@ -30,10 +55,11 @@ export function Settings() {
 				<div className="content-container">
 					<button
 						id="btn-sound"
-						className="button"
+						className={`button ${isMuted ? "muted" : ""}`}
 						onClick={handleSoundToggle}
 						onMouseOver={handleMouseOver}
 					></button>
+
 					<button
 						id="btn-replay"
 						className="button"

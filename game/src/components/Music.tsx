@@ -11,7 +11,7 @@ interface MusicProps {
 
 export const Music: React.FC<MusicProps> = ({ audio }) => {
 	const [music, setMusic] = useState<string>(""); // Initialize music state with null
-	const { level } = useContext(MyContext);
+	const { level, isMuted } = useContext(MyContext);
 	const audioRef = useRef<HTMLAudioElement>(null);
 
 	useEffect(() => {
@@ -35,7 +35,12 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
 
 		if (music && musicPlayer) {
 			musicPlayer.src = music;
-			musicPlayer.volume = 0.15;
+			if (isMuted) {
+				musicPlayer.volume = 0;
+			} else {
+				musicPlayer.volume = 0.15;
+			}
+
 			musicPlayer.loop = true;
 			musicPlayer.play();
 		}
@@ -48,5 +53,5 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
 		};
 	}, [music]);
 
-	return <audio autoPlay loop ref={audioRef} />;
+	return <audio id="music" autoPlay loop ref={audioRef} />;
 };

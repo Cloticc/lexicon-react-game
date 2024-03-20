@@ -6,12 +6,20 @@ import { playSound } from "./../components/playSound";
 
 export function Highscore() {
 	const { music, setMusic } = useContext(MyContext);
+	const { setShowGameContainer } = useContext(MyContext);
 	const [highestScores, setHighestScores] = useState<{
 		[level: string]: { score: number; elapsedTime: number };
 	}>({});
 
-	const { setMapData, setBoxPositions, setPlayerPosition, initialMapData, resetGame, initialPlayerPosition, initialBoxPositions } = useContext(MyContext);
-
+	const {
+		setMapData,
+		setBoxPositions,
+		setPlayerPosition,
+		initialMapData,
+		resetGame,
+		initialPlayerPosition,
+		initialBoxPositions,
+	} = useContext(MyContext);
 
 	useEffect(() => {
 		const storedScores = localStorage.getItem("highestScores");
@@ -19,6 +27,7 @@ export function Highscore() {
 			setHighestScores(JSON.parse(storedScores));
 		}
 		playSound("leveldone", 0.3);
+		setShowGameContainer(false);
 		setMusic("ui");
 	}, []); // Empty dependency array to run the effect only once
 
@@ -28,16 +37,18 @@ export function Highscore() {
 
 	function handleReplay() {
 		playSound("click", 0.25);
+		playSound("reverse", 0.5);
 		playSound("levelstart", 0.5);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
 		setBoxPositions(initialBoxPositions);
 		resetGame();
-		
+		setShowGameContainer(true);
 	}
 	function handleNextLevel() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		setShowGameContainer(true);
 	}
 	return (
 		<>

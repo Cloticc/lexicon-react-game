@@ -259,6 +259,13 @@
 	background-size: 3rem;
 }
 
+#btn-sound.muted:after {
+	background-image: url("../assets/icon-mute.svg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 3.5rem;
+}
+
 #btn-replay:after {
 	display: block;
 	content: "";
