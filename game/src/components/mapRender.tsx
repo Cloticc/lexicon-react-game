@@ -141,9 +141,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
 	return (
 		<div
-			className={`grid-container ${showGameContainer ? "" : "hide"} ${
-				level >= 10 ? "level10" : ""
-			} ${level >= 20 ? "level20" : ""} ${level >= 30 ? "level30" : ""}`}
+			className={`grid-container ${showGameContainer ? "" : "hide"} 
+      ${level >= 10 ? "level10" : ""} 
+      ${level >= 20 ? "level20" : ""} 
+      ${level >= 30 ? "level30" : ""}
+      ${level >= 40 ? "level40" : ""}`}
 		>
 			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
 			<MoveChar
