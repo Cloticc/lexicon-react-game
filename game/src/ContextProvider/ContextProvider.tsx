@@ -35,14 +35,14 @@ interface GameContextProps {
   initialBoxPositions: BoxPosition[];
   setInitialBoxPositions: (positions: BoxPosition[]) => void;
 
-	level: number;
-	setLevel: (level: number) => void;
-	music: string;
-	setMusic: (music: string) => void;
+  level: number;
+  setLevel: (level: number) => void;
+  music: string;
+  setMusic: (music: string) => void;
 }
 
 interface ChildrenProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const MyContext = createContext({} as GameContextProps);
@@ -55,12 +55,12 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   const [mapData, setMapData] = useState<string[][]>([[]]);
   const [boxPositions, setBoxPositions] = useState<{ x: number; y: number }[]>([]);
   const [playerPosition, setPlayerPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-const [indicatorPositions, setIndicatorPositions] = useState<{ x: number; y: number }[]>([]);
+  const [indicatorPositions, setIndicatorPositions] = useState<{ x: number; y: number }[]>([]);
   const [initialMapData, setInitialMapData] = useState<string[][]>([[]]);
   const [initialPlayerPosition, setInitialPlayerPosition] = useState<PlayerPosition>({ x: 0, y: 0 });
   const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
   const [level, setLevel] = useState<number>(0);
-	const [music, setMusic] = useState<string>("");
+  const [music, setMusic] = useState<string>("");
 
   const resetGame = () => {
     setState("Test");
@@ -98,7 +98,7 @@ const [indicatorPositions, setIndicatorPositions] = useState<{ x: number; y: num
     setLevel: setLevel,
     music: music,
     setMusic: setMusic,
-     
+
   };
 
   return (
