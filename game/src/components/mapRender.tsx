@@ -20,6 +20,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		level,
 		showGameContainer,
 		setShowGameContainer,
+		setMusic,
 		mapData,
 		setMapData,
 		boxPositions,
@@ -99,6 +100,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setPlayerPosition(playerStartPosition.current);
 				playSound("click", 0.25);
 				playSound("reverse", 0.5);
+				setMusic("play");
 				setShowGameContainer(false);
 				setTimeout(() => {
 					setShowGameContainer(true);
