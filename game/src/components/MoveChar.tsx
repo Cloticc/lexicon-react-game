@@ -278,12 +278,12 @@ const { startTime, setStartTime } = useContext(MyContext);
         break;
       }
     }
-    // If all indicators are covered, declare victory
-    if (allIndicatorsCovered) {
+    // If all indicators are covered and the game is running, declare victory
+    if (allIndicatorsCovered && gameRunning) {
       stopGame();
       setWonGame(true);
     }
-  }, [mapData, counter, elapsedTime, currentLevel]);
+  }, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
 
   return (
     <>
