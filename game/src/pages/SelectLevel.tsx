@@ -106,10 +106,18 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 									key={startIndex + index}
 									data-mapid={map}
 									onMouseOver={
-										playedMaps.length >= map ? handleMouseOver : undefined
+										playedMaps.length >= Number(map)
+											? handleMouseOver
+											: undefined
 									}
-									onClick={playedMaps.length >= map ? handleMapClick : undefined}
-									className={playedMaps.length >= map ? "" : "notplayable"}
+									onClick={
+										playedMaps.length >= Number(map)
+											? handleMapClick
+											: undefined
+									}
+									className={
+										playedMaps.length >= Number(map) ? "" : "notplayable"
+									}
 								>
 									{startIndex + index + 1}
 									<div className="highest">
