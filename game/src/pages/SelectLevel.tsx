@@ -79,6 +79,8 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	};
 
 	const handlePlayClick = () => {
+		let id = playedMaps.length;
+		setLevel(id);
 		onPageChange("play");
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);

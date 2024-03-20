@@ -1,14 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { MyContext } from "./../ContextProvider/ContextProvider";
 import uiMusic from "./../assets/neon-gaming-128925.mp3";
 import playMusic from "./../assets/synthwave-background-music-155701.mp3";
+import playMusic2 from "./../assets/risk-136788.mp3";
+import playMusic3 from "./../assets/thinking-time-148496.mp3";
 
 interface MusicProps {
 	audio: string;
 }
 
 export const Music: React.FC<MusicProps> = ({ audio }) => {
-	const [music, setMusic] = useState<string>(null); // Initialize music state with null
-
+	const [music, setMusic] = useState<string>(""); // Initialize music state with null
+	const { level } = useContext(MyContext);
 	const audioRef = useRef<HTMLAudioElement>(null);
 
 	useEffect(() => {
@@ -16,7 +19,13 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
 		if (audio === "ui") {
 			setMusic(uiMusic);
 		} else if (audio === "play") {
-			setMusic(playMusic);
+			if (level < 9) {
+				setMusic(playMusic);
+			} else if (level > 9 && level < 19) {
+				setMusic(playMusic2);
+			} else if (level > 19) {
+				setMusic(playMusic3);
+			}
 		}
 	}, [audio]);
 

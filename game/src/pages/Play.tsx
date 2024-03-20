@@ -15,7 +15,7 @@ export function Play({ onPageChange }: SelectPageProps) {
 	const { elapsedTime } = useContext(MyContext);
 	const { wonGame } = useContext(MyContext);
 	const { level } = useContext(MyContext);
-	const { music, setMusic } = useContext(MyContext);
+	const { setMusic } = useContext(MyContext);
 
 	useEffect(() => {
 		setMusic("play");
