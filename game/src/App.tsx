@@ -1,6 +1,8 @@
 import "./App.css";
 import "./css/MediaQueries.css";
 
+import { useContext, useEffect, useState } from "react";
+
 import { Credits } from "./pages/Credits";
 import { FullscreenToggle } from "./components/fullscrenToggle";
 import { Music } from "./components/Music";
