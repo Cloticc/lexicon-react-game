@@ -1,39 +1,43 @@
 import "./../css/Play.css";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Highscore } from "./Highscore";
 import { MapRender } from "../components/mapRender";
 import { SelectPageProps } from "./../components/InterfacePages";
 import { playSound } from "./../components/playSound";
 import { formatElapsedTime } from "../utils/TimeUtils";
-
-import map1 from "../maps/map1.json";
 import { MyContext } from "../ContextProvider/ContextProvider";
-
+import allMaps from "./../maps/maps";
 
 export function Play({ onPageChange }: SelectPageProps) {
-  const { counter } = useContext(MyContext);
-  const { elapsedTime } = useContext(MyContext);
-  const { wonGame } = useContext(MyContext);
+	const { counter } = useContext(MyContext);
+	const { elapsedTime } = useContext(MyContext);
+	const { wonGame } = useContext(MyContext);
+	const { level } = useContext(MyContext);
+	const { music, setMusic } = useContext(MyContext);
 
-  const handleSelectLevelClick = () => {
-    onPageChange("selectlevel");
-    playSound("click", 0.25);
-    playSound("swoosh", 0.15);
-  };
+	useEffect(() => {
+		setMusic("play");
+	}, []);
 
-  function handleMouseOver() {
-    playSound("hover", 0.15);
-  }
+	const handleSelectLevelClick = () => {
+		onPageChange("selectlevel");
+		playSound("click", 0.25);
+		playSound("swoosh", 0.15);
+	};
 
-  function handleUndoStepClick() {
-    /* put function here?*/
-    playSound("click", 0.25);
-    playSound("reverse", 0.35);
-  }
+	function handleMouseOver() {
+		playSound("hover", 0.15);
+	}
 
-  /*
+	function handleUndoStepClick() {
+		/* put function here?*/
+		playSound("click", 0.25);
+		playSound("reverse", 0.35);
+	}
+
+	/*
   // Can remove this useEffect. It's just to show the highscore element after 3 seconds
   useEffect(() => {
     setTimeout(() => {
@@ -42,33 +46,32 @@ export function Play({ onPageChange }: SelectPageProps) {
   });
 */
 
-  return (
-    <>
-      <div id="startpageui">
-        <div id="showlevel">Level 1</div>
-        <div id="status">
-          <div id="stepstaken">{counter} steps</div>
-          <span>in</span>
-          <div id="timer">{formatElapsedTime(elapsedTime)}</div>
-        </div>
-        <button
-          id="btn-undostep"
-          className="button"
-          onMouseOver={handleMouseOver}
-          onClick={handleUndoStepClick}
-        ></button>
+	return (
+		<>
+			<div id="startpageui">
+				<div id="showlevel">Level 1</div>
+				<div id="status">
+					<div id="stepstaken">{counter} steps</div>
+					<span>in</span>
+					<div id="timer">{formatElapsedTime(elapsedTime)}</div>
+				</div>
+				<button
+					id="btn-undostep"
+					className="button"
+					onMouseOver={handleMouseOver}
+					onClick={handleUndoStepClick}
+				></button>
 
-        <button
-          id="btn-selectlevel"
-          className="button"
-          onMouseOver={handleMouseOver}
-          onClick={handleSelectLevelClick}
-        ></button>
+				<button
+					id="btn-selectlevel"
+					className="button"
+					onMouseOver={handleMouseOver}
+					onClick={handleSelectLevelClick}
+				></button>
 
-        <MapRender initialMapData={map1.mapdata} />
-        {wonGame && <Highscore />}
-      </div>
-    </>
-  );
-
+				<MapRender initialMapData={allMaps[level].mapdata} />
+				{wonGame && <Highscore />}
+			</div>
+		</>
+	);
 }
