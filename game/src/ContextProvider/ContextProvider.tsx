@@ -40,6 +40,8 @@ interface GameContextProps {
   setMusic: (music: string) => void;
   startTime: Date;
   setStartTime: (startTime: Date) => void;
+  gameRunning?: boolean;
+  setGameRunning?: (gameRunning: boolean) => void;
 }
 
 interface ChildrenProps {
@@ -63,14 +65,18 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   const [level, setLevel] = useState<number>(0);
   const [music, setMusic] = useState<string>("");
   const [startTime, setStartTime] = useState<Date>(new Date());
+  const [gameRunning, setGameRunning] = useState<boolean>(false);
+
   const resetGame = () => {
     setState("Test");
     setCounter(0);
     setElapsedTime(0);
     setWonGame(false);
+    setGameRunning(false);
     setMapData(initialMapData);
     setMusic("play");
     setStartTime(new Date());
+    setGameRunning(false);
   }
 
   const value: GameContextProps = {
@@ -103,6 +109,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setMusic: setMusic,
     startTime: startTime,
     setStartTime: setStartTime,
+    gameRunning: gameRunning,
+    setGameRunning: setGameRunning,
   };
 
   return (

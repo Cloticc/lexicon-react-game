@@ -38,7 +38,8 @@ export function MoveChar({
   const { counter, setCounter } = useContext(MyContext);
   const { elapsedTime, setElapsedTime } = useContext(MyContext);
   const { wonGame, setWonGame } = useContext(MyContext);
-  const [gameRunning, setGameRunning] = useState<boolean>(false);
+  // const [gameRunning, setGameRunning] = useState<boolean>(false);
+  const { gameRunning, setGameRunning } = useContext(MyContext);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
 const { startTime, setStartTime } = useContext(MyContext);
 
