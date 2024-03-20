@@ -17,6 +17,7 @@ interface MapRenderProps {
 
 export function MapRender({ initialMapData }: MapRenderProps) {
 	const {
+		level,
 		showGameContainer,
 		setShowGameContainer,
 		mapData,
@@ -139,7 +140,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	};
 
 	return (
-		<div className={`grid-container ${showGameContainer ? "" : "hide"}`}>
+		<div
+			className={`grid-container ${showGameContainer ? "" : "hide"} ${
+				level >= 10 ? "level10" : ""
+			} ${level >= 20 ? "level20" : ""} ${level >= 30 ? "level30" : ""}`}
+		>
 			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
 			<MoveChar
 				mapData={mapData}
