@@ -1,7 +1,8 @@
-import { useContext, useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+
+import HighScore from "./highscore";
 import { MyContext } from "../ContextProvider/ContextProvider";
 import { playSound } from "../components/playSound";
-import HighScore from "./highscore";
 
 interface MoveCharProps {
   mapData: string[][];
@@ -33,12 +34,14 @@ export function MoveChar({
   boxPositions,
   setBoxPositions,
 }: MoveCharProps) {
-  const [startTime, setStartTime] = useState<Date | null>(null);
+  // const [startTime, setStartTime] = useState<Date | null>(null);
   const { counter, setCounter } = useContext(MyContext);
   const { elapsedTime, setElapsedTime } = useContext(MyContext);
   const { wonGame, setWonGame } = useContext(MyContext);
-  const [gameRunning, setGameRunning] = useState<boolean>(false);
+  // const [gameRunning, setGameRunning] = useState<boolean>(false);
+  const { gameRunning, setGameRunning } = useContext(MyContext);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
+const { startTime, setStartTime } = useContext(MyContext);
 
   useEffect(() => {
     if (startTime && gameRunning) {
@@ -275,12 +278,12 @@ export function MoveChar({
         break;
       }
     }
-    // If all indicators are covered, declare victory
-    if (allIndicatorsCovered) {
+    // If all indicators are covered and the game is running, declare victory
+    if (allIndicatorsCovered && gameRunning) {
       stopGame();
       setWonGame(true);
     }
-  }, [mapData, counter, elapsedTime, currentLevel]);
+  }, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
 
   return (
     <>

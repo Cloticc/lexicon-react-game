@@ -1,7 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { MyContext } from "../ContextProvider/ContextProvider";
 import { SelectPageProps } from "./../components/InterfacePages";
-import { playSound } from "./../components/playSound";
 import allMaps from "../maps/maps";
+import { formatElapsedTime } from "../utils/TimeUtils";
+import { playSound } from "./../components/playSound";
+import { useContext } from "react";
 
 interface SelectLevelProps extends SelectPageProps {
 	mapCount: number;
@@ -14,6 +18,14 @@ var playedMaps: { mapId: number; score: number; elapsedTime: number }[] = []; //
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	const [mapFiles, setMapFiles] = useState<string[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(0);
+	const { resetGame } = useContext(MyContext);
+	const { level, setLevel } = useContext(MyContext);
+	const { music, setMusic } = useContext(MyContext);
+
+	useEffect(() => {
+		setMusic("ui");
+	}, []);
+
 	const perPage = 20;
 	const startIndex = currentPage * perPage;
 	const endIndex = Math.min((currentPage + 1) * perPage, mapFiles.length);
@@ -68,6 +80,9 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	};
 
 	const handlePlayClick = () => {
+		let id = playedMaps.length;
+		setLevel(id);
+		resetGame();
 		onPageChange("play");
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
@@ -83,9 +98,13 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 		playSound("hover", 0.15);
 	}
 
-	function handleMapClick() {
+	function handleMapClick(e: React.MouseEvent<HTMLLIElement>) {
+		const idString = e.currentTarget.getAttribute("data-mapid");
+		const id = parseInt(idString);
+		setLevel(id);
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		onPageChange("play");
 	}
 
 	return (
@@ -127,7 +146,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 													{highscoreData.score}
 												</span>
 												<span className="hightime">
-													{highscoreData.elapsedTime}
+													{formatElapsedTime(highscoreData.elapsedTime)}
 												</span>
 											</>
 										)}

@@ -1,6 +1,10 @@
+import { MyContext } from "../ContextProvider/ContextProvider";
 import { playSound } from "./../components/playSound";
+import { useContext } from "react";
 
 export function Settings() {
+	const { setMapData, setBoxPositions, setPlayerPosition, initialMapData, resetGame, initialPlayerPosition, initialBoxPositions } = useContext(MyContext);
+
 	function handleMouseOver() {
 		playSound("hover", 0.15);
 	}
@@ -10,7 +14,12 @@ export function Settings() {
 	}
 	function handleReplay() {
 		playSound("click", 0.25);
+		setMapData(initialMapData);
+		setPlayerPosition(initialPlayerPosition);
+		setBoxPositions(initialBoxPositions);
+		resetGame();
 	}
+
 	function handleSolution() {
 		playSound("click", 0.25);
 	}
