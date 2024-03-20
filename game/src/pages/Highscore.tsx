@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { playSound } from "./../components/playSound";
+import { MyContext } from "./../ContextProvider/ContextProvider";
 import { formatElapsedTime } from "../utils/TimeUtils";
 
 export function Highscore() {
+	const { music, setMusic } = useContext(MyContext);
 	const [highestScores, setHighestScores] = useState<{
 		[level: string]: { score: number; elapsedTime: number };
 	}>({});
@@ -12,6 +14,8 @@ export function Highscore() {
 		if (storedScores) {
 			setHighestScores(JSON.parse(storedScores));
 		}
+		playSound("leveldone", 0.3);
+		setMusic("ui");
 	}, []); // Empty dependency array to run the effect only once
 
 	function handleMouseOver() {
