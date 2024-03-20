@@ -17,11 +17,13 @@ interface MapRenderProps {
 
 export function MapRender({ initialMapData }: MapRenderProps) {
   const { mapData, setMapData, boxPositions, setBoxPositions, playerPosition, setPlayerPosition, indicatorPositions, setIndicatorPositions, setInitialMapData, resetGame, setInitialPlayerPosition, setInitialBoxPositions } = useContext(MyContext);
-
+ 
+  // mount the map
   useEffect(() => {
     setMapData(initialMapData);
   }, [setMapData, initialMapData]);
 
+  // Set the initial positions for the game to reset
   useEffect(() => {
     setInitialMapData(initialMapData);
     setInitialPlayerPosition(playerStartPosition.current);
