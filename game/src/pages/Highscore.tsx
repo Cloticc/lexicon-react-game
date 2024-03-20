@@ -93,7 +93,7 @@ export function Highscore() {
 						</div>
 					</div>
 				</div>
-				{Object.keys(highestScores)
+				{/* {Object.keys(highestScores)
 					.map(Number) 
 					.sort((a, b) => a - b) 
 					.map((level) => (
@@ -108,6 +108,22 @@ export function Highscore() {
 								</div>
 							</div>
 						</div>
+					))} */}
+					{Object.keys(highestScores)
+						.map(Number) 
+						.filter((levelNumber) => levelNumber === level) 
+						.map((level) => (
+							<div key={level} className="showhighscore">
+								<div className="result">
+									<div className="row">
+										<div>{level + 1}</div>
+										<div>{highestScores[level].score}</div>
+										<div>
+											{formatElapsedTime(highestScores[level].elapsedTime)}
+										</div>{" "}
+									</div>
+								</div>
+							</div>
 					))}
 				<div className="content-container">
 					<button
