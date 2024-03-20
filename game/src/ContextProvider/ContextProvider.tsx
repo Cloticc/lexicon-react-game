@@ -46,7 +46,16 @@ interface GameContextProps {
 	setMuted: (setMuted: boolean) => void;
 	showGameContainer: boolean;
 	setShowGameContainer: (setShowGameContainer: boolean) => void;
+	playedMaps: number[];
+	setPlayedMaps: (playedMaps: number[]) => void;
+	highestScores: {
+		[level: string]: { score: number; elapsedTime: number };
+	};
+	setHighestScores: (highestScores: { [level: string]: { score: number; elapsedTime: number } }) => void;
 }
+
+
+
 
 interface ChildrenProps {
 	children: React.ReactNode;
@@ -76,7 +85,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
 	const [isMuted, setMuted] = useState<boolean>(false);
 	const [settings, toggleSettings] = useState<boolean>(false);
 	const [showGameContainer, setShowGameContainer] = useState<boolean>(false);
-
+	const [playedMaps, setPlayedMaps] = useState<number[]>([]);
+	const [highestScores, setHighestScores] = useState<{
+		[level: string]: { score: number; elapsedTime: number };
+	}>({});
 	const resetGame = () => {
 		setState("Test");
 		setCounter(0);
@@ -127,6 +139,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
 		toggleSettings: toggleSettings,
 		showGameContainer: showGameContainer,
 		setShowGameContainer: setShowGameContainer,
+		playedMaps: playedMaps,
+		setPlayedMaps: setPlayedMaps,
+		highestScores: highestScores,
+		setHighestScores: setHighestScores,
 	};
 
 	return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

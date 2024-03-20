@@ -41,7 +41,12 @@ export function MoveChar({
   // const [gameRunning, setGameRunning] = useState<boolean>(false);
   const { gameRunning, setGameRunning } = useContext(MyContext);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
-const { startTime, setStartTime } = useContext(MyContext);
+  const { startTime, setStartTime } = useContext(MyContext);
+  const { level, setLevel } = useContext(MyContext);
+  const { highestScores, setHighestScores } = useContext(MyContext);
+
+  const [levelCompleted, setLevelCompleted] = useState(false);
+
 
   useEffect(() => {
     if (startTime && gameRunning) {
@@ -282,9 +287,39 @@ const { startTime, setStartTime } = useContext(MyContext);
     if (allIndicatorsCovered && gameRunning) {
       stopGame();
       setWonGame(true);
+      setLevelCompleted(true);
+      setCurrentLevel(level.toString());
     }
   }, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
 
+
+  useEffect(() => {
+    if (levelCompleted && counter > 0 && elapsedTime > 0) {
+      const updateHighScores = () => {
+        setHighestScores((prevHighestScores) => {
+          const levelData = prevHighestScores[currentLevel] || {
+            score: Infinity,
+            elapsedTime: 0,
+          };
+          if (
+            counter < levelData.score ||
+            (counter === levelData.score && elapsedTime < levelData.elapsedTime)
+          ) {
+            const updatedScores = {
+              ...prevHighestScores,
+              [currentLevel]: { score: counter, elapsedTime },
+            };
+            localStorage.setItem("highestScores", JSON.stringify(updatedScores));
+            return updatedScores;
+          }
+          return prevHighestScores;
+        });
+      };
+
+      updateHighScores();
+      setLevelCompleted(false); // Reset levelCompleted state
+    }
+  }, [levelCompleted, currentLevel]); // Listen for changes in levelCompleted state
   return (
     <>
       {wonGame && counter > 0 && elapsedTime > 0 && (

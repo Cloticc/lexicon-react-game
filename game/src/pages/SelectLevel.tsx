@@ -54,10 +54,12 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 		}
 	}, []);
 
+	
+
 	useEffect(() => {
 		const mapFilesData: string[] = [];
 		for (let i = 1; i <= allMaps.length; i++) {
-			mapFilesData.push(`${i - 1}`);
+			mapFilesData.push(`${i -1}`);
 		}
 		console.log("Map Files: ", mapFilesData);
 		
@@ -103,12 +105,14 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 	function handleMapClick(e: React.MouseEvent<HTMLLIElement>) {
 		const idString = e.currentTarget.getAttribute("data-mapid");
 		const id = parseInt(idString);
-		setLevel(id);
-		
+
+		// Check if the level is unlocked
+
+	
+	setLevel(id);
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
 		onPageChange("play");
-
 		console.log("Level: " ,id);
 	}
 	return (
@@ -121,7 +125,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 						{mapFiles.slice(startIndex, endIndex).map((map, index) => {
 							// Find the corresponding highscore data for the current map
 							const highscoreData = playedMaps.find(
-								(entry) => entry.mapId === level
+								(entry) => entry.mapId === Number(map)
 							);
 
 							return (
@@ -142,7 +146,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 										playedMaps.length >= Number(map) ? "" : "notplayable"
 									}
 								>
-									{startIndex + index }
+									{startIndex + index + 1}
 									<div className="highest">
 										{highscoreData && (
 											<>
