@@ -34,12 +34,13 @@ export function MoveChar({
   boxPositions,
   setBoxPositions,
 }: MoveCharProps) {
-  const [startTime, setStartTime] = useState<Date | null>(null);
+  // const [startTime, setStartTime] = useState<Date | null>(null);
   const { counter, setCounter } = useContext(MyContext);
   const { elapsedTime, setElapsedTime } = useContext(MyContext);
   const { wonGame, setWonGame } = useContext(MyContext);
   const [gameRunning, setGameRunning] = useState<boolean>(false);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
+const { startTime, setStartTime } = useContext(MyContext);
 
   useEffect(() => {
     if (startTime && gameRunning) {

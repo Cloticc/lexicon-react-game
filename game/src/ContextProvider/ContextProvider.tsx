@@ -34,11 +34,12 @@ interface GameContextProps {
   setInitialPlayerPosition: (position: PlayerPosition) => void;
   initialBoxPositions: BoxPosition[];
   setInitialBoxPositions: (positions: BoxPosition[]) => void;
-
   level: number;
   setLevel: (level: number) => void;
   music: string;
   setMusic: (music: string) => void;
+  startTime: Date;
+  setStartTime: (startTime: Date) => void;
 }
 
 interface ChildrenProps {
@@ -61,7 +62,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
   const [level, setLevel] = useState<number>(0);
   const [music, setMusic] = useState<string>("");
-
+  const [startTime, setStartTime] = useState<Date>(new Date());
   const resetGame = () => {
     setState("Test");
     setCounter(0);
@@ -69,6 +70,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setWonGame(false);
     setMapData(initialMapData);
     setMusic("play");
+    setStartTime(new Date());
   }
 
   const value: GameContextProps = {
@@ -99,7 +101,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setLevel: setLevel,
     music: music,
     setMusic: setMusic,
-
+    startTime: startTime,
+    setStartTime: setStartTime,
   };
 
   return (
