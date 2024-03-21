@@ -39,7 +39,11 @@ export function Settings() {
 		playSound("reverse", 0.25);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
+		console.log("Initial player Positions: ", initialPlayerPosition);
+		
 		setBoxPositions(initialBoxPositions);
+		console.log("Initial Box Positions: ", initialBoxPositions);
+		
 		resetGame();
 		setMusic("play");
 		toggleSettings(false);

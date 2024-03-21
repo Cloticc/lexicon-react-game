@@ -1,9 +1,10 @@
 import "../css/MapRender.css";
 
 import { useContext, useEffect, useRef, useState } from "react";
-import { playSound } from "./../components/playSound";
+
 import { MoveChar } from "./MoveChar";
 import { MyContext } from "../ContextProvider/ContextProvider";
+import { playSound } from "./../components/playSound";
 
 //Check if array is an array of arrays
 interface MapRenderProps {
@@ -40,12 +41,6 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setMapData(initialMapData);
 	}, [setMapData, initialMapData]);
 
-	// Set the initial positions for the game to reset
-	useEffect(() => {
-		setInitialMapData(initialMapData);
-		setInitialPlayerPosition(playerStartPosition.current);
-		setInitialBoxPositions(boxStartPositions.current);
-	}, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
 
 	// const [mapData, setMapData] = useState(initialMapData);
 	const [playerDirection, setPlayerDirection] = useState("down");
@@ -55,6 +50,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	const playerStartPosition = useRef({ x: 5, y: 6 });
 	const boxStartPositions = useRef<{ x: number; y: number }[]>([]);
 	const IndicatorPositions = useRef<{ x: number; y: number }[]>([]);
+
+
 
 	useEffect(() => {
 		// Calculate playerStartPosition
@@ -90,8 +87,16 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setPlayerPosition(playerStartPosition.current);
 		setBoxPositions(boxStartPositions.current);
 		setIndicatorPositions(IndicatorPositions.current);
-	}, [initialMapData, setPlayerPosition, setBoxPositions, setIndicatorPositions]);
+	}, [initialMapData, setPlayerPosition, setBoxPositions, setIndicatorPositions, level]);
 
+	// Set the initial positions for the game to reset
+	useEffect(() => {
+		setInitialMapData(initialMapData);
+		setInitialPlayerPosition(playerStartPosition.current);
+		setInitialBoxPositions(boxStartPositions.current);
+	}, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
+
+	
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "R" || event.key === "r") {
