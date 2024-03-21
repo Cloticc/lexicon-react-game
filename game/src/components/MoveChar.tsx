@@ -34,25 +34,30 @@ export function MoveChar({
 	boxPositions,
 	setBoxPositions,
 }: MoveCharProps) {
-	// const [startTime, setStartTime] = useState<Date | null>(null);
-	const { counter, setCounter } = useContext(MyContext);
-	const { elapsedTime, setElapsedTime } = useContext(MyContext);
-	const { wonGame, setWonGame } = useContext(MyContext);
-	// const [gameRunning, setGameRunning] = useState<boolean>(false);
-	const { gameRunning, setGameRunning } = useContext(MyContext);
-	const [currentLevel, setCurrentLevel] = useState<string>("1");
-	const { startTime, setStartTime } = useContext(MyContext);
+  // const [startTime, setStartTime] = useState<Date | null>(null);
+  const { counter, setCounter } = useContext(MyContext);
+  const { elapsedTime, setElapsedTime } = useContext(MyContext);
+  const { wonGame, setWonGame } = useContext(MyContext);
+  // const [gameRunning, setGameRunning] = useState<boolean>(false);
+  const { gameRunning, setGameRunning } = useContext(MyContext);
+  const [currentLevel, setCurrentLevel] = useState<string>("1");
+  const { startTime, setStartTime } = useContext(MyContext);
+  const { level, setLevel } = useContext(MyContext);
+  const { highestScores, setHighestScores } = useContext(MyContext);
 
-	useEffect(() => {
-		if (startTime && gameRunning) {
-			const intervalId = setInterval(() => {
-				const elapsed = Math.floor(Date.now() - startTime.getTime());
-				setElapsedTime(elapsed);
-			}, 100);
+  const [levelCompleted, setLevelCompleted] = useState(false);
 
-			return () => clearInterval(intervalId);
-		}
-	}, [startTime, gameRunning]);
+
+  useEffect(() => {
+    if (startTime && gameRunning) {
+      const intervalId = setInterval(() => {
+        const elapsed = Math.floor(Date.now() - startTime.getTime());
+        setElapsedTime(elapsed);
+      }, 100); 
+
+      return () => clearInterval(intervalId);
+    }
+  }, [startTime, gameRunning, currentLevel]);
 
 	const startGame = useCallback(() => {
 		setStartTime(new Date());
@@ -66,9 +71,9 @@ export function MoveChar({
 		setWonGame(true);
 	}, []);
 
-	const handlePlayerMove = useCallback(
-		(direction: string) => {
-			setPlayerDirection(direction.toLowerCase());
+  const handlePlayerMove = useCallback( //useCallback to reset 
+    (direction: string) => {
+      setPlayerDirection(direction.toLowerCase());
 
 			const newPosition = {
 				x: playerPosition.x + directionMap[direction as Direction].x,
@@ -267,31 +272,65 @@ export function MoveChar({
 		};
 	}, [handlePlayerMove]);
 
-	useEffect(() => {
-		let allIndicatorsCovered = true;
-		for (const position of indicatorPositions) {
-			const { x, y } = position;
-			if (mapData[y][x] !== "B") {
-				allIndicatorsCovered = false;
-				break;
-			}
-		}
-		// If all indicators are covered and the game is running, declare victory
-		if (allIndicatorsCovered && gameRunning) {
-			stopGame();
-			setWonGame(true);
-		}
-	}, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
+  useEffect(() => {
+    let allIndicatorsCovered = true;
+    for (const position of indicatorPositions) {
+      const { x, y } = position;
+      if (mapData[y][x] !== "B") {
+        allIndicatorsCovered = false;
+        break;
+      }
+    }
+    // If all indicators are covered and the game is running, declare victory
+    if (allIndicatorsCovered && gameRunning) {
+      stopGame();
+      setWonGame(true);
+      setLevelCompleted(true);
+      setCurrentLevel(level.toString());
+    }
+  }, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
 
-	return (
-		<>
-			{wonGame && counter > 0 && elapsedTime > 0 && (
-				<HighScore
-					currentLevel={currentLevel}
-					counter={counter}
-					elapsedTime={elapsedTime}
-				/>
-			)}
-		</>
-	);
+
+
+
+  useEffect(() => {
+    if (levelCompleted && counter > 0 && elapsedTime > 0) {
+      const updateHighScores = () => {
+        setHighestScores((prevHighestScores) => {
+          const levelData = prevHighestScores[currentLevel] || {
+            score: Infinity,
+            elapsedTime: 0,
+          };
+          if (
+            counter < levelData.score ||
+            (counter === levelData.score && elapsedTime < levelData.elapsedTime)
+          ) {
+            const updatedScores = {
+              ...prevHighestScores,
+              [currentLevel]: { score: counter, elapsedTime },
+            };
+            localStorage.setItem("highestScores", JSON.stringify(updatedScores));
+            return updatedScores;
+          }
+          return prevHighestScores;
+        });
+      };
+
+      // Delay the execution of updateHighScores by 2 seconds
+      setTimeout(updateHighScores, 1);
+      setLevelCompleted(false); 
+    }
+  }, [levelCompleted, currentLevel]); 
+  
+  return (
+    <>
+      {wonGame && counter > 0 && elapsedTime > 0 && (
+        <HighScore
+          currentLevel={currentLevel}
+          counter={counter}
+          elapsedTime={elapsedTime}
+        />
+      )}
+    </>
+  );
 }

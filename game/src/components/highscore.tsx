@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
+import { MyContext } from "./../ContextProvider/ContextProvider";
 
 interface HighScoreProps {
   currentLevel: string;
@@ -11,21 +13,24 @@ const HighScore: React.FC<HighScoreProps> = ({
   counter,
   elapsedTime,
 }) => {
-  const [highestScores, setHighestScores] = useState<{
-    [level: string]: { score: number; elapsedTime: number };
-  }>({});
-
+  // const [highestScores, setHighestScores] = useState<{
+  //   [level: string]: { score: number; elapsedTime: number };
+  // }>({});
+  const { setHighestScores, highestScores, level } = useContext(MyContext);
   useEffect(() => {
     const storedScores = localStorage.getItem("highestScores");
     if (storedScores) {
       setHighestScores(JSON.parse(storedScores));
+    } else {
+      setHighestScores({});
     }
+    /*...*/
   }, []);
 
   useEffect(() => {
     const updateHighScores = () => {
       setHighestScores((prevHighestScores) => {
-        const levelData = prevHighestScores[currentLevel] || {
+        const levelData = prevHighestScores[level] || {
           score: Infinity,
           elapsedTime: 0,
         };
@@ -35,7 +40,7 @@ const HighScore: React.FC<HighScoreProps> = ({
         ) {
           const updatedScores = {
             ...prevHighestScores,
-            [currentLevel]: { score: counter, elapsedTime },
+            [level]: { score: counter, elapsedTime },
           };
           localStorage.setItem("highestScores", JSON.stringify(updatedScores));
           return updatedScores;
@@ -43,9 +48,9 @@ const HighScore: React.FC<HighScoreProps> = ({
         return prevHighestScores;
       });
     };
-
+ 
     updateHighScores();
-  }, [currentLevel, counter, elapsedTime]);
+  }, [level, counter, elapsedTime]); // Use level instead of currentLevel
 
   return <></>;
 };
