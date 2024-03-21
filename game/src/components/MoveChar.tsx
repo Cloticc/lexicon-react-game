@@ -90,6 +90,15 @@ export function MoveChar({
       setBoxPositions(boxPositions);
       setCounter(counter);
       setHistory(prev => prev.slice(0, -1));
+
+      if (counter === 0) {
+        if (setGameRunning) {
+          setElapsedTime(0);
+          setGameRunning(false);
+          setPlayerDirection("down");
+        }
+      }
+
     } else {
       resetGame();
     }
