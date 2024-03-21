@@ -135,6 +135,15 @@
 	}
 }
 
+@keyframes buttonhover2 {
+	0% {
+		outline: 0px solid yellow;
+	}
+	100% {
+		outline: 1.5rem solid rgba(255, 255, 0, 0);
+	}
+}
+
 #startplay:active {
 	scale: 0.98;
 	cursor: pointer;
@@ -228,8 +237,8 @@
 	padding: 0.2rem;
 	display: block;
 	width: 100%;
-	background: rgba(0, 0, 0, 0.3);
-	border-top: 2px solid rgba(255, 255, 255, 0.6);
+	background: rgba(1, 22, 46, 0.9);
+
 	color: white;
 	position: absolute;
 	bottom: 0;
@@ -304,6 +313,7 @@
 	cursor: pointer;
 	scale: 1.1;
 	z-index: 10;
+	background: linear-gradient(0deg, rgba(227, 251, 24, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 #selectlevel .levels ul li:active {
@@ -311,7 +321,7 @@
 	z-index: 10;
 }
 #selectlevel .levels ul li:hover:before {
-	animation: buttonhover 0.4s ease-out;
+	animation: buttonhover2 0.4s ease-out;
 }
 
 #selectlevel .levels .done {
@@ -641,7 +651,7 @@
 
 @keyframes animateblock {
 	0% {
-		transform: translateY(-200%);
+		transform: translateY(200%);
 		scale: 1;
 	}
 	100% {
