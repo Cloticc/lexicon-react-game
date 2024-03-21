@@ -23,6 +23,12 @@
 	#selectlevel #menubuttons span {
 		top: -4rem !important;
 	}
+
+	#btn-undostep {
+		top: 7rem !important;
+		right: 1rem !important;
+		z-index: 10;
+	}
 }
 @media screen and (max-width: 1600px) {
 	#settings h1,
