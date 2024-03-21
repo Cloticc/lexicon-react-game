@@ -61,7 +61,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 		for (let i = 1; i <= allMaps.length; i++) {
 			mapFilesData.push(`${i -1}`);
 		}
-		console.log("Map Files: ", mapFilesData);
+		// console.log("Map Files: ", mapFilesData);
 		
 		setMapFiles(mapFilesData);
 	}, [mapCount]);
@@ -113,7 +113,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
 		onPageChange("play");
-		console.log("Level: " ,id);
+		// console.log("Level: " ,id);
 	}
 	return (
 		<>
