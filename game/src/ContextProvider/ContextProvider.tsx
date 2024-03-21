@@ -58,6 +58,8 @@ interface GameContextProps {
   }) => void;
   handleHistory: boolean;
   setHandleHistory: (handleHistory: boolean) => void;
+   playerDirection: string;
+  setPlayerDirection: (playerDirection: string) => void;
 }
 
 interface ChildrenProps {
@@ -103,6 +105,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     [level: string]: { score: number; elapsedTime: number };
   }>({});
   const [handleHistory, setHandleHistory] = useState<boolean>(false);
+  const [playerDirection, setPlayerDirection] = useState<string>("down");
+
   const resetGame = () => {
     setState("Test");
     setCounter(0);
@@ -115,6 +119,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setGameRunning(false);
     setPlayerPosition(initialPlayerPosition);
     setBoxPositions(initialBoxPositions);
+    setPlayerDirection("down");
 
   };
 
@@ -162,6 +167,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setHighestScores: setHighestScores,
     handleHistory: handleHistory,
     setHandleHistory: setHandleHistory,
+    playerDirection: playerDirection,
+    setPlayerDirection: setPlayerDirection,
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
