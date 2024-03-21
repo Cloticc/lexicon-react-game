@@ -11,53 +11,51 @@ interface BoxPosition {
 }
 
 interface GameContextProps {
-  test: string;
-  setTest: (test: string) => void;
-  wonGame: boolean;
-  setWonGame: (wonGame: boolean) => void;
-  counter: number;
-  setCounter: (counter: number) => void;
-  elapsedTime: number;
-  setElapsedTime: (elapsedTime: number) => void;
-  resetGame: () => void;
-  mapData: string[][];
-  setMapData: (mapData: string[][]) => void;
-  boxPositions: { x: number; y: number }[];
-  setBoxPositions: (boxPositions: { x: number; y: number }[]) => void;
-  playerPosition: { x: number; y: number };
-  setPlayerPosition: (playerPosition: { x: number; y: number }) => void;
-  indicatorPositions: { x: number; y: number }[];
-  setIndicatorPositions: (
-    indicatorPositions: { x: number; y: number }[]
-  ) => void;
-  initialMapData: string[][];
-  setInitialMapData: (initialMapData: string[][]) => void;
-  initialPlayerPosition: PlayerPosition;
-  setInitialPlayerPosition: (position: PlayerPosition) => void;
-  initialBoxPositions: BoxPosition[];
-  setInitialBoxPositions: (positions: BoxPosition[]) => void;
-  level: number;
-  setLevel: (level: number) => void;
-  music: string;
-  setMusic: (music: string) => void;
-  startTime: Date;
-  setStartTime: (startTime: Date) => void;
-  gameRunning?: boolean;
-  setGameRunning?: (gameRunning: boolean) => void;
-  isMuted: boolean;
-  setMuted: (setMuted: boolean) => void;
-  showGameContainer: boolean;
-  setShowGameContainer: (setShowGameContainer: boolean) => void;
-  playedMaps: number[];
-  setPlayedMaps: (playedMaps: number[]) => void;
-  highestScores: {
-    [level: string]: { score: number; elapsedTime: number };
-  };
-  setHighestScores: (highestScores: {
-    [level: string]: { score: number; elapsedTime: number };
-  }) => void;
-  handleHistory: boolean;
-  setHandleHistory: (handleHistory: boolean) => void;
+	test: string;
+	setTest: (test: string) => void;
+	wonGame: boolean;
+	setWonGame: (wonGame: boolean) => void;
+	settings: boolean;
+	toggleSettings: (settings: boolean) => void;
+	counter: number;
+	setCounter: (counter: number) => void;
+	elapsedTime: number;
+	setElapsedTime: (elapsedTime: number) => void;
+	resetGame: () => void;
+	mapData: string[][];
+	setMapData: (mapData: string[][]) => void;
+	boxPositions: { x: number; y: number }[];
+	setBoxPositions: (boxPositions: { x: number; y: number }[]) => void;
+	playerPosition: { x: number; y: number };
+	setPlayerPosition: (playerPosition: { x: number; y: number }) => void;
+	indicatorPositions: { x: number; y: number }[];
+	setIndicatorPositions: (indicatorPositions: { x: number; y: number }[]) => void;
+	initialMapData: string[][];
+	setInitialMapData: (initialMapData: string[][]) => void;
+	initialPlayerPosition: PlayerPosition;
+	setInitialPlayerPosition: (position: PlayerPosition) => void;
+	initialBoxPositions: BoxPosition[];
+	setInitialBoxPositions: (positions: BoxPosition[]) => void;
+	level: number;
+	setLevel: (level: number) => void;
+	music: string;
+	setMusic: (music: string) => void;
+	startTime: Date;
+	setStartTime: (startTime: Date) => void;
+	gameRunning?: boolean;
+	setGameRunning?: (gameRunning: boolean) => void;
+	isMuted: boolean;
+	setMuted: (setMuted: boolean) => void;
+	showGameContainer: boolean;
+	setShowGameContainer: (setShowGameContainer: boolean) => void;
+	playedMaps: number[];
+	setPlayedMaps: (playedMaps: number[]) => void;
+	highestScores: {
+		[level: string]: { score: number; elapsedTime: number };
+	};
+	setHighestScores: (highestScores: {
+		[level: string]: { score: number; elapsedTime: number };
+	}) => void;
 }
 
 interface ChildrenProps {

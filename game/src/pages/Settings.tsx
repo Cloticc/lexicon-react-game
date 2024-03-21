@@ -22,14 +22,14 @@ export function Settings() {
 		playSound("hover", 0.15);
 	}
 
-	function handleSoundToggle() {
+	function handleSoundToggle(): void {
 		playSound("click", 0.25);
 		if (isMuted) {
-			document.querySelector("#music").volume = 0.15;
+			(document.querySelector("#music") as HTMLAudioElement).volume = 0.15;
 			setMuted(false);
 		} else {
 			setMuted(true);
-			document.querySelector("#music").volume = 0;
+			(document.querySelector("#music") as HTMLAudioElement).volume = 0;
 		}
 		toggleSettings(false);
 	}
@@ -39,7 +39,11 @@ export function Settings() {
 		playSound("reverse", 0.25);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
+		console.log("Initial player Positions: ", initialPlayerPosition);
+		
 		setBoxPositions(initialBoxPositions);
+		console.log("Initial Box Positions: ", initialBoxPositions);
+		
 		resetGame();
 		setMusic("play");
 		toggleSettings(false);
