@@ -20,6 +20,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		level,
 		showGameContainer,
 		setShowGameContainer,
+		setMusic,
 		mapData,
 		setMapData,
 		boxPositions,
@@ -99,6 +100,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setPlayerPosition(playerStartPosition.current);
 				playSound("click", 0.25);
 				playSound("reverse", 0.5);
+				setMusic("play");
 				setShowGameContainer(false);
 				setTimeout(() => {
 					setShowGameContainer(true);
@@ -142,10 +144,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	return (
 		<div
 			className={`grid-container ${showGameContainer ? "" : "hide"} 
-      ${level >= 10 ? "level10" : ""} 
-      ${level >= 20 ? "level20" : ""} 
-      ${level >= 30 ? "level30" : ""}
-      ${level >= 40 ? "level40" : ""}`}
+      ${level >= 9 ? "level10" : ""} 
+      ${level >= 19 ? "level20" : ""} 
+      ${level >= 29 ? "level30" : ""}
+      ${level >= 39 ? "level40" : ""}`}
 		>
 			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
 			<MoveChar

@@ -8,6 +8,7 @@ export function Settings() {
 		setShowGameContainer,
 		isMuted,
 		setMuted,
+		setMusic,
 		setMapData,
 		setBoxPositions,
 		setPlayerPosition,
@@ -40,6 +41,7 @@ export function Settings() {
 		setPlayerPosition(initialPlayerPosition);
 		setBoxPositions(initialBoxPositions);
 		resetGame();
+		setMusic("play");
 		toggleSettings(false);
 		setShowGameContainer(false);
 		setTimeout(() => {
