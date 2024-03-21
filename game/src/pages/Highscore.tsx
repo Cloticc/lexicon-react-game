@@ -5,14 +5,12 @@ import { formatElapsedTime } from "../utils/TimeUtils";
 import { playSound } from "./../components/playSound";
 
 export function Highscore() {
-	const { music, setMusic } = useContext(MyContext);
-	const { setShowGameContainer } = useContext(MyContext);
-	// const [highestScores, setHighestScores] = useState<{
-	// 	[level: string]: { score: number; elapsedTime: number };
-	// }>({});
 
 	const {
+		setShowGameContainer,
 		setMapData,
+		music,
+		setMusic,
 		setBoxPositions,
 		setPlayerPosition,
 		initialMapData,
@@ -36,6 +34,21 @@ export function Highscore() {
 		setShowGameContainer(false);
 		setMusic("ui");
 	}, []); // Add level to the dependency array
+
+	useEffect(() => {
+		// Define the function to run when Enter key is pressed
+		const handleEnterPress = (event) => {
+			if (event.key === "Enter") {
+				handleNextLevel();
+			}
+		};
+		// Attach the event listener to the document body
+		document.body.addEventListener("keydown", handleEnterPress);
+		// Remove the event listener when the component unmounts
+		return () => {
+			document.body.removeEventListener("keydown", handleEnterPress);
+		};
+	}, []);
 
 	function handleMouseOver() {
 		playSound("hover", 0.15);

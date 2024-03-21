@@ -8,6 +8,7 @@ export function Settings() {
 		setShowGameContainer,
 		isMuted,
 		setMuted,
+		setMusic,
 		setMapData,
 		setBoxPositions,
 		setPlayerPosition,
@@ -34,15 +35,18 @@ export function Settings() {
 	}
 
 	function handleReplay() {
-		setShowGameContainer(false);
 		playSound("click", 0.25);
 		playSound("reverse", 0.25);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
 		setBoxPositions(initialBoxPositions);
 		resetGame();
+		setMusic("play");
 		toggleSettings(false);
-		setShowGameContainer(true);
+		setShowGameContainer(false);
+		setTimeout(() => {
+			setShowGameContainer(true);
+		}, 1);
 	}
 
 	function handleSolution() {

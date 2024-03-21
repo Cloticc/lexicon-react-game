@@ -1,7 +1,7 @@
 import "../css/MapRender.css";
 
 import { useContext, useEffect, useRef, useState } from "react";
-
+import { playSound } from "./../components/playSound";
 import { MoveChar } from "./MoveChar";
 import { MyContext } from "../ContextProvider/ContextProvider";
 
@@ -17,7 +17,10 @@ interface MapRenderProps {
 
 export function MapRender({ initialMapData }: MapRenderProps) {
 	const {
+		level,
 		showGameContainer,
+		setShowGameContainer,
+		setMusic,
 		mapData,
 		setMapData,
 		boxPositions,
@@ -95,6 +98,14 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setMapData(initialMapData);
 				setBoxPositions(boxStartPositions.current);
 				setPlayerPosition(playerStartPosition.current);
+				playSound("click", 0.25);
+				playSound("reverse", 0.5);
+				setMusic("play");
+				setShowGameContainer(false);
+				setTimeout(() => {
+					setShowGameContainer(true);
+				}, 1);
+
 				resetGame();
 			}
 		};
@@ -131,7 +142,13 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	};
 
 	return (
-		<div className={`grid-container ${showGameContainer ? "" : "hide"}`}>
+		<div
+			className={`grid-container ${showGameContainer ? "" : "hide"} 
+      ${level >= 9 ? "level10" : ""} 
+      ${level >= 19 ? "level20" : ""} 
+      ${level >= 29 ? "level30" : ""}
+      ${level >= 39 ? "level40" : ""}`}
+		>
 			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
 			<MoveChar
 				mapData={mapData}
