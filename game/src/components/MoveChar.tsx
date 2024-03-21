@@ -48,16 +48,16 @@ export function MoveChar({
   const { handleHistory, setHandleHistory } = useContext(MyContext);
   const { resetGame } = useContext(MyContext);
   const [levelCompleted, setLevelCompleted] = useState(false);
-
-  const [history, setHistory] = useState<
-    {
-      mapData: string[][];
-      playerPosition: { x: number; y: number };
-      boxPositions: { x: number; y: number }[];
-      counter: number;
-      direction: string;
-    }[]
-  >([]);
+const { history, setHistory } = useContext(MyContext);
+  // const [history, setHistory] = useState<
+  //   {
+  //     mapData: string[][];
+  //     playerPosition: { x: number; y: number };
+  //     boxPositions: { x: number; y: number }[];
+  //     counter: number;
+  //     direction: string;
+  //   }[]
+  // >([]);
 
   /**
    * Adds the current state of the game to the history.
