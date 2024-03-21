@@ -56,6 +56,8 @@ interface GameContextProps {
 	setHighestScores: (highestScores: {
 		[level: string]: { score: number; elapsedTime: number };
 	}) => void;
+  handleHistory: boolean;
+  setHandleHistory: (handleHistory: boolean) => void;
 }
 
 interface ChildrenProps {
@@ -111,6 +113,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setMusic("play");
     setStartTime(new Date());
     setGameRunning(false);
+    setPlayerPosition(initialPlayerPosition);
+    setBoxPositions(initialBoxPositions);
+    
+
   };
 
   const value: GameContextProps = {

@@ -46,7 +46,7 @@ export function MoveChar({
   const { level, setLevel } = useContext(MyContext);
   const { highestScores, setHighestScores } = useContext(MyContext);
   const { handleHistory, setHandleHistory } = useContext(MyContext);
-
+ const { resetGame } = useContext(MyContext);
   const [levelCompleted, setLevelCompleted] = useState(false);
 
   const [history, setHistory] = useState<
@@ -72,17 +72,22 @@ export function MoveChar({
     ]);
   };
 
+
   const handleHistoryUndo = useCallback(() => {
-    if (history.length > 1) {
-      const prevState = history[history.length - 1];
-      setMapData(prevState.mapData);
-      setPlayerPosition(prevState.playerPosition);
-      setPlayerDirection(prevState.direction);
-      setBoxPositions(prevState.boxPositions);
-      setCounter(prevState.counter);
-      setHandleHistory(false);
-      setHistory((prev) => prev.slice(0, -1));
-    }
+    if (history.length > 2) {
+        const prevState = history[history.length - 1];
+        setMapData(prevState.mapData);
+        setPlayerPosition(prevState.playerPosition);
+        setPlayerDirection(prevState.direction);
+        setBoxPositions(prevState.boxPositions);
+        setCounter(prevState.counter);
+        setHandleHistory(false);
+        setHistory((prev) => prev.slice(0, -1));
+    } else if (history.length === 2) {
+        resetGame();
+}
+
+    
   }, [
     history,
     setMapData,
@@ -91,10 +96,17 @@ export function MoveChar({
     setCounter,
     setPlayerDirection,
   ]);
+
+  useEffect(() => {
+    setHistory([]);
+    setHandleHistory(false);
+  }, [level]);
+
   useEffect(() => {
     console.log(handleHistory);
     if (handleHistory) {
       handleHistoryUndo();
+      setHandleHistory(false);
     }
   }, [handleHistory]);
 
