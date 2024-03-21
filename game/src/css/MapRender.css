@@ -132,7 +132,7 @@ body,
 
 @keyframes boxonindicator {
 	0% {
-		filter: brightness(0.5) drop-shadow(0 0 0.1rem white);
+		filter: brightness(0.8) drop-shadow(0 0 1rem yellow);
 	}
 	100% {
 		filter: brightness(0.6) drop-shadow(0 0 0.5rem white);
