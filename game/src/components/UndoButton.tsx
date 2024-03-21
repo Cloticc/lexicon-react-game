@@ -1,16 +1,13 @@
-import '../css/UndoButton.css';
+import "../css/UndoButton.css";
 
 export const UndoButton = () => {
-  const handleUndo = () => {
+	const handleUndo = () => {
+		console.log("Undo button clicked ");
+	};
 
-    console.log("Undo button clicked ");
-  };
-
-  return (
-    <div>
-      <button className='undo-btn' onClick={handleUndo}></button>
-    </div>
-  );
+	return (
+		<div>
+			<button className="undo-btn" onClick={handleUndo}></button>
+		</div>
+	);
 };
-
-

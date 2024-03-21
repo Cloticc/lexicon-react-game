@@ -15,6 +15,8 @@ interface GameContextProps {
 	setTest: (test: string) => void;
 	wonGame: boolean;
 	setWonGame: (wonGame: boolean) => void;
+	settings: boolean;
+	toggleSettings: (settings: boolean) => void;
 	counter: number;
 	setCounter: (counter: number) => void;
 	elapsedTime: number;
@@ -51,11 +53,10 @@ interface GameContextProps {
 	highestScores: {
 		[level: string]: { score: number; elapsedTime: number };
 	};
-	setHighestScores: (highestScores: { [level: string]: { score: number; elapsedTime: number } }) => void;
+	setHighestScores: (highestScores: {
+		[level: string]: { score: number; elapsedTime: number };
+	}) => void;
 }
-
-
-
 
 interface ChildrenProps {
 	children: React.ReactNode;
