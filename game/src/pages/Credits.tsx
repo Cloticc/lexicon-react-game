@@ -29,7 +29,7 @@ export function Credits({ onPageChange }: SelectPageProps) {
 					</h4>
 					<h2>HTML, CSS, JavaScript</h2>
 					<h5>Fredrik Berglund</h5>
-					<h5>Andreas</h5>
+					<h5>Andreas Isidorsson</h5>
 					<h5>Konstantios</h5>
 					<h5>Abbas Mansoori</h5>
 					<h5>Alireza Kafshdartoosi</h5>
