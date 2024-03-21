@@ -5,7 +5,6 @@ import { formatElapsedTime } from "../utils/TimeUtils";
 import { playSound } from "./../components/playSound";
 
 export function Highscore() {
-
 	const {
 		setShowGameContainer,
 		setMapData,
@@ -20,7 +19,7 @@ export function Highscore() {
 		level,
 		setLevel,
 		highestScores,
-		setHighestScores
+		setHighestScores,
 	} = useContext(MyContext);
 
 	useEffect(() => {
@@ -64,7 +63,7 @@ export function Highscore() {
 		resetGame();
 		setShowGameContainer(true);
 	}
-	
+
 	function handleNextLevel() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
@@ -82,7 +81,7 @@ export function Highscore() {
 		// localStorage.setItem("highestScores", JSON.stringify(highestScores));
 
 		const nextLevel = level + 1;
-		setLevel(nextLevel); 
+		setLevel(nextLevel);
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
 		setBoxPositions(initialBoxPositions);
@@ -97,7 +96,7 @@ export function Highscore() {
 				<h1>Completed</h1>
 				<h2>Level {level + 1}</h2>
 				<h2>High Score</h2>
-				<div className="showhighscore">w
+				<div className="showhighscore">
 					<div className="result">
 						<div className="row thead">
 							<div>Level</div>
@@ -122,21 +121,21 @@ export function Highscore() {
 							</div>
 						</div>
 					))} */}
-					{Object.keys(highestScores)
-						.map(Number) 
-						.filter((levelNumber) => levelNumber === level) 
-						.map((level) => (
-							<div key={level} className="showhighscore">
-								<div className="result">
-									<div className="row">
-										<div>{level + 1}</div>
-										<div>{highestScores[level].score}</div>
-										<div>
-											{formatElapsedTime(highestScores[level].elapsedTime)}
-										</div>{" "}
-									</div>
+				{Object.keys(highestScores)
+					.map(Number)
+					.filter((levelNumber) => levelNumber === level)
+					.map((level) => (
+						<div key={level} className="showhighscore">
+							<div className="result">
+								<div className="row">
+									<div>{level + 1}</div>
+									<div>{highestScores[level].score}</div>
+									<div>
+										{formatElapsedTime(highestScores[level].elapsedTime)}
+									</div>{" "}
 								</div>
 							</div>
+						</div>
 					))}
 				<div className="content-container">
 					<button
