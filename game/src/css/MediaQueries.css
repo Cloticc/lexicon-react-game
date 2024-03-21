@@ -1,35 +1,3 @@
-@media screen and (max-height: 890px) {
-	.grid-container {
-		margin-top: 2rem;
-		max-height: calc(100vh - 6rem);
-		max-width: calc(100vh - 6rem);
-	}
-	#showlevel {
-		font-size: 2rem;
-		top: 1rem;
-	}
-	#status {
-		top: 3.5rem;
-	}
-	#status span,
-	#timer,
-	#stepstaken {
-		font-size: 1rem;
-	}
-
-	#btn-credit {
-		left: 7rem !important;
-	}
-	#selectlevel #menubuttons span {
-		top: -4rem !important;
-	}
-
-	#btn-undostep {
-		top: 7rem !important;
-		right: 1rem !important;
-		z-index: 10;
-	}
-}
 @media screen and (max-width: 1600px) {
 	#settings h1,
 	#highscore h1 {
@@ -168,6 +136,47 @@
 	}
 }
 
+@media screen and (max-height: 890px) {
+	.grid-container {
+		margin-top: 2rem;
+		max-height: calc(100vh - 6rem);
+		max-width: calc(100vh - 6rem);
+	}
+	#showlevel {
+		font-size: 2rem;
+		top: 1rem;
+	}
+	#status {
+		top: 3.5rem;
+	}
+	#status span,
+	#timer,
+	#stepstaken {
+		font-size: 1rem;
+	}
+
+	#btn-credit {
+		left: 7rem !important;
+	}
+	#selectlevel #menubuttons span {
+		top: -4rem !important;
+	}
+
+	#btn-undostep {
+		top: 11rem !important;
+		right: 3rem !important;
+		z-index: 10;
+	}
+}
+
+@media screen and (max-height: 890px) and (max-width: 1240px) {
+	#btn-undostep {
+		top: 7rem !important;
+		right: 1rem !important;
+		z-index: 10;
+	}
+}
+
 @media screen and (max-width: 640px) {
 	.grid-container {
 		width: 100%;
@@ -227,8 +236,8 @@
 	}
 
 	#btn-undostep {
-		top: 5rem !important;
-		right: 1rem !important;
+		top: 5rem;
+		right: 1rem;
 	}
 
 	#btn-settings:after,
