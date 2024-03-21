@@ -34,6 +34,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		resetGame,
 		setInitialPlayerPosition,
 		setInitialBoxPositions,
+		playerDirection,
+		setPlayerDirection,
 	} = useContext(MyContext);
 
 	// mount the map
@@ -43,7 +45,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
 
 	// const [mapData, setMapData] = useState(initialMapData);
-	const [playerDirection, setPlayerDirection] = useState("down");
+
 	// const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
 	//set useRef to store the initial positions of the player, boxes and indicators
@@ -96,7 +98,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setInitialBoxPositions(boxStartPositions.current);
 	}, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
 
-	
+
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "R" || event.key === "r") {
