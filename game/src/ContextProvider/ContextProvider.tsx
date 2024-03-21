@@ -115,7 +115,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setGameRunning(false);
     setPlayerPosition(initialPlayerPosition);
     setBoxPositions(initialBoxPositions);
-    setElapsedTime(0);
 
   };
 
