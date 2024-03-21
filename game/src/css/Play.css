@@ -34,7 +34,7 @@
 	z-index: 5000;
 	position: fixed;
 	height: 55vh;
-	min-height: 20rem;
+	min-height: 30rem;
 	max-height: 40rem;
 	border: 2px solid white;
 	display: flex;
