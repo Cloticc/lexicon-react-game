@@ -5,6 +5,7 @@ import { useContext } from "react";
 export function Settings() {
 	const {
 		toggleSettings,
+		gameRunning,
 		setShowGameContainer,
 		isMuted,
 		setMuted,
@@ -40,10 +41,10 @@ export function Settings() {
 		setMapData(initialMapData);
 		setPlayerPosition(initialPlayerPosition);
 		console.log("Initial player Positions: ", initialPlayerPosition);
-		
+
 		setBoxPositions(initialBoxPositions);
 		console.log("Initial Box Positions: ", initialBoxPositions);
-		
+
 		resetGame();
 		setMusic("play");
 		toggleSettings(false);
@@ -53,9 +54,12 @@ export function Settings() {
 		}, 1);
 	}
 
+	/*
 	function handleSolution() {
 		playSound("click", 0.25);
 	}
+	*/
+
 	return (
 		<>
 			<div id="settings">
@@ -68,18 +72,21 @@ export function Settings() {
 						onMouseOver={handleMouseOver}
 					></button>
 
-					<button
-						id="btn-replay"
-						className="button"
-						onClick={handleReplay}
-						onMouseOver={handleMouseOver}
-					></button>
-					<button
+					{gameRunning && (
+						<button
+							id="btn-replay"
+							className="button"
+							onClick={handleReplay}
+							onMouseOver={handleMouseOver}
+						></button>
+					)}
+
+					{/*<button
 						id="btn-solution"
 						className="button"
 						onClick={handleSolution}
 						onMouseOver={handleMouseOver}
-					></button>
+						></button>*/}
 				</div>
 			</div>
 			<div id="darkoverlay"></div>
