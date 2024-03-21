@@ -10,6 +10,14 @@ interface BoxPosition {
   y: number;
 }
 
+interface HistoryState {
+  mapData: string[][];
+  playerPosition: { x: number; y: number };
+  boxPositions: { x: number; y: number }[];
+  counter: number;
+  direction: string;
+}
+
 interface GameContextProps {
   test: string;
   setTest: (test: string) => void;
@@ -58,8 +66,10 @@ interface GameContextProps {
   }) => void;
   handleHistory: boolean;
   setHandleHistory: (handleHistory: boolean) => void;
-   playerDirection: string;
+  playerDirection: string;
   setPlayerDirection: (playerDirection: string) => void;
+  history: HistoryState[];
+  setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
 }
 
 interface ChildrenProps {
@@ -106,13 +116,13 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   }>({});
   const [handleHistory, setHandleHistory] = useState<boolean>(false);
   const [playerDirection, setPlayerDirection] = useState<string>("down");
+  const [history, setHistory] = useState<HistoryState[]>([]);
 
   const resetGame = () => {
     setState("Test");
     setCounter(0);
     setElapsedTime(0);
     setWonGame(false);
-    setGameRunning(false);
     setMapData(initialMapData);
     setMusic("play");
     setStartTime(new Date());
@@ -120,8 +130,9 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setPlayerPosition(initialPlayerPosition);
     setBoxPositions(initialBoxPositions);
     setPlayerDirection("down");
-
+    setHistory([]);
   };
+
 
   const value: GameContextProps = {
     test: state,
@@ -169,6 +180,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setHandleHistory: setHandleHistory,
     playerDirection: playerDirection,
     setPlayerDirection: setPlayerDirection,
+    history: history,
+    setHistory: setHistory,
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
