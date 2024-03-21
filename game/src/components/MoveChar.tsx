@@ -46,7 +46,7 @@ export function MoveChar({
   const { level, setLevel } = useContext(MyContext);
   const { highestScores, setHighestScores } = useContext(MyContext);
   const { handleHistory, setHandleHistory } = useContext(MyContext);
- const { resetGame } = useContext(MyContext);
+  const { resetGame } = useContext(MyContext);
   const [levelCompleted, setLevelCompleted] = useState(false);
 
   const [history, setHistory] = useState<
@@ -60,42 +60,41 @@ export function MoveChar({
   >([]);
 
   const addToHistory = () => {
-    setHistory((prev) => [
-      ...prev,
-      {
+    setHistory(prevHistory => {
+      const newHistoryState = {
         mapData,
         playerPosition,
         boxPositions,
         counter,
         direction,
-      },
-    ]);
+      };
+
+      return [...prevHistory, newHistoryState];
+    });
   };
 
+const handleHistoryUndo = useCallback(() => {
+  if (history.length > 1) {
+    const prevState = history[history.length - 1];
+    const { mapData, playerPosition, direction, boxPositions, counter } = prevState;
 
-  const handleHistoryUndo = useCallback(() => {
-    if (history.length > 2) {
-        const prevState = history[history.length - 1];
-        setMapData(prevState.mapData);
-        setPlayerPosition(prevState.playerPosition);
-        setPlayerDirection(prevState.direction);
-        setBoxPositions(prevState.boxPositions);
-        setCounter(prevState.counter);
-        setHandleHistory(false);
-        setHistory((prev) => prev.slice(0, -1));
-    } else if (history.length === 2) {
-        resetGame();
-}
-
-    
-  }, [
-    history,
-    setMapData,
-    setPlayerPosition,
-    setBoxPositions,
-    setCounter,
-    setPlayerDirection,
-  ]);
+    setMapData(mapData);
+    setPlayerPosition(playerPosition);
+    setPlayerDirection(direction);
+    setBoxPositions(boxPositions);
+    setCounter(counter);
+    setHistory(prev => prev.slice(0, -1));
+  } else {
+    resetGame();
+  }
+}, [
+  history,
+  setMapData,
+  setPlayerPosition,
+  setBoxPositions,
+  setCounter,
+  setPlayerDirection,
+]);
 
   useEffect(() => {
     setHistory([]);
@@ -132,7 +131,7 @@ export function MoveChar({
     setGameRunning(false);
     setWonGame(true);
   }, []);
-
+  //the handleplayermove will only re-render when any of the dependencies change else it will not re-render might be a performance optimization
   const handlePlayerMove = useCallback(
     //useCallback to reset
     (direction: string) => {
