@@ -11,13 +11,13 @@ import { formatElapsedTime } from "../utils/TimeUtils";
 import { playSound } from "./../components/playSound";
 
 export function Play({ onPageChange }: SelectPageProps) {
-  const { counter } = useContext(MyContext);
-  const { elapsedTime } = useContext(MyContext);
-  const { wonGame } = useContext(MyContext);
-  const { level } = useContext(MyContext);
-  const { setMusic } = useContext(MyContext);
-  const { showGameContainer, setShowGameContainer } = useContext(MyContext);
-  const { resetGame } = useContext(MyContext);
+	const { counter } = useContext(MyContext);
+	const { elapsedTime } = useContext(MyContext);
+	const { wonGame } = useContext(MyContext);
+	const { level } = useContext(MyContext);
+	const { setMusic } = useContext(MyContext);
+	const { setShowGameContainer } = useContext(MyContext);
+	const { resetGame } = useContext(MyContext);
 
   useEffect(() => {
     setMusic("play");

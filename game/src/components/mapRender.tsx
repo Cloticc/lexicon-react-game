@@ -19,6 +19,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		level,
 		showGameContainer,
 		setShowGameContainer,
+		setMusic,
 		mapData,
 		setMapData,
 		boxPositions,
@@ -49,54 +50,71 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	const [playerDirection, setPlayerDirection] = useState("down");
 	// const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
-  /* This code snippet is finding the initial position of the player ('P') on the map by iterating
-  through the `initialMapData` array. */
-  let playerStartPosition = { x: 5, y: 6 };
-  for (let y = 0; y < initialMapData.length; y++) {
-    const x = initialMapData[y].indexOf("P");
-    if (x !== -1) {
-      playerStartPosition = { x, y };
-      break;
-    }
-  }
-  const [playerPosition, setPlayerPosition] = useState(playerStartPosition);
+	//set useRef to store the initial positions of the player, boxes and indicators
+	const playerStartPosition = useRef({ x: 5, y: 6 });
+	const boxStartPositions = useRef<{ x: number; y: number }[]>([]);
+	const IndicatorPositions = useRef<{ x: number; y: number }[]>([]);
 
-  /* This code snippet is initializing an empty array called `indicatorStartPositions` and then looping
-  through the `initialMapData` array to find positions where the symbol 'I' (representing an
-  indicator) is located. For each position where 'I' is found, an object with the x and y coordinates
-  of that position is pushed into the `indicatorStartPositions` array. This process effectively
-  collects the initial positions of all the indicators on the map and stores them in the
-  `indicatorStartPositions` array for later use in the component. */
-  const indicatorStartPositions = []; // Array of positions
-  for (let y = 0; y < initialMapData.length; y++) {
-    for (let x = 0; x < initialMapData[y].length; x++) {
-      if (initialMapData[y][x] === "I") {
-        indicatorStartPositions.push({ x, y });
-      }
-    }
-  }
+	useEffect(() => {
+		// Calculate playerStartPosition
+		for (let y = 0; y < initialMapData.length; y++) {
+			const x = initialMapData[y].indexOf("P");
+			if (x !== -1) {
+				playerStartPosition.current = { x, y };
+				break;
+			}
+		}
 
-  const [indicatorPositions, setIndicatorPositions] = useState(
-    indicatorStartPositions
-  );
+		// Calculate boxStartPositions
+		boxStartPositions.current = [];
+		for (let y = 0; y < initialMapData.length; y++) {
+			for (let x = 0; x < initialMapData[y].length; x++) {
+				if (initialMapData[y][x] === "B") {
+					boxStartPositions.current.push({ x, y });
+				}
+			}
+		}
 
-  /* This code snippet is initializing an empty array called `boxStartPositions` and then looping through
-  the `initialMapData` array to find positions where the symbol 'B' (representing a box) is located.
-  For each position where 'B' is found, an object with the x and y coordinates of that position is
-  pushed into the `boxStartPositions` array. This process effectively collects the initial positions
-  of all the boxes on the map and stores them in the `boxStartPositions` array for later use in the
-  component. */
-  const boxStartPositions = []; // Array of positions
-  for (let y = 0; y < initialMapData.length; y++) {
-    for (let x = 0; x < initialMapData[y].length; x++) {
-      if (initialMapData[y][x] === "B") {
-        boxStartPositions.push({ x, y });
-      }
-    }
-  }
+		//Calculate indicatorPositions
+		IndicatorPositions.current = [];
+		for (let y = 0; y < initialMapData.length; y++) {
+			for (let x = 0; x < initialMapData[y].length; x++) {
+				if (initialMapData[y][x] === "I") {
+					IndicatorPositions.current.push({ x, y });
+				}
+			}
+		}
 
-  const [boxPositions, setBoxPositions] = useState(boxStartPositions);
-  // console.log(boxPositions , "boxPositions");
+		// Set the initial positions
+		setPlayerPosition(playerStartPosition.current);
+		setBoxPositions(boxStartPositions.current);
+		setIndicatorPositions(IndicatorPositions.current);
+	}, [initialMapData, setPlayerPosition, setBoxPositions, setIndicatorPositions]);
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "R" || event.key === "r") {
+				setMapData(initialMapData);
+				setBoxPositions(boxStartPositions.current);
+				setPlayerPosition(playerStartPosition.current);
+				playSound("click", 0.25);
+				playSound("reverse", 0.5);
+				setMusic("play");
+				setShowGameContainer(false);
+				setTimeout(() => {
+					setShowGameContainer(true);
+				}, 1);
+
+				resetGame();
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [initialMapData, setMapData, setBoxPositions, setPlayerPosition, resetGame]);
 
   //will be used to get the class name for each symbol in the map
   const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
@@ -127,10 +145,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	return (
 		<div
 			className={`grid-container ${showGameContainer ? "" : "hide"} 
-      ${level >= 10 ? "level10" : ""} 
-      ${level >= 20 ? "level20" : ""} 
-      ${level >= 30 ? "level30" : ""}
-      ${level >= 40 ? "level40" : ""}`}
+      ${level >= 9 ? "level10" : ""} 
+      ${level >= 19 ? "level20" : ""} 
+      ${level >= 29 ? "level30" : ""}
+      ${level >= 39 ? "level40" : ""}`}
 		>
 			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
 			<MoveChar

@@ -67,6 +67,11 @@
 		background-size: 2.5rem !important;
 	}
 
+	#selectlevel {
+		width: 90vw;
+		padding: 2rem;
+	}
+
 	#btn-play,
 	#btn-nextlevel {
 		right: 1.5rem !important;
@@ -90,21 +95,21 @@
 	}
 
 	#btn-settings {
-		top: 1rem;
-		right: 1rem;
+		top: 1rem !important;
+		right: 1rem !important;
 	}
 	#btn-undostep {
 		top: 1rem;
 		right: 7rem;
 	}
 	#btn-selectlevel {
-		top: 1rem;
-		left: 1rem;
+		top: 1rem !important;
+		left: 1rem !important;
 	}
 
 	#btn-fullscreen {
-		bottom: 1rem;
-		right: 1rem;
+		bottom: 1rem !important;
+		right: 1rem !important;
 	}
 
 	#startplay {
@@ -151,7 +156,7 @@
 	#selectlevel .levels ul li {
 		font-size: 2rem;
 		height: 100%;
-		min-height: 100%;
+		min-height: 4rem;
 		align-items: center;
 		padding-bottom: 1rem;
 	}
@@ -163,22 +168,42 @@
 	}
 
 	#showlevel {
-		font-size: 2rem;
-		top: 1rem;
+		font-size: 2rem !important;
+		top: 1rem !important;
 	}
 	#status {
-		top: 3.5rem;
+		top: 3.5rem !important;
+		width: 10rem !important;
 	}
 
 	#btn-credits {
 		bottom: 1.5rem !important;
 		left: 6rem !important;
 	}
+	#highscore h2 {
+		font-size: 1rem;
+	}
+
+	.showhighscore {
+		width: 100% !important;
+	}
+	#highscore h2:nth-child(2) {
+		font-size: 1.8rem !important;
+		margin-top: 0.5rem !important;
+	}
+
+	.showhighscore .result .row {
+		font-size: 1rem !important;
+	}
+
+	.showhighscore .row.thead {
+		font-size: 0.7rem !important;
+	}
 
 	#timer,
 	#stepstaken,
 	#status span {
-		font-size: 1rem;
+		font-size: 1rem !important;
 	}
 	.button {
 		outline: 2px solid black;
@@ -187,13 +212,17 @@
 		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.8) !important;
 	}
 
+	#copyright {
+		bottom: 1rem !important;
+	}
+
 	#btn-credits:after {
 		background-size: 0.7rem !important;
 	}
 
 	#btn-undostep {
-		top: 1rem;
-		right: 5rem;
+		top: 5rem !important;
+		right: 1rem !important;
 	}
 
 	#btn-settings:after,
@@ -212,10 +241,11 @@
 	}
 
 	#selectlevel {
-		padding: 1.5rem;
+		padding: 1rem !important;
 		width: 94%;
-		height: 74vh;
+		height: 74vh !important;
 		top: 0.5rem;
+		min-height: 30rem !important;
 	}
 	#selectlevel .levels {
 		height: calc(100% - 6rem) !important;
@@ -230,10 +260,11 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 	#selectlevel .levels ul li {
-		min-height: 3rem;
+		min-height: 2rem !important;
 		height: 100%;
 		outline: 2px solid black;
-		font-size: 2rem;
+		font-size: 1.5rem !important;
+		padding-bottom: 0;
 		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
 	}
 
@@ -282,6 +313,10 @@
 		font-size: clamp(3rem, 18vw, 13rem);
 	}
 
+	#settings {
+		min-height: auto;
+	}
+
 	#highscore {
 		width: 90%;
 		height: 65vh;
@@ -289,15 +324,20 @@
 
 	#settings h1,
 	#highscore h1 {
-		font-size: clamp(3rem, 16vw, 13rem);
-		top: -3rem !important;
+		font-size: clamp(2.5rem, 7vw, 5rem) !important;
+		top: -2rem !important;
 	}
 	#highscore h2 {
 		margin-top: 0;
 	}
 	#selectlevel h1 {
-		font-size: clamp(3rem, 12vw, 13rem) !important;
-		top: -2.5rem;
+		font-size: clamp(2.5rem, 7vw, 5rem) !important;
+		top: -2rem !important;
+	}
+
+	#credits {
+		scale: 0.7;
+		padding: 0 !important;
 	}
 
 	#settings {
