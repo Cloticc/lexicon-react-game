@@ -59,6 +59,9 @@ export function MoveChar({
     }[]
   >([]);
 
+  /**
+   * Adds the current state of the game to the history.
+   */
   const addToHistory = () => {
     setHistory(prevHistory => {
       const newHistoryState = {
@@ -73,28 +76,31 @@ export function MoveChar({
     });
   };
 
-const handleHistoryUndo = useCallback(() => {
-  if (history.length > 1) {
-    const prevState = history[history.length - 1];
-    const { mapData, playerPosition, direction, boxPositions, counter } = prevState;
+  /**
+   * Handles the undo functionality for the game history.
+   */
+  const handleHistoryUndo = useCallback(() => {
+    if (history.length > 1) {
+      const prevState = history[history.length - 1];
+      const { mapData, playerPosition, direction, boxPositions, counter } = prevState;
 
-    setMapData(mapData);
-    setPlayerPosition(playerPosition);
-    setPlayerDirection(direction);
-    setBoxPositions(boxPositions);
-    setCounter(counter);
-    setHistory(prev => prev.slice(0, -1));
-  } else {
-    resetGame();
-  }
-}, [
-  history,
-  setMapData,
-  setPlayerPosition,
-  setBoxPositions,
-  setCounter,
-  setPlayerDirection,
-]);
+      setMapData(mapData);
+      setPlayerPosition(playerPosition);
+      setPlayerDirection(direction);
+      setBoxPositions(boxPositions);
+      setCounter(counter);
+      setHistory(prev => prev.slice(0, -1));
+    } else {
+      resetGame();
+    }
+  }, [
+    history,
+    setMapData,
+    setPlayerPosition,
+    setBoxPositions,
+    setCounter,
+    setPlayerDirection,
+  ]);
 
   useEffect(() => {
     setHistory([]);
@@ -151,58 +157,47 @@ const handleHistoryUndo = useCallback(() => {
         newPosition.y >= 0 &&
         newPosition.y < mapData.length
       ) {
+        // Create a new map data array to avoid mutating the original state
         const newMapData = mapData.map((row: string[]) => [...row]);
 
         if (newMapData[newPosition.y][newPosition.x] !== "#") {
-          const boxIndex = boxPositions.findIndex(
-            (pos) => pos.x === newPosition.x && pos.y === newPosition.y
-          );
-
+          const boxIndex = boxPositions.findIndex((pos) => pos.x === newPosition.x && pos.y === newPosition.y);
+          //if the box is found
           if (boxIndex !== -1) {
             const beyondBoxPosition = {
               x: newPosition.x + directionMap[direction as Direction].x,
               y: newPosition.y + directionMap[direction as Direction].y,
             };
-
+            //if the box is not at the edge of the mapData
             if (
               beyondBoxPosition.x >= 0 &&
               beyondBoxPosition.x < newMapData[0].length &&
               beyondBoxPosition.y >= 0 &&
               beyondBoxPosition.y < newMapData.length &&
-              (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
-                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+              (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," || newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
             ) {
+              // If the player is pushing a box
               newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+              // console.log("box pushed");
+
               playSound("pushbox", 0.4);
               playSound("walk", 0.3);
-              if (
-                indicatorPositions.some(
-                  (pos) =>
-                    pos.x === boxPositions[boxIndex].x &&
-                    pos.y === boxPositions[boxIndex].y
-                )
-              ) {
-                newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] =
-                  "I";
-              } else {
-                newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] =
-                  ",";
-              }
+              // Check if the box is on an indicator
+              // if (
+              // indicatorPositions.some((pos) => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)
 
-              if (
-                indicatorPositions.some(
-                  (pos) =>
-                    pos.x === beyondBoxPosition.x &&
-                    pos.y === beyondBoxPosition.y
-                )
+              // ) {
+              //   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = "I";
+              // } else {
+              //   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = ",";
+              // }
+
+              if (indicatorPositions.some((pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y)
               ) {
                 playSound("boxindication", 0.4);
               }
               if (
-                indicatorPositions.some(
-                  (pos) =>
-                    pos.x === playerPosition.x && pos.y === playerPosition.y
-                )
+                indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
               ) {
                 newMapData[playerPosition.y][playerPosition.x] = "I";
               } else {
@@ -220,11 +215,10 @@ const handleHistoryUndo = useCallback(() => {
               setPlayerPosition(newPosition);
             }
           } else {
+            // If the player is not pushing a box and the new position is not a wall
             if (
               indicatorPositions.some(
-                (pos) =>
-                  pos.x === playerPosition.x && pos.y === playerPosition.y
-              )
+                (pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
             ) {
               newMapData[playerPosition.y][playerPosition.x] = "I";
             } else {
