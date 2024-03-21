@@ -35,7 +35,14 @@ export function Play({ onPageChange }: SelectPageProps) {
 		playSound("swoosh", 0.15);
 	};
 	const handleSpacePress = () => {
-		setHandleHistory(true);
+		// setHandleHistory(true);
+
+  const event = new KeyboardEvent('keydown', {
+    key: ' ', 
+  });
+
+  // Dispatch the event
+  window.dispatchEvent(event);
 	};
 
 	function handleMouseOver() {
