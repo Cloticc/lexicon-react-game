@@ -28,7 +28,7 @@ export function Highscore() {
 		if (storedScores) {
 			setHighestScores(JSON.parse(storedScores));
 		}
-		console.log("Stored Scores: ", storedScores || "No stored scores");
+		// console.log("Stored Scores: ", storedScores || "No stored scores");
 
 		playSound("leveldone", 0.3);
 		setShowGameContainer(false);
