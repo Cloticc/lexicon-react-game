@@ -53,11 +53,11 @@ export function MoveChar({
       const intervalId = setInterval(() => {
         const elapsed = Math.floor(Date.now() - startTime.getTime());
         setElapsedTime(elapsed);
-      }, 100);
+      }, 100); 
 
       return () => clearInterval(intervalId);
     }
-  }, [startTime, gameRunning]);
+  }, [startTime, gameRunning, currentLevel]);
 
   const startGame = useCallback(() => {
     setStartTime(new Date());
@@ -71,7 +71,7 @@ export function MoveChar({
     setWonGame(true);
   }, []);
 
-  const handlePlayerMove = useCallback(
+  const handlePlayerMove = useCallback( //useCallback to reset 
     (direction: string) => {
       setPlayerDirection(direction.toLowerCase());
 
@@ -293,6 +293,8 @@ export function MoveChar({
   }, [mapData, counter, elapsedTime, currentLevel, gameRunning]);
 
 
+
+
   useEffect(() => {
     if (levelCompleted && counter > 0 && elapsedTime > 0) {
       const updateHighScores = () => {
@@ -316,10 +318,12 @@ export function MoveChar({
         });
       };
 
-      updateHighScores();
-      setLevelCompleted(false); // Reset levelCompleted state
+      // Delay the execution of updateHighScores by 2 seconds
+      setTimeout(updateHighScores, 1);
+      setLevelCompleted(false); 
     }
-  }, [levelCompleted, currentLevel]); // Listen for changes in levelCompleted state
+  }, [levelCompleted, currentLevel]); 
+  
   return (
     <>
       {wonGame && counter > 0 && elapsedTime > 0 && (
