@@ -5,8 +5,6 @@ import { formatElapsedTime } from "../utils/TimeUtils";
 import { playSound } from "./../components/playSound";
 
 export function Highscore() {
-	const { music, setMusic } = useContext(MyContext);
-	const { setShowGameContainer } = useContext(MyContext);
 	const [highestScores, setHighestScores] = useState<{
 		[level: string]: { score: number; elapsedTime: number };
 	}>({});
@@ -14,7 +12,10 @@ export function Highscore() {
 	const {
 		level,
 		setLevel,
+		setShowGameContainer,
 		setMapData,
+		music,
+		setMusic,
 		setBoxPositions,
 		setPlayerPosition,
 		initialMapData,
@@ -65,6 +66,7 @@ export function Highscore() {
 	function handleNextLevel() {
 		playSound("click", 0.25);
 		playSound("levelstart", 0.5);
+		setMusic("play");
 		setShowGameContainer(true);
 		let newLevel = level + 1;
 		setLevel(newLevel);

@@ -14,10 +14,40 @@ interface MapRenderProps {
   /* <MapRender initialMapData={map1.mapdata} /> */
 }
 
-export function MapRender({ initialMapData , handleSpacePress}: MapRenderProps) {
-  const [mapData, setMapData] = useState(initialMapData);
-  const [playerDirection, setPlayerDirection] = useState("down");
-  // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
+export function MapRender({ initialMapData }: MapRenderProps) {
+	const {
+		level,
+		showGameContainer,
+		setShowGameContainer,
+		mapData,
+		setMapData,
+		boxPositions,
+		setBoxPositions,
+		playerPosition,
+		setPlayerPosition,
+		indicatorPositions,
+		setIndicatorPositions,
+		setInitialMapData,
+		resetGame,
+		setInitialPlayerPosition,
+		setInitialBoxPositions,
+	} = useContext(MyContext);
+
+	// mount the map
+	useEffect(() => {
+		setMapData(initialMapData);
+	}, [setMapData, initialMapData]);
+
+	// Set the initial positions for the game to reset
+	useEffect(() => {
+		setInitialMapData(initialMapData);
+		setInitialPlayerPosition(playerStartPosition.current);
+		setInitialBoxPositions(boxStartPositions.current);
+	}, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
+
+	// const [mapData, setMapData] = useState(initialMapData);
+	const [playerDirection, setPlayerDirection] = useState("down");
+	// const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
 
   /* This code snippet is finding the initial position of the player ('P') on the map by iterating
   through the `initialMapData` array. */
@@ -94,21 +124,27 @@ export function MapRender({ initialMapData , handleSpacePress}: MapRenderProps) 
     }
   };
 
-  return (
-    <div className="grid-container">
-      {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
-      <MoveChar
-        mapData={mapData}
-        setMapData={setMapData}
-        setPlayerDirection={setPlayerDirection}
-        indicatorPositions={indicatorPositions}
-        setIndicatorPositions={setIndicatorPositions}
-        boxPositions={boxPositions}
-        setBoxPositions={setBoxPositions}
-        playerPosition={playerPosition}
-        setPlayerPosition={setPlayerPosition}
+	return (
+		<div
+			className={`grid-container ${showGameContainer ? "" : "hide"} 
+      ${level >= 10 ? "level10" : ""} 
+      ${level >= 20 ? "level20" : ""} 
+      ${level >= 30 ? "level30" : ""}
+      ${level >= 40 ? "level40" : ""}`}
+		>
+			{/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
+			<MoveChar
+				mapData={mapData}
+				setMapData={setMapData}
+				setPlayerDirection={setPlayerDirection}
+				indicatorPositions={indicatorPositions}
+				setIndicatorPositions={setIndicatorPositions}
+				boxPositions={boxPositions}
+				setBoxPositions={setBoxPositions}
+				playerPosition={playerPosition}
+				setPlayerPosition={setPlayerPosition}
         handleSpacePress={handleSpacePress}
-      />
+			/>
 
       {mapData.map((row, rowIndex) => (
         <div key={rowIndex} className="grid-row">
