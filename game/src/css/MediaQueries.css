@@ -243,8 +243,9 @@
 	#selectlevel {
 		padding: 1rem !important;
 		width: 94%;
-		height: 74vh;
+		height: 74vh !important;
 		top: 0.5rem;
+		min-height: 30rem !important;
 	}
 	#selectlevel .levels {
 		height: calc(100% - 6rem) !important;
@@ -259,10 +260,10 @@
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
 	#selectlevel .levels ul li {
-		min-height: 3rem;
+		min-height: 2rem !important;
 		height: 100%;
 		outline: 2px solid black;
-		font-size: 1rem;
+		font-size: 1.5rem !important;
 		padding-bottom: 0;
 		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
 	}
