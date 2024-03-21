@@ -14,6 +14,7 @@ interface MoveCharProps {
   setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
   boxPositions: { x: number; y: number }[];
   setBoxPositions: (positions: { x: number; y: number }[]) => void;
+  handleSpacePress: () => void;
 }
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
@@ -33,6 +34,7 @@ export function MoveChar({
   indicatorPositions,
   boxPositions,
   setBoxPositions,
+  handleSpacePress,
 }: MoveCharProps) {
   // const [startTime, setStartTime] = useState<Date | null>(null);
   const { counter, setCounter } = useContext(MyContext);
@@ -41,7 +43,51 @@ export function MoveChar({
   // const [gameRunning, setGameRunning] = useState<boolean>(false);
   const { gameRunning, setGameRunning } = useContext(MyContext);
   const [currentLevel, setCurrentLevel] = useState<string>("1");
-const { startTime, setStartTime } = useContext(MyContext);
+  const [direction, setDirection] = useState<string>("");
+  const { startTime, setStartTime } = useContext(MyContext);
+  const [history, setHistory] = useState<
+    {
+      mapData: string[][];
+      playerPosition: { x: number; y: number };
+      boxPositions: { x: number; y: number }[];
+      counter: number;
+      direction: string;
+    }[]
+  >([]);
+
+  const addToHistory = () => {
+    setHistory((prev) => [
+      ...prev,
+      {
+        mapData,
+        playerPosition,
+        boxPositions,
+        counter,
+        direction,
+      },
+    ]);
+  };
+
+  const handleHistoryUndo = useCallback(() => {
+    if (history.length > 1) {
+      const prevState = history[history.length - 1];
+      setMapData(prevState.mapData);
+      setPlayerPosition(prevState.playerPosition);
+      setPlayerDirection(prevState.direction);
+      setBoxPositions(prevState.boxPositions);
+      setCounter(prevState.counter);
+      setHistory((prev) => prev.slice(0, -1));
+    }
+    handleSpacePress();
+  }, [
+    history,
+    setMapData,
+    setPlayerPosition,
+    setBoxPositions,
+    setCounter,
+    setPlayerDirection,
+    handleSpacePress,
+  ]);
 
   useEffect(() => {
     if (startTime && gameRunning) {
@@ -69,6 +115,7 @@ const { startTime, setStartTime } = useContext(MyContext);
   const handlePlayerMove = useCallback(
     (direction: string) => {
       setPlayerDirection(direction.toLowerCase());
+      setDirection(direction.toLowerCase());
 
       const newPosition = {
         x: playerPosition.x + directionMap[direction as Direction].x,
@@ -173,6 +220,7 @@ const { startTime, setStartTime } = useContext(MyContext);
           if (!gameRunning && counter === 0) {
             startGame(); // Start the game when the first move is made
           }
+          addToHistory();
         }
       }
     },
@@ -210,6 +258,9 @@ const { startTime, setStartTime } = useContext(MyContext);
         case "D":
           handlePlayerMove("RIGHT");
           break;
+        case " ":
+          handleHistoryUndo();
+          break;
         default:
           break;
       }
@@ -220,7 +271,7 @@ const { startTime, setStartTime } = useContext(MyContext);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handlePlayerMove]);
+  }, [handlePlayerMove, handleHistoryUndo]);
 
   useEffect(() => {
     let startTouchX: number | null = null;
@@ -297,3 +348,4 @@ const { startTime, setStartTime } = useContext(MyContext);
     </>
   );
 }
+
