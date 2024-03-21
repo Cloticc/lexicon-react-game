@@ -70,7 +70,7 @@ export function Play({ onPageChange }: SelectPageProps) {
         onClick={handleSelectLevelClick}
       ></button>
 
-      <MapRender initialMapData={allMaps[level].mapdata} handleSpacePress={handleSpacePress}/>
+      <MapRender initialMapData={allMaps[level].mapdata}/>
       {wonGame && <Highscore />}
     </>
   );

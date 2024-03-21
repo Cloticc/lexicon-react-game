@@ -14,7 +14,6 @@ interface MoveCharProps {
   setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
   boxPositions: { x: number; y: number }[];
   setBoxPositions: (positions: { x: number; y: number }[]) => void;
-  handleSpacePress: () => void;
 }
 type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT";
 
@@ -34,7 +33,6 @@ export function MoveChar({
   indicatorPositions,
   boxPositions,
   setBoxPositions,
-  handleSpacePress,
 }: MoveCharProps) {
   // const [startTime, setStartTime] = useState<Date | null>(null);
   const { counter, setCounter } = useContext(MyContext);
@@ -83,7 +81,6 @@ export function MoveChar({
       setCounter(prevState.counter);
       setHistory((prev) => prev.slice(0, -1));
     }
-    handleSpacePress();
   }, [
     history,
     setMapData,
@@ -91,7 +88,6 @@ export function MoveChar({
     setBoxPositions,
     setCounter,
     setPlayerDirection,
-    handleSpacePress,
   ]);
 
   useEffect(() => {

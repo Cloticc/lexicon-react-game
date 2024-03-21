@@ -1,17 +1,18 @@
 import "../css/MapRender.css";
 
+import { useContext, useEffect, useRef, useState } from "react";
+import { playSound } from "./../components/playSound";
 import { MoveChar } from "./MoveChar";
-import { useState } from "react";
+import { MyContext } from "../ContextProvider/ContextProvider";
 
 //Check if array is an array of arrays
 interface MapRenderProps {
-  initialMapData: string[][];
-  handleSpacePress: () => void;
+	initialMapData: string[][];
 }
 // example to add the map to the game add the following line to the App.tsx file
 // import map1 from './maps/map1.json';
 {
-  /* <MapRender initialMapData={map1.mapdata} /> */
+	/* <MapRender initialMapData={map1.mapdata} /> */
 }
 
 export function MapRender({ initialMapData }: MapRenderProps) {
@@ -116,31 +117,29 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		};
 	}, [initialMapData, setMapData, setBoxPositions, setPlayerPosition, resetGame]);
 
-  //will be used to get the class name for each symbol in the map
-  const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
-    const isIndicator = indicatorPositions.some(
-      (pos) => pos.x === x && pos.y === y
-    );
-    const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
-    switch (symbol) {
-      case "-":
-        return "empty";
-      case "P":
-        return isIndicator
-          ? "boxindicator"
-          : `ground player-${playerDirection} playerwalk${playerDirection}`;
-      case "B":
-        return isIndicator && isBox ? "box box-on-indicator" : "box";
-      case ",":
-        return "ground";
-      case "I":
-        return "boxindicator";
-      case "#":
-        return "wall";
-      default:
-        return "";
-    }
-  };
+	//will be used to get the class name for each symbol in the map
+	const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
+		const isIndicator = indicatorPositions.some((pos) => pos.x === x && pos.y === y);
+		const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
+		switch (symbol) {
+			case "-":
+				return "empty";
+			case "P":
+				return isIndicator
+					? "boxindicator"
+					: `ground player-${playerDirection} playerwalk${playerDirection}`;
+			case "B":
+				return isIndicator && isBox ? "box box-on-indicator" : "box";
+			case ",":
+				return "ground";
+			case "I":
+				return "boxindicator";
+			case "#":
+				return "wall";
+			default:
+				return "";
+		}
+	};
 
 	return (
 		<div
@@ -161,34 +160,29 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				setBoxPositions={setBoxPositions}
 				playerPosition={playerPosition}
 				setPlayerPosition={setPlayerPosition}
-        handleSpacePress={handleSpacePress}
 			/>
 
-      {mapData.map((row, rowIndex) => (
-        <div key={rowIndex} className="grid-row">
-          {row.map((column, columnIndex) => {
-            const className = getClassNameForSymbol(
-              column,
-              columnIndex,
-              rowIndex
-            );
+			{mapData.map((row, rowIndex) => (
+				<div key={rowIndex} className="grid-row">
+					{row.map((column: string, columnIndex: number) => {
+						const className = getClassNameForSymbol(column, columnIndex, rowIndex);
 
-            return (
-              <div key={columnIndex} className={`grid-item ${className}`}>
-                {className === "boxindicator" && (
-                  <div className="boxindicator-container"></div>
-                )}
-                {className === "box" && <div className="box-container"></div>}
-                {className === "boxindicator" &&
-                  playerPosition.x === columnIndex &&
-                  playerPosition.y === rowIndex && (
-                    <div className={`player-${playerDirection}`}></div>
-                  )}
-              </div>
-            );
-          })}
-        </div>
-      ))}
-    </div>
-  );
+						return (
+							<div key={columnIndex} className={`grid-item ${className}`}>
+								{className === "boxindicator" && (
+									<div className="boxindicator-container"></div>
+								)}
+								{className === "box" && <div className="box-container"></div>}
+								{className === "boxindicator" &&
+									playerPosition.x === columnIndex &&
+									playerPosition.y === rowIndex && (
+										<div className={`player-${playerDirection}`}></div>
+									)}
+							</div>
+						);
+					})}
+				</div>
+			))}
+		</div>
+	);
 }
