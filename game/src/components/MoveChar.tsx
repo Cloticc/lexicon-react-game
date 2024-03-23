@@ -35,20 +35,45 @@ export function MoveChar({
 	setBoxPositions,
 }: MoveCharProps) {
 	// const [startTime, setStartTime] = useState<Date | null>(null);
-	const { counter, setCounter } = useContext(MyContext);
-	const { elapsedTime, setElapsedTime } = useContext(MyContext);
-	const { wonGame, setWonGame } = useContext(MyContext);
+	// const { counter, setCounter } = useContext(MyContext);
+	// const { elapsedTime, setElapsedTime } = useContext(MyContext);
+	// const { wonGame, setWonGame } = useContext(MyContext);
 	// const [gameRunning, setGameRunning] = useState<boolean>(false);
-	const { gameRunning, setGameRunning } = useContext(MyContext);
+	// const { gameRunning, setGameRunning } = useContext(MyContext);
+	// const { startTime, setStartTime } = useContext(MyContext);
+	// const { level, setLevel } = useContext(MyContext);
+	// const { highestScores, setHighestScores } = useContext(MyContext);
+	// const { handleHistory, setHandleHistory } = useContext(MyContext);
+	// const { resetGame } = useContext(MyContext);
+	// const { history, setHistory } = useContext(MyContext);
 	const [currentLevel, setCurrentLevel] = useState<string>("1");
+
 	const [direction, setDirection] = useState<string>("");
-	const { startTime, setStartTime } = useContext(MyContext);
-	const { level, setLevel } = useContext(MyContext);
-	const { highestScores, setHighestScores } = useContext(MyContext);
-	const { handleHistory, setHandleHistory } = useContext(MyContext);
-	const { resetGame } = useContext(MyContext);
 	const [levelCompleted, setLevelCompleted] = useState(false);
-	const { history, setHistory } = useContext(MyContext);
+	
+//Reduce the number of useContext calls by destructuring the values from the context
+	const {
+		counter,
+		setCounter,
+		elapsedTime,
+		setElapsedTime,
+		wonGame,
+		setWonGame,
+		gameRunning,
+		setGameRunning,
+		startTime,
+		setStartTime,
+		level,
+		setLevel,
+		highestScores,
+		setHighestScores,
+		handleHistory,
+		setHandleHistory,
+		resetGame,
+		history,
+		setHistory,
+	} = useContext(MyContext);
+
 	// const [history, setHistory] = useState<
 	//   {
 	//     mapData: string[][];
@@ -140,133 +165,252 @@ export function MoveChar({
 		setWonGame(true);
 	}, []);
 	//the handleplayermove will only re-render when any of the dependencies change else it will not re-render might be a performance optimization
-	const handlePlayerMove = useCallback(
-		//useCallback to reset
-		(direction: string) => {
-			setPlayerDirection(direction.toLowerCase());
-			setDirection(direction.toLowerCase());
+	// const handlePlayerMove = useCallback(
+	// 	//useCallback to reset
+	// 	(direction: string) => {
+	// 		setPlayerDirection(direction.toLowerCase());
+	// 		setDirection(direction.toLowerCase());
 
-			const newPosition = {
-				x: playerPosition.x + directionMap[direction as Direction].x,
-				y: playerPosition.y + directionMap[direction as Direction].y,
-			};
+	// 		const newPosition = {
+	// 			x: playerPosition.x + directionMap[direction as Direction].x,
+	// 			y: playerPosition.y + directionMap[direction as Direction].y,
+	// 		};
 
-			if (
-				mapData.length > 0 &&
-				mapData[0] &&
-				newPosition.x >= 0 &&
-				newPosition.x < mapData[0].length &&
-				newPosition.y >= 0 &&
-				newPosition.y < mapData.length
-			) {
-				// Create a new map data array to avoid mutating the original state
-				const newMapData = mapData.map((row: string[]) => [...row]);
+	// 		if (
+	// 			mapData.length > 0 &&
+	// 			mapData[0] &&
+	// 			newPosition.x >= 0 &&
+	// 			newPosition.x < mapData[0].length &&
+	// 			newPosition.y >= 0 &&
+	// 			newPosition.y < mapData.length
+	// 		) {
+	// 			// Create a new map data array to avoid mutating the original state
+	// 			const newMapData = mapData.map((row: string[]) => [...row]);
 
-				if (newMapData[newPosition.y][newPosition.x] !== "#") {
-					const boxIndex = boxPositions.findIndex(
-						(pos) => pos.x === newPosition.x && pos.y === newPosition.y
-					);
-					//if the box is found
-					if (boxIndex !== -1) {
-						const beyondBoxPosition = {
-							x: newPosition.x + directionMap[direction as Direction].x,
-							y: newPosition.y + directionMap[direction as Direction].y,
-						};
-						//if the box is not at the edge of the mapData
-						if (
-							beyondBoxPosition.x >= 0 &&
-							beyondBoxPosition.x < newMapData[0].length &&
-							beyondBoxPosition.y >= 0 &&
-							beyondBoxPosition.y < newMapData.length &&
-							(newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
-								newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
-						) {
-							// If the player is pushing a box
-							newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
-							// console.log("box pushed");
+	// 			if (newMapData[newPosition.y][newPosition.x] !== "#") {
+	// 				const boxIndex = boxPositions.findIndex(
+	// 					(pos) => pos.x === newPosition.x && pos.y === newPosition.y
+	// 				);
+	// 				//if the box is found
+	// 				if (boxIndex !== -1) {
+	// 					const beyondBoxPosition = {
+	// 						x: newPosition.x + directionMap[direction as Direction].x,
+	// 						y: newPosition.y + directionMap[direction as Direction].y,
+	// 					};
+	// 					//if the box is not at the edge of the mapData
+	// 					if (
+	// 						beyondBoxPosition.x >= 0 &&
+	// 						beyondBoxPosition.x < newMapData[0].length &&
+	// 						beyondBoxPosition.y >= 0 &&
+	// 						beyondBoxPosition.y < newMapData.length &&
+	// 						(newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
+	// 							newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+	// 					) {
+	// 						// If the player is pushing a box
+	// 						newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+	// 						// console.log("box pushed");
 
-							playSound("pushbox", 0.4);
-							playSound("walk", 0.3);
-							// Check if the box is on an indicator
-							// if (
-							// indicatorPositions.some((pos) => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)
+	// 						playSound("pushbox", 0.4);
+	// 						playSound("walk", 0.3);
+	// 						// Check if the box is on an indicator
+	// 						// if (
+	// 						// indicatorPositions.some((pos) => pos.x === boxPositions[boxIndex].x && pos.y === boxPositions[boxIndex].y)
 
-							// ) {
-							//   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = "I";
-							// } else {
-							//   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = ",";
-							// }
+	// 						// ) {
+	// 						//   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = "I";
+	// 						// } else {
+	// 						//   newMapData[boxPositions[boxIndex].y][boxPositions[boxIndex].x] = ",";
+	// 						// }
 
-							if (
-								indicatorPositions.some(
-									(pos) =>
-										pos.x === beyondBoxPosition.x &&
-										pos.y === beyondBoxPosition.y
-								)
-							) {
-								playSound("boxindication", 0.4);
-							}
-							if (
-								indicatorPositions.some(
-									(pos) =>
-										pos.x === playerPosition.x && pos.y === playerPosition.y
-								)
-							) {
-								newMapData[playerPosition.y][playerPosition.x] = "I";
-							} else {
-								newMapData[playerPosition.y][playerPosition.x] = ",";
-							}
-							newMapData[newPosition.y][newPosition.x] = "P";
+	// 						if (
+	// 							indicatorPositions.some(
+	// 								(pos) =>
+	// 									pos.x === beyondBoxPosition.x &&
+	// 									pos.y === beyondBoxPosition.y
+	// 							)
+	// 						) {
+	// 							playSound("boxindication", 0.4);
+	// 						}
+	// 						if (
+	// 							indicatorPositions.some(
+	// 								(pos) =>
+	// 									pos.x === playerPosition.x && pos.y === playerPosition.y
+	// 							)
+	// 						) {
+	// 							newMapData[playerPosition.y][playerPosition.x] = "I";
+	// 						} else {
+	// 							newMapData[playerPosition.y][playerPosition.x] = ",";
+	// 						}
+	// 						newMapData[newPosition.y][newPosition.x] = "P";
 
-							setCounter(counter + 1);
-							setMapData(newMapData);
+	// 						setCounter(counter + 1);
+	// 						setMapData(newMapData);
 
-							const newBoxPositions = [...boxPositions];
-							newBoxPositions[boxIndex] = beyondBoxPosition;
-							setBoxPositions(newBoxPositions);
+	// 						const newBoxPositions = [...boxPositions];
+	// 						newBoxPositions[boxIndex] = beyondBoxPosition;
+	// 						setBoxPositions(newBoxPositions);
 
-							setPlayerPosition(newPosition);
-						}
-					} else {
-						// If the player is not pushing a box and the new position is not a wall
-						if (
-							indicatorPositions.some(
-								(pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
-							)
-						) {
-							newMapData[playerPosition.y][playerPosition.x] = "I";
-						} else {
-							newMapData[playerPosition.y][playerPosition.x] = ",";
-						}
-						newMapData[newPosition.y][newPosition.x] = "P";
-						setCounter(counter + 1);
-						setMapData(newMapData);
-						playSound("walk", 0.3);
-						setPlayerPosition(newPosition);
-					}
+	// 						setPlayerPosition(newPosition);
+	// 					}
+	// 				} else {
+	// 					// If the player is not pushing a box and the new position is not a wall
+	// 					if (
+	// 						indicatorPositions.some(
+	// 							(pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
+	// 						)
+	// 					) {
+	// 						newMapData[playerPosition.y][playerPosition.x] = "I";
+	// 					} else {
+	// 						newMapData[playerPosition.y][playerPosition.x] = ",";
+	// 					}
+	// 					newMapData[newPosition.y][newPosition.x] = "P";
+	// 					setCounter(counter + 1);
+	// 					setMapData(newMapData);
+	// 					playSound("walk", 0.3);
+	// 					setPlayerPosition(newPosition);
+	// 				}
 
-					if (!gameRunning && counter === 0) {
-						startGame(); // Start the game when the first move is made
-					}
-					addToHistory();
-				}
-			}
-		},
-		[
-			mapData,
-			playerPosition,
-			setPlayerDirection,
-			indicatorPositions,
-			setMapData,
-			setPlayerPosition,
-			setBoxPositions,
-			boxPositions,
-			gameRunning,
-			counter,
-			startGame,
-		]
+	// 				if (!gameRunning && counter === 0) {
+	// 					startGame(); // Start the game when the first move is made
+	// 				}
+	// 				addToHistory();
+	// 			}
+	// 		}
+	// 	},
+	// 	[
+	// 		mapData,
+	// 		playerPosition,
+	// 		setPlayerDirection,
+	// 		indicatorPositions,
+	// 		setMapData,
+	// 		setPlayerPosition,
+	// 		setBoxPositions,
+	// 		boxPositions,
+	// 		gameRunning,
+	// 		counter,
+	// 		startGame,
+	// 	]
+	// );
+const isWithinBoundaries = (position: { x: number; y: number }) => {
+	return (
+		position.x >= 0 &&
+		position.x < mapData[0].length &&
+		position.y >= 0 &&
+		position.y < mapData.length
 	);
+};
 
+const isNotWall = (newMapData: string[][], position: { x: number; y: number }) => {
+	return newMapData[position.y][position.x] !== "#";
+};
+
+const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
+	if (
+		indicatorPositions.some(
+			(pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
+		)
+	) {
+		newMapData[playerPosition.y][playerPosition.x] = "I";
+	} else {
+		newMapData[playerPosition.y][playerPosition.x] = ",";
+	}
+	newMapData[newPosition.y][newPosition.x] = "P";
+	setCounter(counter + 1);
+	setMapData(newMapData);
+	playSound("walk", 0.3);
+	setPlayerPosition(newPosition);
+};
+
+const moveBox = (
+	newMapData: string[][],
+	newPosition: { x: number; y: number },
+	beyondBoxPosition: { x: number; y: number },
+	boxIndex: number
+) => {
+	newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = "B";
+	playSound("pushbox", 0.4);
+	playSound("walk", 0.3);
+	if (
+		indicatorPositions.some(
+			(pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y
+		)
+	) {
+		playSound("boxindication", 0.4);
+	}
+	if (
+		indicatorPositions.some(
+			(pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
+		)
+	) {
+		newMapData[playerPosition.y][playerPosition.x] = "I";
+	} else {
+		newMapData[playerPosition.y][playerPosition.x] = ",";
+	}
+	newMapData[newPosition.y][newPosition.x] = "P";
+	setCounter(counter + 1);
+	setMapData(newMapData);
+	const newBoxPositions = [...boxPositions];
+	newBoxPositions[boxIndex] = beyondBoxPosition;
+	setBoxPositions(newBoxPositions);
+	setPlayerPosition(newPosition);
+};
+
+const handlePlayerMove = useCallback(
+	(direction: string) => {
+		setPlayerDirection(direction.toLowerCase());
+		setDirection(direction.toLowerCase());
+
+		const newPosition = {
+			x: playerPosition.x + directionMap[direction as Direction].x,
+			y: playerPosition.y + directionMap[direction as Direction].y,
+		};
+
+		if (mapData.length > 0 && mapData[0] && isWithinBoundaries(newPosition)) {
+			const newMapData = mapData.map((row: string[]) => [...row]);
+
+			if (isNotWall(newMapData, newPosition)) {
+				const boxIndex = boxPositions.findIndex(
+					(pos) => pos.x === newPosition.x && pos.y === newPosition.y
+				);
+
+				if (boxIndex !== -1) {
+					const beyondBoxPosition = {
+						x: newPosition.x + directionMap[direction as Direction].x,
+						y: newPosition.y + directionMap[direction as Direction].y,
+					};
+
+					if (
+						isWithinBoundaries(beyondBoxPosition) &&
+						(newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "," ||
+							newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === "I")
+					) {
+						moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+					}
+				} else {
+					movePlayer(newMapData, newPosition);
+				}
+
+				if (!gameRunning && counter === 0) {
+					startGame();
+				}
+				addToHistory();
+			}
+		}
+	},
+	[
+		mapData,
+		playerPosition,
+		setPlayerDirection,
+		indicatorPositions,
+		setMapData,
+		setPlayerPosition,
+		setBoxPositions,
+		boxPositions,
+		gameRunning,
+		counter,
+		startGame,
+	]
+);
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			switch (event.key.toUpperCase()) {
