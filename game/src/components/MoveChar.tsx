@@ -135,7 +135,7 @@ export function MoveChar({
 	}, [level]);
 
 	useEffect(() => {
-		console.log(handleHistory);
+		// console.log(handleHistory);
 		if (handleHistory) {
 			handleHistoryUndo();
 			setHandleHistory(false);
