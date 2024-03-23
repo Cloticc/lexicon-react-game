@@ -60,6 +60,12 @@ export function Settings() {
 	}
 	*/
 
+	function handleCookie() {
+		playSound("click", 0.25);
+	
+		localStorage.clear();
+	
+	}
 	return (
 		<>
 			<div id="settings">
@@ -87,6 +93,12 @@ export function Settings() {
 						onClick={handleSolution}
 						onMouseOver={handleMouseOver}
 						></button>*/}
+					<button
+						id="btn-solution"
+						className="button"
+						onClick={handleCookie}
+						onMouseOver={handleMouseOver}
+						></button>
 				</div>
 			</div>
 			<div id="darkoverlay"></div>
