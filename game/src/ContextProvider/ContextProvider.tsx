@@ -19,8 +19,6 @@ interface HistoryState {
 }
 
 interface GameContextProps {
-    test: string;
-    setTest: (test: string) => void;
     youAreDead: boolean;
     setYouAreDead: (youAreDead: boolean) => void;
     youLost: boolean;
@@ -74,6 +72,9 @@ interface GameContextProps {
     setPlayerDirection: (playerDirection: string) => void;
     history: HistoryState[];
     setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
+    contextMenu: { visible: boolean; x: number; y: number };
+    setContextMenu: (contextMenu: { visible: boolean; x: number; y: number }) => void;
+    
 }
 
 interface ChildrenProps {
@@ -83,7 +84,6 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
-    const [state, setState] = useState('Test');
     const [youAreDead, setYouAreDead] = useState<boolean>(false);
     const [youLost, setYouLost] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -116,9 +116,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [handleHistory, setHandleHistory] = useState<boolean>(false);
     const [playerDirection, setPlayerDirection] = useState<string>('down');
     const [history, setHistory] = useState<HistoryState[]>([]);
+    const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
+
 
     const resetGame = () => {
-        setState('Test');
         setCounter(0);
         setElapsedTime(0);
         setWonGame(false);
@@ -133,8 +134,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
-        test: state,
-        setTest: setState,
         youLost: youLost,
         setYouLost: setYouLost,
         youAreDead: youAreDead,
@@ -184,6 +183,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setPlayerDirection: setPlayerDirection,
         history: history,
         setHistory: setHistory,
+        contextMenu: contextMenu,
+        setContextMenu: setContextMenu,
     };
 
     return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

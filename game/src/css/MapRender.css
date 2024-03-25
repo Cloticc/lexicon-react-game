@@ -594,3 +594,144 @@ body,
     background-repeat: no-repeat;
     background-size: 1660%;
 }
+
+/* Editor */
+.btn-container-top {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+}
+
+.btn-container-top button {
+		background-color: green;
+		color: white;
+		font-weight: bold;
+		padding: 1rem;
+		font-family: Arial;
+}
+
+.btn-container-top button:hover {
+		background-color: black;
+		cursor: pointer;
+}
+
+.btn-container-top button:disabled {
+		background-color: gray;
+}
+
+
+.toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.toolbar button {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
+}
+
+.toolbar button:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.toolbar button:disabled {
+    background-color: gray;
+}
+
+.toolbar button:disabled:hover {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.toolbar button:active {
+    background-color: black;
+}
+
+.toolbar button:active:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.toolbar button:active:disabled {
+    background-color: gray;
+}
+
+.go-back {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.go-back button {
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
+    z-index: 100;
+    position: fixed;
+    top: 1rem;
+}
+
+.go-back button:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.clear-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
+    margin: 1rem;
+}
+
+.clear-btn:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.grid-container-editor {
+    margin: 2rem;
+    width: 70%;
+    min-width: 320px;
+    max-height: 90vh;
+    outline: 4px solid black;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    max-width: 800px;
+}
+
+.grid-row-editor {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+.grid-item-editor {
+    aspect-ratio: 1/1;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+
+.context-menu {
+	position: absolute;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 1000;
+	width: 200px;
+	box-shadow: 10px 10px 5px grey;
+}

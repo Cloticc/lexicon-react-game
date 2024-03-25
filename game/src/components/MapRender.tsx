@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 import { MoveChar } from "./MoveChar";
 import { MyContext } from "../ContextProvider/ContextProvider";
+import { log } from "console";
 import { playSound } from "./../components/playSound";
 
 //Check if array is an array of arrays
