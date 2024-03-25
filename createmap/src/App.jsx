@@ -15,6 +15,9 @@ function App() {
 		let playerAmount = 0;
 		let boxAmount = 0;
 		let boxIndicator = 0;
+		let specialBoxIndicator = 0;
+		let specialBoxAmount = 0;
+		let doorAmount = 0;
 		rows.forEach((row) => {
 			const columns = row.querySelectorAll(".grid-item");
 			const array = [];
@@ -36,6 +39,21 @@ function App() {
 					++boxIndicator;
 				} else if (column.classList.contains("wall")) {
 					symbol = "#";
+				} else if (column.classList.contains("cracked")) {
+					symbol = "W";
+				} else if (column.classList.contains("mined")) {
+					symbol = "M";
+				} else if (column.classList.contains("specialboxed")) {
+					symbol = "O";
+					++specialBoxAmount;
+				} else if (column.classList.contains("special")) {
+					let number = column.querySelector(".specialid").textContent;
+					symbol = "S" + number;
+					++specialBoxIndicator;
+				} else if (column.classList.contains("door")) {
+					let number = column.querySelector(".doorid").textContent;
+					symbol = "D" + number;
+					++doorAmount;
 				}
 				array.push(symbol);
 			});
@@ -48,6 +66,16 @@ function App() {
 
 		if (boxAmount === 0) {
 			alert("Must have at least one box, please fix...");
+			return;
+		}
+
+		if (specialBoxIndicator !== specialBoxAmount) {
+			alert("Special boxes must have the same amount of special box indicator spaces...");
+			return;
+		}
+
+		if (specialBoxIndicator !== doorAmount) {
+			alert("You must place out the same amount of doors, as special box indicators...");
 			return;
 		}
 
@@ -102,8 +130,36 @@ function App() {
 			thisEl.classList.remove("ground");
 		} else if (thisEl.classList.contains("boxed")) {
 			thisEl.innerHTML = "";
-			thisEl.innerHTML = '<div class="boxindicator"></div>';
+			thisEl.innerHTML = '<div class="mine"></div>';
 			thisEl.classList.remove("boxed");
+			thisEl.classList.add("ground2");
+			thisEl.classList.add("mined");
+		} else if (thisEl.classList.contains("mined")) {
+			thisEl.innerHTML = "";
+			thisEl.classList.remove("mined");
+			thisEl.classList.remove("ground");
+			thisEl.classList.remove("ground2");
+			thisEl.classList.add("cracked");
+		} else if (thisEl.classList.contains("cracked")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="doorid">1</div>';
+			thisEl.classList.remove("cracked");
+			thisEl.classList.add("door");
+		} else if (thisEl.classList.contains("door")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="specialid">1</div>';
+			thisEl.classList.remove("door");
+			thisEl.classList.add("special");
+			thisEl.classList.add("ground2");
+		} else if (thisEl.classList.contains("special")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="specialbox"></div>';
+			thisEl.classList.remove("special");
+			thisEl.classList.add("specialboxed");
+		} else if (thisEl.classList.contains("specialboxed")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="boxindicator"></div>';
+			thisEl.classList.remove("specialboxed");
 			thisEl.classList.add("ground2");
 			thisEl.classList.add("indicator");
 		} else if (thisEl.classList.contains("indicator")) {
@@ -135,10 +191,37 @@ function App() {
 			thisEl.innerHTML = `<div class="boxindicator"></div>`;
 		} else if (thisEl.classList.contains("indicator")) {
 			thisEl.innerHTML = "";
-			thisEl.innerHTML = '<div class="box"></div>';
-			thisEl.classList.add("boxed");
-			thisEl.classList.add("ground2");
+			thisEl.innerHTML = '<div class="specialbox"></div>';
+			thisEl.classList.add("specialboxed");
 			thisEl.classList.remove("indicator");
+		} else if (thisEl.classList.contains("specialboxed")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="specialid">1</div>';
+			thisEl.classList.add("special");
+			thisEl.classList.add("ground2");
+			thisEl.classList.remove("specialboxed");
+		} else if (thisEl.classList.contains("special")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="doorid">1</div>';
+			thisEl.classList.add("door");
+			thisEl.classList.remove("ground2");
+			thisEl.classList.remove("special");
+		} else if (thisEl.classList.contains("door")) {
+			thisEl.innerHTML = "";
+			thisEl.classList.remove("door");
+			thisEl.classList.remove("ground2");
+			thisEl.classList.add("cracked");
+		} else if (thisEl.classList.contains("cracked")) {
+			thisEl.innerHTML = "";
+			thisEl.classList.remove("cracked");
+			thisEl.classList.add("ground2");
+			thisEl.classList.add("mined");
+		} else if (thisEl.classList.contains("mined")) {
+			thisEl.innerHTML = "";
+			thisEl.innerHTML = '<div class="box"></div>';
+			thisEl.classList.remove("mined");
+			thisEl.classList.add("ground2");
+			thisEl.classList.add("boxed");
 		} else if (thisEl.classList.contains("boxed")) {
 			thisEl.innerHTML = "";
 			thisEl.classList.remove("ground");
@@ -155,12 +238,38 @@ function App() {
 		}
 	}
 
+	// Define the function isMouseOverDoorOrSpecial
+	function isMouseOverDoorOrSpecial(e) {
+		return e.target.classList.contains("door") || e.target.classList.contains("special");
+	}
+
 	function toggleGrid() {
 		const container = document.querySelector(".grid-container");
 		if (container.classList.contains("gridless")) {
 			container.classList.remove("gridless");
 		} else {
 			container.classList.add("gridless");
+		}
+	}
+
+	function handleScroll(e) {
+		if (isMouseOverDoorOrSpecial(e)) {
+			let element = e.target.querySelector(".doorid, .specialid");
+			let number = parseInt(element.textContent);
+			if (e.deltaY < 0) {
+				++number;
+				if (number > 99) {
+					number = 99;
+				}
+				element.textContent = number;
+			}
+			if (e.deltaY > 0) {
+				--number;
+				if (number < 1) {
+					number = 1;
+				}
+				element.textContent = number;
+			}
 		}
 	}
 
@@ -180,6 +289,9 @@ function App() {
 						}}
 						onContextMenu={(e) => {
 							handleGridClickBack(e);
+						}}
+						onWheel={(e) => {
+							handleScroll(e);
 						}}
 					></div>
 				);
