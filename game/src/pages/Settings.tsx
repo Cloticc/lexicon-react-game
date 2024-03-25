@@ -1,6 +1,7 @@
+import { useContext, useEffect } from "react";
+
 import { MyContext } from "../ContextProvider/ContextProvider";
 import { playSound } from "./../components/playSound";
-import { useContext } from "react";
 
 export function Settings() {
 	const {
@@ -18,6 +19,21 @@ export function Settings() {
 		initialPlayerPosition,
 		initialBoxPositions,
 	} = useContext(MyContext);
+
+	useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        toggleSettings(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []); 
+
 
 	function handleMouseOver() {
 		playSound("hover", 0.15);
@@ -60,6 +76,11 @@ export function Settings() {
 	}
 	*/
 
+	function handleCookie() {
+		playSound("click", 0.25);
+	
+		localStorage.clear();
+	}
 	return (
 		<>
 			<div id="settings">
@@ -87,6 +108,12 @@ export function Settings() {
 						onClick={handleSolution}
 						onMouseOver={handleMouseOver}
 						></button>*/}
+					<button
+						id="btn-solution"
+						className="button"
+						onClick={handleCookie}
+						onMouseOver={handleMouseOver}
+						></button>
 				</div>
 			</div>
 			<div id="darkoverlay"></div>
