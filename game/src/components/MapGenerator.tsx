@@ -14,7 +14,7 @@ interface ToolbarProps {
 function Toolbar({ onItemSelected }: ToolbarProps) {
 	// memo becuse we dont want to recreate the array every time the component rerenders
 	const items = useMemo(() => ['wall', 'ground', 'box', 'boxindicator', 'player'], []);
-
+// This is a custom hook that listens for keydown events and calls the provided callback when a number key is pressed (1-9) to select an item
 	useEffect(() => {
 		const handleKeyDown = (e: { key: string; }) => {
 			const keyNumber = parseInt(e.key, 10);
@@ -24,14 +24,13 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
 			}
 		};
 
-
 		window.addEventListener('keydown', handleKeyDown);
 
 		return () => {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
 	}, [items, onItemSelected]);
-
+ // This is the toolbar component that displays the items that can be selected
 	return (
 		<div>
 			{items.map((item, index) => (
