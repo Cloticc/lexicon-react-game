@@ -32,9 +32,9 @@ body,
 	display: grid;
 	grid-template-rows: repeat(10, 1fr);
 	max-width: calc(100vh - 12rem);
-	filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+	/* filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
-		drop-shadow(0 2rem 3rem black);
+		drop-shadow(0 2rem 3rem black); */
 	animation: intro 0.5s ease-out 1 forwards;
 }
 
@@ -42,7 +42,7 @@ body,
 	display: none;
 }
 
-@keyframes intro {
+/* @keyframes intro {
 	0% {
 		scale: 0.1;
 		filter: brightness(3) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
@@ -58,7 +58,7 @@ body,
 			drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
 		scale: 1;
 	}
-}
+} */
 .grid-row {
 	display: grid;
 	grid-template-columns: repeat(10, 1fr);
@@ -126,18 +126,18 @@ body,
 
 .box-on-indicator {
 	overflow: hidden;
-	filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow);
+	/* filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow); */
 	animation: boxonindicator 0.6s ease-in-out infinite alternate;
 }
 
-@keyframes boxonindicator {
+/* @keyframes boxonindicator {
 	0% {
 		filter: brightness(0.8) drop-shadow(0 0 1rem yellow);
 	}
 	100% {
 		filter: brightness(0.6) drop-shadow(0 0 0.5rem white);
 	}
-}
+} */
 
 .player {
 	position: relative;
@@ -566,4 +566,85 @@ body,
 	background-position: 91.5% 85%;
 	background-repeat: no-repeat;
 	background-size: 1660%;
+}
+
+
+/* Editor */
+.toolbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.toolbar button {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	padding: 1rem;
+	font-family: Arial;
+}
+
+.toolbar button:hover {
+	background-color: black;
+	cursor: pointer;
+}
+
+.toolbar button:disabled {
+	background-color: gray;
+}
+
+.toolbar button:disabled:hover {
+	background-color: gray;
+	cursor: not-allowed;
+}
+
+.toolbar button:active {
+	background-color: black;
+}
+
+.toolbar button:active:hover {
+	background-color: black;
+	cursor: pointer;
+}
+
+.toolbar button:active:disabled {
+	background-color: gray;
+}
+
+.go-back {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.go-back button {
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	padding: 1rem;
+	font-family: Arial;
+	z-index: 100;
+	position: fixed; 
+	top: 100px;
+}
+
+.go-back button:hover {
+	background-color: black;
+	cursor: pointer;
+}
+
+
+.grid-row {
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	width: 100%;
+	height: 100%;
+}
+
+.grid-item {
+	aspect-ratio: 1/1;
+	border: 1px solid rgb(0, 0, 0);
 }
