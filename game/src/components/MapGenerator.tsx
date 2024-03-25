@@ -2,7 +2,7 @@
 
 import "../css/MapRender.css"
 
-import { useContext, useEffect, useMemo, useState } from "react";
+import { SetStateAction, useContext, useEffect, useMemo, useState } from "react";
 
 import { MapRender } from "./MapRender";
 import { MyContext } from "../ContextProvider/ContextProvider";
@@ -90,18 +90,18 @@ export function MapGenerator() {
 	);
 
 
-	const handleItemSelected = (item) => {
+	const handleItemSelected = (item: SetStateAction<null>) => {
 		console.log(`Item selected: ${item}`);
 		setSelectedItem(item);
 	};
 	useEffect(() => {
-		const handleKeyDown = (e) => {
+		const handleKeyDown = (e: { key: string; }) => {
 			if (e.key === 'Shift') {
 				setIsShiftDown(true);
 			}
 		};
 
-		const handleKeyUp = (e) => {
+		const handleKeyUp = (e: { key: string; }) => {
 			if (e.key === 'Shift') {
 				setIsShiftDown(false);
 			}
@@ -123,36 +123,84 @@ export function MapGenerator() {
 			html: "",
 		};
 
-		const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
+		// Use a more specific selector to get the grid items directly
+		const gridItems = document.querySelectorAll<HTMLDivElement>(".grid-row-editor .grid-item-editor");
 
+		// Define counters outside the loop
 		let playerAmount = 0;
 		let boxAmount = 0;
 		let boxIndicator = 0;
-		rows.forEach((row) => {
-			const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
-			const array: string[] = [];
-			data.mapdata.push(array);
-			columns.forEach((column) => {
-				let symbol: string;
-				if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
-					symbol = "-";
-				} else if (column.classList.contains("player")) {
-					symbol = "P";
-					++playerAmount;
-				} else if (column.classList.contains("box")) {
-					symbol = "B";
-					++boxAmount;
-				} else if (column.classList.contains("ground")) {
-					symbol = ",";
-				} else if (column.classList.contains("boxindicator")) {
-					symbol = "I";
-					++boxIndicator;
-				} else if (column.classList.contains("wall")) {
-					symbol = "#";
+
+		// Define a temporary array to hold the current row
+		let row: string[] = [];
+
+		gridItems.forEach((item, index) => {
+			// If index is a multiple of 10, we're starting a new row
+			if (index % 10 === 0) {
+				// If row is not empty, push it to mapdata and start a new row
+				if (row.length > 0) {
+					data.mapdata.push(row);
+					row = [];
 				}
-				array.push(symbol);
-			});
+			}
+			// Determine the symbol based on the item's classes
+			let symbol: string;
+			if (item.classList.contains("player")) {
+				symbol = "P";
+				++playerAmount;
+			} else if (item.classList.contains("box")) {
+				symbol = "B";
+				++boxAmount;
+			} else if (item.classList.contains("ground")) {
+				symbol = ",";
+			} else if (item.classList.contains("boxindicator")) {
+				symbol = "I";
+				++boxIndicator;
+			} else if (item.classList.contains("wall")) {
+				symbol = "#";
+			} else {
+				symbol = "-";
+			}
+
+			// Add the symbol to the current row
+			row.push(symbol);
 		});
+
+		// Add the last row to mapdata
+		if (row.length > 0) {
+			data.mapdata.push(row);
+		}
+
+		// const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
+
+		// let playerAmount = 0;
+		// let boxAmount = 0;
+		// let boxIndicator = 0;
+		// rows.forEach((row) => {
+		// 	const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
+		// 	const array: string[] = [];
+		// 	data.mapdata.push(array);
+		// 	columns.forEach((column) => {
+		// 		let symbol: string;
+		// 		if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
+		// 			symbol = "-";
+		// 		} else if (column.classList.contains("player")) {
+		// 			symbol = "P";
+		// 			++playerAmount;
+		// 		} else if (column.classList.contains("box")) {
+		// 			symbol = "B";
+		// 			++boxAmount;
+		// 		} else if (column.classList.contains("ground")) {
+		// 			symbol = ",";
+		// 		} else if (column.classList.contains("boxindicator")) {
+		// 			symbol = "I";
+		// 			++boxIndicator;
+		// 		} else if (column.classList.contains("wall")) {
+		// 			symbol = "#";
+		// 		}
+		// 		array.push(symbol);
+		// 	});
+		// });
 
 		if (playerAmount > 1 || playerAmount === 0) {
 			alert("Can/must only have 1 player, please fix...");
