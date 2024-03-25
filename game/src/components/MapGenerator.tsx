@@ -182,7 +182,7 @@ export function MapGenerator() {
 					counter?: () => number;
 				};
 			};
-
+//add more classes here to get more symbols in the map
 			const classToSymbol: ClassToSymbol = {
 				player: { symbol: 'P', counter: () => ++playerAmount },
 				box: { symbol: 'B', counter: () => ++boxAmount },
@@ -296,10 +296,10 @@ export function MapGenerator() {
 	};
 
 
-	function toggleGrid(): void {
-		const container = document.querySelector<HTMLDivElement>(".grid-container-editor");
-		container?.classList.toggle("gridless");
-	}
+	// function toggleGrid(): void {
+	// 	const container = document.querySelector<HTMLDivElement>(".grid-container-editor");
+	// 	container?.classList.toggle("gridless");
+	// }
 
 
 	const generateSymbolArray = () => {
