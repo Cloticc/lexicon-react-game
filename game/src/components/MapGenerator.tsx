@@ -182,7 +182,7 @@ export function MapGenerator() {
 					counter?: () => number;
 				};
 			};
-//add more classes here to get more symbols in the map
+			//add more classes here to get more symbols in the map
 			const classToSymbol: ClassToSymbol = {
 				player: { symbol: 'P', counter: () => ++playerAmount },
 				box: { symbol: 'B', counter: () => ++boxAmount },
