@@ -1,312 +1,312 @@
 #btn-selectlevel {
-	position: absolute;
-	left: 3rem;
-	top: 3rem;
-	z-index: 80;
+    position: absolute;
+    left: 3rem;
+    top: 3rem;
+    z-index: 80;
 }
 
 #btn-selectlevel:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-grid.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-grid.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #highscore {
-	background: rgba(255, 255, 255, 0.6);
-	backdrop-filter: blur(0.5rem);
-	width: 80vw;
-	max-width: 50rem;
-	padding: 2rem;
-	border-radius: 0.8rem;
-	outline: 3px solid black;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(0.5rem);
+    width: 80vw;
+    max-width: 50rem;
+    padding: 2rem;
+    border-radius: 0.8rem;
+    outline: 3px solid black;
 
-	box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5), 0 0 2rem 0 yellow,
-		0 0 10rem 0 yellow;
-	z-index: 5000;
-	position: fixed;
-	height: 55vh;
-	min-height: 30rem;
-	max-height: 40rem;
-	border: 2px solid white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	animation: animateblock 0.2s ease-in-out 1 forwards;
+    box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5), 0 0 2rem 0 yellow,
+        0 0 10rem 0 yellow;
+    z-index: 5000;
+    position: fixed;
+    height: 55vh;
+    min-height: 30rem;
+    max-height: 40rem;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: animateblock 0.2s ease-in-out 1 forwards;
 }
 
 #highscore h1 {
-	height: 8rem;
-	position: absolute;
-	top: -5rem;
-	left: 50%;
-	transform: translateX(-50%);
-	color: white;
+    height: 8rem;
+    position: absolute;
+    top: -5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
 
-	font-size: clamp(2rem, 10vw, 6rem);
-	font-family: "Gajraj One", sans-serif;
+    font-size: clamp(2rem, 10vw, 6rem);
+    font-family: 'Gajraj One', sans-serif;
 
-	color: transparent;
-	background: linear-gradient(
-		0deg,
-		rgb(0, 20, 86) 16%,
-		rgba(37, 129, 255, 1) 37%,
-		rgba(185, 214, 255, 1) 51%,
-		rgba(37, 129, 255, 1) 66%,
-		rgba(0, 15, 33, 1) 100%
-	);
-	background-size: contain;
-	-webkit-background-clip: text;
-	background-clip: text;
-	/*-webkit-text-stroke: 0.001rem rgb(246, 246, 246);*/
-	filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
-		drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
-	animation: bg-shift 0.5s ease-in-out infinite alternate;
+    color: transparent;
+    background: linear-gradient(
+        0deg,
+        rgb(0, 20, 86) 16%,
+        rgba(37, 129, 255, 1) 37%,
+        rgba(185, 214, 255, 1) 51%,
+        rgba(37, 129, 255, 1) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
+    background-size: contain;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /*-webkit-text-stroke: 0.001rem rgb(246, 246, 246);*/
+    filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
+        drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
+    animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
 
 #highscore input {
-	text-align: center;
-	padding: 1rem;
-	border-radius: 0.4rem;
-	margin-bottom: 1rem;
-	font-size: 1.2rem;
-	font-weight: 600;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 #showlevel,
 #stepstaken,
 #timer {
-	position: fixed;
-	top: 2rem;
-	color: white;
-	font-family: "Gajraj One", sans-serif;
-	font-size: 4rem;
-	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    position: fixed;
+    top: 2rem;
+    color: white;
+    font-family: 'Gajraj One', sans-serif;
+    font-size: 4rem;
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
 }
 
 #stepstaken {
-	position: relative;
-	top: auto;
-	bottom: auto;
-	z-index: 2500;
-	font-size: 2rem;
-	filter: none;
-	width: 12rem;
+    position: relative;
+    top: auto;
+    bottom: auto;
+    z-index: 2500;
+    font-size: 2rem;
+    filter: none;
+    width: 12rem;
 }
 
 #status {
-	justify-content: center;
-	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
-	position: absolute;
-	display: flex;
-	top: 7rem;
-	font-size: 2rem;
-	z-index: 2500;
+    justify-content: center;
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    position: absolute;
+    display: flex;
+    top: 7rem;
+    font-size: 2rem;
+    z-index: 2500;
 }
 
 #status span {
-	font-family: "Gajraj One", sans-serif;
-	font-size: 2rem;
-	color: white;
-	margin-left: 0.5rem;
-	margin-right: 0.5rem;
+    font-family: 'Gajraj One', sans-serif;
+    font-size: 2rem;
+    color: white;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 #timer {
-	filter: none;
-	font-size: 2rem;
-	top: auto;
-	position: relative;
-	align-self: flex-end;
-	width: 10rem;
-	text-align: left;
-	margin-left: 1rem;
+    filter: none;
+    font-size: 2rem;
+    top: auto;
+    position: relative;
+    align-self: flex-end;
+    width: 10rem;
+    text-align: left;
+    margin-left: 1rem;
 }
 
 #highscore h2 {
-	margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 #highscore h2:nth-child(2) {
-	margin-top: 2rem;
-	font-weight: 900;
-	font-size: 4rem;
-	font-family: "Gajraj One", sans-serif;
-	filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
-	color: white;
+    margin-top: 2rem;
+    font-weight: 900;
+    font-size: 4rem;
+    font-family: 'Gajraj One', sans-serif;
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    color: white;
 }
 
 .showhighscore {
-	width: 90%;
-	border: 2px solid black;
-	padding: 1rem;
-	border-radius: 0.4rem;
-	background: black;
-	color: white;
-	border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 90%;
+    border: 2px solid black;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    background: black;
+    color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 .showhighscore .result {
-	width: 100%;
+    width: 100%;
 }
 
 .showhighscore .result .row {
-	width: 100%;
-	text-align: left;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	font-size: 1.5rem;
+    width: 100%;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 1.5rem;
 }
 
 .showhighscore .thead {
-	font-size: 0.9rem !important;
+    font-size: 0.9rem !important;
 }
 
 .showhighscore .result .row div:nth-child(2) {
-	text-align: center;
+    text-align: center;
 }
 
 .showhighscore .result .row div:nth-child(3) {
-	text-align: right;
+    text-align: right;
 }
 
 .showhighscore:nth-child(4) {
-	border-bottom: none !important;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	background: black;
-	color: white;
-	padding-top: 0.3rem;
-	padding-bottom: 0.3rem;
-	font-size: 0.8rem;
-	font-weight: 600;
-	text-transform: uppercase;
+    border-bottom: none !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background: black;
+    color: white;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .showhighscore:nth-child(5) {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	font-weight: 600;
-	font-size: 1.2rem;
-	padding-top: 0.3rem;
-	padding-bottom: 0.3rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
 }
 
 #btn-replay-again {
-	position: absolute;
-	bottom: 3rem;
-	left: 3rem;
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
 }
 
 #btn-nextlevel {
-	position: absolute;
-	bottom: 3rem;
-	right: 3rem;
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
 }
 
 #btn-nextlevel:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-play.svg");
-	background-position: 40% center;
-	background-repeat: no-repeat;
-	background-size: 3.5rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-play.svg');
+    background-position: 40% center;
+    background-repeat: no-repeat;
+    background-size: 3.5rem;
 }
 
 #btn-replay-again:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/undo-arrow-icon.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/undo-arrow-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #btn-sound:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-sound.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-sound.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #btn-sound.muted:after {
-	background-image: url("../assets/icon-mute.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3.5rem;
+    background-image: url('../assets/icon-mute.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3.5rem;
 }
 
 #btn-replay:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/undo-arrow-icon.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/undo-arrow-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #btn-replay:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/undo-arrow-icon.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/undo-arrow-icon.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #btn-solution:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-puzzle.svg");
-	background-position: 59% 45%;
-	background-repeat: no-repeat;
-	background-size: 3.5rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-puzzle.svg');
+    background-position: 59% 45%;
+    background-repeat: no-repeat;
+    background-size: 3.5rem;
 }
