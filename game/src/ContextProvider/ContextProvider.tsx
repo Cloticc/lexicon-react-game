@@ -70,6 +70,8 @@ interface GameContextProps {
   setPlayerDirection: (playerDirection: string) => void;
   history: HistoryState[];
   setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
+  contextMenu: { visible: boolean; x: number; y: number };
+  setContextMenu: (contextMenu: { visible: boolean; x: number; y: number }) => void;
 }
 
 interface ChildrenProps {
@@ -117,6 +119,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
   const [handleHistory, setHandleHistory] = useState<boolean>(false);
   const [playerDirection, setPlayerDirection] = useState<string>("down");
   const [history, setHistory] = useState<HistoryState[]>([]);
+	const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
 
   const resetGame = () => {
     setState("Test");
@@ -182,6 +185,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     setPlayerDirection: setPlayerDirection,
     history: history,
     setHistory: setHistory,
+    contextMenu: contextMenu,
+    setContextMenu: setContextMenu,
   };
 
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
