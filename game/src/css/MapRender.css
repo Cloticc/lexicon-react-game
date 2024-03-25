@@ -1,45 +1,45 @@
 html,
 body,
 #root {
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0;
-	background: lightgray;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: lightgray;
 }
 
 #root {
-	flex-direction: column;
+    flex-direction: column;
 }
 
 #container {
-	width: 100%;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: relative;
 }
 
 .grid-container {
-	margin-top: 5rem;
-	width: 100%;
-	min-width: 320px;
-	max-height: calc(100vh - 12rem);
-	outline: none;
-	display: grid;
-	grid-template-rows: repeat(10, 1fr);
-	max-width: calc(100vh - 12rem);
-	/* filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+    margin-top: 5rem;
+    width: 100%;
+    min-width: 320px;
+    max-height: calc(100vh - 12rem);
+    outline: none;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    max-width: calc(100vh - 12rem);
+    /* filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
 		drop-shadow(0 2rem 3rem black); */
-	animation: intro 0.5s ease-out 1 forwards;
+    animation: intro 0.5s ease-out 1 forwards;
 }
 
 .hide {
-	display: none;
+    display: none;
 }
 
 /* @keyframes intro {
@@ -60,74 +60,74 @@ body,
 	}
 } */
 .grid-row {
-	display: grid;
-	grid-template-columns: repeat(10, 1fr);
-	width: 100%;
-	height: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
 }
 
 .grid-item {
-	aspect-ratio: 1/1;
-	border: none;
-	border-top: none;
+    aspect-ratio: 1/1;
+    border: none;
+    border-top: none;
 }
 
 .wall {
-	background-color: gray;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 50% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1550%;
+    background-color: gray;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1550%;
 }
 
 .ground,
 .ground2 {
-	position: relative;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91.5% 85%;
-	background-repeat: no-repeat;
-	background-size: 1690%;
-	z-index: 1;
+    position: relative;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.5% 85%;
+    background-repeat: no-repeat;
+    background-size: 1690%;
+    z-index: 1;
 }
 
 .box {
-	position: relative;
-	width: 100%;
-	height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .box::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
-	z-index: 8;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
+    z-index: 8;
 }
 
 .box::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 50% 0%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	z-index: 9;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 0%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+    z-index: 9;
 }
 
 .box-on-indicator {
-	overflow: hidden;
-	/* filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow); */
-	animation: boxonindicator 0.6s ease-in-out infinite alternate;
+    overflow: hidden;
+    /* filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow); */
+    animation: boxonindicator 0.6s ease-in-out infinite alternate;
 }
 
 /* @keyframes boxonindicator {
@@ -140,15 +140,15 @@ body,
 } */
 
 .player {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	display: block;
-	content: "";
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 0% 57%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: '';
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 0% 57%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
 }
 
 /* .player::before {
@@ -181,295 +181,295 @@ body,
 .player-down,
 .player-left,
 .player-right {
-	position: relative;
-	width: 100%;
-	height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .player-left::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 25% 86%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	animation: walkleft 0.5s steps(1, jump-both);
-	z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 25% 86%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+    animation: walkleft 0.5s steps(1, jump-both);
+    z-index: 1;
 }
 
 .player-right::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 0% 86%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	animation: walkright 0.5s steps(1, jump-both);
-	z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 0% 86%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+    animation: walkright 0.5s steps(1, jump-both);
+    z-index: 1;
 }
 
 .player-up::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 25% 57%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	animation: walkup 0.5s steps(1, jump-both);
-	z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 25% 57%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+    animation: walkup 0.5s steps(1, jump-both);
+    z-index: 1;
 }
 
 .player-down::after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 0% 57%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
-	animation: walkdown 0.5s steps(1, jump-both);
-	z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 0% 57%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+    animation: walkdown 0.5s steps(1, jump-both);
+    z-index: 1;
 }
 
 #startpageui #player .playerwalkdown {
-	animation: walkdown 0.5s infinite steps(1, jump-both);
+    animation: walkdown 0.5s infinite steps(1, jump-both);
 }
 
 .boxindicator .player-up,
 .boxindicator .player-down,
 .boxindicator .player-left,
 .boxindicator .player-right {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
 }
 .ground .player-up,
 .ground .player-down,
 .ground .player-left,
 .ground .player-right {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
 }
 
 @keyframes walkright {
-	0% {
-		background-position: 0% 86%;
-	}
-	50% {
-		background-position: 0% 86%;
-	}
-	100% {
-		background-position: 17% 86%;
-	}
+    0% {
+        background-position: 0% 86%;
+    }
+    50% {
+        background-position: 0% 86%;
+    }
+    100% {
+        background-position: 17% 86%;
+    }
 }
 
 @keyframes walkleft {
-	0% {
-		background-position: 42% 86%;
-	}
-	50% {
-		background-position: 25% 86%;
-	}
-	100% {
-		background-position: 25% 86%;
-	}
+    0% {
+        background-position: 42% 86%;
+    }
+    50% {
+        background-position: 25% 86%;
+    }
+    100% {
+        background-position: 25% 86%;
+    }
 }
 
 @keyframes walkup {
-	0% {
-		background-position: 25% 57%;
-	}
-	50% {
-		background-position: 42% 57%;
-	}
-	100% {
-		background-position: 42% 57%;
-	}
+    0% {
+        background-position: 25% 57%;
+    }
+    50% {
+        background-position: 42% 57%;
+    }
+    100% {
+        background-position: 42% 57%;
+    }
 }
 
 @keyframes walkdown {
-	0% {
-		background-position: 0% 57%;
-	}
-	50% {
-		background-position: 16% 57%;
-	}
-	100% {
-		background-position: 17% 57%;
-	}
+    0% {
+        background-position: 0% 57%;
+    }
+    50% {
+        background-position: 16% 57%;
+    }
+    100% {
+        background-position: 17% 57%;
+    }
 }
 
 .boxindicator-container {
-	position: relative;
-	width: 100%;
-	height: 100%;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .boxindicator-container::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
-	z-index: 1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
+    z-index: 1;
 }
 
 .boxindicator {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
 }
 
 .boxindicator::before,
 .boxindicator::after {
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	content: "";
-	background-image: url("../assets/sokoban_vector.svg");
-	background-repeat: no-repeat;
-	background-size: 1590%;
-	z-index: 4;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-image: url('../assets/sokoban_vector.svg');
+    background-repeat: no-repeat;
+    background-size: 1590%;
+    z-index: 4;
 }
 
 .boxindicator::before {
-	background-position: 99.8% 57.5%;
-	animation: flash 0.5s ease infinite alternate;
-	z-index: 3;
+    background-position: 99.8% 57.5%;
+    animation: flash 0.5s ease infinite alternate;
+    z-index: 3;
 }
 
 .boxindicator::after {
-	background-position: -0.15% 28.5%;
-	background-size: 1430%;
-	animation: opacitydrop 0.5s ease infinite alternate;
-	z-index: 1;
+    background-position: -0.15% 28.5%;
+    background-size: 1430%;
+    animation: opacitydrop 0.5s ease infinite alternate;
+    z-index: 1;
 }
 
 @keyframes opacitydrop {
-	0% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 1;
+    }
 
-	100% {
-		opacity: 0.6;
-	}
+    100% {
+        opacity: 0.6;
+    }
 }
 
 .level10 .wall {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 58.25% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1590%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 58.25% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1590%;
 }
 
 .level10 .box {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 58.3% 0%;
-	background-repeat: no-repeat;
-	background-size: 1590%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 58.3% 0%;
+    background-repeat: no-repeat;
+    background-size: 1590%;
 }
 
 .level10 .ground {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 83% 86%;
-	background-repeat: no-repeat;
-	background-size: 1590%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 83% 86%;
+    background-repeat: no-repeat;
+    background-size: 1590%;
 }
 
 .grid-item:hover {
-	outline: none;
-	z-index: 100;
-	cursor: default;
-	animation: none;
+    outline: none;
+    z-index: 100;
+    cursor: default;
+    animation: none;
 }
 
 @keyframes flash {
-	0% {
-		filter: brightness(2);
-	}
+    0% {
+        filter: brightness(2);
+    }
 
-	1000% {
-		filter: brightness(1);
-	}
+    1000% {
+        filter: brightness(1);
+    }
 }
 
 #generate,
 #togglegrid {
-	z-index: 100;
-	position: relative;
-	display: block;
-	background-color: green;
-	color: white;
-	font-weight: bold;
-	padding: 1rem;
-	font-family: Arial;
+    z-index: 100;
+    position: relative;
+    display: block;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
 }
 
 #generate:hover,
 #togglegrid:hover {
-	background-color: black;
-	cursor: pointer;
+    background-color: black;
+    cursor: pointer;
 }
 
 #togglegrid {
-	background-color: gray;
+    background-color: gray;
 }
 
 #buttons {
-	margin-top: 2rem;
-	display: flex;
-	flex-direction: row;
-	gap: 1rem;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 }
 
 .gridless .grid-item,
 .gridless .grid-row {
-	border: none;
+    border: none;
 }
 
 /* Hello there */
 
 /* Level 10 Add level10 class to gridcontainer */
 .level10 .wall {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 58.25% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1500%;
-	background-color: gray;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 58.25% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1500%;
+    background-color: gray;
 }
 
 .level10 .box::after {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 58.3% 0%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 58.3% 0%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
 }
 
 .level10 .ground,
@@ -478,26 +478,26 @@ body,
 .level10 .player-up::before,
 .level10 .player-down::before,
 .level10 .boxindicator-container::before {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 83% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 83% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
 }
 
 /* Level 20 Add level20 class to gridcontainer */
 .level20 .wall {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 66.7% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1500%;
-	background-color: gray;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 66.7% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1500%;
+    background-color: gray;
 }
 
 .level20 .box::after {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 66.7% 0%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 66.7% 0%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
 }
 
 .level20 .ground,
@@ -506,26 +506,26 @@ body,
 .level20 .player-up::before,
 .level20 .player-down::before,
 .level20 .boxindicator-container::before {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 99.5% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 99.5% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
 }
 
 /* Level 30 Add level30 class to gridcontainer */
 .level30 .wall {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 75% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1500%;
-	background-color: gray;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 75% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1500%;
+    background-color: gray;
 }
 
 .level30 .box::after {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 75% 0%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 75% 0%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
 }
 
 .level30 .ground,
@@ -534,26 +534,26 @@ body,
 .level30 .player-up::before,
 .level30 .player-down::before,
 .level30 .boxindicator-container::before {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91.5% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.5% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
 }
 
 /* Level 40 Add level40 class to gridcontainer */
 .level40 .wall {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 66.6% 99.75%;
-	background-repeat: no-repeat;
-	background-size: 1500%;
-	background-color: gray;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 66.6% 99.75%;
+    background-repeat: no-repeat;
+    background-size: 1500%;
+    background-color: gray;
 }
 
 .level40 .box::after {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 66.7% 0%;
-	background-repeat: no-repeat;
-	background-size: 1490%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 66.7% 0%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
 }
 
 .level40 .ground,
@@ -562,89 +562,138 @@ body,
 .level40 .player-up::before,
 .level40 .player-down::before,
 .level40 .boxindicator-container::before {
-	background-image: url("../assets/sokoban_vector.svg");
-	background-position: 91.5% 85%;
-	background-repeat: no-repeat;
-	background-size: 1660%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.5% 85%;
+    background-repeat: no-repeat;
+    background-size: 1660%;
+}
+
+/* Editor */
+.btn-container-top {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+}
+
+.btn-container-top button {
+		background-color: green;
+		color: white;
+		font-weight: bold;
+		padding: 1rem;
+		font-family: Arial;
+}
+
+.btn-container-top button:hover {
+		background-color: black;
+		cursor: pointer;
+}
+
+.btn-container-top button:disabled {
+		background-color: gray;
 }
 
 
-/* Editor */
 .toolbar {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .toolbar button {
-	background-color: green;
-	color: white;
-	font-weight: bold;
-	padding: 1rem;
-	font-family: Arial;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
 }
 
 .toolbar button:hover {
-	background-color: black;
-	cursor: pointer;
+    background-color: black;
+    cursor: pointer;
 }
 
 .toolbar button:disabled {
-	background-color: gray;
+    background-color: gray;
 }
 
 .toolbar button:disabled:hover {
-	background-color: gray;
-	cursor: not-allowed;
+    background-color: gray;
+    cursor: not-allowed;
 }
 
 .toolbar button:active {
-	background-color: black;
+    background-color: black;
 }
 
 .toolbar button:active:hover {
-	background-color: black;
-	cursor: pointer;
+    background-color: black;
+    cursor: pointer;
 }
 
 .toolbar button:active:disabled {
-	background-color: gray;
+    background-color: gray;
 }
 
 .go-back {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .go-back button {
-	background-color: green;
-	color: white;
-	font-weight: bold;
-	padding: 1rem;
-	font-family: Arial;
-	z-index: 100;
-	position: fixed; 
-	top: 100px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
+    z-index: 100;
+    position: fixed;
+    top: 1rem;
 }
 
 .go-back button:hover {
-	background-color: black;
-	cursor: pointer;
+    background-color: black;
+    cursor: pointer;
 }
 
-
-.grid-row {
-	display: grid;
-	grid-template-columns: repeat(10, 1fr);
-	width: 100%;
-	height: 100%;
+.clear-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    font-family: Arial;
+    margin: 1rem;
 }
 
-.grid-item {
-	aspect-ratio: 1/1;
-	border: 1px solid rgb(0, 0, 0);
+.clear-btn:hover {
+    background-color: black;
+    cursor: pointer;
+}
+
+.grid-container-editor {
+    margin: 2rem;
+    width: 70%;
+    min-width: 320px;
+    max-height: 90vh;
+    outline: 4px solid black;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+    max-width: 800px;
+}
+
+.grid-row-editor {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    width: 100%;
+    height: 100%;
+}
+
+.grid-item-editor {
+    aspect-ratio: 1/1;
+    border: 1px solid rgb(0, 0, 0);
 }
