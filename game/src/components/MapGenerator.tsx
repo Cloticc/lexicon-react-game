@@ -13,7 +13,7 @@ interface ToolbarProps {
 
 function Toolbar({ onItemSelected }: ToolbarProps) {
 	// memo becuse we dont want to recreate the array every time the component rerenders
-	const items = useMemo(() => ['wall', 'player', 'box', 'ground', 'boxindicator'], []);
+	const items = useMemo(() => ['wall', 'ground', 'box', 'boxindicator', 'player'], []);
 
 	useEffect(() => {
 		const handleKeyDown = (e: { key: string; }) => {
