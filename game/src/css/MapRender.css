@@ -32,9 +32,9 @@ body,
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: calc(100vh - 12rem);
-    /* filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
-		drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
-		drop-shadow(0 2rem 3rem black); */
+    filter: drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+        drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+        drop-shadow(0 2rem 3rem black);
     animation: intro 0.5s ease-out 1 forwards;
 }
 
@@ -42,23 +42,23 @@ body,
     display: none;
 }
 
-/* @keyframes intro {
-	0% {
-		scale: 0.1;
-		filter: brightness(3) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
-			drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
-			drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
-	}
-	50% {
-		scale: 1.2;
-	}
-	100% {
-		filter: brightness(1) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
-			drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
-			drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
-		scale: 1;
-	}
-} */
+@keyframes intro {
+    0% {
+        scale: 0.1;
+        filter: brightness(3) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+            drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+            drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
+    }
+    50% {
+        scale: 1.2;
+    }
+    100% {
+        filter: brightness(1) drop-shadow(0 0rem 2px black) drop-shadow(0 0rem 0px black)
+            drop-shadow(0 0rem 0px black) drop-shadow(0 0rem 0px black)
+            drop-shadow(0 0rem 0px black) drop-shadow(0 2rem 3rem black);
+        scale: 1;
+    }
+}
 .grid-row {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -126,18 +126,18 @@ body,
 
 .box-on-indicator {
     overflow: hidden;
-    /* filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow); */
+    filter: brightness(0.5) drop-shadow(0 0 0.2rem yellow);
     animation: boxonindicator 0.6s ease-in-out infinite alternate;
 }
 
-/* @keyframes boxonindicator {
-	0% {
-		filter: brightness(0.8) drop-shadow(0 0 1rem yellow);
-	}
-	100% {
-		filter: brightness(0.6) drop-shadow(0 0 0.5rem white);
-	}
-} */
+@keyframes boxonindicator {
+    0% {
+        filter: brightness(0.8) drop-shadow(0 0 1rem yellow);
+    }
+    100% {
+        filter: brightness(0.6) drop-shadow(0 0 0.5rem white);
+    }
+}
 
 .player {
     position: relative;
@@ -452,6 +452,33 @@ body,
 .gridless .grid-item,
 .gridless .grid-row {
     border: none;
+}
+
+.dead {
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    height: 10rem !important;
+    transform: translateX(-50%) translateY(-100%);
+    z-index: 2000;
+    white-space: nowrap;
+    font-size: clamp(2rem, 10vw, 6rem) !important;
+}
+
+.falling {
+    animation: falling 0.4s ease-out 1 forwards;
+}
+
+@keyframes falling {
+    0% {
+        scale: 1;
+    }
+    100% {
+        scale: 0;
+    }
 }
 
 /* Hello there */
