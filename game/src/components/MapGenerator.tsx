@@ -7,20 +7,25 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from "react"
 import { MapRender } from "./MapRender";
 import { MyContext } from "../ContextProvider/ContextProvider";
 
+const ITEMS = ['empty','wall', 'ground', 'box', 'boxindicator', 'player', ];
+
 interface ToolbarProps {
 	onItemSelected: (item: string) => void;
 }
-
+// This is the toolbar component that displays the items that can be selected
 function Toolbar({ onItemSelected }: ToolbarProps) {
+	const { setContextMenu, } = useContext(MyContext);
 	// memo becuse we dont want to recreate the array every time the component rerenders
-	const items = useMemo(() => ['wall', 'ground', 'box', 'boxindicator', 'player'], []);
-// This is a custom hook that listens for keydown events and calls the provided callback when a number key is pressed (1-9) to select an item
+	const items = useMemo(() => ITEMS, []);
+	// This is a custom hook that listens for keydown events and calls the provided callback when a number key is pressed (1-9) to select an item
 	useEffect(() => {
 		const handleKeyDown = (e: { key: string; }) => {
 			const keyNumber = parseInt(e.key, 10);
 			if (keyNumber >= 1 && keyNumber <= items.length) {
 				console.log(`Key ${keyNumber} pressed, selecting item ${items[keyNumber - 1]}`);
 				onItemSelected(items[keyNumber - 1]);
+				// Hide the context menu
+				setContextMenu({ visible: false, x: 0, y: 0 });
 			}
 		};
 
@@ -30,7 +35,7 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
 			window.removeEventListener('keydown', handleKeyDown);
 		};
 	}, [items, onItemSelected]);
- // This is the toolbar component that displays the items that can be selected
+	// This is the toolbar component that displays the items that can be selected
 	return (
 		<div>
 			{items.map((item, index) => (
@@ -51,10 +56,29 @@ interface EmptydivsProps {
 }
 
 
+// This is the main component that renders the grid and handles the grid item clicks and context menu
+function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDown, onMouseUp, onItemSelected }: EmptydivsProps & ToolbarProps) {
+	const { contextMenu, setContextMenu, } = useContext(MyContext);
+	const items = useMemo(() => ITEMS, []);
 
-function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDown, onMouseUp }: EmptydivsProps) {
+	useEffect(() => {
+		document.addEventListener('click', () => setContextMenu({ visible: false, x: 0, y: 0 }));
+		return () => {
+			document.removeEventListener('click', () => setContextMenu({ visible: false, x: 0, y: 0 }));
+		};
+	}, []);
+
+	const handleContextMenu = (event) => {
+		event.preventDefault();
+		if (contextMenu.visible) {
+			setContextMenu({ visible: false, x: 0, y: 0 });
+			return;
+		}
+		setContextMenu({ visible: true, x: event.pageX, y: event.pageY });
+	};
+
 	return (
-		<div className="grid-container-editor" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+		<div className="grid-container-editor" onMouseDown={onMouseDown} onMouseUp={onMouseUp} onContextMenu={handleContextMenu}>
 			{gridItems.map((row, i) => (
 				<div key={i} className="grid-row-editor">
 					{row.map((item, j) => (
@@ -68,10 +92,18 @@ function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDow
 					))}
 				</div>
 			))}
+			{contextMenu.visible && (
+				<div className="context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
+					{items.map((item, index) => (
+						<p key={item} onClick={() => onItemSelected(item)}>
+							{index + 1}. {item}
+						</p>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }
-
 
 export function MapGenerator() {
 	const {
@@ -238,20 +270,20 @@ export function MapGenerator() {
 	};
 
 	const handleGridClickBack = (e, i, j) => {
-		e.stopPropagation();
-		e.preventDefault();
+		// // e.stopPropagation();
+		// // e.preventDefault();
 
-		// Copy gridItems state
-		const newGridItems = [...gridItems];
+		// // Copy gridItems state
+		// const newGridItems = [...gridItems];
 
-		// Update the class of the clicked grid item
-		// If the grid item is not empty, set it to empty
-		if (newGridItems[i][j] !== '') {
-			newGridItems[i][j] = '';
-		}
+		// // Update the class of the clicked grid item
+		// // If the grid item is not empty, set it to empty
+		// if (newGridItems[i][j] !== '') {
+		// 	newGridItems[i][j] = '';
+		// }
 
-		// Update gridItems state
-		setGridItems(newGridItems);
+		// // Update gridItems state
+		// setGridItems(newGridItems);
 	};
 
 
@@ -316,7 +348,7 @@ export function MapGenerator() {
 					Toggle Grid
 				</button>
 				<button className="generate-symbol-array" onClick={generateSymbolArray}>
-					Generate Symbol Array
+					Generate Symbol Array for MapRender
 				</button>
 			</div>
 			<Emptydivs
@@ -325,6 +357,7 @@ export function MapGenerator() {
 				handleGridClickBack={handleGridClickBack}
 				onMouseDown={() => setIsMouseDown(true)}
 				onMouseUp={() => setIsMouseDown(false)}
+				onItemSelected={handleItemSelected}
 			/>
 			<div className="toolbar">
 				<Toolbar onItemSelected={handleItemSelected} />
