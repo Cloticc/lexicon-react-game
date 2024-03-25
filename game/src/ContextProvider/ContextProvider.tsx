@@ -19,8 +19,6 @@ interface HistoryState {
 }
 
 interface GameContextProps {
-    test: string;
-    setTest: (test: string) => void;
     youAreDead: boolean;
     setYouAreDead: (youAreDead: boolean) => void;
     youLost: boolean;
@@ -86,7 +84,6 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
-    const [state, setState] = useState('Test');
     const [youAreDead, setYouAreDead] = useState<boolean>(false);
     const [youLost, setYouLost] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -123,7 +120,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
 
 
     const resetGame = () => {
-        setState('Test');
         setCounter(0);
         setElapsedTime(0);
         setWonGame(false);
@@ -138,8 +134,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
-        test: state,
-        setTest: setState,
         youLost: youLost,
         setYouLost: setYouLost,
         youAreDead: youAreDead,
