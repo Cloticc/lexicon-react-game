@@ -7,7 +7,7 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from "react"
 import { MapRender } from "./MapRender";
 import { MyContext } from "../ContextProvider/ContextProvider";
 
-const ITEMS = ['empty','wall', 'ground', 'box', 'boxindicator', 'player', ];
+const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player',];
 
 interface ToolbarProps {
 	onItemSelected: (item: string) => void;
@@ -22,7 +22,7 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
 		const handleKeyDown = (e: { key: string; }) => {
 			const keyNumber = parseInt(e.key, 10);
 			if (keyNumber >= 1 && keyNumber <= items.length) {
-				console.log(`Key ${keyNumber} pressed, selecting item ${items[keyNumber - 1]}`);
+				// console.log(`Key ${keyNumber} pressed, selecting item ${items[keyNumber - 1]}`);
 				onItemSelected(items[keyNumber - 1]);
 				// Hide the context menu
 				setContextMenu({ visible: false, x: 0, y: 0 });
@@ -68,7 +68,8 @@ function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDow
 		};
 	}, []);
 
-	const handleContextMenu = (event) => {
+
+	const handleContextMenu = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		event.preventDefault();
 		if (contextMenu.visible) {
 			setContextMenu({ visible: false, x: 0, y: 0 });
@@ -122,7 +123,7 @@ export function MapGenerator() {
 
 
 	const handleItemSelected = (item: SetStateAction<null>) => {
-		console.log(`Item selected: ${item}`);
+		// console.log(`Item selected: ${item}`);
 		setSelectedItem(item);
 	};
 	useEffect(() => {
@@ -175,22 +176,28 @@ export function MapGenerator() {
 				}
 			}
 			// Determine the symbol based on the item's classes
-			let symbol: string;
-			if (item.classList.contains("player")) {
-				symbol = "P";
-				++playerAmount;
-			} else if (item.classList.contains("box")) {
-				symbol = "B";
-				++boxAmount;
-			} else if (item.classList.contains("ground")) {
-				symbol = ",";
-			} else if (item.classList.contains("boxindicator")) {
-				symbol = "I";
-				++boxIndicator;
-			} else if (item.classList.contains("wall")) {
-				symbol = "#";
-			} else {
-				symbol = "-";
+			type ClassToSymbol = {
+				[key: string]: {
+					symbol: string;
+					counter?: () => number;
+				};
+			};
+
+			const classToSymbol: ClassToSymbol = {
+				player: { symbol: 'P', counter: () => ++playerAmount },
+				box: { symbol: 'B', counter: () => ++boxAmount },
+				ground: { symbol: ',' },
+				boxindicator: { symbol: 'I', counter: () => ++boxIndicator },
+				wall: { symbol: '#' },
+			};
+
+			let symbol = '-';
+			for (const className in classToSymbol) {
+				if (item.classList.contains(className)) {
+					symbol = classToSymbol[className].symbol;
+					classToSymbol[className].counter?.();
+					break;
+				}
 			}
 
 			// Add the symbol to the current row
@@ -214,7 +221,7 @@ export function MapGenerator() {
 			return;
 		}
 
-		console.log(boxIndicator, boxAmount);
+		// console.log(boxIndicator, boxAmount);
 
 		if (boxIndicator === 0 || boxIndicator !== boxAmount) {
 			alert(
@@ -252,7 +259,7 @@ export function MapGenerator() {
 	}
 
 
-	const handleGridClick = (e, i, j) => {
+	const handleGridClick = (e: { stopPropagation: () => void; type: string; }, i: string | number, j: string | number) => {
 		e.stopPropagation();
 
 		// Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
@@ -262,14 +269,16 @@ export function MapGenerator() {
 			const newGridItems = [...gridItems];
 
 			// Update the class of the clicked grid item based on the selected item
-			newGridItems[i][j] = selectedItem;
+			newGridItems[Number(i)][Number(j)] = selectedItem;
 
 			// Update gridItems state
 			setGridItems(newGridItems);
 		}
 	};
 
-	const handleGridClickBack = (e, i, j) => {
+	//dont remove this i to lazy to fix it
+	const handleGridClickBack = () => {
+		// const handleGridClickBack = (e: { stopPropagation: () => void; preventDefault: () => void; }, i: string | number, j: string | number) => {
 		// // e.stopPropagation();
 		// // e.preventDefault();
 
@@ -313,7 +322,7 @@ export function MapGenerator() {
 			})
 		);
 
-		console.log(symbolArray);
+		// console.log(symbolArray);
 
 
 		setMapData(symbolArray);
@@ -325,6 +334,19 @@ export function MapGenerator() {
 	};
 
 
+	const handleHelp = () => {
+
+		alert("1. Click on the grid to place items\n" +
+			"2. Use the toolbar/right click or 1-9Num to select an item\n" +
+			"5. Hold Shift to place/draw multiple items\n" +
+			"6. Click 'Download Map' to download the map\n" +
+			"7. Click 'Toggle Grid' to toggle the grid\n" +
+			"8. Click 'Test Map' to test the map\n" +
+			"9. Click 'Go Back' to go back to the map editor\n" +
+			"10. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n"
+		);
+
+	};
 
 
 
@@ -341,14 +363,15 @@ export function MapGenerator() {
 		<>
 			{/* <div className="map-generator"> */}
 			<div className="btn-container-top">
+				<button onClick={handleHelp}>Help</button>
 				<button className="generate" onClick={generateMap}>
-					Generate Map
+					Download Map
 				</button>
-				<button className="toggle" onClick={toggleGrid}>
+				{/* <button className="toggle" onClick={toggleGrid}>
 					Toggle Grid
-				</button>
+				</button> */}
 				<button className="generate-symbol-array" onClick={generateSymbolArray}>
-					Generate Symbol Array for MapRender
+					Test Map
 				</button>
 			</div>
 			<Emptydivs
@@ -357,10 +380,12 @@ export function MapGenerator() {
 				handleGridClickBack={handleGridClickBack}
 				onMouseDown={() => setIsMouseDown(true)}
 				onMouseUp={() => setIsMouseDown(false)}
-				onItemSelected={handleItemSelected}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				onItemSelected={handleItemSelected as any}
 			/>
 			<div className="toolbar">
-				<Toolbar onItemSelected={handleItemSelected} />
+				{/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+				<Toolbar onItemSelected={handleItemSelected as any} />
 			</div>
 
 			<div>
