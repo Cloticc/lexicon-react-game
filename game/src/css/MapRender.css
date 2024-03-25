@@ -697,3 +697,14 @@ body,
     aspect-ratio: 1/1;
     border: 1px solid rgb(0, 0, 0);
 }
+
+
+.context-menu {
+	position: absolute;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	padding: 10px;
+	z-index: 1000;
+	width: 200px;
+	box-shadow: 10px 10px 5px grey;
+}
