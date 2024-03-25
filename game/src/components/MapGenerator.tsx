@@ -171,36 +171,7 @@ export function MapGenerator() {
 			data.mapdata.push(row);
 		}
 
-		// const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
 
-		// let playerAmount = 0;
-		// let boxAmount = 0;
-		// let boxIndicator = 0;
-		// rows.forEach((row) => {
-		// 	const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
-		// 	const array: string[] = [];
-		// 	data.mapdata.push(array);
-		// 	columns.forEach((column) => {
-		// 		let symbol: string;
-		// 		if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
-		// 			symbol = "-";
-		// 		} else if (column.classList.contains("player")) {
-		// 			symbol = "P";
-		// 			++playerAmount;
-		// 		} else if (column.classList.contains("box")) {
-		// 			symbol = "B";
-		// 			++boxAmount;
-		// 		} else if (column.classList.contains("ground")) {
-		// 			symbol = ",";
-		// 		} else if (column.classList.contains("boxindicator")) {
-		// 			symbol = "I";
-		// 			++boxIndicator;
-		// 		} else if (column.classList.contains("wall")) {
-		// 			symbol = "#";
-		// 		}
-		// 		array.push(symbol);
-		// 	});
-		// });
 
 		if (playerAmount > 1 || playerAmount === 0) {
 			alert("Can/must only have 1 player, please fix...");
@@ -369,6 +340,40 @@ export function MapGenerator() {
 		</>
 	);
 }
+
+
+
+
+// const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
+
+// let playerAmount = 0;
+// let boxAmount = 0;
+// let boxIndicator = 0;
+// rows.forEach((row) => {
+// 	const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
+// 	const array: string[] = [];
+// 	data.mapdata.push(array);
+// 	columns.forEach((column) => {
+// 		let symbol: string;
+// 		if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
+// 			symbol = "-";
+// 		} else if (column.classList.contains("player")) {
+// 			symbol = "P";
+// 			++playerAmount;
+// 		} else if (column.classList.contains("box")) {
+// 			symbol = "B";
+// 			++boxAmount;
+// 		} else if (column.classList.contains("ground")) {
+// 			symbol = ",";
+// 		} else if (column.classList.contains("boxindicator")) {
+// 			symbol = "I";
+// 			++boxIndicator;
+// 		} else if (column.classList.contains("wall")) {
+// 			symbol = "#";
+// 		}
+// 		array.push(symbol);
+// 	});
+// });
 
 
 
