@@ -1,3 +1,4 @@
+
 import './App.css';
 import './css/MediaQueries.css';
 
@@ -17,6 +18,7 @@ import allMaps from './maps/maps';
 import { playSound } from './components/playSound';
 
 type Page = 'start' | 'selectlevel' | 'play' | 'credits' | 'MapGenerator';
+
 
 function App() {
     const [currentPage, setCurrentPage] = useState<Page>('start');
