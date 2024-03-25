@@ -15,7 +15,7 @@ import { StartPageUI } from "./pages/StartPageUI";
 import allMaps from "./maps/maps";
 import { playSound } from "./components/playSound";
 
-type Page = "start" | "selectlevel" | "play" | "credits";
+type Page = "start" | "selectlevel" | "play" | "credits" | "MapGenerator";
 
 function App() {
 	const [currentPage, setCurrentPage] = useState<Page>("start");
@@ -86,7 +86,8 @@ function App() {
 					<div id="startpageui">
 						{/* StartPage UI */}
 						{currentPage === "start" && <StartPageUI onPageChange={handlePageChange} />}
-
+						{/* MapGenerator */}
+						{currentPage === "MapGenerator" && <MapGenerator onPageChange={handlePageChange} />}					{/* MyComponent */}
 						{/* Select Level*/}
 						{currentPage === "selectlevel" && (
 							<SelectLevel

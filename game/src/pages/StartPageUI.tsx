@@ -15,6 +15,12 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
 		playSound("hover", 0.15);
 	}
 
+const handleButtonClick2 = () => {
+		onPageChange("MapGenerator");
+		playSound("click", 0.25);
+		playSound("swoosh", 0.25);
+	};
+
 	return (
 		<>
 			<div id="player">
@@ -22,6 +28,7 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
 				<div className="player playerwalkdown"></div>
 			</div>
 			<div id="startplay" onClick={handleButtonClick} onMouseOver={handleMouseOver}></div>
+			<div id="mapEditor" onClick={handleButtonClick2}>mapEditor</div>
 		</>
 	);
 }
