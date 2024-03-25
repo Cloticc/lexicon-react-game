@@ -7,11 +7,16 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { MapRender } from "./MapRender";
 import { MyContext } from "../ContextProvider/ContextProvider";
 
-function Toolbar({ onItemSelected }) {
+interface ToolbarProps {
+	onItemSelected: (item: string) => void;
+}
+
+function Toolbar({ onItemSelected }: ToolbarProps) {
+	// memo becuse we dont want to recreate the array every time the component rerenders
 	const items = useMemo(() => ['wall', 'player', 'box', 'ground', 'boxindicator'], []);
 
 	useEffect(() => {
-		const handleKeyDown = (e) => {
+		const handleKeyDown = (e: { key: string; }) => {
 			const keyNumber = parseInt(e.key, 10);
 			if (keyNumber >= 1 && keyNumber <= items.length) {
 				console.log(`Key ${keyNumber} pressed, selecting item ${items[keyNumber - 1]}`);
@@ -38,7 +43,17 @@ function Toolbar({ onItemSelected }) {
 	);
 }
 
-function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDown, onMouseUp }) {
+interface EmptydivsProps {
+	gridItems: string[][];
+	handleGridClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, i: number, j: number) => void;
+	handleGridClickBack: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, i: number, j: number) => void;
+	onMouseDown: () => void;
+	onMouseUp: () => void;
+}
+
+
+
+function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDown, onMouseUp }: EmptydivsProps) {
 	return (
 		<div className="grid-container-editor" onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
 			{gridItems.map((row, i) => (
@@ -58,13 +73,13 @@ function Emptydivs({ gridItems, handleGridClick, handleGridClickBack, onMouseDow
 	);
 }
 
+
 export function MapGenerator() {
 	const {
 		mapData,
 		setMapData,
 	} = useContext(MyContext);
 
-	const [count, setCount] = useState<number>(0);
 	const [selectedItem, setSelectedItem] = useState(null);
 	const [isShiftDown, setIsShiftDown] = useState(false);
 	const [isMouseDown, setIsMouseDown] = useState(false);
@@ -121,15 +136,15 @@ export function MapGenerator() {
 				let symbol: string;
 				if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
 					symbol = "-";
-				} else if (column.classList.contains("player1")) {
+				} else if (column.classList.contains("player")) {
 					symbol = "P";
 					++playerAmount;
-				} else if (column.classList.contains("boxed")) {
+				} else if (column.classList.contains("box")) {
 					symbol = "B";
 					++boxAmount;
 				} else if (column.classList.contains("ground")) {
 					symbol = ",";
-				} else if (column.classList.contains("indicator")) {
+				} else if (column.classList.contains("boxindicator")) {
 					symbol = "I";
 					++boxIndicator;
 				} else if (column.classList.contains("wall")) {
@@ -158,9 +173,13 @@ export function MapGenerator() {
 			return;
 		}
 
-		const dataHTML = document.querySelector("#container")!.innerHTML;
-
-		data.html = dataHTML;
+		const container = document.querySelector("#container");
+		if (container) {
+			const dataHTML = container.innerHTML;
+			data.html = dataHTML;
+		} else {
+			console.error("Element with id 'container' not found" + container);
+		}
 
 		// Convert the JSON data to a Blob
 		const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -183,13 +202,12 @@ export function MapGenerator() {
 	}
 
 
-
 	const handleGridClick = (e, i, j) => {
 		e.stopPropagation();
 
-		// Only update the grid item if the mouse button is down and Shift is held, or if it's a click event
+		// Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
 		if ((isMouseDown && isShiftDown) || e.type === 'click') {
-			console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
+			// console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
 			// Copy gridItems state
 			const newGridItems = [...gridItems];
 
@@ -258,6 +276,8 @@ export function MapGenerator() {
 
 
 
+
+
 	return showMapRender ? (
 		<>
 			{/* < div className="map-render"> */}
@@ -291,7 +311,7 @@ export function MapGenerator() {
 			<div className="toolbar">
 				<Toolbar onItemSelected={handleItemSelected} />
 			</div>
-			
+
 			<div>
 				<button className="clear-btn" onClick={() => setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')))}>
 					Clear
