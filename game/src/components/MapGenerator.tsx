@@ -7,7 +7,7 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 
-const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player'];
+const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'specialboxed', 'special', 'door'];
 
 interface ToolbarProps {
     onItemSelected: (item: string) => void;
@@ -179,6 +179,9 @@ export function MapGenerator() {
         let playerAmount = 0;
         let boxAmount = 0;
         let boxIndicator = 0;
+        let specialboxed = 0;
+        let specialid = 0;
+        let doorid = 0;
 
         // Define a temporary array to hold the current row
         let row: string[] = [];
@@ -206,6 +209,13 @@ export function MapGenerator() {
                 ground: { symbol: ',' },
                 boxindicator: { symbol: 'I', counter: () => ++boxIndicator },
                 wall: { symbol: '#' },
+                specialboxed: { symbol: 'O', counter: () => ++specialboxed },
+                special: { symbol: 'S', counter: () => ++specialid },
+                door: { symbol: 'D', counter: () => ++doorid },
+                cracked: { symbol: 'W' },
+                mined: { symbol: 'M' },
+
+
             };
 
             let symbol = '-';
@@ -329,6 +339,16 @@ export function MapGenerator() {
                         return 'I';
                     case 'wall':
                         return '#';
+                    case 'specialboxed':
+                        return 'O';
+                    case 'special':
+                        return 'S';
+                    case 'door':
+                        return 'D';
+                    case 'cracked':
+                        return 'W';
+                    case 'mined':
+                        return 'M';
                     default:
                         return '-';
                 }
@@ -348,13 +368,12 @@ export function MapGenerator() {
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items\n' +
-                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-                '5. Hold Shift to place/draw multiple items\n' +
-                "6. Click 'Download Map' to download the map\n" +
-                "7. Click 'Toggle Grid' to toggle the grid\n" +
-                "8. Click 'Test Map' to test the map\n" +
-                "9. Click 'Go Back' to go back to the map editor\n" +
-                '10. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+            '2. Use the toolbar/right click or 1-9Num to select an item\n' +
+            '5. Hold Shift to place/draw multiple items\n' +
+            "6. Click 'Download Map' to download the map\n" +
+            "7. Click 'Test Map' to test the map\n" +
+            "8. Click 'Go Back' to go back to the map editor\n" +
+            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
         );
     };
 
