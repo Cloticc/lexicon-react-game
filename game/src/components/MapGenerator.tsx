@@ -7,7 +7,7 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 
-const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'special', 'specialboxed', 'door '];
+const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'special', 'specialboxed', 'door'];
 
 interface ToolbarProps {
     onItemSelected: (item: string) => void;
@@ -115,9 +115,9 @@ function Emptydivs({
                             {item.type === 'special' && <div className="specialid">{item.id}</div>}
                             {item.type === 'door' && <div className="specialid">{item.id}</div>}
                             {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
- 
-                             
-                            
+
+
+
                         </div>
                     ))}
                 </div>
@@ -311,10 +311,10 @@ export function MapGenerator() {
         j: string | number
     ) => {
         e.stopPropagation();
-
+        // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
         if ((isMouseDown && isShiftDown) || e.type === 'click') {
             const newGridItems = [...gridItems];
-
+            // Update the class of the clicked grid item based on the selected item
             if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
