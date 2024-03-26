@@ -21,6 +21,8 @@ interface HistoryState {
 interface GameContextProps {
     totalToken: number;
     setTotalToken: (totalToken: number) => void;
+    playedMaps: { mapId: number; score: number; elapsedTime: number }[];
+    setPlayedMaps: (playedMaps: { mapId: number; score: number; elapsedTime: number }[]) => void;
     youAreDead: boolean;
     setYouAreDead: (youAreDead: boolean) => void;
     youLost: boolean;
@@ -60,8 +62,7 @@ interface GameContextProps {
     setMuted: (setMuted: boolean) => void;
     showGameContainer: boolean;
     setShowGameContainer: (setShowGameContainer: boolean) => void;
-    playedMaps: number[];
-    setPlayedMaps: (playedMaps: number[]) => void;
+
     highestScores: {
         [level: string]: { score: number; elapsedTime: number };
     };
@@ -135,6 +136,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
+        playedMaps: playedMaps,
+        setPlayedMaps: setPlayedMaps,
         totalToken: totalToken,
         setTotalToken: setTotalToken,
         youLost: youLost,
@@ -176,8 +179,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         toggleSettings: toggleSettings,
         showGameContainer: showGameContainer,
         setShowGameContainer: setShowGameContainer,
-        playedMaps: playedMaps,
-        setPlayedMaps: setPlayedMaps,
+
         highestScores: highestScores,
         setHighestScores: setHighestScores,
         handleHistory: handleHistory,
