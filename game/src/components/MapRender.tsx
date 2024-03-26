@@ -37,6 +37,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setInitialBoxPositions,
 		playerDirection,
 		setPlayerDirection,
+		youAreDead,
+		youLost,
+		playerGroundFloor,
+		boxGroundFloor
 	} = useContext(MyContext);
 
 	// mount the map
@@ -129,13 +133,15 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
 		const isIndicator = indicatorPositions.some((pos) => pos.x === x && pos.y === y);
 		const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
+
+
 		switch (symbol) {
 			case "-":
 				return "empty";
 			case "P":
-				return isIndicator ? "boxindicator" : `ground player-${playerDirection} playerwalk${playerDirection}`;
+				return isIndicator ? "boxindicator" : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
 			case "B":
-				return isIndicator && isBox ? "box box-on-indicator" : "box";
+				return isIndicator && isBox ? "box box-on-indicator" : `${boxGroundFloor} box`;
 			case ",":
 				return "ground";
 			case "I":

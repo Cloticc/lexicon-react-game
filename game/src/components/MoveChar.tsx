@@ -61,8 +61,10 @@ export function MoveChar({
         history,
         setHistory,
         youAreDead,
-        setYouAreDead,
+        setYouAreDead,        
         setYouLost,
+       setPlayerGroundFloor,
+       setBoxGroundFloor
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -257,6 +259,7 @@ export function MoveChar({
 
                     if (checkEmptySpace) {
                         handleDeath();
+                        setPlayerGroundFloor('falling');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -277,6 +280,7 @@ export function MoveChar({
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            setBoxGroundFloor('falling');
                             youLost();
                             return;
                         }
