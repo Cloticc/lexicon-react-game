@@ -1,13 +1,13 @@
 // import "../css/MapGenerator.css"
 
-import '../css/MapRender.css';
+// import '../css/MapRender.css';
 
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 
-const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'specialboxed', 'special', 'door'];
+const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'special', 'specialboxed', 'door '];
 
 interface ToolbarProps {
     onItemSelected: (item: string) => void;
@@ -105,6 +105,28 @@ function Emptydivs({
                     {row.map((item, j) => (
                         <div
                             key={j}
+                            className={`grid-item-editor ${item.type}`}
+                            data-id={item.id}
+                            onClick={(e) => handleGridClick(e, i, j)}
+                            onMouseOver={(e) => handleGridClick(e, i, j)}
+                            onContextMenu={(e) => handleGridClickBack(e, i, j)}
+                        >
+                            {item.type === 'specialboxed' && <div className="specialid">{item.id}</div>}
+                            {item.type === 'special' && <div className="specialid">{item.id}</div>}
+                            {item.type === 'door' && <div className="specialid">{item.id}</div>}
+                            {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
+ 
+                             
+                            
+                        </div>
+                    ))}
+                </div>
+            ))}
+            {/* {gridItems.map((row, i) => (
+                <div key={i} className="grid-row-editor">
+                    {row.map((item, j) => (
+                        <div
+                            key={j}
                             className={`grid-item-editor ${item}`}
                             onClick={(e) => handleGridClick(e, i, j)}
                             onMouseOver={(e) => handleGridClick(e, i, j)}
@@ -112,7 +134,7 @@ function Emptydivs({
                         ></div>
                     ))}
                 </div>
-            ))}
+            ))} */}
             {contextMenu.visible && (
                 <div className="context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
                     {items.map((item, index) => (
@@ -179,9 +201,9 @@ export function MapGenerator() {
         let playerAmount = 0;
         let boxAmount = 0;
         let boxIndicator = 0;
-        let specialboxed = 0;
-        let specialid = 0;
-        let doorid = 0;
+        let specialBoxIndicator = 0;
+        let specialBoxAmount = 0;
+        let doorAmount = 0;
 
         // Define a temporary array to hold the current row
         let row: string[] = [];
@@ -209,9 +231,9 @@ export function MapGenerator() {
                 ground: { symbol: ',' },
                 boxindicator: { symbol: 'I', counter: () => ++boxIndicator },
                 wall: { symbol: '#' },
-                specialboxed: { symbol: 'O', counter: () => ++specialboxed },
-                special: { symbol: 'S', counter: () => ++specialid },
-                door: { symbol: 'D', counter: () => ++doorid },
+                specialboxed: { symbol: 'O', counter: () => ++specialBoxIndicator },
+                special: { symbol: 'S', counter: () => ++specialBoxAmount },
+                door: { symbol: 'D', counter: () => ++doorAmount },
                 cracked: { symbol: 'W' },
                 mined: { symbol: 'M' },
 
@@ -290,19 +312,73 @@ export function MapGenerator() {
     ) => {
         e.stopPropagation();
 
-        // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
         if ((isMouseDown && isShiftDown) || e.type === 'click') {
-            // console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
-            // Copy gridItems state
             const newGridItems = [...gridItems];
 
-            // Update the class of the clicked grid item based on the selected item
-            newGridItems[Number(i)][Number(j)] = selectedItem;
+            if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
+                const id = prompt('Enter an ID (1-9) for this item:');
+                if (id && /^[1-9]$/.test(id)) {
+                    newGridItems[Number(i)][Number(j)] = { type: selectedItem, id };
+                } else {
+                    alert('Invalid ID. Please enter a single digit between 1 and 9.');
+                }
+            } else {
+                newGridItems[Number(i)][Number(j)] = { type: selectedItem };
+            }
 
-            // Update gridItems state
             setGridItems(newGridItems);
         }
     };
+
+    // const handleGridClick = (
+    //     e: { stopPropagation: () => void; type: string },
+    //     i: string | number,
+    //     j: string | number
+    // ) => {
+    //     e.stopPropagation();
+
+    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
+    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
+    //         // Copy gridItems state
+    //         const newGridItems = [...gridItems];
+
+    //         // Update the class of the clicked grid item based on the selected item
+    //         if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
+    //             const id = prompt('Enter an ID (1-9) for this item:');
+    //             if (id && /^[1-9]$/.test(id)) { // Check if the input is a single digit between 1 and 9
+    //                 newGridItems[Number(i)][Number(j)] = selectedItem + '-' + id;
+    //             } else {
+    //                 alert('Invalid ID. Please enter a single digit between 1 and 9.');
+    //             }
+    //         } else {
+    //             newGridItems[Number(i)][Number(j)] = selectedItem;
+    //         }
+    //         console.log(newGridItems);
+    //         setGridItems(newGridItems);
+    //     }
+    // };
+
+
+    // const handleGridClick = (
+    //     e: { stopPropagation: () => void; type: string },
+    //     i: string | number,
+    //     j: string | number
+    // ) => {
+    //     e.stopPropagation();
+
+    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
+    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
+    //         // console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
+    //         // Copy gridItems state
+    //         const newGridItems = [...gridItems];
+
+    //         // Update the class of the clicked grid item based on the selected item
+    //         newGridItems[Number(i)][Number(j)] = selectedItem;
+
+    //         // Update gridItems state
+    //         setGridItems(newGridItems);
+    //     }
+    // };
 
     //dont remove this i to lazy to fix it
     const handleGridClickBack = () => {
@@ -328,23 +404,27 @@ export function MapGenerator() {
     const generateSymbolArray = () => {
         const symbolArray = gridItems.map((row) =>
             row.map((item) => {
-                switch (item) {
+                // Split the item string by '-' to get the item type and the ID
+                const itemType = item.type;
+                const id = item.id;
+
+                switch (itemType) {
                     case 'player':
                         return 'P';
                     case 'box':
                         return 'B';
                     case 'ground':
                         return ',';
-                    case 'boxindicator':
+                    case 'boxIndicator':
                         return 'I';
                     case 'wall':
                         return '#';
                     case 'specialboxed':
-                        return 'O';
+                        return 'O' + id;
                     case 'special':
-                        return 'S';
+                        return 'S' + id;
                     case 'door':
-                        return 'D';
+                        return 'D' + id;
                     case 'cracked':
                         return 'W';
                     case 'mined':
@@ -355,8 +435,7 @@ export function MapGenerator() {
             })
         );
 
-        // console.log(symbolArray);
-
+        console.log(symbolArray);
         setMapData(symbolArray);
         setShowMapRender(true);
     };
