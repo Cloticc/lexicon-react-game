@@ -52,8 +52,6 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-        setLevel,
-        highestScores,
         setHighestScores,
         handleHistory,
         setHandleHistory,
@@ -61,7 +59,6 @@ export function MoveChar({
         history,
         setHistory,
         setYouAreDead,
-        setYouLost,
     } = useContext(MyContext);
 
     function youAreDead() {
@@ -74,15 +71,6 @@ export function MoveChar({
         }, 3000);
     }
 
-    function youLost() {
-        setYouLost(true);
-        playSound('lost', 0.4);
-        playSound('gameover', 0.4);
-        setTimeout(() => {
-            setYouLost(false);
-            resetGame();
-        }, 3000);
-    }
 
     /**
      * Adds the current state of the game to the history.
@@ -155,15 +143,24 @@ export function MoveChar({
 
     const startGame = useCallback(() => {
         setStartTime(new Date());
-        setGameRunning(true);
+        if (setGameRunning) {
+            setGameRunning(true);
+        }
         setWonGame(false);
     }, []);
-
+    
     const stopGame = useCallback(() => {
-        setStartTime(null);
-        setGameRunning(false);
-        setWonGame(true);
-    }, []);
+        if (startTime !== null) {
+            setStartTime(null!); // Adding an assertion to tell TypeScript that startTime is not null
+        }
+        if (setGameRunning) {
+            setGameRunning(false);
+            setWonGame(true);
+        }
+    }, [startTime, setGameRunning]);
+    
+    
+    
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
