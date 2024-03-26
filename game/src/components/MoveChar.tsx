@@ -57,11 +57,16 @@ export function MoveChar({
         setHandleHistory,
         resetGame,
         history,
-        setHistory,
-        setYouAreDead,
+
+        youAreDead,
+        setYouAreDead,        
+        setYouLost,
+       setPlayerGroundFloor,
+       setBoxGroundFloor
+
     } = useContext(MyContext);
 
-    function youAreDead() {
+    function handleDeath() {
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -205,6 +210,7 @@ export function MoveChar({
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
+
         if (
             indicatorPositions.some(
                 (pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y
@@ -235,6 +241,10 @@ export function MoveChar({
             setPlayerDirection(direction.toLowerCase());
             setDirection(direction.toLowerCase());
 
+            if (youAreDead) {
+                return;
+            }
+
             const newPosition = {
                 x: playerPosition.x + directionMap[direction as Direction].x,
                 y: playerPosition.y + directionMap[direction as Direction].y,
@@ -247,7 +257,8 @@ export function MoveChar({
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
 
                     if (checkEmptySpace) {
-                        youAreDead();
+                        handleDeath();
+                        setPlayerGroundFloor('falling');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -263,9 +274,14 @@ export function MoveChar({
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
+                            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                        } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            setBoxGroundFloor('falling');
+                            youLost();
+                            return;
                         }
                     } else {
                         movePlayer(newMapData, newPosition);
@@ -279,6 +295,7 @@ export function MoveChar({
             }
         },
         [
+            youAreDead,
             mapData,
             playerPosition,
             setPlayerDirection,

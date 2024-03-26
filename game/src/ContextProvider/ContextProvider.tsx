@@ -77,6 +77,10 @@ interface GameContextProps {
     setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
     contextMenu: { visible: boolean; x: number; y: number };
     setContextMenu: (contextMenu: { visible: boolean; x: number; y: number }) => void;
+    playerGroundFloor: string;
+    setPlayerGroundFloor: (groundFloor: string) => void;
+    boxGroundFloor: string;
+    setBoxGroundFloor: (boxGroundFloor: string) => void;
 }
 
 interface ChildrenProps {
@@ -120,7 +124,9 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [history, setHistory] = useState<HistoryState[]>([]);
     const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
     const [totalToken, setTotalToken] = useState<number>(0);
-
+    const [playerGroundFloor, setPlayerGroundFloor] = useState('ground');
+    const [boxGroundFloor, setBoxGroundFloor] = useState('ground');
+    
     const resetGame = () => {
         setCounter(0);
         setElapsedTime(0);
@@ -133,6 +139,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setBoxPositions(initialBoxPositions);
         setPlayerDirection('down');
         setHistory([]);
+        setPlayerGroundFloor('ground');
+        setBoxGroundFloor('ground');
     };
 
     const value: GameContextProps = {
@@ -190,6 +198,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setHistory: setHistory,
         contextMenu: contextMenu,
         setContextMenu: setContextMenu,
+        playerGroundFloor: playerGroundFloor,
+        setPlayerGroundFloor: setPlayerGroundFloor,
+        boxGroundFloor: boxGroundFloor,
+        setBoxGroundFloor: setBoxGroundFloor,
     };
 
     return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
