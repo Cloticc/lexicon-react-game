@@ -200,7 +200,7 @@ export function MapGenerator() {
         // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
-        let boxIndicator = 0;
+        let boxIndex = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
         let doorAmount = 0;
@@ -229,7 +229,7 @@ export function MapGenerator() {
                 player: { symbol: 'P', counter: () => ++playerAmount },
                 box: { symbol: 'B', counter: () => ++boxAmount },
                 ground: { symbol: ',' },
-                boxindicator: { symbol: 'I', counter: () => ++boxIndicator },
+                boxindicator: { symbol: 'I', counter: () => ++boxIndex },
                 wall: { symbol: '#' },
                 specialboxed: { symbol: 'O', counter: () => ++specialBoxIndicator },
                 special: { symbol: 'S', counter: () => ++specialBoxAmount },
@@ -270,7 +270,7 @@ export function MapGenerator() {
 
         // console.log(boxIndicator, boxAmount);
 
-        if (boxIndicator === 0 || boxIndicator !== boxAmount) {
+        if (boxIndex === 0 || boxIndex !== boxAmount) {
             alert(
                 'You must have the same amount of Box indicators as you have boxes, please fix...'
             );
@@ -396,11 +396,6 @@ export function MapGenerator() {
         // setGridItems(newGridItems);
     };
 
-    // function toggleGrid(): void {
-    // 	const container = document.querySelector<HTMLDivElement>(".grid-container-editor");
-    // 	container?.classList.toggle("gridless");
-    // }
-
     const generateSymbolArray = () => {
         const symbolArray = gridItems.map((row) =>
             row.map((item) => {
@@ -415,7 +410,7 @@ export function MapGenerator() {
                         return 'B';
                     case 'ground':
                         return ',';
-                    case 'boxIndicator':
+                    case 'boxindicator':
                         return 'I';
                     case 'wall':
                         return '#';
