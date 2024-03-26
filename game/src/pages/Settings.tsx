@@ -6,6 +6,7 @@ import { playSound } from './../components/playSound';
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
         gameRunning,
+        showGameContainer,
         setShowGameContainer,
         isMuted,
         setMuted,
