@@ -329,57 +329,7 @@ export function MapGenerator() {
             setGridItems(newGridItems);
         }
     };
-
-    // const handleGridClick = (
-    //     e: { stopPropagation: () => void; type: string },
-    //     i: string | number,
-    //     j: string | number
-    // ) => {
-    //     e.stopPropagation();
-
-    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
-    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
-    //         // Copy gridItems state
-    //         const newGridItems = [...gridItems];
-
-    //         // Update the class of the clicked grid item based on the selected item
-    //         if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
-    //             const id = prompt('Enter an ID (1-9) for this item:');
-    //             if (id && /^[1-9]$/.test(id)) { // Check if the input is a single digit between 1 and 9
-    //                 newGridItems[Number(i)][Number(j)] = selectedItem + '-' + id;
-    //             } else {
-    //                 alert('Invalid ID. Please enter a single digit between 1 and 9.');
-    //             }
-    //         } else {
-    //             newGridItems[Number(i)][Number(j)] = selectedItem;
-    //         }
-    //         console.log(newGridItems);
-    //         setGridItems(newGridItems);
-    //     }
-    // };
-
-
-    // const handleGridClick = (
-    //     e: { stopPropagation: () => void; type: string },
-    //     i: string | number,
-    //     j: string | number
-    // ) => {
-    //     e.stopPropagation();
-
-    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
-    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
-    //         // console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
-    //         // Copy gridItems state
-    //         const newGridItems = [...gridItems];
-
-    //         // Update the class of the clicked grid item based on the selected item
-    //         newGridItems[Number(i)][Number(j)] = selectedItem;
-
-    //         // Update gridItems state
-    //         setGridItems(newGridItems);
-    //     }
-    // };
-
+  
     //dont remove this i to lazy to fix it
     const handleGridClickBack = () => {
         // const handleGridClickBack = (e: { stopPropagation: () => void; preventDefault: () => void; }, i: string | number, j: string | number) => {
