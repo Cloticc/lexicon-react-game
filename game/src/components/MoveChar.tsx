@@ -209,6 +209,7 @@ export function MoveChar({
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
+
         if (
             indicatorPositions.some(
                 (pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y
@@ -271,9 +272,13 @@ export function MoveChar({
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
+                            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                        } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            youLost();
+                            return;
                         }
                     } else {
                         movePlayer(newMapData, newPosition);
