@@ -6,17 +6,15 @@ import { useContext, useEffect, useState } from 'react';
 import { Credits } from './pages/Credits';
 import { FullscreenToggle } from './components/fullscrenToggle';
 import { Music } from './components/Music';
-import { MyComponent } from './pages/MyComponent';
 import { MyContext } from './ContextProvider/ContextProvider';
 import { Play } from './pages/Play';
 import { SelectLevel } from './pages/SelectLevel';
 import { Settings } from './pages/Settings';
 import { StartPageUI } from './pages/StartPageUI';
-import { MapGenerator } from './components/MapGenerator';
 import allMaps from './maps/maps';
 import { playSound } from './components/playSound';
 
-type Page = 'start' | 'selectlevel' | 'play' | 'credits' | 'MapGenerator';
+type Page = 'start' | 'selectlevel' | 'play' | 'credits';
 
 function App() {
     const [currentPage, setCurrentPage] = useState<Page>('start');
@@ -87,11 +85,7 @@ function App() {
                     <div id="startpageui">
                         {/* StartPage UI */}
                         {currentPage === 'start' && <StartPageUI onPageChange={handlePageChange} />}
-                        {/* MapGenerator */}
-                        {currentPage === 'MapGenerator' && (
-                            <MapGenerator onPageChange={handlePageChange} />
-                        )}{' '}
-                        {/* MyComponent */}
+
                         {/* Select Level*/}
                         {currentPage === 'selectlevel' && (
                             <SelectLevel
@@ -101,10 +95,13 @@ function App() {
                                 onLevelChange={handleLevelChange}
                             />
                         )}
+
                         {/* Credits */}
                         {currentPage === 'credits' && <Credits onPageChange={handlePageChange} />}
+
                         {/* Play */}
                         {currentPage === 'play' && <Play onPageChange={handlePageChange} />}
+
                         <div id="space">
                             <div className="stars"></div>
                             <div className="stars"></div>
