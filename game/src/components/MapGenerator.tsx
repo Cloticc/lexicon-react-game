@@ -429,7 +429,7 @@ export function MapGenerator() {
                     <Toolbar onItemSelected={handleItemSelected as any} />
                 </div>
                 <div>
-                    <button
+                    <button 
                         className="clear-btn"
                         onClick={() =>
                             setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')))
@@ -453,106 +453,3 @@ export function MapGenerator() {
         </>
     );
 }
-
-// const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
-
-// let playerAmount = 0;
-// let boxAmount = 0;
-// let boxIndicator = 0;
-// rows.forEach((row) => {
-// 	const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
-// 	const array: string[] = [];
-// 	data.mapdata.push(array);
-// 	columns.forEach((column) => {
-// 		let symbol: string;
-// 		if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
-// 			symbol = "-";
-// 		} else if (column.classList.contains("player")) {
-// 			symbol = "P";
-// 			++playerAmount;
-// 		} else if (column.classList.contains("box")) {
-// 			symbol = "B";
-// 			++boxAmount;
-// 		} else if (column.classList.contains("ground")) {
-// 			symbol = ",";
-// 		} else if (column.classList.contains("boxindicator")) {
-// 			symbol = "I";
-// 			++boxIndicator;
-// 		} else if (column.classList.contains("wall")) {
-// 			symbol = "#";
-// 		}
-// 		array.push(symbol);
-// 	});
-// });
-
-// function handleGridClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
-// 	e.stopPropagation();
-
-// 	const thisEl = e.target as HTMLDivElement;
-// 	if (thisEl.classList.length === 1 && thisEl.classList.contains("grid-item")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("wall");
-// 	} else if (thisEl.classList.contains("wall")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground");
-// 		thisEl.classList.remove("wall");
-// 	} else if (thisEl.classList.contains("ground")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="box"></div>';
-// 		thisEl.classList.add("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.remove("ground");
-// 	} else if (thisEl.classList.contains("boxed")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="boxindicator"></div>';
-// 		thisEl.classList.remove("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("indicator");
-// 	} else if (thisEl.classList.contains("indicator")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="player"></div>';
-// 		thisEl.classList.remove("indicator");
-// 		thisEl.classList.add("player1");
-// 	} else if (thisEl.classList.contains("player1")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("player1");
-// 		thisEl.classList.remove("ground2");
-// 	}
-// }
-
-// function handleGridClickBack(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
-// 	e.stopPropagation();
-// 	e.preventDefault();
-// 	const thisEl = e.target as HTMLDivElement;
-// 	if (thisEl.classList.length === 1 && thisEl.classList.contains("grid-item")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("player1");
-// 		thisEl.innerHTML = `<div class="player"></div>`;
-// 	} else if (thisEl.classList.contains("player1")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("indicator");
-// 		thisEl.classList.remove("player1");
-// 		thisEl.innerHTML = `<div class="boxindicator"></div>`;
-// 	} else if (thisEl.classList.contains("indicator")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="box"></div>';
-// 		thisEl.classList.add("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.remove("indicator");
-// 	} else if (thisEl.classList.contains("boxed")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("ground");
-// 		thisEl.classList.remove("ground2");
-// 		thisEl.classList.remove("boxed");
-// 		thisEl.classList.add("ground");
-// 	} else if (thisEl.classList.contains("ground")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("wall");
-// 		thisEl.classList.remove("ground");
-// 	} else if (thisEl.classList.contains("wall")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("wall");
-// 	}
-// }
