@@ -753,3 +753,27 @@ body,
     width: 200px;
     box-shadow: 10px 10px 5px grey;
 }
+
+.token:after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url('../src/assets/sokoban_vector.svg');
+    background-position: 83% 71%;
+    background-repeat: no-repeat;
+    background-size: 1590%;
+    animation: tokenglow 0.5s ease-in-out alternate infinite;
+}
+
+@keyframes tokenglow {
+    0% {
+        filter: drop-shadow(0 0 2px white) drop-shadow(0 0 4px yellow);
+    }
+    100% {
+        filter: drop-shadow(0 0 2px white) drop-shadow(0 0 8px yellow);
+    }
+}
