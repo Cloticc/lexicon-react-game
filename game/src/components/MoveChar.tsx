@@ -60,11 +60,12 @@ export function MoveChar({
         resetGame,
         history,
         setHistory,
+        youAreDead,
         setYouAreDead,
         setYouLost,
     } = useContext(MyContext);
 
-    function youAreDead() {
+    function handleDeath() {
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -238,6 +239,10 @@ export function MoveChar({
             setPlayerDirection(direction.toLowerCase());
             setDirection(direction.toLowerCase());
 
+            if (youAreDead) {
+                return;
+            }
+
             const newPosition = {
                 x: playerPosition.x + directionMap[direction as Direction].x,
                 y: playerPosition.y + directionMap[direction as Direction].y,
@@ -250,7 +255,7 @@ export function MoveChar({
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
 
                     if (checkEmptySpace) {
-                        youAreDead();
+                        handleDeath();
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -282,6 +287,7 @@ export function MoveChar({
             }
         },
         [
+            youAreDead,
             mapData,
             playerPosition,
             setPlayerDirection,
