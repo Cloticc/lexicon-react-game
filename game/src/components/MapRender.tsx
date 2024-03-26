@@ -140,6 +140,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 				return "empty";
 			case "P":
 				return isIndicator ? "boxindicator" : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+				// return `${isIndicator ? "boxindicator " : ""}${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
 			case "B":
 				return isIndicator && isBox ? "box box-on-indicator" : `${boxGroundFloor} box`;
 			case ",":
@@ -185,11 +186,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 									<div className="boxindicator-container"></div>
 								)}
 								{className === "box" && <div className="box-container"></div>}
-								{className === "boxindicator" &&
-									playerPosition.x === columnIndex &&
-									playerPosition.y === rowIndex && (
-										<div className={`player-${playerDirection}`}></div>
-									)}
+								{className === "boxindicator" && playerPosition.x === columnIndex && playerPosition.y === rowIndex && ( <div className={`player-${playerDirection}`}></div> )}
 							</div>
 						);
 					})}

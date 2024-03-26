@@ -1,7 +1,3 @@
-// import "../css/MapGenerator.css"
-
-// import '../css/MapRender.css';
-
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { MapRender } from './MapRender';
@@ -329,7 +325,7 @@ export function MapGenerator() {
             setGridItems(newGridItems);
         }
     };
-  
+
     //dont remove this i to lazy to fix it
     const handleGridClickBack = () => {
         // const handleGridClickBack = (e: { stopPropagation: () => void; preventDefault: () => void; }, i: string | number, j: string | number) => {
@@ -429,7 +425,7 @@ export function MapGenerator() {
                     <Toolbar onItemSelected={handleItemSelected as any} />
                 </div>
                 <div>
-                    <button 
+                    <button
                         className="clear-btn"
                         onClick={() =>
                             setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')))
