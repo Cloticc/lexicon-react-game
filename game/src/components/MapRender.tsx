@@ -133,9 +133,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 			case "-":
 				return "empty";
 			case "P":
-				return isIndicator
-					? "boxindicator"
-					: `ground player-${playerDirection} playerwalk${playerDirection}`;
+				return isIndicator ? "boxindicator" : `ground player-${playerDirection} playerwalk${playerDirection}`;
 			case "B":
 				return isIndicator && isBox ? "box box-on-indicator" : "box";
 			case ",":
