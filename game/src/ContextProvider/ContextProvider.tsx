@@ -19,6 +19,8 @@ interface HistoryState {
 }
 
 interface GameContextProps {
+    totalToken: number;
+    setTotalToken: (totalToken: number) => void;
     youAreDead: boolean;
     setYouAreDead: (youAreDead: boolean) => void;
     youLost: boolean;
@@ -74,7 +76,6 @@ interface GameContextProps {
     setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
     contextMenu: { visible: boolean; x: number; y: number };
     setContextMenu: (contextMenu: { visible: boolean; x: number; y: number }) => void;
-    
 }
 
 interface ChildrenProps {
@@ -117,7 +118,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [playerDirection, setPlayerDirection] = useState<string>('down');
     const [history, setHistory] = useState<HistoryState[]>([]);
     const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
-
+    const [totalToken, setTotalToken] = useState<number>(0);
 
     const resetGame = () => {
         setCounter(0);
@@ -134,6 +135,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
+        totalToken: totalToken,
+        setTotalToken: setTotalToken,
         youLost: youLost,
         setYouLost: setYouLost,
         youAreDead: youAreDead,
