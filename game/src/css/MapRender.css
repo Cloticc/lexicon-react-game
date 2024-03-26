@@ -615,7 +615,7 @@ body,
     position: relative;
 }
 
-.door,
+.doorid,
 .specialid {
     user-select: none;
     font-family: Arial, Helvetica, sans-serif;
