@@ -18,6 +18,7 @@ interface MapRenderProps {
 }
 
 export function MapRender({ initialMapData }: MapRenderProps) {
+
     const {
         level,
         showGameContainer,
@@ -235,3 +236,4 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         </div>
     );
 }
+

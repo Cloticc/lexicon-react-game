@@ -52,19 +52,21 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-        setLevel,
-        highestScores,
         setHighestScores,
         handleHistory,
         setHandleHistory,
         resetGame,
         history,
-        setHistory,
-        setYouAreDead,
+
+        youAreDead,
+        setYouAreDead,        
         setYouLost,
+       setPlayerGroundFloor,
+       setBoxGroundFloor
+
     } = useContext(MyContext);
 
-    function youAreDead() {
+    function handleDeath() {
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -74,15 +76,6 @@ export function MoveChar({
         }, 3000);
     }
 
-    function youLost() {
-        setYouLost(true);
-        playSound('lost', 0.4);
-        playSound('gameover', 0.4);
-        setTimeout(() => {
-            setYouLost(false);
-            resetGame();
-        }, 3000);
-    }
 
     /**
      * Adds the current state of the game to the history.
@@ -155,15 +148,24 @@ export function MoveChar({
 
     const startGame = useCallback(() => {
         setStartTime(new Date());
-        setGameRunning(true);
+        if (setGameRunning) {
+            setGameRunning(true);
+        }
         setWonGame(false);
     }, []);
-
+    
     const stopGame = useCallback(() => {
-        setStartTime(null);
-        setGameRunning(false);
-        setWonGame(true);
-    }, []);
+        if (startTime !== null) {
+            setStartTime(null!); // Adding an assertion to tell TypeScript that startTime is not null
+        }
+        if (setGameRunning) {
+            setGameRunning(false);
+            setWonGame(true);
+        }
+    }, [startTime, setGameRunning]);
+    
+    
+    
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
@@ -208,6 +210,7 @@ export function MoveChar({
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
+
         if (
             indicatorPositions.some(
                 (pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y
@@ -238,6 +241,10 @@ export function MoveChar({
             setPlayerDirection(direction.toLowerCase());
             setDirection(direction.toLowerCase());
 
+            if (youAreDead) {
+                return;
+            }
+
             const newPosition = {
                 x: playerPosition.x + directionMap[direction as Direction].x,
                 y: playerPosition.y + directionMap[direction as Direction].y,
@@ -250,7 +257,8 @@ export function MoveChar({
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
 
                     if (checkEmptySpace) {
-                        youAreDead();
+                        handleDeath();
+                        setPlayerGroundFloor('falling');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -266,9 +274,14 @@ export function MoveChar({
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
+                            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                        } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            setBoxGroundFloor('falling');
+                            youLost();
+                            return;
                         }
                     } else {
                         movePlayer(newMapData, newPosition);
@@ -282,6 +295,7 @@ export function MoveChar({
             }
         },
         [
+            youAreDead,
             mapData,
             playerPosition,
             setPlayerDirection,
