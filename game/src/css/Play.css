@@ -310,3 +310,42 @@
     background-repeat: no-repeat;
     background-size: 3.5rem;
 }
+
+#btn-solution .totaltokens {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: -1rem;
+    right: -1rem;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 74% 69.8%;
+    background-size: 3800%;
+    background-color: yellow;
+    border-radius: 100rem;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: 4px solid black;
+}
+
+#btn-solution.disabled {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+
+#btn-cookie:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-delete.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 2.5rem;
+}
