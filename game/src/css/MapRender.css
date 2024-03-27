@@ -772,8 +772,14 @@ body,
     background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(0.5rem);
     height: 100%;
-    overflow-y: auto;
+
     scrollbar-width: none;
+}
+
+@media screen and (max-height: 800px) {
+    .btn-container-top {
+        overflow-y: auto;
+    }
 }
 
 .btn-container-top button {
@@ -884,7 +890,24 @@ body,
     background-image: url('../assets/sokoban_vector.svg');
     background-position: -0.7% 28%;
     background-size: 1230%;
+    z-index: 10;
     background-repeat: no-repeat;
+}
+.btn-container-top .button4:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    height: 90%;
+    transition: 0.2s ease-in-out;
+    transform-origin: top left;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 100.8% 57.5%;
+    background-repeat: no-repeat;
+    background-size: 1250%;
+    z-index: 1;
 }
 .btn-container-top .button5:after {
     background-image: url('../assets/sokoban_vector.svg');
@@ -919,14 +942,74 @@ body,
 
 .btn-container-top .button7:after {
     background-image: url('../assets/sokoban_vector.svg');
-    background-position: 101% 28.6%;
+    background-position: 100.7% 28.6%;
     background-repeat: no-repeat;
     background-size: 1230%;
 }
 
+/*
+.btn-container-top .button7:before {
+    transform-origin: top left;
+    transition: 0.2s ease-in-out;
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    content: '';
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 80%;
+    height: 80%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.9% 86.3%;
+    background-repeat: no-repeat;
+    background-size: 1350%;
+}
+*/
+
+.btn-container-top .button8:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 92.3% 72%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+.btn-container-top .button9:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 83.8% -1.3%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+.btn-container-top .button10:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 101.6%;
+    background-repeat: no-repeat;
+    background-size: 1200%;
+}
 .btn-container-top button:hover:after,
 .btn-container-top button:hover:before {
     scale: 1.2;
+}
+
+.clear-btn {
+    background-image: url('../assets/icon-delete.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 1.2rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.clear-btn:hover,
+.generate-symbol-array:hover {
+    background-color: transparent !important;
+    scale: 1.2;
+    outline: none !important;
+}
+
+.generate-symbol-array {
+    text-indent: -1000px;
+    box-shadow: none !important;
 }
 
 .toolbar div {
@@ -1014,7 +1097,7 @@ body,
 
 .grid-container-editor {
     margin: 2rem;
-    width: 70%;
+    width: 50%;
     min-width: 320px;
     max-height: 90vh;
     outline: 4px solid black;
