@@ -485,7 +485,9 @@ export function MapGenerator() {
         <>
             {/* <div className="map-generator"> */}
             <div className="btn-container-top">
-                <button onClick={handleHelp}>Help</button>
+                <button className="btn-help" onClick={handleHelp}>
+                    Help
+                </button>
                 <button className="generate" onClick={generateMap}>
                     Download Map
                 </button>

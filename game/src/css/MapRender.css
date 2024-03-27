@@ -1001,13 +1001,40 @@ body,
 }
 
 .clear-btn:hover,
-.generate-symbol-array:hover {
+.generate-symbol-array:hover,
+.btn-help:hover,
+.generate:hover {
     background-color: transparent !important;
     scale: 1.2;
     outline: none !important;
 }
 
 .generate-symbol-array {
+    background-image: url('../assets/icon-play.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.generate {
+    background-image: url('../assets/icon-download.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 2rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.btn-help {
+    background-image: url('../assets/icon-info.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 0.6rem;
+    filter: invert(1);
     text-indent: -1000px;
     box-shadow: none !important;
 }
@@ -1104,6 +1131,7 @@ body,
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
+    margin-left: 5rem;
 }
 
 .grid-row-editor {
