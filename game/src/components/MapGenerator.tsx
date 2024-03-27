@@ -7,7 +7,19 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 
-const ITEMS = ['empty', 'wall', 'ground', 'box', 'boxindicator', 'player', 'cracked', 'mined', 'special', 'specialboxed', 'door'];
+const ITEMS = [
+    'empty',
+    'wall',
+    'ground',
+    'box',
+    'boxindicator',
+    'player',
+    'cracked',
+    'mined',
+    'special',
+    'specialboxed',
+    'door',
+];
 
 interface ToolbarProps {
     onItemSelected: (item: string) => void;
@@ -39,8 +51,12 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
     return (
         <div>
             {items.map((item, index) => (
-                <button key={item} onClick={() => onItemSelected(item)}>
-                    {index + 1}. {item}
+                <button
+                    className={'button' + index}
+                    key={item}
+                    onClick={() => onItemSelected(item)}
+                >
+                    <span className="number">{index + 1}</span> <span className="text">{item}</span>
                 </button>
             ))}
         </div>
@@ -111,13 +127,12 @@ function Emptydivs({
                             onMouseOver={(e) => handleGridClick(e, i, j)}
                             onContextMenu={(e) => handleGridClickBack(e, i, j)}
                         >
-                            {item.type === 'specialboxed' && <div className="specialid">{item.id}</div>}
+                            {item.type === 'specialboxed' && (
+                                <div className="specialid">{item.id}</div>
+                            )}
                             {item.type === 'special' && <div className="specialid">{item.id}</div>}
                             {item.type === 'door' && <div className="specialid">{item.id}</div>}
                             {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
-
-
-
                         </div>
                     ))}
                 </div>
@@ -139,7 +154,7 @@ function Emptydivs({
                 <div className="context-menu" style={{ top: contextMenu.y, left: contextMenu.x }}>
                     {items.map((item, index) => (
                         <p key={item} onClick={() => onItemSelected(item)}>
-                            {index + 1}. {item}
+                            <span>{index + 1}</span> {item}
                         </p>
                     ))}
                 </div>
@@ -236,8 +251,6 @@ export function MapGenerator() {
                 door: { symbol: 'D', counter: () => ++doorAmount },
                 cracked: { symbol: 'W' },
                 mined: { symbol: 'M' },
-
-
             };
 
             let symbol = '-';
@@ -315,7 +328,11 @@ export function MapGenerator() {
         if ((isMouseDown && isShiftDown) || e.type === 'click') {
             const newGridItems = [...gridItems];
             // Update the class of the clicked grid item based on the selected item
-            if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
+            if (
+                selectedItem === 'door' ||
+                selectedItem === 'special' ||
+                selectedItem === 'specialboxed'
+            ) {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
                     newGridItems[Number(i)][Number(j)] = { type: selectedItem, id };
@@ -357,7 +374,6 @@ export function MapGenerator() {
     //         setGridItems(newGridItems);
     //     }
     // };
-
 
     // const handleGridClick = (
     //     e: { stopPropagation: () => void; type: string },
@@ -447,12 +463,12 @@ export function MapGenerator() {
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items\n' +
-            '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-            '5. Hold Shift to place/draw multiple items\n' +
-            "6. Click 'Download Map' to download the map\n" +
-            "7. Click 'Test Map' to test the map\n" +
-            "8. Click 'Go Back' to go back to the map editor\n" +
-            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
+                '5. Hold Shift to place/draw multiple items\n' +
+                "6. Click 'Download Map' to download the map\n" +
+                "7. Click 'Test Map' to test the map\n" +
+                "8. Click 'Go Back' to go back to the map editor\n" +
+                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
         );
     };
 
@@ -469,7 +485,9 @@ export function MapGenerator() {
         <>
             {/* <div className="map-generator"> */}
             <div className="btn-container-top">
-                <button onClick={handleHelp}>Help</button>
+                <button className="btn-help" onClick={handleHelp}>
+                    Help
+                </button>
                 <button className="generate" onClick={generateMap}>
                     Download Map
                 </button>

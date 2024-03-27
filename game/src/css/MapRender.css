@@ -760,17 +760,32 @@ body,
 /* Editor */
 .btn-container-top {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 0;
+    left: 0;
+    width: 4rem;
     display: flex;
+    padding-top: 0.5rem;
     flex-direction: column;
-    justify-content: center;
-    align-items: start;
+    justify-content: start;
+    align-items: center;
     gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.5rem);
+    height: 100%;
+
+    scrollbar-width: none;
+}
+
+@media screen and (max-height: 800px) {
+    .btn-container-top {
+        overflow-y: auto;
+    }
 }
 
 .btn-container-top button {
-    background: linear-gradient(rgb(7, 29, 71) 30%, rgb(1, 14, 27) 60%);
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
     border: none;
     border-radius: 0.4rem;
     box-shadow: 0 0.2rem 0 black;
@@ -778,25 +793,250 @@ body,
     font-weight: bold;
     padding: 1rem;
     font-family: Arial;
+    position: relative;
 }
 
-.btn-container-top button:hover {
-    background: white;
+.btn-container-top button .number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: yellow;
+    border-radius: 10rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    z-index: 20;
+}
+
+.btn-container-top button .text {
+    position: absolute;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    padding: 0.5rem 0.6rem;
+    left: 130%;
+    top: 0;
+}
+
+.btn-container-top button:hover,
+.btn-container-top .active {
     color: black;
     cursor: pointer;
+    outline: 2px solid white;
+}
+
+.btn-container-top button:hover .text {
+    display: block;
+}
+
+.btn-container-top button:hover .number {
+    background: yellow;
+    color: black;
 }
 
 .btn-container-top button:disabled {
     background-color: gray;
 }
 
-.toolbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    width: 100%;
+.btn-container-top button:after {
+    display: block;
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    content: '';
+    z-index: 10;
+    overflow: hidden;
+    transform-origin: top left;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-container-top .button1:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 101.6%;
+    background-repeat: no-repeat;
+    background-size: 1200%;
+}
+
+.btn-container-top .button2:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 92.4% 86.6%;
+    background-repeat: no-repeat;
+    background-size: 1250%;
+}
+
+.btn-container-top .button3:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% -1%;
+    background-repeat: no-repeat;
+    background-size: 1290%;
+}
+
+.btn-container-top .button4:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: -0.7% 28%;
+    background-size: 1230%;
+    z-index: 10;
+    background-repeat: no-repeat;
+}
+.btn-container-top .button4:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 90%;
+    height: 90%;
+    transition: 0.2s ease-in-out;
+    transform-origin: top left;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 100.8% 57.5%;
+    background-repeat: no-repeat;
+    background-size: 1250%;
+    z-index: 1;
+}
+.btn-container-top .button5:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 0% 57%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+}
+.btn-container-top .button6:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 101.6%;
+    background-repeat: no-repeat;
+    background-size: 1200%;
+}
+.btn-container-top .button6:before {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    content: '';
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 80%;
+    height: 80%;
+    background-image: url('../assets/cracks.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 50;
+    transition: 0.2s ease-in-out;
+    transform-origin: top left;
+}
+
+.btn-container-top .button7:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 100.7% 28.6%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+
+/*
+.btn-container-top .button7:before {
+    transform-origin: top left;
+    transition: 0.2s ease-in-out;
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    content: '';
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 80%;
+    height: 80%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.9% 86.3%;
+    background-repeat: no-repeat;
+    background-size: 1350%;
+}
+*/
+
+.btn-container-top .button8:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 92.3% 72%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+.btn-container-top .button9:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 83.8% -1.3%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+.btn-container-top .button10:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 101.6%;
+    background-repeat: no-repeat;
+    background-size: 1200%;
+}
+.btn-container-top button:hover:after,
+.btn-container-top button:hover:before {
+    scale: 1.2;
+}
+
+.clear-btn {
+    background-image: url('../assets/icon-delete.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 1.2rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.clear-btn:hover,
+.generate-symbol-array:hover,
+.btn-help:hover,
+.generate:hover {
+    background-color: transparent !important;
+    scale: 1.2;
+    outline: none !important;
+}
+
+.generate-symbol-array {
+    background-image: url('../assets/icon-play.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.generate {
+    background-image: url('../assets/icon-download.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 2rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
+}
+
+.btn-help {
+    background-image: url('../assets/icon-info.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 0.6rem;
+    filter: invert(1);
+    text-indent: -1000px;
+    box-shadow: none !important;
 }
 
 .toolbar div {
@@ -819,7 +1059,6 @@ body,
 }
 
 .toolbar button:hover {
-    background: white;
     color: black;
     cursor: pointer;
 }
@@ -885,13 +1124,14 @@ body,
 
 .grid-container-editor {
     margin: 2rem;
-    width: 70%;
+    width: 50%;
     min-width: 320px;
     max-height: 90vh;
     outline: 4px solid black;
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
+    margin-left: 5rem;
 }
 
 .grid-row-editor {
@@ -906,12 +1146,50 @@ body,
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.grid-item-editor:hover {
+    animation: flash 0.2s ease-in-out forwards;
+    border: 1px solid white;
+    cursor: cell;
+}
+
 .context-menu {
     position: absolute;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.5rem);
+    border-radius: 0.5rem;
+    padding: 0.3rem;
     z-index: 1000;
     width: 200px;
-    box-shadow: 10px 10px 5px grey;
+    max-height: 50vh;
+    overflow-y: auto;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.context-menu p {
+    padding: 0.5rem 0.5rem;
+    line-height: 1.6rem;
+}
+
+.context-menu p span {
+    display: inline-block;
+    background: yellow;
+    color: black;
+    border-radius: 10rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.context-menu p:hover {
+    cursor: pointer;
+    background: rgba(81, 81, 81, 0.5);
+}
+
+.context-menu p:hover span {
+    background: white;
 }
