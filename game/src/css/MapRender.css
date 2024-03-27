@@ -764,18 +764,21 @@ body,
     left: 0;
     width: 4rem;
     display: flex;
+    padding-top: 0.5rem;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 0.5rem;
     background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(0.5rem);
     height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 
 .btn-container-top button {
     width: 3rem;
-    text-indent: -1000px;
+    height: 3rem;
     background-color: transparent;
     border: none;
     border-radius: 0.4rem;
@@ -784,25 +787,93 @@ body,
     font-weight: bold;
     padding: 1rem;
     font-family: Arial;
+    position: relative;
 }
 
-.btn-container-top button:hover {
-    background: white;
+.btn-container-top button .number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: yellow;
+    color: black;
+    border-radius: 10rem;
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: absolute;
+    top: -0.5rem;
+    left: -0.5rem;
+    z-index: 20;
+}
+
+.btn-container-top button .text {
+    position: absolute;
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    padding: 0.5rem 0.6rem;
+    left: 130%;
+    top: 0;
+}
+
+.btn-container-top button:hover,
+.btn-container-top .active {
     color: black;
     cursor: pointer;
+    outline: 2px solid white;
+}
+
+.btn-container-top button:hover .text {
+    display: block;
+}
+
+.btn-container-top button:hover .number {
+    background: white;
 }
 
 .btn-container-top button:disabled {
     background-color: gray;
 }
 
-.toolbar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 2rem;
-    width: 100%;
+.btn-container-top button:after {
+    display: block;
+    position: absolute;
+    width: 90%;
+    height: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    content: '';
+    z-index: 10;
+    overflow: hidden;
+    transform-origin: top left;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-container-top .button1:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 102%;
+    background-repeat: no-repeat;
+    background-size: 1150%;
+}
+
+.btn-container-top .button2:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 92.4% 86.6%;
+    background-repeat: no-repeat;
+    background-size: 1250%;
+}
+
+.btn-container-top button:hover:after {
+    scale: 1.2;
 }
 
 .toolbar div {
@@ -825,7 +896,6 @@ body,
 }
 
 .toolbar button:hover {
-    background: white;
     color: black;
     cursor: pointer;
 }
@@ -927,7 +997,10 @@ body,
     padding: 0.3rem;
     z-index: 1000;
     width: 200px;
+    max-height: 50vh;
+    overflow-y: auto;
     box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+    scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 .context-menu p {

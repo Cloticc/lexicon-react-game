@@ -51,8 +51,12 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
     return (
         <div>
             {items.map((item, index) => (
-                <button key={item} onClick={() => onItemSelected(item)}>
-                    {index + 1}. {item}
+                <button
+                    className={'button' + index}
+                    key={item}
+                    onClick={() => onItemSelected(item)}
+                >
+                    <span className="number">{index + 1}</span> <span className="text">{item}</span>
                 </button>
             ))}
         </div>
