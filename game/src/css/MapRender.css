@@ -760,17 +760,23 @@ body,
 /* Editor */
 .btn-container-top {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: 0;
+    left: 0;
+    width: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     gap: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.5rem);
+    height: 100%;
 }
 
 .btn-container-top button {
-    background: linear-gradient(rgb(7, 29, 71) 30%, rgb(1, 14, 27) 60%);
+    width: 3rem;
+    text-indent: -1000px;
+    background-color: transparent;
     border: none;
     border-radius: 0.4rem;
     box-shadow: 0 0.2rem 0 black;
@@ -906,12 +912,47 @@ body,
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.grid-item-editor:hover {
+    animation: flash 0.2s ease-in-out forwards;
+    border: 1px solid white;
+    cursor: cell;
+}
+
 .context-menu {
     position: absolute;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(0.5rem);
+    border-radius: 0.5rem;
+    padding: 0.3rem;
     z-index: 1000;
     width: 200px;
-    box-shadow: 10px 10px 5px grey;
+    box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.context-menu p {
+    padding: 0.5rem 0.5rem;
+    line-height: 1.6rem;
+}
+
+.context-menu p span {
+    display: inline-block;
+    background: yellow;
+    color: black;
+    border-radius: 10rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    text-align: center;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.context-menu p:hover {
+    cursor: pointer;
+    background: rgba(81, 81, 81, 0.5);
+}
+
+.context-menu p:hover span {
+    background: white;
 }
