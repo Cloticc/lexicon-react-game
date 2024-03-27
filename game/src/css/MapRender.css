@@ -794,8 +794,8 @@ body,
     display: flex;
     justify-content: center;
     align-items: center;
-    background: yellow;
-    color: black;
+    background: black;
+    color: yellow;
     border-radius: 10rem;
     font-size: 0.7rem;
     font-weight: bold;
@@ -836,7 +836,8 @@ body,
 }
 
 .btn-container-top button:hover .number {
-    background: white;
+    background: yellow;
+    color: black;
 }
 
 .btn-container-top button:disabled {
@@ -860,9 +861,9 @@ body,
 
 .btn-container-top .button1:after {
     background-image: url('../assets/sokoban_vector.svg');
-    background-position: 50% 102%;
+    background-position: 50% 101.6%;
     background-repeat: no-repeat;
-    background-size: 1150%;
+    background-size: 1200%;
 }
 
 .btn-container-top .button2:after {
@@ -872,7 +873,59 @@ body,
     background-size: 1250%;
 }
 
-.btn-container-top button:hover:after {
+.btn-container-top .button3:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% -1%;
+    background-repeat: no-repeat;
+    background-size: 1290%;
+}
+
+.btn-container-top .button4:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: -0.7% 28%;
+    background-size: 1230%;
+    background-repeat: no-repeat;
+}
+.btn-container-top .button5:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 0% 57%;
+    background-repeat: no-repeat;
+    background-size: 1490%;
+}
+.btn-container-top .button6:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 50% 101.6%;
+    background-repeat: no-repeat;
+    background-size: 1200%;
+}
+.btn-container-top .button6:before {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    content: '';
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 80%;
+    height: 80%;
+    background-image: url('../assets/cracks.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 50;
+    transition: 0.2s ease-in-out;
+    transform-origin: top left;
+}
+
+.btn-container-top .button7:after {
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 101% 28.6%;
+    background-repeat: no-repeat;
+    background-size: 1230%;
+}
+
+.btn-container-top button:hover:after,
+.btn-container-top button:hover:before {
     scale: 1.2;
 }
 
