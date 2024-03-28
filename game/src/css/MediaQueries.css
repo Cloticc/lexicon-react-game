@@ -1,362 +1,362 @@
 @media screen and (max-width: 1600px) {
-	#settings h1,
-	#highscore h1 {
-		top: -5rem;
-	}
+    #settings h1,
+    #highscore h1 {
+        top: -5rem;
+    }
 }
 @media screen and (max-width: 1240px) {
-	.highest {
-		display: none !important;
-	}
-	.button {
-		width: 4.5rem !important;
-		height: 4.5rem !important;
-		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.8);
-	}
+    .highest {
+        display: none !important;
+    }
+    .button {
+        width: 4.5rem !important;
+        height: 4.5rem !important;
+        box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 0.8rem 0 rgba(0, 0, 0, 0.8);
+    }
 
-	#showlevel {
-		font-size: 3rem;
-		top: 1rem;
-	}
+    #showlevel {
+        font-size: 3rem;
+        top: 1rem;
+    }
 
-	.grid-container {
-		scale: 0.85;
-	}
-	#status {
-		top: 4.5rem;
-	}
+    .grid-container {
+        scale: 0.85;
+    }
+    #status {
+        top: 4.5rem;
+    }
 
-	#btn-settings:after,
-	#btn-fullscreen:after,
-	#btn-sound:after,
-	#btn-replay:after,
-	#btn-solution:after,
-	#btn-start:after,
-	#btn-play:after,
-	#btn-levels:after,
-	#btn-selectlevel:after,
-	#btn-replay-again:after,
-	#btn-nextlevel:after,
-	#btn-undostep:after {
-		background-size: 2.5rem !important;
-	}
+    #btn-settings:after,
+    #btn-fullscreen:after,
+    #btn-sound:after,
+    #btn-replay:after,
+    #btn-solution:after,
+    #btn-start:after,
+    #btn-play:after,
+    #btn-levels:after,
+    #btn-selectlevel:after,
+    #btn-replay-again:after,
+    #btn-nextlevel:after,
+    #btn-undostep:after {
+        background-size: 2.5rem !important;
+    }
 
-	#selectlevel {
-		width: 90vw;
-		padding: 2rem;
-	}
+    #selectlevel {
+        width: 90vw;
+        padding: 2rem;
+    }
 
-	#btn-play,
-	#btn-nextlevel {
-		right: 1.5rem !important;
-		bottom: 1.5rem !important;
-	}
+    #btn-play,
+    #btn-nextlevel {
+        right: 1.5rem !important;
+        bottom: 1.5rem !important;
+    }
 
-	#btn-start,
-	#btn-levels,
-	#btn-replay-again {
-		left: 1.5rem !important;
-		bottom: 1.5rem !important;
-	}
+    #btn-start,
+    #btn-levels,
+    #btn-replay-again {
+        left: 1.5rem !important;
+        bottom: 1.5rem !important;
+    }
 
-	#btn-credits:after {
-		background-size: 0.8rem !important;
-	}
+    #btn-credits:after {
+        background-size: 0.8rem !important;
+    }
 
-	#btn-credits {
-		bottom: 1.5rem !important;
-		left: 8rem !important;
-	}
+    #btn-credits {
+        bottom: 1.5rem !important;
+        left: 8rem !important;
+    }
 
-	#btn-settings {
-		top: 1rem !important;
-		right: 1rem !important;
-	}
-	#btn-undostep {
-		top: 1rem;
-		right: 7rem;
-	}
-	#btn-selectlevel {
-		top: 1rem !important;
-		left: 1rem !important;
-	}
+    #btn-settings {
+        top: 1rem !important;
+        right: 1rem !important;
+    }
+    #btn-undostep {
+        top: 1rem !important;
+        right: 7rem !important;
+    }
+    #btn-selectlevel {
+        top: 1rem !important;
+        left: 1rem !important;
+    }
 
-	#btn-fullscreen {
-		bottom: 1rem !important;
-		right: 1rem !important;
-	}
+    #btn-fullscreen {
+        bottom: 1rem !important;
+        right: 1rem !important;
+    }
 
-	#startplay {
-		width: 4.5rem;
-		height: 4.5rem;
-		padding: 3.5rem;
-	}
-	#selectlevel {
-		padding: 1rem;
-		height: 67vh;
-	}
-	#selectlevel h1,
-	#settings h1,
-	#highscore h1 {
-		font-size: clamp(2rem, 8vw, 4rem) !important;
-		top: -3.5rem !important;
-	}
-	#selectlevel .arrow {
-		width: 4rem;
-		height: 4rem;
-	}
+    #startplay {
+        width: 4.5rem;
+        height: 4.5rem;
+        padding: 3.5rem;
+    }
+    #selectlevel {
+        padding: 1rem;
+        height: 67vh;
+    }
+    #selectlevel h1,
+    #settings h1,
+    #highscore h1 {
+        font-size: clamp(2rem, 8vw, 4rem) !important;
+        top: -3.5rem !important;
+    }
+    #selectlevel .arrow {
+        width: 4rem;
+        height: 4rem;
+    }
 
-	#selectlevel .next {
-		right: -10%;
-	}
+    #selectlevel .next {
+        right: -10%;
+    }
 
-	#selectlevel .prev {
-		left: -10%;
-	}
+    #selectlevel .prev {
+        left: -10%;
+    }
 
-	#selectlevel #menubuttons span {
-		top: -5rem !important;
-		font-size: 1rem;
-	}
+    #selectlevel #menubuttons span {
+        top: -5rem !important;
+        font-size: 1rem;
+    }
 
-	#selectlevel .levels ul {
-		gap: 1rem;
-	}
+    #selectlevel .levels ul {
+        gap: 1rem;
+    }
 
-	#selectlevel .levels {
-		height: calc(100% - 12rem);
-	}
+    #selectlevel .levels {
+        height: calc(100% - 12rem);
+    }
 
-	#selectlevel .levels ul li {
-		font-size: 2rem;
-		height: 100%;
-		min-height: 4rem;
-		align-items: center;
-		padding-bottom: 1rem;
-	}
+    #selectlevel .levels ul li {
+        font-size: 2rem;
+        height: 100%;
+        min-height: 4rem;
+        align-items: center;
+        padding-bottom: 1rem;
+    }
 }
 
 @media screen and (max-height: 890px) {
-	.grid-container {
-		margin-top: 2rem;
-		max-height: calc(100vh - 6rem);
-		max-width: calc(100vh - 6rem);
-	}
-	#showlevel {
-		font-size: 2rem;
-		top: 1rem;
-	}
-	#status {
-		top: 3.5rem;
-	}
-	#status span,
-	#timer,
-	#stepstaken {
-		font-size: 1rem;
-	}
+    .grid-container {
+        margin-top: 2rem;
+        max-height: calc(100vh - 6rem);
+        max-width: calc(100vh - 6rem);
+    }
+    #showlevel {
+        font-size: 2rem;
+        top: 1rem;
+    }
+    #status {
+        top: 3.5rem;
+    }
+    #status span,
+    #timer,
+    #stepstaken {
+        font-size: 1rem;
+    }
 
-	#btn-credit {
-		left: 7rem !important;
-	}
-	#selectlevel #menubuttons span {
-		top: -4rem !important;
-	}
+    #btn-credit {
+        left: 7rem !important;
+    }
+    #selectlevel #menubuttons span {
+        top: -4rem !important;
+    }
 
-	#btn-undostep {
-		top: 11rem !important;
-		right: 3rem !important;
-		z-index: 10;
-	}
+    #btn-undostep {
+        top: 11rem !important;
+        right: 3rem !important;
+        z-index: 10;
+    }
 }
 
 @media screen and (max-height: 890px) and (max-width: 1240px) {
-	#btn-undostep {
-		top: 7rem !important;
-		right: 1rem !important;
-		z-index: 10;
-	}
+    #btn-undostep {
+        top: 7rem !important;
+        right: 1rem !important;
+        z-index: 10;
+    }
 }
 
 @media screen and (max-width: 640px) {
-	.grid-container {
-		width: 100%;
-	}
+    .grid-container {
+        width: 100%;
+    }
 
-	#showlevel {
-		font-size: 2rem !important;
-		top: 1rem !important;
-	}
-	#status {
-		top: 3.5rem !important;
-		width: 10rem !important;
-	}
+    #showlevel {
+        font-size: 2rem !important;
+        top: 1rem !important;
+    }
+    #status {
+        top: 3.5rem !important;
+        width: 10rem !important;
+    }
 
-	#btn-credits {
-		bottom: 1.5rem !important;
-		left: 6rem !important;
-	}
-	#highscore h2 {
-		font-size: 1rem;
-	}
+    #btn-credits {
+        bottom: 1.5rem !important;
+        left: 6rem !important;
+    }
+    #highscore h2 {
+        font-size: 1rem;
+    }
 
-	.showhighscore {
-		width: 100% !important;
-	}
-	#highscore h2:nth-child(2) {
-		font-size: 1.8rem !important;
-		margin-top: 0.5rem !important;
-	}
+    .showhighscore {
+        width: 100% !important;
+    }
+    #highscore h2:nth-child(2) {
+        font-size: 1.8rem !important;
+        margin-top: 0.5rem !important;
+    }
 
-	.showhighscore .result .row {
-		font-size: 1rem !important;
-	}
+    .showhighscore .result .row {
+        font-size: 1rem !important;
+    }
 
-	.showhighscore .row.thead {
-		font-size: 0.7rem !important;
-	}
+    .showhighscore .row.thead {
+        font-size: 0.7rem !important;
+    }
 
-	#timer,
-	#stepstaken,
-	#status span {
-		font-size: 1rem !important;
-	}
-	.button {
-		outline: 2px solid black;
-		width: 3rem !important;
-		height: 3rem !important;
-		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.8) !important;
-	}
+    #timer,
+    #stepstaken,
+    #status span {
+        font-size: 1rem !important;
+    }
+    .button {
+        outline: 2px solid black;
+        width: 3rem !important;
+        height: 3rem !important;
+        box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.3rem 0.8rem 0 rgba(0, 0, 0, 0.8) !important;
+    }
 
-	#copyright {
-		bottom: 1rem !important;
-	}
+    #copyright {
+        bottom: 1rem !important;
+    }
 
-	#btn-credits:after {
-		background-size: 0.7rem !important;
-	}
+    #btn-credits:after {
+        background-size: 0.7rem !important;
+    }
 
-	#btn-undostep {
-		top: 5rem;
-		right: 1rem;
-	}
+    #btn-undostep {
+        top: 5rem !important;
+        right: 1rem !important;
+    }
 
-	#btn-settings:after,
-	#btn-fullscreen:after,
-	#btn-sound:after,
-	#btn-replay:after,
-	#btn-solution:after,
-	#btn-start:after,
-	#btn-play:after,
-	#btn-levels:after,
-	#btn-selectlevel:after,
-	#btn-replay-again:after,
-	#btn-nextlevel:after,
-	#btn-undostep:after {
-		background-size: 2rem !important;
-	}
+    #btn-settings:after,
+    #btn-fullscreen:after,
+    #btn-sound:after,
+    #btn-replay:after,
+    #btn-solution:after,
+    #btn-start:after,
+    #btn-play:after,
+    #btn-levels:after,
+    #btn-selectlevel:after,
+    #btn-replay-again:after,
+    #btn-nextlevel:after,
+    #btn-undostep:after {
+        background-size: 2rem !important;
+    }
 
-	#selectlevel {
-		padding: 1rem !important;
-		width: 94%;
-		height: 74vh !important;
-		top: 0.5rem;
-		min-height: 30rem !important;
-	}
-	#selectlevel .levels {
-		height: calc(100% - 6rem) !important;
-	}
-	#selectlevel #menubuttons span {
-		top: -2rem !important;
-		font-size: 0.9rem !important;
-	}
-	#selectlevel .levels ul {
-		margin-top: 1rem;
-		gap: 1rem;
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-	}
-	#selectlevel .levels ul li {
-		min-height: 2rem !important;
-		height: 100%;
-		outline: 2px solid black;
-		font-size: 1.5rem !important;
-		padding-bottom: 0;
-		box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
-	}
+    #selectlevel {
+        padding: 1rem !important;
+        width: 94%;
+        height: 74vh !important;
+        top: 0.5rem;
+        min-height: 30rem !important;
+    }
+    #selectlevel .levels {
+        height: calc(100% - 6rem) !important;
+    }
+    #selectlevel #menubuttons span {
+        top: -2rem !important;
+        font-size: 0.9rem !important;
+    }
+    #selectlevel .levels ul {
+        margin-top: 1rem;
+        gap: 1rem;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    #selectlevel .levels ul li {
+        min-height: 2rem !important;
+        height: 100%;
+        outline: 2px solid black;
+        font-size: 1.5rem !important;
+        padding-bottom: 0;
+        box-shadow: 0 1px 0 1px white inset, 0 2px 0 1px black, 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.8);
+    }
 
-	#selectlevel .next {
-		right: -4%;
-		top: auto;
-		bottom: 9%;
-		z-index: 10;
-		scale: 0.7;
-	}
-	#selectlevel .prev {
-		right: auto;
-		left: -4%;
-		top: auto;
-		bottom: 9%;
-		z-index: 10;
-		scale: 0.7;
-	}
+    #selectlevel .next {
+        right: -4%;
+        top: auto;
+        bottom: 9%;
+        z-index: 10;
+        scale: 0.7;
+    }
+    #selectlevel .prev {
+        right: auto;
+        left: -4%;
+        top: auto;
+        bottom: 9%;
+        z-index: 10;
+        scale: 0.7;
+    }
 
-	#selectlevel .prev:hover,
-	#selectlevel .next:hover {
-		scale: 1;
-	}
+    #selectlevel .prev:hover,
+    #selectlevel .next:hover {
+        scale: 1;
+    }
 
-	#selectlevel .prev:active,
-	#selectlevel .next:active {
-		scale: 1 !important;
-	}
-	#selectlevel .arrow:active:after {
-		animation: arrowmove 0.5s ease-in infinite alternate;
-	}
+    #selectlevel .prev:active,
+    #selectlevel .next:active {
+        scale: 1 !important;
+    }
+    #selectlevel .arrow:active:after {
+        animation: arrowmove 0.5s ease-in infinite alternate;
+    }
 
-	#credits {
-		padding: 0;
-	}
-	#credits h2 {
-		margin-top: 1rem;
-		font-size: 1.5rem;
-	}
+    #credits {
+        padding: 0;
+    }
+    #credits h2 {
+        margin-top: 1rem;
+        font-size: 1.5rem;
+    }
 
-	#startplay {
-		width: 4rem;
-		height: 4rem;
-	}
-	#startpageui h1 {
-		font-size: clamp(3rem, 18vw, 13rem);
-	}
+    #startplay {
+        width: 4rem;
+        height: 4rem;
+    }
+    #startpageui h1 {
+        font-size: clamp(3rem, 18vw, 13rem);
+    }
 
-	#settings {
-		min-height: auto;
-	}
+    #settings {
+        min-height: auto;
+    }
 
-	#highscore {
-		width: 90%;
-		height: 65vh;
-	}
+    #highscore {
+        width: 90%;
+        height: 65vh;
+    }
 
-	#settings h1,
-	#highscore h1 {
-		font-size: clamp(2.5rem, 7vw, 5rem) !important;
-		top: -2rem !important;
-	}
-	#highscore h2 {
-		margin-top: 0;
-	}
-	#selectlevel h1 {
-		font-size: clamp(2.5rem, 7vw, 5rem) !important;
-		top: -2rem !important;
-	}
+    #settings h1,
+    #highscore h1 {
+        font-size: clamp(2.5rem, 7vw, 5rem) !important;
+        top: -2rem !important;
+    }
+    #highscore h2 {
+        margin-top: 0;
+    }
+    #selectlevel h1 {
+        font-size: clamp(2.5rem, 7vw, 5rem) !important;
+        top: -2rem !important;
+    }
 
-	#credits {
-		scale: 0.7;
-		padding: 0 !important;
-	}
+    #credits {
+        scale: 0.7;
+        padding: 0 !important;
+    }
 
-	#settings {
-		min-height: 15rem;
-		max-height: 15rem;
-	}
+    #settings {
+        min-height: 15rem;
+        max-height: 15rem;
+    }
 }
