@@ -1,6 +1,4 @@
-// import "../css/MapGenerator.css"
-
-// import '../css/MapRender.css';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
@@ -109,6 +107,8 @@ function Emptydivs({
         setContextMenu({ visible: true, x: event.pageX, y: event.pageY });
     };
 
+
+
     return (
         <div
             className="grid-container-editor"
@@ -116,23 +116,19 @@ function Emptydivs({
             onMouseUp={onMouseUp}
             onContextMenu={handleContextMenu}
         >
-            {gridItems.map((row, i) => (
+            {gridItems.map((row: any[], i: number) => (
                 <div key={i} className="grid-row-editor">
-                    {row.map((item, j) => (
+                    {row.map((item: any, j: number) => (
                         <div
                             key={j}
-                            className={`grid-item-editor ${item.type}`}
+                            className={`grid-item-editor ${item.type && item.type !== 'empty' ? (item.type === 'player' ? 'ground player-down playerwalkdown' : 'ground ' + item.type) : item.type}`}
                             data-id={item.id}
                             onClick={(e) => handleGridClick(e, i, j)}
                             onMouseOver={(e) => handleGridClick(e, i, j)}
                             onContextMenu={(e) => handleGridClickBack(e, i, j)}
                         >
-                            {item.type === 'specialboxed' && (
-                                <div className="specialid">{item.id}</div>
-                            )}
                             {item.type === 'special' && <div className="specialid">{item.id}</div>}
                             {item.type === 'door' && <div className="specialid">{item.id}</div>}
-                            {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
                         </div>
                     ))}
                 </div>
@@ -215,7 +211,7 @@ export function MapGenerator() {
         // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
-        let boxIndicator = 0;
+        let boxIndex = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
         let doorAmount = 0;
@@ -244,7 +240,7 @@ export function MapGenerator() {
                 player: { symbol: 'P', counter: () => ++playerAmount },
                 box: { symbol: 'B', counter: () => ++boxAmount },
                 ground: { symbol: ',' },
-                boxindicator: { symbol: 'I', counter: () => ++boxIndicator },
+                boxindicator: { symbol: 'I', counter: () => ++boxIndex },
                 wall: { symbol: '#' },
                 specialboxed: { symbol: 'O', counter: () => ++specialBoxIndicator },
                 special: { symbol: 'S', counter: () => ++specialBoxAmount },
@@ -283,7 +279,7 @@ export function MapGenerator() {
 
         // console.log(boxIndicator, boxAmount);
 
-        if (boxIndicator === 0 || boxIndicator !== boxAmount) {
+        if (boxIndex === 0 || boxIndex !== boxAmount) {
             alert(
                 'You must have the same amount of Box indicators as you have boxes, please fix...'
             );
@@ -330,8 +326,7 @@ export function MapGenerator() {
             // Update the class of the clicked grid item based on the selected item
             if (
                 selectedItem === 'door' ||
-                selectedItem === 'special' ||
-                selectedItem === 'specialboxed'
+                selectedItem === 'special'
             ) {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
@@ -412,11 +407,6 @@ export function MapGenerator() {
         // setGridItems(newGridItems);
     };
 
-    // function toggleGrid(): void {
-    // 	const container = document.querySelector<HTMLDivElement>(".grid-container-editor");
-    // 	container?.classList.toggle("gridless");
-    // }
-
     const generateSymbolArray = () => {
         const symbolArray = gridItems.map((row) =>
             row.map((item) => {
@@ -431,12 +421,12 @@ export function MapGenerator() {
                         return 'B';
                     case 'ground':
                         return ',';
-                    case 'boxIndicator':
+                    case 'boxindicator':
                         return 'I';
                     case 'wall':
                         return '#';
                     case 'specialboxed':
-                        return 'O' + id;
+                        return 'O';
                     case 'special':
                         return 'S' + id;
                     case 'door':
@@ -463,12 +453,12 @@ export function MapGenerator() {
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items\n' +
-                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-                '5. Hold Shift to place/draw multiple items\n' +
-                "6. Click 'Download Map' to download the map\n" +
-                "7. Click 'Test Map' to test the map\n" +
-                "8. Click 'Go Back' to go back to the map editor\n" +
-                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+            '2. Use the toolbar/right click or 1-9Num to select an item\n' +
+            '5. Hold Shift to place/draw multiple items\n' +
+            "6. Click 'Download Map' to download the map\n" +
+            "7. Click 'Test Map' to test the map\n" +
+            "8. Click 'Go Back' to go back to the map editor\n" +
+            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
         );
     };
 
@@ -526,106 +516,3 @@ export function MapGenerator() {
         </>
     );
 }
-
-// const rows = document.querySelectorAll<HTMLDivElement>(".grid-row-editor");
-
-// let playerAmount = 0;
-// let boxAmount = 0;
-// let boxIndicator = 0;
-// rows.forEach((row) => {
-// 	const columns = row.querySelectorAll<HTMLDivElement>(".grid-item-editor");
-// 	const array: string[] = [];
-// 	data.mapdata.push(array);
-// 	columns.forEach((column) => {
-// 		let symbol: string;
-// 		if (column.classList.length <= 1 && column.classList.contains("grid-item-editor")) {
-// 			symbol = "-";
-// 		} else if (column.classList.contains("player")) {
-// 			symbol = "P";
-// 			++playerAmount;
-// 		} else if (column.classList.contains("box")) {
-// 			symbol = "B";
-// 			++boxAmount;
-// 		} else if (column.classList.contains("ground")) {
-// 			symbol = ",";
-// 		} else if (column.classList.contains("boxindicator")) {
-// 			symbol = "I";
-// 			++boxIndicator;
-// 		} else if (column.classList.contains("wall")) {
-// 			symbol = "#";
-// 		}
-// 		array.push(symbol);
-// 	});
-// });
-
-// function handleGridClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
-// 	e.stopPropagation();
-
-// 	const thisEl = e.target as HTMLDivElement;
-// 	if (thisEl.classList.length === 1 && thisEl.classList.contains("grid-item")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("wall");
-// 	} else if (thisEl.classList.contains("wall")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground");
-// 		thisEl.classList.remove("wall");
-// 	} else if (thisEl.classList.contains("ground")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="box"></div>';
-// 		thisEl.classList.add("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.remove("ground");
-// 	} else if (thisEl.classList.contains("boxed")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="boxindicator"></div>';
-// 		thisEl.classList.remove("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("indicator");
-// 	} else if (thisEl.classList.contains("indicator")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="player"></div>';
-// 		thisEl.classList.remove("indicator");
-// 		thisEl.classList.add("player1");
-// 	} else if (thisEl.classList.contains("player1")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("player1");
-// 		thisEl.classList.remove("ground2");
-// 	}
-// }
-
-// function handleGridClickBack(e: React.MouseEvent<HTMLDivElement, MouseEvent>): void {
-// 	e.stopPropagation();
-// 	e.preventDefault();
-// 	const thisEl = e.target as HTMLDivElement;
-// 	if (thisEl.classList.length === 1 && thisEl.classList.contains("grid-item")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("player1");
-// 		thisEl.innerHTML = `<div class="player"></div>`;
-// 	} else if (thisEl.classList.contains("player1")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.add("indicator");
-// 		thisEl.classList.remove("player1");
-// 		thisEl.innerHTML = `<div class="boxindicator"></div>`;
-// 	} else if (thisEl.classList.contains("indicator")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.innerHTML = '<div class="box"></div>';
-// 		thisEl.classList.add("boxed");
-// 		thisEl.classList.add("ground2");
-// 		thisEl.classList.remove("indicator");
-// 	} else if (thisEl.classList.contains("boxed")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("ground");
-// 		thisEl.classList.remove("ground2");
-// 		thisEl.classList.remove("boxed");
-// 		thisEl.classList.add("ground");
-// 	} else if (thisEl.classList.contains("ground")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.add("wall");
-// 		thisEl.classList.remove("ground");
-// 	} else if (thisEl.classList.contains("wall")) {
-// 		thisEl.innerHTML = "";
-// 		thisEl.classList.remove("wall");
-// 	}
-// }
