@@ -50,7 +50,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         if (oldToken) {
             oldToken.classList.remove('token');
         }
-        console.log(level);
+
         if (level % 6 === 0 && level !== 0) {
             var numberFromLevel = undefined;
             var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
