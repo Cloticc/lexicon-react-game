@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MoveChar } from './MoveChar';
 import { MyContext } from '../ContextProvider/ContextProvider';
-import { log } from 'console';
 import { playSound } from './../components/playSound';
 
 //Check if array is an array of arrays
@@ -168,7 +167,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         const isIndicator = indicatorPositions.some((pos) => pos.x === x && pos.y === y);
         const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
 
-        switch (symbol) {
+        switch (symbol[0]) {
             case '-':
                 return 'empty';
             case 'P':
@@ -183,10 +182,22 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 return 'boxindicator';
             case '#':
                 return 'wall';
+            case 'O':
+                return `${boxGroundFloor} specialboxed`;
+            case 'S':
+                return `${boxGroundFloor} special`
+            case 'D':
+                return 'door';
+            case 'W':
+                return 'cracked'
+            case 'M':
+                return `${boxGroundFloor} mined`
             default:
                 return '';
         }
+
     };
+
 
     return (
         <div
