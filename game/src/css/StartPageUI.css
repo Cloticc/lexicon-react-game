@@ -421,7 +421,8 @@
     right: 3rem;
 }
 
-#selectlevel #btn-start:after {
+#selectlevel #btn-start:after,
+#btn-home:after {
     position: absolute;
     top: 0;
     left: 0;
@@ -465,6 +466,12 @@
 
         rgb(3, 101, 198) 60%
     );
+}
+
+#btn-home {
+    position: absolute;
+    top: 11rem;
+    right: 3rem;
 }
 
 #selectlevel h1 {
@@ -656,9 +663,6 @@
     z-index: 80;
 }
 
-#mapEditor:after {
-}
-
 @keyframes animateblock {
     0% {
         transform: translateY(200%);
@@ -837,7 +841,8 @@
     color: white;
 }
 
-#mapEditor:after {
+#mapEditor:after,
+#btn-backtoedit:after {
     display: block;
     content: '';
     position: absolute;
@@ -850,4 +855,10 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 4rem;
+}
+
+#btn-backtoedit {
+    position: absolute;
+    top: 3rem;
+    left: 3rem;
 }

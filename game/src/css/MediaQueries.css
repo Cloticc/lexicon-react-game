@@ -38,7 +38,9 @@
     #btn-replay-again:after,
     #btn-nextlevel:after,
     #btn-undostep:after,
-    #mapEditor:after {
+    #mapEditor:after,
+    #btn-backtoedit:after,
+    #btn-home:after {
         background-size: 2.5rem !important;
     }
 
@@ -73,13 +75,19 @@
         top: 1rem !important;
         right: 1rem !important;
     }
-    #mapEditor {
+    #mapEditor,
+    #btn-backtoedit {
         top: 1rem !important;
         left: 1rem !important;
     }
     #btn-undostep {
         top: 1rem !important;
         right: 7rem !important;
+    }
+
+    #btn-home {
+        top: 7rem !important;
+        right: 1rem !important;
     }
     #btn-selectlevel {
         top: 1rem !important;
@@ -240,7 +248,8 @@
         background-size: 0.7rem !important;
     }
 
-    #btn-undostep {
+    #btn-undostep,
+    #btn-home {
         top: 5rem !important;
         right: 1rem !important;
     }
@@ -257,7 +266,9 @@
     #btn-replay-again:after,
     #btn-nextlevel:after,
     #btn-undostep:after,
-    #mapEditor:after {
+    #mapEditor:after,
+    #btn-backtoedit:after,
+    #btn-home:after {
         background-size: 2rem !important;
     }
 
