@@ -19,6 +19,7 @@ interface MapRenderProps {
 export function MapRender({ initialMapData }: MapRenderProps) {
     const {
         level,
+        setLevel,
         showGameContainer,
         setShowGameContainer,
         setMusic,
@@ -49,6 +50,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         if (oldToken) {
             oldToken.classList.remove('token');
         }
+        console.log(level);
         if (level % 6 === 0 && level !== 0) {
             var numberFromLevel = undefined;
             var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
@@ -82,7 +84,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 }
             }
         }
-    }, [level]);
+    }, [level, setLevel]);
 
     // mount the map
     useEffect(() => {
