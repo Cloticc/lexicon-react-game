@@ -61,10 +61,10 @@ export function MoveChar({
         history,
         setHistory,
         youAreDead,
-        setYouAreDead,        
+        setYouAreDead,
         setYouLost,
-       setPlayerGroundFloor,
-       setBoxGroundFloor
+        setPlayerGroundFloor,
+        setBoxGroundFloor,
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -208,6 +208,11 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
+        // Check if the new position contains a mine
+        if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'M') {
+            youLost();
+            return;
+        }
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
@@ -260,6 +265,11 @@ export function MoveChar({
                     if (checkEmptySpace) {
                         handleDeath();
                         setPlayerGroundFloor('falling');
+                        return;
+                    }
+                    if (newMapData[newPosition.y][newPosition.x] === 'M') {
+                        handleDeath();
+                        return;
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -275,7 +285,7 @@ export function MoveChar({
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
-                            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
