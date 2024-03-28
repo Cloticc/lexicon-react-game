@@ -61,10 +61,11 @@ export function MoveChar({
         history,
         setHistory,
         youAreDead,
-        setYouAreDead,        
+        youLost,
+        setYouAreDead,
         setYouLost,
-       setPlayerGroundFloor,
-       setBoxGroundFloor
+        setPlayerGroundFloor,
+        setBoxGroundFloor,
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -77,7 +78,7 @@ export function MoveChar({
         }, 3000);
     }
 
-    function youLost() {
+    function handleLost() {
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -242,7 +243,7 @@ export function MoveChar({
             setPlayerDirection(direction.toLowerCase());
             setDirection(direction.toLowerCase());
 
-            if (youAreDead) {
+            if (youAreDead || youLost) {
                 return;
             }
 
@@ -275,13 +276,13 @@ export function MoveChar({
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
-                            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                             setBoxGroundFloor('falling');
-                            youLost();
+                            handleLost();
                             return;
                         }
                     } else {

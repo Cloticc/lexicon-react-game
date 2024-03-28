@@ -3,7 +3,9 @@
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { MapRender } from './MapRender';
+import { playSound } from './playSound';
 import { MyContext } from '../ContextProvider/ContextProvider';
+import { SelectPageProps } from './../components/InterfacePages';
 
 const ITEMS = [
     'empty',
@@ -22,6 +24,10 @@ const ITEMS = [
 interface ToolbarProps {
     onItemSelected: (item: string) => void;
 }
+
+function handleMouseOver() {
+    playSound('hover', 0.15);
+}
 // This is the toolbar component that displays the items that can be selected
 function Toolbar({ onItemSelected }: ToolbarProps) {
     const { setContextMenu } = useContext(MyContext);
@@ -34,8 +40,19 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
             if (keyNumber >= 1 && keyNumber <= items.length) {
                 // console.log(`Key ${keyNumber} pressed, selecting item ${items[keyNumber - 1]}`);
                 onItemSelected(items[keyNumber - 1]);
+
+                const allButtons = document.querySelectorAll('.toolbar button');
+                allButtons.forEach((btn, index) => {
+                    btn.classList.remove('active');
+                    if (index === keyNumber - 1) {
+                        btn.classList.add('active');
+                        btn.focus();
+                    }
+                });
+
                 // Hide the context menu
                 setContextMenu({ visible: false, x: 0, y: 0 });
+                playSound('click', 0.25);
             }
         };
 
@@ -45,6 +62,16 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [items, onItemSelected]);
+
+    function handleToolbarClick(e, item) {
+        playSound('click', 0.25);
+        const allButtons = document.querySelectorAll('.toolbar button');
+        allButtons.forEach((btn) => {
+            btn.classList.remove('active');
+        });
+        e.target.classList.add('active');
+        onItemSelected(item);
+    }
     // This is the toolbar component that displays the items that can be selected
     return (
         <div>
@@ -52,7 +79,8 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
                 <button
                     className={'button' + index}
                     key={item}
-                    onClick={() => onItemSelected(item)}
+                    onClick={(e) => handleToolbarClick(e, item)} // Pass 'e' to the function
+                    onMouseOver={handleMouseOver}
                 >
                     <span className="number">{index + 1}</span> <span className="text">{item}</span>
                 </button>
@@ -107,8 +135,6 @@ function Emptydivs({
         setContextMenu({ visible: true, x: event.pageX, y: event.pageY });
     };
 
-
-
     return (
         <div
             className="grid-container-editor"
@@ -121,7 +147,13 @@ function Emptydivs({
                     {row.map((item: any, j: number) => (
                         <div
                             key={j}
-                            className={`grid-item-editor ${item.type && item.type !== 'empty' ? (item.type === 'player' ? 'ground player-down playerwalkdown' : 'ground ' + item.type) : item.type}`}
+                            className={`grid-item-editor ${
+                                item.type && item.type !== 'empty'
+                                    ? item.type === 'player'
+                                        ? 'ground player-down playerwalkdown'
+                                        : 'ground ' + item.type
+                                    : item.type
+                            }`}
                             data-id={item.id}
                             onClick={(e) => handleGridClick(e, i, j)}
                             onMouseOver={(e) => handleGridClick(e, i, j)}
@@ -159,8 +191,8 @@ function Emptydivs({
     );
 }
 
-export function MapGenerator() {
-    const { mapData, setMapData } = useContext(MyContext);
+export function MapGenerator({ onPageChange }: SelectPageProps) {
+    const { mapData, setMapData, setMusic } = useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -324,10 +356,7 @@ export function MapGenerator() {
         if ((isMouseDown && isShiftDown) || e.type === 'click') {
             const newGridItems = [...gridItems];
             // Update the class of the clicked grid item based on the selected item
-            if (
-                selectedItem === 'door' ||
-                selectedItem === 'special'
-            ) {
+            if (selectedItem === 'door' || selectedItem === 'special') {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
                     newGridItems[Number(i)][Number(j)] = { type: selectedItem, id };
@@ -441,24 +470,37 @@ export function MapGenerator() {
             })
         );
 
+        playSound('click', 0.25);
+        playSound('levelstart', 0.25);
+        setMusic('play');
         console.log(symbolArray);
         setMapData(symbolArray);
         setShowMapRender(true);
     };
 
     const goBack = () => {
+        setMusic('ui');
+        playSound('swoosh', 0.25);
+        playSound('click', 0.25);
         setShowMapRender(false);
+    };
+    const goHome = () => {
+        setMusic('ui');
+        playSound('swoosh', 0.25);
+        playSound('click', 0.25);
+        setShowMapRender(false);
+        onPageChange('start');
     };
 
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items\n' +
-            '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-            '5. Hold Shift to place/draw multiple items\n' +
-            "6. Click 'Download Map' to download the map\n" +
-            "7. Click 'Test Map' to test the map\n" +
-            "8. Click 'Go Back' to go back to the map editor\n" +
-            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
+                '5. Hold Shift to place/draw multiple items\n' +
+                "6. Click 'Download Map' to download the map\n" +
+                "7. Click 'Test Map' to test the map\n" +
+                "8. Click 'Go Back' to go back to the map editor\n" +
+                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
         );
     };
 
@@ -466,27 +508,51 @@ export function MapGenerator() {
         <>
             {/* < div className="map-render"> */}
             <MapRender initialMapData={mapData} />
-            <div className="go-back">
-                <button onClick={goBack}>Go Back</button>
-            </div>
+
+            <button
+                className="button"
+                id="btn-backtoedit"
+                onClick={goBack}
+                onMouseOver={handleMouseOver}
+            ></button>
+
+            <button
+                className="button"
+                id="btn-home"
+                onClick={goHome}
+                onMouseOver={handleMouseOver}
+            ></button>
+
             {/* </div> */}
         </>
     ) : (
         <>
             {/* <div className="map-generator"> */}
+            <button
+                className="button"
+                id="btn-home"
+                onClick={goHome}
+                onMouseOver={handleMouseOver}
+            ></button>
             <div className="btn-container-top">
-                <button className="btn-help" onClick={handleHelp}>
-                    Help
-                </button>
-                <button className="generate" onClick={generateMap}>
-                    Download Map
-                </button>
+                <button
+                    className="btn-help"
+                    onClick={handleHelp}
+                    onMouseOver={handleMouseOver}
+                ></button>
+                <button
+                    className="generate"
+                    onClick={generateMap}
+                    onMouseOver={handleMouseOver}
+                ></button>
                 {/* <button className="toggle" onClick={toggleGrid}>
 					Toggle Grid
 				</button> */}
-                <button className="generate-symbol-array" onClick={generateSymbolArray}>
-                    Test Map
-                </button>
+                <button
+                    className="generate-symbol-array"
+                    onClick={generateSymbolArray}
+                    onMouseOver={handleMouseOver}
+                ></button>
                 <div className="toolbar">
                     {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <Toolbar onItemSelected={handleItemSelected as any} />
@@ -494,6 +560,7 @@ export function MapGenerator() {
                 <div>
                     <button
                         className="clear-btn"
+                        onMouseOver={handleMouseOver}
                         onClick={() =>
                             setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')))
                         }
