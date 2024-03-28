@@ -123,9 +123,6 @@ function Emptydivs({
                             onMouseOver={(e) => handleGridClick(e, i, j)}
                             onContextMenu={(e) => handleGridClickBack(e, i, j)}
                         >
-                            {item.type === 'specialboxed' && (
-                                <div className="specialid">{item.id}</div>
-                            )}
                             {item.type === 'special' && <div className="specialid">{item.id}</div>}
                             {item.type === 'door' && <div className="specialid">{item.id}</div>}
                             {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
@@ -326,8 +323,7 @@ export function MapGenerator() {
             // Update the class of the clicked grid item based on the selected item
             if (
                 selectedItem === 'door' ||
-                selectedItem === 'special' ||
-                selectedItem === 'specialboxed'
+                selectedItem === 'special'
             ) {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
@@ -427,7 +423,7 @@ export function MapGenerator() {
                     case 'wall':
                         return '#';
                     case 'specialboxed':
-                        return 'O' + id;
+                        return 'O';
                     case 'special':
                         return 'S' + id;
                     case 'door':
@@ -454,12 +450,12 @@ export function MapGenerator() {
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items\n' +
-                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-                '5. Hold Shift to place/draw multiple items\n' +
-                "6. Click 'Download Map' to download the map\n" +
-                "7. Click 'Test Map' to test the map\n" +
-                "8. Click 'Go Back' to go back to the map editor\n" +
-                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+            '2. Use the toolbar/right click or 1-9Num to select an item\n' +
+            '5. Hold Shift to place/draw multiple items\n' +
+            "6. Click 'Download Map' to download the map\n" +
+            "7. Click 'Test Map' to test the map\n" +
+            "8. Click 'Go Back' to go back to the map editor\n" +
+            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
         );
     };
 
