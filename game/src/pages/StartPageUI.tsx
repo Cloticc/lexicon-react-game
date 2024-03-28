@@ -28,7 +28,12 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
                 <div className="player playerwalkdown"></div>
             </div>
             <div id="startplay" onClick={handleButtonClick} onMouseOver={handleMouseOver}></div>
-            <div id="mapEditor" className="button" onClick={handleButtonClick2}></div>
+            <div
+                id="mapEditor"
+                className="button"
+                onClick={handleButtonClick2}
+                onMouseOver={handleMouseOver}
+            ></div>
         </>
     );
 }
