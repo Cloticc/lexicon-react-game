@@ -37,7 +37,8 @@
     #btn-selectlevel:after,
     #btn-replay-again:after,
     #btn-nextlevel:after,
-    #btn-undostep:after {
+    #btn-undostep:after,
+    #mapEditor:after {
         background-size: 2.5rem !important;
     }
 
@@ -71,6 +72,10 @@
     #btn-settings {
         top: 1rem !important;
         right: 1rem !important;
+    }
+    #mapEditor {
+        top: 1rem !important;
+        left: 1rem !important;
     }
     #btn-undostep {
         top: 1rem !important;
@@ -251,7 +256,8 @@
     #btn-selectlevel:after,
     #btn-replay-again:after,
     #btn-nextlevel:after,
-    #btn-undostep:after {
+    #btn-undostep:after,
+    #mapEditor:after {
         background-size: 2rem !important;
     }
 

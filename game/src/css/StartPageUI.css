@@ -1,479 +1,479 @@
 #startpageui {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	background: linear-gradient(
-		0deg,
-		rgb(0, 20, 86) 16%,
-		rgba(37, 129, 255, 1) 37%,
-		rgba(185, 214, 255, 1) 51%,
-		rgba(37, 129, 255, 1) 66%,
-		rgba(0, 15, 33, 1) 100%
-	);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+        0deg,
+        rgb(0, 20, 86) 16%,
+        rgba(37, 129, 255, 1) 37%,
+        rgba(185, 214, 255, 1) 51%,
+        rgba(37, 129, 255, 1) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
 }
 
 #player {
-	width: 70%;
-	aspect-ratio: 1 / 1;
-	max-width: 30rem;
-	position: relative;
+    width: 70%;
+    aspect-ratio: 1 / 1;
+    max-width: 30rem;
+    position: relative;
 }
 
 #player .player {
-	filter: drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 2px black)
-		drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 0px black);
-	z-index: -1;
-	position: relative;
+    filter: drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 2px black)
+        drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 0px black);
+    z-index: -1;
+    position: relative;
 }
 
 #startpageui h1 {
-	position: absolute;
-	bottom: -1rem;
-	left: 50%;
-	transform: translateX(-50%);
-	color: white;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
 
-	font-size: clamp(2rem, 15vw, 10rem);
-	font-family: "Gajraj One", sans-serif;
+    font-size: clamp(2rem, 15vw, 10rem);
+    font-family: 'Gajraj One', sans-serif;
 
-	color: transparent;
-	background: linear-gradient(
-		0deg,
-		rgb(0, 20, 86) 16%,
-		rgba(37, 129, 255, 1) 37%,
-		rgba(185, 214, 255, 1) 51%,
-		rgba(37, 129, 255, 1) 66%,
-		rgba(0, 15, 33, 1) 100%
-	);
-	background-size: contain;
-	-webkit-background-clip: text;
-	background-clip: text;
+    color: transparent;
+    background: linear-gradient(
+        0deg,
+        rgb(0, 20, 86) 16%,
+        rgba(37, 129, 255, 1) 37%,
+        rgba(185, 214, 255, 1) 51%,
+        rgba(37, 129, 255, 1) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
+    background-size: contain;
+    -webkit-background-clip: text;
+    background-clip: text;
 
-	filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
-		drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
-	animation: bg-shift 0.5s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
+        drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
+    animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
 
 #startpageui #player h1 {
-	-webkit-text-stroke: 1px rgba(246, 246, 246, 0.7);
+    -webkit-text-stroke: 1px rgba(246, 246, 246, 0.7);
 }
 @keyframes bg-shift {
-	0% {
-		background-position: 0 -25px;
-	}
-	100% {
-		background-position: 0 25px;
-	}
+    0% {
+        background-position: 0 -25px;
+    }
+    100% {
+        background-position: 0 25px;
+    }
 }
 #startplay {
-	margin-top: 2rem;
-	content: "";
-	position: relative;
-	width: 5rem;
-	height: 5rem;
-	padding: 4rem;
-	border-radius: 0.8rem;
-	outline: 4px solid black;
-	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(
-		rgb(144, 183, 255) 30%,
+    margin-top: 2rem;
+    content: '';
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+    padding: 4rem;
+    border-radius: 0.8rem;
+    outline: 4px solid black;
+    box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
+    background: linear-gradient(
+        rgb(144, 183, 255) 30%,
 
-		rgb(3, 101, 198) 60%
-	);
+        rgb(3, 101, 198) 60%
+    );
 }
 
 #startplay:after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image: url("../assets/icon-play.svg");
-	background-position: 40% center;
-	background-size: 60%;
-	background-repeat: no-repeat;
-	filter: drop-shadow(0 1px 0px white);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/icon-play.svg');
+    background-position: 40% center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 1px 0px white);
 }
 
 #startplay:hover {
-	scale: 1.08;
-	cursor: pointer;
-	background: linear-gradient(
-		rgb(187, 211, 255) 30%,
+    scale: 1.08;
+    cursor: pointer;
+    background: linear-gradient(
+        rgb(187, 211, 255) 30%,
 
-		rgb(20, 113, 205) 60%
-	) !important;
+        rgb(20, 113, 205) 60%
+    ) !important;
 }
 
 #startplay:before {
-	content: "";
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-radius: 0.8rem;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0.8rem;
 }
 
 #startplay:hover:before {
-	animation: buttonhover 0.4s ease-out 1 forwards;
+    animation: buttonhover 0.4s ease-out 1 forwards;
 }
 
 @keyframes buttonhover {
-	0% {
-		outline: 0px solid black;
-	}
-	100% {
-		outline: 1.5rem solid rgba(0, 0, 0, 0);
-	}
+    0% {
+        outline: 0px solid black;
+    }
+    100% {
+        outline: 1.5rem solid rgba(0, 0, 0, 0);
+    }
 }
 
 @keyframes buttonhover2 {
-	0% {
-		outline: 0px solid yellow;
-	}
-	100% {
-		outline: 1.5rem solid rgba(255, 255, 0, 0);
-	}
+    0% {
+        outline: 0px solid yellow;
+    }
+    100% {
+        outline: 1.5rem solid rgba(255, 255, 0, 0);
+    }
 }
 
 #startplay:active {
-	scale: 0.98;
-	cursor: pointer;
-	box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 3px black, 0 1rem 1rem 0 rgba(0, 0, 0, 0.8);
+    scale: 0.98;
+    cursor: pointer;
+    box-shadow: 0 0.1rem 0 0.1rem white inset, 0 8px 0 3px black, 0 1rem 1rem 0 rgba(0, 0, 0, 0.8);
 }
 
 #copyright {
-	font-size: 0.9rem;
-	position: absolute;
-	bottom: 2rem;
-	color: white;
-	filter: drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    font-size: 0.9rem;
+    position: absolute;
+    bottom: 2rem;
+    color: white;
+    filter: drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
 }
 
 #retrogrid {
-	background-image: url("../assets/retrogrid.svg");
-	background-position: center center;
-	background-size: cover;
-	height: 100vh;
-	width: 100%;
-	position: fixed;
-	bottom: 0;
-	z-index: -2;
-	filter: brightness(4);
+    background-image: url('../assets/retrogrid.svg');
+    background-position: center center;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: -2;
+    filter: brightness(4);
 }
 
 #music {
-	display: none;
+    display: none;
 }
 
 #selectlevel {
-	background: rgba(255, 255, 255, 0.6);
-	backdrop-filter: blur(0.5rem);
-	width: 80vw;
-	max-width: 50rem;
-	padding: 2rem;
-	min-height: 36rem;
-	border-radius: 0.8rem;
-	outline: 3px solid black;
-	box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
-	z-index: 10;
-	position: relative;
-	height: 75vh;
-	border: 2px solid white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	animation: animateblock 0.2s ease-in-out 1 forwards;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(0.5rem);
+    width: 80vw;
+    max-width: 50rem;
+    padding: 2rem;
+    min-height: 36rem;
+    border-radius: 0.8rem;
+    outline: 3px solid black;
+    box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    position: relative;
+    height: 75vh;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: animateblock 0.2s ease-in-out 1 forwards;
 }
 
 #selectlevel .levels {
-	width: 100%;
-	height: calc(100% - 14rem);
+    width: 100%;
+    height: calc(100% - 14rem);
 }
 
 #selectlevel .levels ul {
-	list-style: none;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	grid-gap: 1rem;
-	margin-top: 2rem;
-	justify-content: center;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
 }
 
 #selectlevel .levels ul li {
-	justify-content: center;
+    justify-content: center;
 
-	display: flex;
-	border-radius: 0.4rem;
-	outline: 3px solid black;
-	box-shadow: 0 1px 0 1px white inset, 0 4px 0 3px black, 0 1rem 2rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(
-		rgb(144, 183, 255) 30%,
+    display: flex;
+    border-radius: 0.4rem;
+    outline: 3px solid black;
+    box-shadow: 0 1px 0 1px white inset, 0 4px 0 3px black, 0 1rem 2rem 0 rgba(0, 0, 0, 0.8);
+    background: linear-gradient(
+        rgb(144, 183, 255) 30%,
 
-		rgb(3, 101, 198) 60%
-	);
-	font-weight: 900;
-	font-size: 2.5rem;
-	backdrop-filter: blur(0.5rem);
-	position: relative;
-	padding-bottom: 1.7rem;
+        rgb(3, 101, 198) 60%
+    );
+    font-weight: 900;
+    font-size: 2.5rem;
+    backdrop-filter: blur(0.5rem);
+    position: relative;
+    padding-bottom: 1.7rem;
 
-	z-index: 0;
+    z-index: 0;
 }
 #selectlevel .levels ul li .highest {
-	font-size: 0.8rem;
-	text-transform: uppercase;
-	font-weight: 500;
-	padding: 0.2rem;
-	display: block;
-	width: 100%;
-	background: rgba(1, 22, 46, 0.9);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 0.2rem;
+    display: block;
+    width: 100%;
+    background: rgba(1, 22, 46, 0.9);
 
-	color: white;
-	position: absolute;
-	bottom: 0;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	padding-left: 0.5rem;
-	padding-right: 0.5rem;
-	pointer-events: none;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    pointer-events: none;
 }
 
 .highest .highmoves {
-	float: left;
-	display: inline-block;
-	padding: 0.2rem 0.2rem;
-	align-self: flex-start;
+    float: left;
+    display: inline-block;
+    padding: 0.2rem 0.2rem;
+    align-self: flex-start;
 
-	border-radius: 0.3rem;
-	padding-left: 1rem;
-	position: relative;
+    border-radius: 0.3rem;
+    padding-left: 1rem;
+    position: relative;
 }
 .highest .highmoves:after {
-	position: absolute;
-	display: block;
-	width: 2rem;
-	height: 2rem;
-	left: -0.5rem;
-	top: -0.3rem;
-	content: "";
-	filter: invert(1);
-	background-image: url("../assets/icon-step.svg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 0.5rem;
+    position: absolute;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    left: -0.5rem;
+    top: -0.3rem;
+    content: '';
+    filter: invert(1);
+    background-image: url('../assets/icon-step.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 0.5rem;
 }
 
 .highest .hightime {
-	display: inline-block;
-	margin-left: 0.5rem;
-	padding: 0.2rem 0.2rem;
-	border-radius: 0.2rem;
-	align-self: flex-end;
-	padding-right: 1rem;
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.2rem 0.2rem;
+    border-radius: 0.2rem;
+    align-self: flex-end;
+    padding-right: 1rem;
 }
 
 .highest .hightime:after {
-	position: absolute;
-	display: block;
-	width: 2rem;
-	height: 2rem;
-	right: -0.2rem;
-	top: -0.1rem;
-	content: "";
-	filter: invert(1) contrast(2);
-	background-image: url("../assets/icon-clock.svg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 0.8rem;
+    position: absolute;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    right: -0.2rem;
+    top: -0.1rem;
+    content: '';
+    filter: invert(1) contrast(2);
+    background-image: url('../assets/icon-clock.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 0.8rem;
 }
 
 #selectlevel .levels ul li:before {
-	content: "";
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-radius: 0.4rem;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0.4rem;
 }
 
 #selectlevel .levels ul li:hover {
-	cursor: pointer;
-	scale: 1.1;
-	z-index: 10;
-	background: linear-gradient(0deg, rgba(227, 251, 24, 1) 0%, rgba(255, 255, 255, 1) 100%);
+    cursor: pointer;
+    scale: 1.1;
+    z-index: 10;
+    background: linear-gradient(0deg, rgba(227, 251, 24, 1) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 #selectlevel .levels ul li:active {
-	scale: 0.9;
-	z-index: 10;
+    scale: 0.9;
+    z-index: 10;
 }
 #selectlevel .levels ul li:hover:before {
-	animation: buttonhover2 0.4s ease-out;
+    animation: buttonhover2 0.4s ease-out;
 }
 
 #selectlevel .levels .done {
-	background: gold;
+    background: gold;
 }
 
 #selectlevel .levels .notplayable {
-	opacity: 0.3;
-	filter: grayscale(1);
+    opacity: 0.3;
+    filter: grayscale(1);
 }
 
 #selectlevel .levels .notplayable:hover:before {
-	animation: none;
+    animation: none;
 }
 
 #selectlevel .levels .notplayable:hover {
-	cursor: default;
-	scale: 1;
+    cursor: default;
+    scale: 1;
 }
 #selectlevel #menubuttons {
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	padding: 3rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 3rem;
 }
 
 #selectlevel #btn-play {
-	position: absolute;
-	right: 3rem;
-	bottom: 3rem;
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
 }
 
 #selectlevel #btn-start {
-	position: absolute;
-	left: 3rem;
-	bottom: 3rem;
+    position: absolute;
+    left: 3rem;
+    bottom: 3rem;
 }
 
 #selectlevel #btn-levels {
-	position: absolute;
-	left: 3rem;
-	bottom: 3rem;
+    position: absolute;
+    left: 3rem;
+    bottom: 3rem;
 }
 
 #selectlevel #btn-levels:after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	rotate: 180deg;
-	height: 100%;
-	content: "";
-	filter: drop-shadow(0 -1px 0 white);
-	background-image: url("../assets/icon-play.svg");
-	background-repeat: no-repeat;
-	background-position: 38% center;
-	background-size: 3.5rem;
-	position: absolute;
-	right: 3rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    rotate: 180deg;
+    height: 100%;
+    content: '';
+    filter: drop-shadow(0 -1px 0 white);
+    background-image: url('../assets/icon-play.svg');
+    background-repeat: no-repeat;
+    background-position: 38% center;
+    background-size: 3.5rem;
+    position: absolute;
+    right: 3rem;
 }
 
 #selectlevel #btn-credits {
-	position: absolute;
-	left: 11rem;
-	bottom: 3rem;
+    position: absolute;
+    left: 11rem;
+    bottom: 3rem;
 }
 
 #selectlevel #btn-play:after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	content: "";
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-play.svg");
-	background-repeat: no-repeat;
-	background-position: 38% center;
-	background-size: 3.5rem;
-	position: absolute;
-	right: 3rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-play.svg');
+    background-repeat: no-repeat;
+    background-position: 38% center;
+    background-size: 3.5rem;
+    position: absolute;
+    right: 3rem;
 }
 
 #selectlevel #btn-credits:after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	content: "";
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-info.svg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 1.2rem;
-	position: absolute;
-	right: 3rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-info.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 1.2rem;
+    position: absolute;
+    right: 3rem;
 }
 
 #selectlevel #btn-start:after {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	content: "";
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-home.svg");
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 4rem;
-	position: absolute;
-	right: 3rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-home.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 4rem;
+    position: absolute;
+    right: 3rem;
 }
 
 #selectlevel #menubuttons span {
-	position: absolute;
-	top: -7rem;
-	font-weight: 600;
-	font-size: 1.2rem;
-	left: 50%;
-	transform: translateX(-50%);
-	width: 100%;
-	background: rgba(0, 0, 0, 0.1);
-	padding: 0.5rem;
+    position: absolute;
+    top: -7rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
 }
 
 .button {
-	position: relative;
-	width: 6rem;
-	height: 6rem;
-	border-radius: 0.4rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: none;
-	outline: 4px solid black;
-	box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
-	background: linear-gradient(
-		rgb(144, 183, 255) 30%,
+    position: relative;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: 4px solid black;
+    box-shadow: 0 1px 0 1px white inset, 0 8px 0 4px black, 0 2rem 4rem 0 rgba(0, 0, 0, 0.8);
+    background: linear-gradient(
+        rgb(144, 183, 255) 30%,
 
-		rgb(3, 101, 198) 60%
-	);
+        rgb(3, 101, 198) 60%
+    );
 }
 
 #selectlevel h1 {
-	font-size: clamp(2rem, 10vw, 5rem) !important;
-	white-space: nowrap;
-	bottom: auto;
-	top: -4.2rem;
-	filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
-		drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
+    font-size: clamp(2rem, 10vw, 5rem) !important;
+    white-space: nowrap;
+    bottom: auto;
+    top: -4.2rem;
+    filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
+        drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
 }
 
 /*
@@ -491,356 +491,363 @@
 */
 
 #selectlevel .arrow {
-	border: none;
-	position: absolute;
-	transform: translateY(-50%);
-	width: 6rem;
-	height: 6rem;
-	filter: invert(1) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
-		drop-shadow(0 0 0px black) drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
-	transform-origin: top center;
-	background: transparent;
-	transition: scale 0.2s ease-out;
+    border: none;
+    position: absolute;
+    transform: translateY(-50%);
+    width: 6rem;
+    height: 6rem;
+    filter: invert(1) drop-shadow(0 0 1px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0.5rem 0.5rem rgba(0, 0, 0, 0.5));
+    transform-origin: top center;
+    background: transparent;
+    transition: scale 0.2s ease-out;
 }
 
 #selectlevel .arrow:after {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	content: "";
-	background: url("../assets/icon-arrow.svg");
-	background-repeat: no-repeat;
-	background-size: 70%;
-	background-position: center center;
-	animation: arrowmove 0.5s ease-in infinite alternate;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    background: url('../assets/icon-arrow.svg');
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center center;
+    animation: arrowmove 0.5s ease-in infinite alternate;
 }
 
 @keyframes arrowmove {
-	0% {
-		transform: translateX(0);
-	}
-	100% {
-		transform: translateX(1rem);
-	}
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(1rem);
+    }
 }
 
 #selectlevel .arrow:disabled {
-	display: none;
+    display: none;
 }
 
 #selectlevel .prev {
-	left: -15%;
-	top: 50%;
+    left: -15%;
+    top: 50%;
 }
 
 #selectlevel .next {
-	right: -15%;
-	top: 50%;
+    right: -15%;
+    top: 50%;
 }
 
 #selectlevel .next:after {
-	rotate: 180deg;
+    rotate: 180deg;
 }
 
 .button:before {
-	pointer-events: none;
-	content: "";
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	border-radius: 0.4rem;
+    pointer-events: none;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0.4rem;
 }
 
 #selectlevel .arrow:hover {
-	cursor: pointer;
-	scale: 1.3;
-	z-index: 10;
+    cursor: pointer;
+    scale: 1.3;
+    z-index: 10;
 }
 
 #selectlevel .arrow:hover:after {
-	animation: none;
+    animation: none;
 }
 #selectlevel .arrow:active {
-	cursor: pointer;
-	scale: 1;
-	z-index: 10;
+    cursor: pointer;
+    scale: 1;
+    z-index: 10;
 }
 .button:hover {
-	cursor: pointer;
-	scale: 1.1;
-	z-index: 10;
-	background: linear-gradient(
-		rgb(187, 211, 255) 30%,
+    cursor: pointer;
+    scale: 1.1;
+    z-index: 10;
+    background: linear-gradient(
+        rgb(187, 211, 255) 30%,
 
-		rgb(20, 113, 205) 60%
-	) !important;
+        rgb(20, 113, 205) 60%
+    ) !important;
 }
 
 .button:active {
-	scale: 0.95;
-	box-shadow: 0 1px 0 1px white inset, 0 4px 0 4px black, 0 1rem 1rem 0 rgba(0, 0, 0, 0.8);
+    scale: 0.95;
+    box-shadow: 0 1px 0 1px white inset, 0 4px 0 4px black, 0 1rem 1rem 0 rgba(0, 0, 0, 0.8);
 }
 .button:hover:before {
-	animation: buttonhover 0.4s ease-out;
+    animation: buttonhover 0.4s ease-out;
 }
 
 #credits {
-	padding: 2rem;
+    padding: 2rem;
 }
 
 #credits h2 {
-	margin-top: 2rem;
-	font-family: "Gajraj One", sans-serif;
-	font-size: 2rem;
+    margin-top: 2rem;
+    font-family: 'Gajraj One', sans-serif;
+    font-size: 2rem;
 }
 
 #credits h5,
 #credits a {
-	font-size: 1.2rem;
-	color: black;
+    font-size: 1.2rem;
+    color: black;
 }
 
 #btn-fullscreen {
-	position: absolute;
-	bottom: 3rem;
-	right: 3rem;
-	z-index: 10;
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    z-index: 10;
 }
 
 #btn-fullscreen:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-fullscreen.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-fullscreen.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #settings {
-	background: rgba(255, 255, 255, 0.6);
-	backdrop-filter: blur(0.5rem);
-	width: 80vw;
-	max-width: 50rem;
-	padding: 2rem;
-	border-radius: 0.8rem;
-	outline: 3px solid black;
-	box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
-	z-index: 50;
-	position: fixed;
-	min-height: 20rem;
-	max-height: 40rem;
-	border: 2px solid white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	transform: translateY(-100%);
-	animation: animateblock 0.2s ease-in-out 1 forwards;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(0.5rem);
+    width: 80vw;
+    max-width: 50rem;
+    padding: 2rem;
+    border-radius: 0.8rem;
+    outline: 3px solid black;
+    box-shadow: 0 0.5rem 3px rgba(0, 0, 0, 1), 0 2rem 2rem rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    position: fixed;
+    min-height: 20rem;
+    max-height: 40rem;
+    border: 2px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transform: translateY(-100%);
+    animation: animateblock 0.2s ease-in-out 1 forwards;
+}
+
+#mapEditor {
+    position: absolute;
+    left: 3rem;
+    top: 3rem;
+    z-index: 80;
+}
+
+#mapEditor:after {
 }
 
 @keyframes animateblock {
-	0% {
-		transform: translateY(200%);
-		scale: 1;
-	}
-	100% {
-		transform: translateY(0);
-		scale: 1;
-	}
+    0% {
+        transform: translateY(200%);
+        scale: 1;
+    }
+    100% {
+        transform: translateY(0);
+        scale: 1;
+    }
 }
 
 #settings h1,
 #highscore h1 {
-	position: absolute;
-	top: -5rem;
-	left: 50%;
-	transform: translateX(-50%);
-	color: white;
+    position: absolute;
+    top: -5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
 
-	font-size: clamp(2rem, 10vw, 6rem);
-	font-family: "Gajraj One", sans-serif;
+    font-size: clamp(2rem, 10vw, 6rem);
+    font-family: 'Gajraj One', sans-serif;
 
-	color: transparent;
-	background: linear-gradient(
-		0deg,
-		rgb(0, 20, 86) 16%,
-		rgba(37, 129, 255, 1) 37%,
-		rgba(185, 214, 255, 1) 51%,
-		rgba(37, 129, 255, 1) 66%,
-		rgba(0, 15, 33, 1) 100%
-	);
-	background-size: contain;
-	-webkit-background-clip: text;
-	background-clip: text;
-	/*-webkit-text-stroke: 0.001rem rgb(246, 246, 246);*/
-	filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
-		drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
-	animation: bg-shift 0.5s ease-in-out infinite alternate;
+    color: transparent;
+    background: linear-gradient(
+        0deg,
+        rgb(0, 20, 86) 16%,
+        rgba(37, 129, 255, 1) 37%,
+        rgba(185, 214, 255, 1) 51%,
+        rgba(37, 129, 255, 1) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
+    background-size: contain;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /*-webkit-text-stroke: 0.001rem rgb(246, 246, 246);*/
+    filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0px 0.5rem 0px black)
+        drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
+    animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
 
 #settings .content-container {
-	margin-top: 4rem;
-	display: flex;
-	gap: 2rem;
+    margin-top: 4rem;
+    display: flex;
+    gap: 2rem;
 }
 
 #btn-settings {
-	position: absolute;
-	right: 3rem;
-	top: 3rem;
-	z-index: 80;
+    position: absolute;
+    right: 3rem;
+    top: 3rem;
+    z-index: 80;
 }
 #btn-settings:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 1px 0 white);
-	background-image: url("../assets/icon-settings.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-settings.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #btn-undostep {
-	position: absolute;
-	right: 11rem;
-	top: 3rem;
-	z-index: 10;
+    position: absolute;
+    right: 11rem;
+    top: 3rem;
+    z-index: 10;
 }
 #btn-undostep:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 -1px 0 white);
-	rotate: 180deg;
-	background-image: url("../assets/icon-play.svg");
-	background-position: 43% center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 -1px 0 white);
+    rotate: 180deg;
+    background-image: url('../assets/icon-play.svg');
+    background-position: 43% center;
+    background-repeat: no-repeat;
+    background-size: 3rem;
 }
 
 #darkoverlay {
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	left: 0;
-	top: 0;
-	content: "";
-	display: block;
-	background: rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(1rem);
-	z-index: 20;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    content: '';
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(1rem);
+    z-index: 20;
 }
 
 .content-container {
-	margin-top: 3rem;
+    margin-top: 3rem;
 }
 
 /* Stars */
 
 #space,
 .stars {
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: -100;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -100;
 }
 
 .stars {
-	background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
-		radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
-		radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0)),
-		radial-gradient(2px 2px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
-		radial-gradient(2px 2px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
-		radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0, 0, 0, 0));
-	background-repeat: repeat;
-	background-size: 200px 200px;
-	animation: zoom 20s infinite;
-	opacity: 0;
+    background-image: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0, 0, 0, 0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: zoom 20s infinite;
+    opacity: 0;
 }
 
 .stars:nth-child(1) {
-	background-position: 50% 50%;
-	animation-delay: 0s;
+    background-position: 50% 50%;
+    animation-delay: 0s;
 }
 .stars:nth-child(2) {
-	background-position: 20% 60%;
-	animation-delay: 1s;
+    background-position: 20% 60%;
+    animation-delay: 1s;
 }
 .stars:nth-child(3) {
-	background-position: -20% -30%;
-	animation-delay: 2s;
+    background-position: -20% -30%;
+    animation-delay: 2s;
 }
 .stars:nth-child(4) {
-	background-position: 40% -80%;
-	animation-delay: 3s;
+    background-position: 40% -80%;
+    animation-delay: 3s;
 }
 .stars:nth-child(5) {
-	background-position: -20% 30%;
-	animation-delay: 4s;
+    background-position: -20% 30%;
+    animation-delay: 4s;
 }
 
 @keyframes zoom {
-	0% {
-		opacity: 0;
-		transform: scale(0.5);
-		animation-timing-function: ease-in;
-	}
-	85% {
-		opacity: 1;
-		transform: scale(2.8);
-		animation-timing-function: linear;
-	}
-	100% {
-		opacity: 0;
-		transform: scale(3.5);
-	}
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+        animation-timing-function: ease-in;
+    }
+    85% {
+        opacity: 1;
+        transform: scale(2.8);
+        animation-timing-function: linear;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(3.5);
+    }
 }
 
-
-
-
-#mapEditor{
-	position: absolute;
-	right: 19rem;
-	top: 3rem;
-	z-index: 100;
-	color: white;
+#mapEditor {
+    position: absolute;
+    right: 19rem;
+    top: 3rem;
+    z-index: 100;
+    color: white;
 }
 
 #mapEditor:after {
-	display: block;
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	filter: drop-shadow(0 -1px 0 white);
-	background-image: url("../assets/icon-map.svg");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 3rem;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-editor.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 4rem;
 }
