@@ -185,7 +185,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case 'O':
                 return `${boxGroundFloor} specialboxed`;
             case 'S':
-                return 'special';
+                return `${boxGroundFloor} special`
             case 'D':
                 return 'door';
             case 'W':
