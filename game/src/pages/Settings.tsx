@@ -1,12 +1,11 @@
-import { useContext, useEffect } from 'react'
-
-import { MyContext } from '../ContextProvider/ContextProvider'
-import { playSound } from './../components/playSound'
+import { useContext, useEffect } from 'react';
+import { SelectPageProps } from './../components/InterfacePages';
+import { MyContext } from '../ContextProvider/ContextProvider';
+import { playSound } from './../components/playSound';
 import allMaps from './../maps/maps'
 
-export function Settings() {
+export function Settings({ onPageChange }: SelectPageProps) {
     const {
-        toggleSettings,
         gameRunning,
         setShowGameContainer,
         isMuted,
@@ -19,78 +18,122 @@ export function Settings() {
         resetGame,
         initialPlayerPosition,
         initialBoxPositions,
+        totalToken,
+        setTotalToken,
+        setPlayedMaps,
+        toggleSettings,
         setPlayerDirection,
         level,
-    } = useContext(MyContext)
+    } = useContext(MyContext);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
-                toggleSettings(false)
+                toggleSettings(false);
             }
-        }
+        };
 
-        window.addEventListener('keydown', handleKeyDown)
+        window.addEventListener('keydown', handleKeyDown);
 
         return () => {
-            window.removeEventListener('keydown', handleKeyDown)
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
+    useEffect(() => {
+        const totalTokenLocalStorage = localStorage.getItem('totaltokens');
+        if (totalTokenLocalStorage) {
+            setTotalToken(parseInt(totalTokenLocalStorage));
+        } else {
+            setTotalToken(3);
+            localStorage.setItem('totaltokens', '3');
         }
-    }, [])
+    }, [totalToken]);
 
     function handleMouseOver() {
-        playSound('hover', 0.15)
+        playSound('hover', 0.15);
     }
 
     function handleSoundToggle(): void {
-        playSound('click', 0.25)
+        playSound('click', 0.25);
         if (isMuted) {
-            ;(
-                document.querySelector('#music') as HTMLAudioElement
-            ).volume = 0.15
-            setMuted(false)
+            (document.querySelector('#music') as HTMLAudioElement).volume = 0.15;
+            setMuted(false);
         } else {
-            setMuted(true)
-            ;(document.querySelector('#music') as HTMLAudioElement).volume = 0
+            setMuted(true);
+            (document.querySelector('#music') as HTMLAudioElement).volume = 0;
         }
-        toggleSettings(false)
+        toggleSettings(false);
     }
 
     function handleReplay() {
-        playSound('click', 0.25)
-        playSound('reverse', 0.25)
-        setMapData(initialMapData)
-        setPlayerPosition(initialPlayerPosition)
-        console.log('Initial player Positions: ', initialPlayerPosition)
+        playSound('click', 0.25);
+        playSound('reverse', 0.25);
+        setMapData(initialMapData);
+        setPlayerPosition(initialPlayerPosition);
+        console.log('Initial player Positions: ', initialPlayerPosition);
 
-        setBoxPositions(initialBoxPositions)
-        console.log('Initial Box Positions: ', initialBoxPositions)
+        setBoxPositions(initialBoxPositions);
+        console.log('Initial Box Positions: ', initialBoxPositions);
 
-        resetGame()
-        setMusic('play')
-        toggleSettings(false)
-        setShowGameContainer(false)
+        resetGame();
+        setMusic('play');
+        toggleSettings(false);
+        setShowGameContainer(false);
         setTimeout(() => {
-            setShowGameContainer(true)
-        }, 1)
+            setShowGameContainer(true);
+        }, 1);
     }
 
-    function loadSolution(): void {
-        playSound('click', 0.25)
-        toggleSettings(false)
-        resetGame() 
-        for (let index = 0; index < allMaps[level].solution.length; index++) {
-            const mapData = allMaps[level].solution[index].mapdata
-            const direction = allMaps[level].solution[index].direction
-            setTimeout(() => {
-                setMapData(mapData)
-                setPlayerDirection(direction)
-            }, index * 500)
-            setTimeout(() => {
-                resetGame()
-            }, (allMaps[level].solution.length + 2) * 500)
+    function handleSolution() {
+        if (totalToken > 0) {
+            playSound('click', 0.25);
+            let newTokenAmount = totalToken - 1;
+            if (newTokenAmount < 0) {
+                newTokenAmount = 0;
+            }
+            setTotalToken(newTokenAmount);
+            localStorage.setItem('totaltokens', newTokenAmount.toString());
+            toggleSettings(false)
+            resetGame() 
+            for (let index = 0; index < allMaps[level].solution.length; index++) {
+                const mapData = allMaps[level].solution[index].mapdata
+                const direction = allMaps[level].solution[index].direction
+                setTimeout(() => {
+                    setMapData(mapData)
+                    setPlayerDirection(direction)
+                }, index * 500)
+                setTimeout(() => {
+                    resetGame()
+                }, (allMaps[level].solution.length + 2) * 500)
+            }
+            setMusic('play');
+            playSound('collect');
         }
     }
 
+    function handleCookie() {
+        playSound('click', 0.25);
+        const result = window.confirm(
+            'Are you sure you want to delete all highscore and total tokens and start over again?'
+        );
+        if (result) {
+            // User clicked "OK"
+            localStorage.clear();
+            setShowGameContainer(false);
+            setTimeout(() => {
+                setShowGameContainer(true);
+            }, 1);
+            onPageChange('start');
+            playSound('reverse');
+            setTotalToken(3);
+            toggleSettings(false);
+            setPlayedMaps([]);
+        } else {
+            // User clicked "Cancel"
+            toggleSettings(false);
+        }
+    }
     return (
         <>
             <div id="settings">
@@ -111,15 +154,29 @@ export function Settings() {
                             onMouseOver={handleMouseOver}
                         ></button>
                     )}
+
+                    {gameRunning && (
+                        <div
+                            id="btn-solution"
+                            className={`button ${totalToken <= 0 ? 'disabled' : ''}`}
+                            onClick={handleSolution}
+                            onMouseOver={handleMouseOver}
+                        >
+                            <span className="totaltokens" data-totaltoken={totalToken}>
+                                {totalToken}
+                            </span>
+                        </div>
+                    )}
+
                     <button
-                        id="btn-solution"
+                        id="btn-cookie"
                         className="button"
-                        onClick={loadSolution}
+                        onClick={handleCookie}
                         onMouseOver={handleMouseOver}
                     ></button>
                 </div>
             </div>
             <div id="darkoverlay"></div>
         </>
-    )
+    );
 }
