@@ -183,7 +183,7 @@ export function MoveChar({
     };
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
-        return newMapData[position.y][position.x] === '-';
+        return newMapData[position.y][position.x] === '-' || newMapData[position.y][position.x] === 'M';
     };
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
