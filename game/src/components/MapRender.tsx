@@ -36,13 +36,54 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setInitialBoxPositions,
 		playerDirection,
 		setPlayerDirection,
+		youAreDead,
+		youLost,
+		playerGroundFloor,
+		boxGroundFloor,
 	} = useContext(MyContext);
+
+	const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+
+	useEffect(() => {
+		if (level % 6 === 0 && level !== 0) {
+			var numberFromLevel = undefined;
+			var tokensArray = JSON.parse(localStorage.getItem("tokens") || "[]");
+			if (tokensArray !== undefined) {
+				numberFromLevel = tokensArray && tokensArray.find((token) => token === level);
+			} else {
+				tokensArray = [];
+			}
+			if (numberFromLevel === undefined) {
+				const availablePositions: { x: number; y: number }[] = [];
+
+				// Iterate through the mapData array
+				for (let x = 0; x < mapData.length; x++) {
+					for (let y = 0; y < mapData[x].length; y++) {
+						// Check if the value is ","
+						if (mapData[x][y] === ",") {
+							availablePositions.push({ x, y });
+						}
+					}
+				}
+
+				if (availablePositions.length > 0) {
+					// Randomly select a position from available positions
+					const randomIndex = Math.floor(Math.random() * availablePositions.length);
+					const randomPosition = availablePositions[randomIndex];
+
+					// Set the selected position
+					setSelectedPosition(randomPosition);
+
+					localStorage.setItem("tokens", JSON.stringify(tokensArray));
+				}
+			}
+		}
+	}, [level]);
 
 	// mount the map
 	useEffect(() => {
 		setMapData(initialMapData);
 	}, [setMapData, initialMapData]);
-
 
 	// const [mapData, setMapData] = useState(initialMapData);
 
@@ -52,8 +93,6 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	const playerStartPosition = useRef({ x: 5, y: 6 });
 	const boxStartPositions = useRef<{ x: number; y: number }[]>([]);
 	const IndicatorPositions = useRef<{ x: number; y: number }[]>([]);
-
-
 
 	useEffect(() => {
 		// Calculate playerStartPosition
@@ -98,7 +137,6 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 		setInitialBoxPositions(boxStartPositions.current);
 	}, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
 
-
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
 			if (event.key === "R" || event.key === "r") {
@@ -128,21 +166,32 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 	const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
 		const isIndicator = indicatorPositions.some((pos) => pos.x === x && pos.y === y);
 		const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
-		switch (symbol) {
+
+		switch (symbol[0]) {
 			case "-":
 				return "empty";
 			case "P":
 				return isIndicator
 					? "boxindicator"
-					: `ground player-${playerDirection} playerwalk${playerDirection}`;
+					: `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
 			case "B":
-				return isIndicator && isBox ? "box box-on-indicator" : "box";
+				return isIndicator && isBox ? "box box-on-indicator" : `${boxGroundFloor} box`;
 			case ",":
 				return "ground";
 			case "I":
 				return "boxindicator";
 			case "#":
 				return "wall";
+			case "O":
+				return `${boxGroundFloor} specialboxed`;
+			case "S":
+				return "special";
+			case "D":
+				return "door";
+			case "W":
+				return "cracked";
+			case "M":
+				return "mined";
 			default:
 				return "";
 		}
@@ -175,7 +224,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 						const className = getClassNameForSymbol(column, columnIndex, rowIndex);
 
 						return (
-							<div key={columnIndex} className={`grid-item ${className}`}>
+							<div
+								key={columnIndex}
+								className={`grid-item ${className} ${tokenClass}`}
+							>
 								{className === "boxindicator" && (
 									<div className="boxindicator-container"></div>
 								)}
