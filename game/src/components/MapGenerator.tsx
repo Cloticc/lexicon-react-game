@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { MapRender } from './MapRender';
@@ -105,6 +107,8 @@ function Emptydivs({
         setContextMenu({ visible: true, x: event.pageX, y: event.pageY });
     };
 
+
+
     return (
         <div
             className="grid-container-editor"
@@ -112,9 +116,9 @@ function Emptydivs({
             onMouseUp={onMouseUp}
             onContextMenu={handleContextMenu}
         >
-            {gridItems.map((row, i) => (
+            {gridItems.map((row: any[], i: number) => (
                 <div key={i} className="grid-row-editor">
-                    {row.map((item, j) => (
+                    {row.map((item: any, j: number) => (
                         <div
                             key={j}
                             className={`grid-item-editor ${item.type && item.type !== 'empty' ? (item.type === 'player' ? 'ground player-down playerwalkdown' : 'ground ' + item.type) : item.type}`}
