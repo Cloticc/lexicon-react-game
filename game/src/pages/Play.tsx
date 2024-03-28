@@ -23,6 +23,8 @@ export function Play({ onPageChange }: SelectPageProps) {
         resetGame,
         setHandleHistory,
         gameRunning,
+        setHistory,
+        history,
     } = useContext(MyContext);
 
     useEffect(() => {
@@ -51,6 +53,20 @@ export function Play({ onPageChange }: SelectPageProps) {
         playSound('hover', 0.15);
     }
 
+    const saveSolutionToJson = () => {
+        const Solution = history.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }));
+        const jsonSolution = JSON.stringify(Solution);
+        const blob = new Blob([jsonSolution], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `map${level + 1}.json`;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(a.href);
+    };
     /*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
@@ -76,6 +92,14 @@ export function Play({ onPageChange }: SelectPageProps) {
                     onClick={handleSpacePress}
                 ></button>
             )}
+            {gameRunning && (
+                <button
+                    id="btn-undostep"
+                    className="button"
+                    onMouseOver={handleMouseOver}
+                    onClick={handleSpacePress}
+                ></button>
+            )}
 
             <button
                 id="btn-selectlevel"
@@ -83,6 +107,21 @@ export function Play({ onPageChange }: SelectPageProps) {
                 onMouseOver={handleMouseOver}
                 onClick={handleSelectLevelClick}
             ></button>
+            <button
+                id="btn-selectlevel"
+                className="button"
+                onMouseOver={handleMouseOver}
+                onClick={handleSelectLevelClick}
+            ></button>
+
+            <button
+                id="btn-btn-solution"
+                className="button"
+                onMouseOver={handleMouseOver}
+                onClick={saveSolutionToJson}
+            >
+                Save Solution
+            </button>
 
             <MapRender initialMapData={allMaps[level].mapdata} />
             {wonGame && <Highscore />}

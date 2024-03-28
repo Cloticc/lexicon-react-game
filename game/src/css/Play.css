@@ -20,6 +20,13 @@
     background-size: 3rem;
 }
 
+#btn-btn-solution {
+    position: absolute;
+    left: 3rem;
+    top: 12rem;
+    z-index: 80;
+}
+
 #highscore {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(0.5rem);

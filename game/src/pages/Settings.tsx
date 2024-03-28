@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { SelectPageProps } from './../components/InterfacePages';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { playSound } from './../components/playSound';
+import allMaps from './../maps/maps'
 
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
@@ -21,6 +22,8 @@ export function Settings({ onPageChange }: SelectPageProps) {
         setTotalToken,
         setPlayedMaps,
         toggleSettings,
+        setPlayerDirection,
+        level,
     } = useContext(MyContext);
 
     useEffect(() => {
@@ -91,10 +94,21 @@ export function Settings({ onPageChange }: SelectPageProps) {
             }
             setTotalToken(newTokenAmount);
             localStorage.setItem('totaltokens', newTokenAmount.toString());
-
+            toggleSettings(false)
+            resetGame() 
+            for (let index = 0; index < allMaps[level].solution.length; index++) {
+                const mapData = allMaps[level].solution[index].mapdata
+                const direction = allMaps[level].solution[index].direction
+                setTimeout(() => {
+                    setMapData(mapData)
+                    setPlayerDirection(direction)
+                }, index * 500)
+                setTimeout(() => {
+                    resetGame()
+                }, (allMaps[level].solution.length + 2) * 500)
+            }
             setMusic('play');
             playSound('collect');
-            toggleSettings(false);
         }
     }
 
