@@ -20,6 +20,7 @@ export function Play({ onPageChange }: SelectPageProps) {
         setShowGameContainer,
         resetGame,
         setHandleHistory,
+        setHistory,
         gameRunning,
         history,
     } = useContext(MyContext)
@@ -51,25 +52,19 @@ export function Play({ onPageChange }: SelectPageProps) {
     }
 
     const saveSolutionToJson = () => {
-        const jsonSolution = JSON.stringify(history)
+        const Solution = history.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }))
+        const jsonSolution = JSON.stringify(Solution)
         const blob = new Blob([jsonSolution], { type: 'application/json' })
-        console.log(history)
-
-        // Create a temporary anchor element to trigger the download
         const a = document.createElement('a')
         a.href = URL.createObjectURL(blob)
-
-        // Set the filename based on the current level
-        a.download = `level_${level+1}_solution.json`
-
-        // Trigger the download
+        a.download = `map${level + 1}.json`
         a.click()
-
-        // Release the object URL
         a.remove()
         window.URL.revokeObjectURL(a.href)
     }
-
     /*
 	// Can remove this useEffect. It's just to show the highscore element after 3 seconds
 	useEffect(() => {
