@@ -117,7 +117,7 @@ function Emptydivs({
                     {row.map((item, j) => (
                         <div
                             key={j}
-                            className={`grid-item-editor ${item.type}`}
+                            className={`grid-item-editor ${item.type && item.type !== 'empty' ? (item.type === 'player' ? 'ground player-down playerwalkdown' : 'ground ' + item.type) : item.type}`}
                             data-id={item.id}
                             onClick={(e) => handleGridClick(e, i, j)}
                             onMouseOver={(e) => handleGridClick(e, i, j)}
@@ -125,7 +125,6 @@ function Emptydivs({
                         >
                             {item.type === 'special' && <div className="specialid">{item.id}</div>}
                             {item.type === 'door' && <div className="specialid">{item.id}</div>}
-                            {/* {item.type === 'ground2' && <div className="boxindicator">{item.id}</div>} */}
                         </div>
                     ))}
                 </div>
