@@ -191,7 +191,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case 'W':
                 return 'cracked'
             case 'M':
-                return 'mined'
+                return `${boxGroundFloor} mined`
             default:
                 return '';
         }
