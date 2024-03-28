@@ -45,6 +45,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
 
     useEffect(() => {
+        let oldToken = document.querySelector('.token');
+        if (oldToken) {
+            oldToken.classList.remove('token');
+        }
         if (level % 6 === 0 && level !== 0) {
             var numberFromLevel = undefined;
             var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
@@ -185,19 +189,17 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case 'O':
                 return `${boxGroundFloor} specialboxed`;
             case 'S':
-                return `${boxGroundFloor} special`
+                return `${boxGroundFloor} special`;
             case 'D':
                 return 'door';
             case 'W':
-                return 'cracked'
+                return 'cracked';
             case 'M':
-                return `${boxGroundFloor} mined`
+                return `${boxGroundFloor} mined`;
             default:
                 return '';
         }
-
     };
-
 
     return (
         <div
