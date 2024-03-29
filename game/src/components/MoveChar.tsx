@@ -1,7 +1,8 @@
+import { MyContext, TokensMap } from '../ContextProvider/ContextProvider';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import HighScore from './highscore';
-import { MyContext } from '../ContextProvider/ContextProvider';
+import { log } from 'console';
 import { playSound } from '../components/playSound';
 
 interface MoveCharProps {
@@ -68,6 +69,8 @@ export function MoveChar({
         setBoxGroundFloor,
         selectedPosition,
         setSelectedPosition,
+        collectedTokens,
+        setCollectedTokens,
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -185,14 +188,17 @@ export function MoveChar({
 
 
     useEffect(() => {
+        // Check if the level is a multiple of 6
         if (level % 6 === 0 && level !== 0) {
-            console.log('level', level);
-            
+            // if (level !== 0) {
             // Check if a token already exists on the map
             const tokenExists = mapData.some(row => row.includes('T'));
 
-            // If a token doesn't exist, place a new one
-            if (!tokenExists) {
+            // Check if the user has already collected a token from this level
+            // const tokenCollected = collectedTokens[level];
+            const tokenCollected = collectedTokens[Number(level + 1)];
+            // If a token doesn't exist and hasn't been collected, place a new one
+            if (!tokenExists && !tokenCollected) {
                 // Find all available positions on the map where a token can be placed
                 const availablePositions = mapData.flatMap((row, x) =>
                     row.map((column, y) => column === ',' ? { x, y } : null)
@@ -204,8 +210,31 @@ export function MoveChar({
                 }
             }
         }
+    }, [level, mapData, collectedTokens]);
+
+
+    // Load the collectedTokens from localStorage when the component mounts
+    useEffect(() => {
+        const storedTokens = localStorage.getItem('collectedTokens');
+        if (storedTokens) {
+            console.log(`storedTokens: ${storedTokens}`);
+
+            setCollectedTokens(JSON.parse(storedTokens));
+        }
     }, []);
 
+    // Save the collectedTokens to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
+    }, [collectedTokens]);
+
+    // Define a function that updates the collectedTokens state
+    const updateCollectedTokens = (level: number) => {
+        const updatedTokens = { ...collectedTokens };
+        const currentLevelTokens = updatedTokens[level] || 0;
+        updatedTokens[level + 1] = currentLevelTokens + 1;
+        setCollectedTokens(updatedTokens);
+    };
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
@@ -224,14 +253,16 @@ export function MoveChar({
         return newMapData[position.y][position.x] === '-';
     };
 
-    const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
-        // Check if the new player position matches the token position
-        if (newMapData[newPosition.y][newPosition.x] === 'T') {
-            playSound('collect', 0.5);
-            // If it does, remove the token
-            newMapData[newPosition.y][newPosition.x] = ','; // Replace the token with an empty space
-        }
 
+    const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
+        // Check if the new player position has a token
+        if (newMapData[newPosition.y][newPosition.x] === 'T') {
+            // If it does, remove the token
+            newMapData[newPosition.y][newPosition.x] = ',';
+
+            // Update the collectedTokens state
+            updateCollectedTokens(Number(level));
+        }
 
         if (
             indicatorPositions.some(
