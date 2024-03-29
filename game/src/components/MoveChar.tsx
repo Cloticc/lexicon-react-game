@@ -68,7 +68,12 @@ export function MoveChar({
         setBoxGroundFloor,
     } = useContext(MyContext);
 
-    function handleDeath() {
+    function handleDeath(string: string | undefined | null) {
+        if (string === undefined || string === null || string === '') {
+        } else if (string === 'mine') {
+            playSound('mine', 0.8);
+        }
+
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -78,7 +83,12 @@ export function MoveChar({
         }, 3000);
     }
 
-    function handleLost() {
+    function handleLost(string: string | undefined | null) {
+        if (string === undefined || string === null || string === '') {
+        } else if (string === 'boxexplode') {
+            playSound('boxexplode', 0.8);
+        }
+
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
@@ -183,7 +193,11 @@ export function MoveChar({
     };
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
-        return newMapData[position.y][position.x] === '-' || newMapData[position.y][position.x] === 'M';
+        return newMapData[position.y][position.x] === '-';
+    };
+
+    const isMine = (newMapData: string[][], position: { x: number; y: number }) => {
+        return newMapData[position.y][position.x] === 'M';
     };
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
@@ -257,10 +271,16 @@ export function MoveChar({
 
                 if (isNotWall(newMapData, newPosition)) {
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
+                    const checkMine = isMine(newMapData, newPosition);
 
                     if (checkEmptySpace) {
                         handleDeath();
                         setPlayerGroundFloor('falling');
+                    }
+
+                    if (checkMine) {
+                        handleDeath('mine');
+                        setPlayerGroundFloor('explode');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -283,6 +303,11 @@ export function MoveChar({
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                             setBoxGroundFloor('falling');
                             handleLost();
+                            return;
+                        } else if (isMine(newMapData, beyondBoxPosition)) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            setBoxGroundFloor('explode');
+                            handleLost('boxexplode');
                             return;
                         }
                     } else {
