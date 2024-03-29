@@ -498,11 +498,11 @@ body,
     display: block;
     content: '';
     position: absolute;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-25%) translateY(-25%);
     background-image: url('../assets/pixelexplosiononce.gif');
     background-size: cover;
-    width: 150%;
-    height: 150%;
+    width: 200%;
+    height: 200%;
     z-index: 10;
     animation: explode 1s 1 forwards;
 }
