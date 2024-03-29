@@ -41,9 +41,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         youLost,
         playerGroundFloor,
         boxGroundFloor,
+        selectedPosition,
+        setSelectedPosition,
     } = useContext(MyContext);
 
-    const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+    // const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
 
     useEffect(() => {
         let oldToken = document.querySelector('.token');
@@ -198,6 +200,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 return 'cracked';
             case 'M':
                 return `${boxGroundFloor} mined`;
+            case 'T':
+                return `${boxGroundFloor} token`;
             default:
                 return '';
         }
@@ -228,16 +232,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 <div key={rowIndex} className="grid-row">
                     {row.map((column: string, columnIndex: number) => {
                         const className = getClassNameForSymbol(column, columnIndex, rowIndex);
-                        const isTokenCell =
-                            selectedPosition &&
-                            selectedPosition.x === rowIndex &&
-                            selectedPosition.y === columnIndex;
-                        const tokenClass = isTokenCell ? 'token' : '';
+                        // const tokenClass = column === 'T' ? 'token' : '';
 
                         return (
                             <div
                                 key={columnIndex}
-                                className={`grid-item ${className} ${tokenClass}`}
+                                className={`grid-item ${className}`}
                             >
                                 {className === 'boxindicator' && (
                                     <div className="boxindicator-container"></div>

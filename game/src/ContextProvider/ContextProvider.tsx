@@ -81,6 +81,8 @@ interface GameContextProps {
     setPlayerGroundFloor: (groundFloor: string) => void;
     boxGroundFloor: string;
     setBoxGroundFloor: (boxGroundFloor: string) => void;
+    selectedPosition: { x: number; y: number } | null;
+    setSelectedPosition: (selectedPosition: { x: number; y: number } | null) => void;
 }
 
 interface ChildrenProps {
@@ -126,7 +128,9 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [totalToken, setTotalToken] = useState<number>(0);
     const [playerGroundFloor, setPlayerGroundFloor] = useState('ground');
     const [boxGroundFloor, setBoxGroundFloor] = useState('ground');
-    
+    const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+
+
     const resetGame = () => {
         setCounter(0);
         setElapsedTime(0);
@@ -202,6 +206,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setPlayerGroundFloor: setPlayerGroundFloor,
         boxGroundFloor: boxGroundFloor,
         setBoxGroundFloor: setBoxGroundFloor,
+        selectedPosition: selectedPosition,
+        setSelectedPosition: setSelectedPosition,
     };
 
     return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

@@ -66,6 +66,8 @@ export function MoveChar({
         setYouLost,
         setPlayerGroundFloor,
         setBoxGroundFloor,
+        selectedPosition,
+        setSelectedPosition,
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -169,6 +171,42 @@ export function MoveChar({
         setWonGame(true);
     }, []);
 
+
+
+    // Define the placeToken function
+    const placeToken = (position: { x: number; y: number }) => {
+        // Create a copy of the mapData array
+        const newMapData = [...mapData];
+        // Replace the selected position with a token
+        newMapData[position.x][position.y] = 'T'; // 'T' represents a token
+        // Update the mapData state
+        setMapData(newMapData);
+    };
+
+
+    useEffect(() => {
+        if (level % 6 === 0 && level !== 0) {
+            console.log('level', level);
+            
+            // Check if a token already exists on the map
+            const tokenExists = mapData.some(row => row.includes('T'));
+
+            // If a token doesn't exist, place a new one
+            if (!tokenExists) {
+                // Find all available positions on the map where a token can be placed
+                const availablePositions = mapData.flatMap((row, x) =>
+                    row.map((column, y) => column === ',' ? { x, y } : null)
+                ).filter(Boolean) as { x: number; y: number }[];
+
+                if (availablePositions.length > 0) {
+                    const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
+                    placeToken(randomPosition);
+                }
+            }
+        }
+    }, []);
+
+
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
             position.x >= 0 &&
@@ -187,6 +225,14 @@ export function MoveChar({
     };
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
+        // Check if the new player position matches the token position
+        if (newMapData[newPosition.y][newPosition.x] === 'T') {
+            playSound('collect', 0.5);
+            // If it does, remove the token
+            newMapData[newPosition.y][newPosition.x] = ','; // Replace the token with an empty space
+        }
+
+
         if (
             indicatorPositions.some(
                 (pos) => pos.x === playerPosition.x && pos.y === playerPosition.y

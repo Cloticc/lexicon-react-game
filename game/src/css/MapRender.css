@@ -759,7 +759,40 @@ body,
     }
 }
 
-.token:after {
+.token {
+    position: relative;
+}
+
+/* .token::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91% 85%; 
+    background-repeat: no-repeat;
+    background-size: 1660%;
+    z-index: 1;
+} */
+
+.token::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 83% 71%; 
+    background-repeat: no-repeat;
+    background-size: 1590%;
+    z-index: 2;
+}
+
+
+/* .token:after {
     display: block;
     width: 100%;
     height: 100%;
@@ -771,7 +804,7 @@ body,
     background-position: 83% 71%;
     background-repeat: no-repeat;
     background-size: 1590%;
-}
+} */
 
 /* end new map stuff */
 
