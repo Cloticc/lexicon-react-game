@@ -504,7 +504,7 @@ body,
     width: 200%;
     height: 200%;
     z-index: 10;
-    animation: explode 1s 1 forwards;
+    animation: explode 0.8s 1 forwards;
 }
 
 @keyframes explode {
@@ -528,6 +528,44 @@ body,
     }
     100% {
         scale: 0;
+    }
+}
+
+.drill {
+    filter: brightness(1);
+    animation: drillanimation 1s 1 forwards !important;
+}
+
+@keyframes drillanimation {
+    0% {
+        filter: brightness(2);
+    }
+    5% {
+        filter: brightness(1);
+    }
+    10% {
+        filter: brightness(3);
+    }
+    15% {
+        filter: brightness(1);
+    }
+    20% {
+        filter: brightness(2);
+    }
+    25% {
+        filter: brightness(1);
+    }
+    30% {
+        filter: brightness(3);
+    }
+    35% {
+        filter: brightness(1);
+    }
+    40% {
+        filter: brightness(2);
+    }
+    100% {
+        filter: brightness(1);
     }
 }
 

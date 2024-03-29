@@ -41,6 +41,8 @@ export function MoveChar({
 
     //Reduce the number of useContext calls by destructuring the values from the context
     const {
+        disableControls,
+        setDisableControls,
         counter,
         setCounter,
         elapsedTime,
@@ -73,12 +75,13 @@ export function MoveChar({
         } else if (string === 'mine') {
             playSound('mine', 0.8);
         }
-
+        setDisableControls(true);
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
         setTimeout(() => {
             setYouAreDead(false);
+            setDisableControls(false);
             resetGame();
         }, 3000);
     }
@@ -88,12 +91,13 @@ export function MoveChar({
         } else if (string === 'boxexplode') {
             playSound('boxexplode', 0.8);
         }
-
+        setDisableControls(true);
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
         setTimeout(() => {
             setYouLost(false);
+            setDisableControls(false);
             resetGame();
         }, 3000);
     }
@@ -171,6 +175,7 @@ export function MoveChar({
         setStartTime(new Date());
         setGameRunning(true);
         setWonGame(false);
+        setDisableControls(false);
     }, []);
 
     const stopGame = useCallback(() => {
@@ -198,6 +203,10 @@ export function MoveChar({
 
     const isMine = (newMapData: string[][], position: { x: number; y: number }) => {
         return newMapData[position.y][position.x] === 'M';
+    };
+
+    const isCrackedWall = (newMapData: string[][], position: { x: number; y: number }) => {
+        return newMapData[position.y][position.x] === 'W';
     };
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
@@ -272,6 +281,7 @@ export function MoveChar({
                 if (isNotWall(newMapData, newPosition)) {
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
                     const checkMine = isMine(newMapData, newPosition);
+                    const checkCrackedWall = isCrackedWall(newMapData, newPosition);
 
                     if (checkEmptySpace) {
                         handleDeath();
@@ -311,7 +321,16 @@ export function MoveChar({
                             return;
                         }
                     } else {
-                        movePlayer(newMapData, newPosition);
+                        if (checkCrackedWall) {
+                            setDisableControls(true);
+                            playSound('drill');
+                            setTimeout(() => {
+                                movePlayer(newMapData, newPosition);
+                                setDisableControls(false);
+                            }, 1050);
+                        } else {
+                            movePlayer(newMapData, newPosition);
+                        }
                     }
 
                     if (!gameRunning && counter === 0) {
@@ -338,29 +357,31 @@ export function MoveChar({
     );
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            switch (event.key.toUpperCase()) {
-                case 'ARROWUP':
-                case 'W':
-                    handlePlayerMove('UP');
-                    break;
-                case 'ARROWDOWN':
-                case 'S':
-                    handlePlayerMove('DOWN');
-                    break;
-                case 'ARROWLEFT':
-                case 'A':
-                    handlePlayerMove('LEFT');
-                    break;
-                case 'ARROWRIGHT':
-                case 'D':
-                    handlePlayerMove('RIGHT');
-                    break;
-                case ' ':
-                    handleHistoryUndo();
-                    setHandleHistory(false);
-                    break;
-                default:
-                    break;
+            if (!disableControls) {
+                switch (event.key.toUpperCase()) {
+                    case 'ARROWUP':
+                    case 'W':
+                        handlePlayerMove('UP');
+                        break;
+                    case 'ARROWDOWN':
+                    case 'S':
+                        handlePlayerMove('DOWN');
+                        break;
+                    case 'ARROWLEFT':
+                    case 'A':
+                        handlePlayerMove('LEFT');
+                        break;
+                    case 'ARROWRIGHT':
+                    case 'D':
+                        handlePlayerMove('RIGHT');
+                        break;
+                    case ' ':
+                        handleHistoryUndo();
+                        setHandleHistory(false);
+                        break;
+                    default:
+                        break;
+                }
             }
         };
 
@@ -431,6 +452,7 @@ export function MoveChar({
         if (allIndicatorsCovered && gameRunning) {
             stopGame();
             setWonGame(true);
+
             setLevelCompleted(true);
             setCurrentLevel(level.toString());
         }

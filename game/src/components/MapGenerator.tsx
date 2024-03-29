@@ -198,6 +198,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     const [isShiftDown, setIsShiftDown] = useState(false);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [showMapRender, setShowMapRender] = useState(false);
+
+    const { setDisableControls } = useContext(MyContext);
+
     // const [mapData, setMapData] = useState<string[][]>([]);
     const [gridItems, setGridItems] = useState(
         Array.from({ length: 10 }, () => new Array(10).fill(''))
@@ -470,6 +473,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             })
         );
 
+        setDisableControls(false);
         playSound('click', 0.25);
         playSound('levelstart', 0.25);
         setMusic('play');
