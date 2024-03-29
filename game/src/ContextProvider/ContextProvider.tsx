@@ -19,6 +19,7 @@ interface HistoryState {
 }
 
 interface GameContextProps {
+    disableControls: boolean;
     totalToken: number;
     setTotalToken: (totalToken: number) => void;
     playedMaps: { mapId: number; score: number; elapsedTime: number }[];
@@ -90,6 +91,7 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [disableControls, setDisableControls] = useState<boolean>(false);
     const [youAreDead, setYouAreDead] = useState<boolean>(false);
     const [youLost, setYouLost] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -126,7 +128,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [totalToken, setTotalToken] = useState<number>(0);
     const [playerGroundFloor, setPlayerGroundFloor] = useState('ground');
     const [boxGroundFloor, setBoxGroundFloor] = useState('ground');
-    
+
     const resetGame = () => {
         setCounter(0);
         setElapsedTime(0);
@@ -144,6 +146,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
+        disableControls: disableControls,
+        setDisableControls: setDisableControls,
         playedMaps: playedMaps,
         setPlayedMaps: setPlayedMaps,
         totalToken: totalToken,
