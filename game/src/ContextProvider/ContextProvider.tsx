@@ -20,6 +20,7 @@ interface HistoryState {
 
 interface GameContextProps {
     disableControls: boolean;
+    setDisableControls: (disableControls: boolean) => void;
     totalToken: number;
     setTotalToken: (totalToken: number) => void;
     playedMaps: { mapId: number; score: number; elapsedTime: number }[];
