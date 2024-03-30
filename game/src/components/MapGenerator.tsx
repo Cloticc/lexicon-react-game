@@ -199,7 +199,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [showMapRender, setShowMapRender] = useState(false);
 
-    const { setDisableControls } = useContext(MyContext);
+    const { setDisableControls, setGameReady } = useContext(MyContext);
 
     // const [mapData, setMapData] = useState<string[][]>([]);
     const [gridItems, setGridItems] = useState(
@@ -480,6 +480,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         console.log(symbolArray);
         setMapData(symbolArray);
         setShowMapRender(true);
+        setGameReady(true);
     };
 
     const goBack = () => {
@@ -487,6 +488,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
+        setGameReady(false);
     };
     const goHome = () => {
         setMusic('ui');

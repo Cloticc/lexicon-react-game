@@ -19,6 +19,8 @@ interface HistoryState {
 }
 
 interface GameContextProps {
+    gameReady: boolean;
+    setGameReady: (gameReady: boolean) => void;
     disableControls: boolean;
     setDisableControls: (disableControls: boolean) => void;
     totalToken: number;
@@ -92,6 +94,7 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [gameReady, setGameReady] = useState<boolean>(false);
     const [disableControls, setDisableControls] = useState<boolean>(false);
     const [youAreDead, setYouAreDead] = useState<boolean>(false);
     const [youLost, setYouLost] = useState<boolean>(false);
@@ -147,6 +150,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
+        gameReady: gameReady,
+        setGameReady: setGameReady,
         disableControls: disableControls,
         setDisableControls: setDisableControls,
         playedMaps: playedMaps,

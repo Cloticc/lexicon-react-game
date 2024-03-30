@@ -325,7 +325,7 @@
 }
 
 #selectlevel .levels .done {
-    background: gold;
+    background-image: linear-gradient(0deg, #d29d2b, #ffffff, #d29d2b, #ffffff);
 }
 
 #selectlevel .levels .notplayable {
@@ -610,6 +610,14 @@
 #credits a {
     font-size: 1.2rem;
     color: black;
+}
+
+#credits a:hover {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    text-decoration: none;
+    background: black;
+    color: white;
 }
 
 #btn-fullscreen {
