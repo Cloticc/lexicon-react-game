@@ -16,9 +16,8 @@ interface SelectLevelProps extends SelectPageProps {
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     const [mapFiles, setMapFiles] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const { resetGame } = useContext(MyContext);
-    const { level, setLevel } = useContext(MyContext);
-    const { music, setMusic } = useContext(MyContext);
+    const { resetGame, evel, setLevel, music, setMusic, setGameReady } = useContext(MyContext);
+
     var { playedMaps, setPlayedMaps } = useContext(MyContext);
 
     useEffect(() => {
@@ -117,6 +116,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
         playSound('click', 0.25);
         playSound('levelstart', 0.5);
         onPageChange('play');
+        setGameReady(true);
         // console.log("Level: " ,id);
     }
     return (
@@ -132,6 +132,15 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
                                 (entry) => entry.mapId === Number(map)
                             );
 
+                            const classNames = [''];
+
+                            if (playedMaps.length < map) {
+                                classNames.push('notplayable');
+                            }
+
+                            if (highscoreData) {
+                                classNames.push('done');
+                            }
                             return (
                                 <li
                                     key={startIndex + index}
@@ -146,9 +155,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
                                             ? handleMapClick
                                             : undefined
                                     }
-                                    className={
-                                        playedMaps.length >= Number(map) ? '' : 'notplayable'
-                                    }
+                                    className={classNames.join(' ')}
                                 >
                                     {startIndex + index + 1}
                                     <div className="highest">
