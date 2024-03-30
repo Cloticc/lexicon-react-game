@@ -1228,7 +1228,7 @@ body,
 
 .grid-container-editor {
     margin: 2rem;
-    width: 50%;
+    width: 80%;
     min-width: 290px;
     max-height: 90vh;
     outline: 4px solid black;
@@ -1236,6 +1236,7 @@ body,
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
     margin-left: 6rem;
+    z-index: -1;
 }
 
 .grid-row-editor {

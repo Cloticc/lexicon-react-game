@@ -147,6 +147,9 @@
 }
 
 @media screen and (max-height: 890px) {
+    .grid-container-editor {
+        width: 45% !important;
+    }
     .grid-container {
         margin-top: 2rem;
         max-height: calc(100vh - 6rem);
