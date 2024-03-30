@@ -5,9 +5,6 @@
     }
 }
 @media screen and (max-width: 1240px) {
-    .highest {
-        display: none !important;
-    }
     .button {
         width: 4.5rem !important;
         height: 4.5rem !important;
@@ -187,6 +184,12 @@
         top: 7rem !important;
         right: 1rem !important;
         z-index: 10;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .highest {
+        display: none !important;
     }
 }
 
