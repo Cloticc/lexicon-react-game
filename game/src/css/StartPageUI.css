@@ -870,3 +870,14 @@
     top: 3rem;
     left: 3rem;
 }
+
+.createmapheader {
+    font-size: 3rem !important;
+    position: absolute;
+    top: 1rem;
+    text-align: center;
+    height: 4rem !important;
+    overflow: visible;
+    z-index: 100;
+    line-height: 3rem !important;
+}

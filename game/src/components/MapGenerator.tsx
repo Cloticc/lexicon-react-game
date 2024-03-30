@@ -513,6 +513,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     return showMapRender ? (
         <>
             {/* < div className="map-render"> */}
+            <h1 className="createmapheader">Test</h1>
             <MapRender initialMapData={mapData} />
 
             <button
@@ -533,6 +534,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         </>
     ) : (
         <>
+            <h1 className="createmapheader">Create</h1>
             {/* <div className="map-generator"> */}
             <button
                 className="button"
