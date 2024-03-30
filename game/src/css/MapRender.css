@@ -1229,13 +1229,13 @@ body,
 .grid-container-editor {
     margin: 2rem;
     width: 50%;
-    min-width: 320px;
+    min-width: 290px;
     max-height: 90vh;
     outline: 4px solid black;
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
-    margin-left: 5rem;
+    margin-left: 6rem;
 }
 
 .grid-row-editor {
