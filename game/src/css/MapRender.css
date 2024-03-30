@@ -1235,7 +1235,7 @@ body,
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
-    margin-left: 6rem;
+
     z-index: -1;
 }
 

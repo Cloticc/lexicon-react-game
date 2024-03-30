@@ -194,6 +194,9 @@
     .highest {
         display: none !important;
     }
+    .grid-container-editor {
+        margin-left: 6rem !important;
+    }
 }
 
 @media screen and (max-width: 640px) {
