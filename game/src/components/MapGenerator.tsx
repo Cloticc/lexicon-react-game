@@ -369,7 +369,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             } else {
                 newGridItems[Number(i)][Number(j)] = { type: selectedItem };
             }
-
+            playSound('add', 0.4);
             setGridItems(newGridItems);
         }
     };
@@ -484,7 +484,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     };
 
     const goBack = () => {
-        setMusic('ui');
+        setMusic('create');
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
@@ -496,6 +496,11 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('click', 0.25);
         setShowMapRender(false);
         onPageChange('start');
+    };
+
+    const handleClearButton = () => {
+        playSound('reverse', 0.3);
+        setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')));
     };
 
     const handleHelp = () => {
@@ -569,9 +574,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     <button
                         className="clear-btn"
                         onMouseOver={handleMouseOver}
-                        onClick={() =>
-                            setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')))
-                        }
+                        onClick={handleClearButton}
                     >
                         Clear
                     </button>
