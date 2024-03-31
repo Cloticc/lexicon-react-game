@@ -16,7 +16,8 @@ interface SelectLevelProps extends SelectPageProps {
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     const [mapFiles, setMapFiles] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const { resetGame, evel, setLevel, music, setMusic, setGameReady } = useContext(MyContext);
+    const { resetGame, setLevel, setMusic, setGameReady, setDisableControls } =
+        useContext(MyContext);
 
     var { playedMaps, setPlayedMaps } = useContext(MyContext);
 
@@ -107,8 +108,8 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     }
 
     function handleMapClick(e: React.MouseEvent<HTMLLIElement>) {
-        const idString = e.currentTarget.getAttribute('data-mapid');
-        const id = parseInt(idString);
+        const idString: string = e.currentTarget.getAttribute('data-mapid') ?? '';
+        const id: number = parseInt(idString);
 
         // Check if the level is unlocked
 
@@ -117,6 +118,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
         playSound('levelstart', 0.5);
         onPageChange('play');
         setGameReady(true);
+        setDisableControls(false);
         // console.log("Level: " ,id);
     }
     return (

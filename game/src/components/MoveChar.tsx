@@ -54,7 +54,8 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-
+        setLevel,
+        highestScores,
         setHighestScores,
         handleHistory,
         setHandleHistory,
