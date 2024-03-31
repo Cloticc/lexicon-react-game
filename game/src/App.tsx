@@ -113,7 +113,7 @@ function App() {
                             <div className="stars"></div>
                         </div>
                         <div id="retrogrid"></div>
-                        <div id="copyright">© 2024 Studio5</div>
+                        <div id="copyright">© 2024 Phoenix5</div>
                     </div>
                 </>
             )}

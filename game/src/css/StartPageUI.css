@@ -76,7 +76,37 @@
         drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
     animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
+/*
+#startpageui h2 {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
 
+    font-size: clamp(2rem, 2.5vw, 4rem);
+    font-family: 'Gajraj One', sans-serif;
+    white-space: nowrap;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.2vw;
+    background: linear-gradient(
+        0deg,
+        rgb(86, 0, 30) 16%,
+        rgb(255, 37, 99) 37%,
+        rgb(255, 185, 209) 51%,
+        rgb(255, 37, 124) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
+    background-size: contain;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    filter: drop-shadow(0 0 1px rgb(255, 86, 145)) drop-shadow(0 0 1px white)
+        drop-shadow(0px 0.5rem 0px black) drop-shadow(0px 12px 24px black)
+        drop-shadow(1px 1px 1px rgb(255, 0, 98));
+}
+*/
 #startpageui #player h1 {
     -webkit-text-stroke: 1px rgba(246, 246, 246, 0.7);
 }
