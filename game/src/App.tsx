@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react';
 import { Credits } from './pages/Credits';
 import { FullscreenToggle } from './components/fullscrenToggle';
 import { Music } from './components/Music';
-import { MyComponent } from './pages/MyComponent';
 import { MyContext } from './ContextProvider/ContextProvider';
 import { Play } from './pages/Play';
 import { SelectLevel } from './pages/SelectLevel';
