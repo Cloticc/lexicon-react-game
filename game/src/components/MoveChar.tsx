@@ -54,8 +54,7 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-        setLevel,
-        highestScores,
+
         setHighestScores,
         handleHistory,
         setHandleHistory,
@@ -70,7 +69,7 @@ export function MoveChar({
         setBoxGroundFloor,
     } = useContext(MyContext);
 
-    function handleDeath(string: string | undefined | null) {
+    function handleDeath(string?: string | null) {
         if (string === undefined || string === null || string === '') {
         } else if (string === 'mine') {
             playSound('mine', 0.8);
@@ -86,7 +85,7 @@ export function MoveChar({
         }, 3000);
     }
 
-    function handleLost(string: string | undefined | null) {
+    function handleLost(string?: string | null) {
         if (string === undefined || string === null || string === '') {
         } else if (string === 'boxexplode') {
             playSound('boxexplode', 0.8);
