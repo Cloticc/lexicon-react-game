@@ -21,9 +21,7 @@ export function Play({ onPageChange }: SelectPageProps) {
         setMusic,
         setShowGameContainer,
         resetGame,
-        setHandleHistory,
         gameRunning,
-        setHistory,
         setGameReady,
         history,
     } = useContext(MyContext);

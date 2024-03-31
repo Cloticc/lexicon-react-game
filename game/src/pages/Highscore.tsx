@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { MyContext } from './../ContextProvider/ContextProvider';
 import { formatElapsedTime } from '../utils/TimeUtils';
@@ -8,7 +8,6 @@ export function Highscore() {
     const {
         setShowGameContainer,
         setMapData,
-        music,
         setMusic,
         setBoxPositions,
         setPlayerPosition,

@@ -37,8 +37,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setInitialBoxPositions,
         playerDirection,
         setPlayerDirection,
-        youAreDead,
-        youLost,
+
         playerGroundFloor,
         boxGroundFloor,
     } = useContext(MyContext);
@@ -55,10 +54,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             var numberFromLevel = undefined;
             var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
             if (tokensArray !== undefined) {
-                numberFromLevel = tokensArray && tokensArray.find((token) => token === level);
+                numberFromLevel =
+                    tokensArray && tokensArray.find((token: number) => token === level);
             } else {
                 tokensArray = [];
             }
+
             if (numberFromLevel === undefined) {
                 const availablePositions: { x: number; y: number }[] = [];
 

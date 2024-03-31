@@ -7,8 +7,7 @@ import allMaps from './../maps/maps';
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
         gameReady,
-        setGameReady,
-        gameRunning,
+
         setShowGameContainer,
         isMuted,
         setMuted,
