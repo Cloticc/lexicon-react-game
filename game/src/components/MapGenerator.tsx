@@ -42,7 +42,7 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
                 onItemSelected(items[keyNumber - 1]);
 
                 const allButtons = document.querySelectorAll('.toolbar button');
-                allButtons.forEach((btn, index) => {
+                allButtons.forEach((btn: HTMLButtonElement, index) => {
                     btn.classList.remove('active');
                     if (index === keyNumber - 1) {
                         btn.classList.add('active');
@@ -63,15 +63,18 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
         };
     }, [items, onItemSelected]);
 
-    function handleToolbarClick(e, item) {
+    function handleToolbarClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, item: string) {
         playSound('click', 0.25);
-        const allButtons = document.querySelectorAll('.toolbar button');
-        allButtons.forEach((btn) => {
+        const allButtons = document.querySelectorAll(
+            '.toolbar button'
+        ) as NodeListOf<HTMLButtonElement>;
+        allButtons.forEach((btn: HTMLButtonElement) => {
             btn.classList.remove('active');
         });
-        e.target.classList.add('active');
+        (e.target as HTMLButtonElement).classList.add('active');
         onItemSelected(item);
     }
+
     // This is the toolbar component that displays the items that can be selected
     return (
         <div>
