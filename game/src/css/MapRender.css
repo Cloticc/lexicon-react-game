@@ -388,7 +388,8 @@ body,
     }
 }
 
-.level10 .wall {
+.level10 .wall,
+.level10 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 58.25% 99.75%;
     background-repeat: no-repeat;
@@ -667,7 +668,8 @@ body,
 }
 
 /* Level 20 Add level20 class to gridcontainer */
-.level20 .wall {
+.level20 .wall,
+.level20 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 66.7% 99.75%;
     background-repeat: no-repeat;
@@ -695,7 +697,8 @@ body,
 }
 
 /* Level 30 Add level30 class to gridcontainer */
-.level30 .wall {
+.level30 .wall,
+.level30 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 75% 99.75%;
     background-repeat: no-repeat;
@@ -723,7 +726,8 @@ body,
 }
 
 /* Level 40 Add level40 class to gridcontainer */
-.level40 .wall {
+.level40 .wall,
+.level40 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 66.6% 99.75%;
     background-repeat: no-repeat;
