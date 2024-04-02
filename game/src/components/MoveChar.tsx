@@ -180,7 +180,7 @@ export function MoveChar({
 
     const stopGame = useCallback(() => {
         setStartTime(null);
-        setGameRunning(false);
+        setGameRunning?.(false);
         setWonGame(true);
     }, []);
 
