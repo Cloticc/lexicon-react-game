@@ -181,14 +181,13 @@ export function MoveChar({
         // Create a copy of the collectedTokens object
         const updatedTokens = { ...collectedTokens };
         // Increment the token count for the current level
-        const currentLevelTokens = updatedTokens[level] || 0;
+        const currentLevelTokens = updatedTokens[level + 1] || 0;
         // Only increment the token count if a token hasn't been collected for this level
         if (currentLevelTokens === 0) {
             updatedTokens[level + 1] = currentLevelTokens + 1;
             setCollectedTokens(updatedTokens);
         }
     };
-
 
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
