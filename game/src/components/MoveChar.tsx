@@ -203,6 +203,7 @@ export function MoveChar({
         if (currentLevelTokens === 0) {
             updatedTokens[level + 1] = currentLevelTokens + 1;
             setCollectedTokens(updatedTokens);
+            playSound('collect', 0.4);
         }
     };
     
