@@ -324,7 +324,30 @@ export function MoveChar({
                         if (checkCrackedWall) {
                             setDisableControls(true);
                             playSound('drill');
+
+                            const gridContainer = document.querySelector('.grid-container');
+                            gridContainer?.classList.add('gameshaker');
+                            if (gridContainer) {
+                                const gridItems =
+                                    gridContainer.querySelectorAll('[class^="grid-item"]');
+
+                                const x = newPosition.y; // Assuming newPosition is an object with x and y properties
+                                const y = newPosition.x;
+
+                                gridItems.forEach((gridItem, index) => {
+                                    const gridX = Math.floor(index / 10); // Assuming 10 items per row
+                                    const gridY = index % 10;
+
+                                    if (gridX === x && gridY === y) {
+                                        gridItem.classList.add('drill');
+                                        gridItem.focus();
+                                    } else {
+                                        gridItem.classList.remove('drill');
+                                    }
+                                });
+                            }
                             setTimeout(() => {
+                                gridContainer?.classList.remove('gameshaker');
                                 movePlayer(newMapData, newPosition);
                                 setDisableControls(false);
                             }, 1050);
