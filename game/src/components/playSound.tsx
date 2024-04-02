@@ -17,6 +17,7 @@ import doorSound from './../assets/recording-slidedoor-1547157608-fake-online-au
 import mediumExplosionSound from './../assets/medium-explosion-40472.mp3';
 import lostSound from './../assets/game-fx-9-40197.mp3';
 import gameOverSound from './../assets/080205_life-lost-game-over-89697.mp3';
+import addSound from './../assets/pick-92276.mp3';
 
 type SoundName =
     | 'click'
@@ -35,9 +36,11 @@ type SoundName =
     | 'drill'
     | 'lost'
     | 'gameover'
+    | 'add'
     | 'reverse'; // Define sound names as string literals
 
 const soundFiles: Record<SoundName, string> = {
+    add: addSound,
     click: clickSound,
     hover: hoverSound,
     walk: walkSound,

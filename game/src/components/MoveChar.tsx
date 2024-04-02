@@ -42,6 +42,8 @@ export function MoveChar({
 
     //Reduce the number of useContext calls by destructuring the values from the context
     const {
+        disableControls,
+        setDisableControls,
         counter,
         setCounter,
         elapsedTime,
@@ -75,22 +77,34 @@ export function MoveChar({
         setTotalToken,
     } = useContext(MyContext);
 
-    function handleDeath() {
+    function handleDeath(string?: string | null) {
+        if (string === undefined || string === null || string === '') {
+        } else if (string === 'mine') {
+            playSound('mine', 0.8);
+        }
+        setDisableControls(true);
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
         setTimeout(() => {
             setYouAreDead(false);
+            setDisableControls(false);
             resetGame();
         }, 3000);
     }
 
-    function handleLost() {
+    function handleLost(string?: string | null) {
+        if (string === undefined || string === null || string === '') {
+        } else if (string === 'boxexplode') {
+            playSound('boxexplode', 0.8);
+        }
+        setDisableControls(true);
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
         setTimeout(() => {
             setYouLost(false);
+            setDisableControls(false);
             resetGame();
         }, 3000);
     }
@@ -166,13 +180,14 @@ export function MoveChar({
 
     const startGame = useCallback(() => {
         setStartTime(new Date());
-        setGameRunning(true);
+        setGameRunning?.(true);
         setWonGame(false);
+        setDisableControls(false);
     }, []);
 
     const stopGame = useCallback(() => {
         setStartTime(null);
-        setGameRunning(false);
+        setGameRunning?.(false);
         setWonGame(true);
     }, []);
 
@@ -208,6 +223,14 @@ export function MoveChar({
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
         return newMapData[position.y][position.x] === '-';
+    };
+
+    const isMine = (newMapData: string[][], position: { x: number; y: number }) => {
+        return newMapData[position.y][position.x] === 'M';
+    };
+
+    const isCrackedWall = (newMapData: string[][], position: { x: number; y: number }) => {
+        return newMapData[position.y][position.x] === 'W';
     };
 
 
@@ -291,10 +314,17 @@ export function MoveChar({
 
                 if (isNotWall(newMapData, newPosition)) {
                     const checkEmptySpace = isEmptySpace(newMapData, newPosition);
+                    const checkMine = isMine(newMapData, newPosition);
+                    const checkCrackedWall = isCrackedWall(newMapData, newPosition);
 
                     if (checkEmptySpace) {
                         handleDeath();
                         setPlayerGroundFloor('falling');
+                    }
+
+                    if (checkMine) {
+                        handleDeath('mine');
+                        setPlayerGroundFloor('explode');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -318,9 +348,46 @@ export function MoveChar({
                             setBoxGroundFloor('falling');
                             handleLost();
                             return;
+                        } else if (isMine(newMapData, beyondBoxPosition)) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            setBoxGroundFloor('explode');
+                            handleLost('boxexplode');
+                            return;
                         }
                     } else {
-                        movePlayer(newMapData, newPosition);
+                        if (checkCrackedWall) {
+                            setDisableControls(true);
+                            playSound('drill');
+
+                            const gridContainer = document.querySelector('.grid-container');
+                            gridContainer?.classList.add('gameshaker');
+                            if (gridContainer) {
+                                const gridItems =
+                                    gridContainer.querySelectorAll('[class^="grid-item"]');
+
+                                const x = newPosition.y; // Assuming newPosition is an object with x and y properties
+                                const y = newPosition.x;
+
+                                gridItems.forEach((gridItem, index) => {
+                                    const gridX = Math.floor(index / 10); // Assuming 10 items per row
+                                    const gridY = index % 10;
+
+                                    if (gridX === x && gridY === y) {
+                                        gridItem.classList.add('drill');
+                                        gridItem.focus();
+                                    } else {
+                                        gridItem.classList.remove('drill');
+                                    }
+                                });
+                            }
+                            setTimeout(() => {
+                                gridContainer?.classList.remove('gameshaker');
+                                movePlayer(newMapData, newPosition);
+                                setDisableControls(false);
+                            }, 1050);
+                        } else {
+                            movePlayer(newMapData, newPosition);
+                        }
                     }
 
                     if (!gameRunning && counter === 0) {
@@ -347,29 +414,31 @@ export function MoveChar({
     );
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            switch (event.key.toUpperCase()) {
-                case 'ARROWUP':
-                case 'W':
-                    handlePlayerMove('UP');
-                    break;
-                case 'ARROWDOWN':
-                case 'S':
-                    handlePlayerMove('DOWN');
-                    break;
-                case 'ARROWLEFT':
-                case 'A':
-                    handlePlayerMove('LEFT');
-                    break;
-                case 'ARROWRIGHT':
-                case 'D':
-                    handlePlayerMove('RIGHT');
-                    break;
-                case ' ':
-                    handleHistoryUndo();
-                    setHandleHistory(false);
-                    break;
-                default:
-                    break;
+            if (!disableControls) {
+                switch (event.key.toUpperCase()) {
+                    case 'ARROWUP':
+                    case 'W':
+                        handlePlayerMove('UP');
+                        break;
+                    case 'ARROWDOWN':
+                    case 'S':
+                        handlePlayerMove('DOWN');
+                        break;
+                    case 'ARROWLEFT':
+                    case 'A':
+                        handlePlayerMove('LEFT');
+                        break;
+                    case 'ARROWRIGHT':
+                    case 'D':
+                        handlePlayerMove('RIGHT');
+                        break;
+                    case ' ':
+                        handleHistoryUndo();
+                        setHandleHistory(false);
+                        break;
+                    default:
+                        break;
+                }
             }
         };
 
@@ -392,29 +461,31 @@ export function MoveChar({
         };
 
         const handleTouchMove = (event: TouchEvent) => {
-            if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
+            if (!disableControls) {
+                if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
 
-            const touch = event.touches[0];
-            const distX = touch.clientX - startTouchX;
-            const distY = touch.clientY - startTouchY;
+                const touch = event.touches[0];
+                const distX = touch.clientX - startTouchX;
+                const distY = touch.clientY - startTouchY;
 
-            // Check if the touch movement exceeds the threshold
-            if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
+                // Check if the touch movement exceeds the threshold
+                if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
 
-            let direction: Direction | null = null;
+                let direction: Direction | null = null;
 
-            // Determine the swipe direction
-            if (Math.abs(distX) > Math.abs(distY)) {
-                direction = distX > 0 ? 'RIGHT' : 'LEFT';
-            } else {
-                direction = distY > 0 ? 'DOWN' : 'UP';
-            }
+                // Determine the swipe direction
+                if (Math.abs(distX) > Math.abs(distY)) {
+                    direction = distX > 0 ? 'RIGHT' : 'LEFT';
+                } else {
+                    direction = distY > 0 ? 'DOWN' : 'UP';
+                }
 
-            if (direction) {
-                handlePlayerMove(direction);
-                // Reset the initial touch position after each successful move
-                startTouchX = touch.clientX;
-                startTouchY = touch.clientY;
+                if (direction) {
+                    handlePlayerMove(direction);
+                    // Reset the initial touch position after each successful move
+                    startTouchX = touch.clientX;
+                    startTouchY = touch.clientY;
+                }
             }
         };
 
@@ -440,6 +511,7 @@ export function MoveChar({
         if (allIndicatorsCovered && gameRunning) {
             stopGame();
             setWonGame(true);
+
             setLevelCompleted(true);
             setCurrentLevel(level.toString());
         }

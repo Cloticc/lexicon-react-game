@@ -26,10 +26,27 @@
 }
 
 #player .player {
-    filter: drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 2px black)
-        drop-shadow(0px 0px 0px black) drop-shadow(0px 0px 0px black);
+    filter: drop-shadow(0 0 2px black) drop-shadow(0 0 1px black) drop-shadow(0 0 0 black)
+        drop-shadow(0 0 0 black) drop-shadow(0 0 0 black) drop-shadow(0 0 0 black)
+        drop-shadow(0 0 0 black) drop-shadow(0 0 0 black);
     z-index: -1;
     position: relative;
+}
+
+#startpageui #player .playerwalkdown {
+    animation: walkdownstart 0.6s infinite steps(1, jump-both) !important;
+}
+
+@keyframes walkdownstart {
+    0% {
+        background-position: 0% 57%;
+    }
+    50% {
+        background-position: 16.5% 57%;
+    }
+    100% {
+        background-position: 16.7% 57%;
+    }
 }
 
 #startpageui h1 {
@@ -59,7 +76,37 @@
         drop-shadow(0px 12px 24px black) drop-shadow(1px 1px 1px magenta);
     animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
+/*
+#startpageui h2 {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
 
+    font-size: clamp(2rem, 2.5vw, 4rem);
+    font-family: 'Gajraj One', sans-serif;
+    white-space: nowrap;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.2vw;
+    background: linear-gradient(
+        0deg,
+        rgb(86, 0, 30) 16%,
+        rgb(255, 37, 99) 37%,
+        rgb(255, 185, 209) 51%,
+        rgb(255, 37, 124) 66%,
+        rgba(0, 15, 33, 1) 100%
+    );
+    background-size: contain;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    filter: drop-shadow(0 0 1px rgb(255, 86, 145)) drop-shadow(0 0 1px white)
+        drop-shadow(0px 0.5rem 0px black) drop-shadow(0px 12px 24px black)
+        drop-shadow(1px 1px 1px rgb(255, 0, 98));
+}
+*/
 #startpageui #player h1 {
     -webkit-text-stroke: 1px rgba(246, 246, 246, 0.7);
 }
@@ -251,7 +298,6 @@
 }
 
 .highest .highmoves {
-    float: left;
     display: inline-block;
     padding: 0.2rem 0.2rem;
     align-self: flex-start;
@@ -325,7 +371,7 @@
 }
 
 #selectlevel .levels .done {
-    background: gold;
+    background-image: linear-gradient(0deg, #d29d2b, #ffffff, #d29d2b, #ffffff);
 }
 
 #selectlevel .levels .notplayable {
@@ -600,6 +646,12 @@
     padding: 2rem;
 }
 
+#credits p {
+    max-width: 420px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 #credits h2 {
     margin-top: 2rem;
     font-family: 'Gajraj One', sans-serif;
@@ -610,6 +662,14 @@
 #credits a {
     font-size: 1.2rem;
     color: black;
+}
+
+#credits a:hover {
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    text-decoration: none;
+    background: black;
+    color: white;
 }
 
 #btn-fullscreen {
@@ -857,8 +917,40 @@
     background-size: 4rem;
 }
 
+#btn-savemap:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-download.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 4rem;
+}
+
+#btn-savemap {
+    position: absolute;
+    left: 3rem;
+    top: 11rem;
+}
+
 #btn-backtoedit {
     position: absolute;
     top: 3rem;
     left: 3rem;
+}
+
+.createmapheader {
+    font-size: 3rem !important;
+    position: absolute;
+    top: 1rem;
+    text-align: center;
+    height: 4rem !important;
+    overflow: visible;
+    z-index: 100;
+    line-height: 3rem !important;
 }

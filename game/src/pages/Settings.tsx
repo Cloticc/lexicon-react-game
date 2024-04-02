@@ -4,10 +4,12 @@ import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
 import allMaps from './../maps/maps'
 import { playSound } from './../components/playSound';
+import allMaps from './../maps/maps';
 
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
-        gameRunning,
+        gameReady,
+        testingMap,
         setShowGameContainer,
         isMuted,
         setMuted,
@@ -95,18 +97,18 @@ export function Settings({ onPageChange }: SelectPageProps) {
             }
             setTotalToken(newTokenAmount);
             localStorage.setItem('totaltokens', newTokenAmount.toString());
-            toggleSettings(false)
-            resetGame() 
+            toggleSettings(false);
+            resetGame();
             for (let index = 0; index < allMaps[level].solution.length; index++) {
-                const mapData = allMaps[level].solution[index].mapdata
-                const direction = allMaps[level].solution[index].direction
+                const mapData = allMaps[level].solution[index].mapdata;
+                const direction = allMaps[level].solution[index].direction;
                 setTimeout(() => {
-                    setMapData(mapData)
-                    setPlayerDirection(direction)
-                }, index * 500)
+                    setMapData(mapData);
+                    setPlayerDirection(direction);
+                }, index * 500);
                 setTimeout(() => {
-                    resetGame()
-                }, (allMaps[level].solution.length + 2) * 500)
+                    resetGame();
+                }, (allMaps[level].solution.length + 2) * 500);
             }
             setMusic('play');
             playSound('collect');
@@ -147,7 +149,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
                         onMouseOver={handleMouseOver}
                     ></button>
 
-                    {gameRunning && (
+                    {gameReady && (
                         <button
                             id="btn-replay"
                             className="button"
@@ -156,7 +158,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
                         ></button>
                     )}
 
-                    {gameRunning && (
+                    {gameReady && !testingMap && (
                         <div
                             id="btn-solution"
                             className={`button ${totalToken <= 0 ? 'disabled' : ''}`}

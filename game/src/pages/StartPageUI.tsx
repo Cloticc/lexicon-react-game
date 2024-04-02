@@ -1,10 +1,13 @@
 import './../css/Map.css';
 import './../css/StartPageUI.css';
 
+import { useContext } from 'react';
 import { SelectPageProps } from './../components/InterfacePages';
+import { MyContext } from '../ContextProvider/ContextProvider';
 import { playSound } from './../components/playSound';
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
+    const { setGameReady, setMusic } = useContext(MyContext);
     const handleButtonClick = () => {
         onPageChange('selectlevel');
         playSound('click', 0.25);
@@ -19,6 +22,8 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
         onPageChange('MapGenerator');
         playSound('click', 0.25);
         playSound('swoosh', 0.25);
+        setMusic('create');
+        setGameReady(false);
     };
 
     return (

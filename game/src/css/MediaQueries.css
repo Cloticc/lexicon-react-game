@@ -5,9 +5,6 @@
     }
 }
 @media screen and (max-width: 1240px) {
-    .highest {
-        display: none !important;
-    }
     .button {
         width: 4.5rem !important;
         height: 4.5rem !important;
@@ -40,7 +37,8 @@
     #btn-undostep:after,
     #mapEditor:after,
     #btn-backtoedit:after,
-    #btn-home:after {
+    #btn-home:after,
+    #btn-savemap:after {
         background-size: 2.5rem !important;
     }
 
@@ -74,6 +72,10 @@
     #btn-settings {
         top: 1rem !important;
         right: 1rem !important;
+    }
+    #btn-savemap {
+        top: 7rem !important;
+        left: 1rem !important;
     }
     #mapEditor,
     #btn-backtoedit {
@@ -150,6 +152,9 @@
 }
 
 @media screen and (max-height: 890px) {
+    .grid-container-editor {
+        width: 45% !important;
+    }
     .grid-container {
         margin-top: 2rem;
         max-height: calc(100vh - 6rem);
@@ -187,6 +192,15 @@
         top: 7rem !important;
         right: 1rem !important;
         z-index: 10;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .highest {
+        display: none !important;
+    }
+    .grid-container-editor {
+        margin-left: 6rem !important;
     }
 }
 
@@ -254,6 +268,11 @@
         right: 1rem !important;
     }
 
+    #btn-savemap {
+        top: 5rem !important;
+        left: 1rem !important;
+    }
+
     #btn-settings:after,
     #btn-fullscreen:after,
     #btn-sound:after,
@@ -268,7 +287,8 @@
     #btn-undostep:after,
     #mapEditor:after,
     #btn-backtoedit:after,
-    #btn-home:after {
+    #btn-home:after,
+    #btn-savemap:after {
         background-size: 2rem !important;
     }
 

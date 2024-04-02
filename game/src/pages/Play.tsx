@@ -21,9 +21,8 @@ export function Play({ onPageChange }: SelectPageProps) {
         setMusic,
         setShowGameContainer,
         resetGame,
-        setHandleHistory,
         gameRunning,
-        setHistory,
+        setGameReady,
         history,
     } = useContext(MyContext);
 
@@ -37,6 +36,7 @@ export function Play({ onPageChange }: SelectPageProps) {
         onPageChange('selectlevel');
         playSound('click', 0.25);
         playSound('swoosh', 0.15);
+        setGameReady(false);
     };
     const handleSpacePress = () => {
         // setHandleHistory(true);
@@ -84,14 +84,6 @@ export function Play({ onPageChange }: SelectPageProps) {
                 <div id="timer">{formatElapsedTime(elapsedTime)}</div>
             </div>
 
-            {gameRunning && (
-                <button
-                    id="btn-undostep"
-                    className="button"
-                    onMouseOver={handleMouseOver}
-                    onClick={handleSpacePress}
-                ></button>
-            )}
             {gameRunning && (
                 <button
                     id="btn-undostep"

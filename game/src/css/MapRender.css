@@ -38,6 +38,10 @@ body,
     animation: intro 0.5s ease-out 1 forwards;
 }
 
+.introdone {
+    animation: none;
+}
+
 .hide {
     display: none;
 }
@@ -384,7 +388,8 @@ body,
     }
 }
 
-.level10 .wall {
+.level10 .wall,
+.level10 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 58.25% 99.75%;
     background-repeat: no-repeat;
@@ -474,6 +479,54 @@ body,
     animation: falling 0.4s ease-out 1 forwards;
 }
 
+.explode {
+    position: relative;
+    background-image: url('../assets/sokoban_vector.svg');
+    background-position: 91.5% 85%;
+    background-repeat: no-repeat;
+    background-size: 1690%;
+    z-index: 5;
+    overflow: visible;
+}
+.explode:before {
+    display: block;
+    content: '';
+    position: absolute;
+    background-image: url('../assets/burn-hole-png.png');
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.explode:after {
+    display: block;
+    content: '';
+    position: absolute;
+    transform: translateX(-25%) translateY(-25%);
+    background-image: url('../assets/pixelexplosiononce.gif');
+    background-size: cover;
+    width: 200%;
+    height: 200%;
+    z-index: 10;
+    animation: explode 0.8s 1 forwards;
+}
+
+@keyframes explode {
+    0% {
+        opacity: 0;
+    }
+    0.000001% {
+        opacity: 1;
+    }
+    99.99999% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 @keyframes falling {
     0% {
         scale: 1;
@@ -483,6 +536,107 @@ body,
     }
 }
 
+.drill {
+    filter: brightness(1);
+    animation: drillanimation 1.2s 1 forwards !important;
+}
+
+@keyframes drillanimation {
+    0% {
+        filter: brightness(2);
+    }
+    5% {
+        filter: brightness(1);
+    }
+    10% {
+        filter: brightness(3);
+    }
+    15% {
+        filter: brightness(1);
+    }
+    20% {
+        filter: brightness(2);
+    }
+    25% {
+        filter: brightness(1);
+    }
+    30% {
+        filter: brightness(3);
+    }
+    35% {
+        filter: brightness(1);
+    }
+    40% {
+        filter: brightness(2);
+    }
+    45% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(2);
+    }
+    55% {
+        filter: brightness(1);
+    }
+    60% {
+        filter: brightness(2);
+    }
+    65% {
+        filter: brightness(1);
+    }
+    70% {
+        filter: brightness(2);
+    }
+    100% {
+        filter: brightness(1);
+    }
+}
+
+.gameshaker {
+    animation: gameshaker 1.4s 1 forwards;
+}
+
+@keyframes gameshaker {
+    0% {
+        rotate: 16deg;
+    }
+    5% {
+        rotate: -16deg;
+    }
+    10% {
+        rotate: 16deg;
+    }
+    15% {
+        rotate: -16deg;
+    }
+    20% {
+        rotate: 2deg;
+    }
+    30% {
+        rotate: -8deg;
+    }
+    40% {
+        rotate: -16deg;
+    }
+    50% {
+        rotate: 16deg;
+    }
+    60% {
+        rotate: -3deg;
+    }
+    70% {
+        rotate: 5deg;
+    }
+    80% {
+        rotate: -5deg;
+    }
+    90% {
+        rotate: 3deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
 /* Hello there */
 
 /* Level 10 Add level10 class to gridcontainer */
@@ -514,7 +668,8 @@ body,
 }
 
 /* Level 20 Add level20 class to gridcontainer */
-.level20 .wall {
+.level20 .wall,
+.level20 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 66.7% 99.75%;
     background-repeat: no-repeat;
@@ -542,7 +697,8 @@ body,
 }
 
 /* Level 30 Add level30 class to gridcontainer */
-.level30 .wall {
+.level30 .wall,
+.level30 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 75% 99.75%;
     background-repeat: no-repeat;
@@ -570,7 +726,8 @@ body,
 }
 
 /* Level 40 Add level40 class to gridcontainer */
-.level40 .wall {
+.level40 .wall,
+.level40 .cracked {
     background-image: url('../assets/sokoban_vector.svg');
     background-position: 66.6% 99.75%;
     background-repeat: no-repeat;
@@ -1175,14 +1332,14 @@ body,
 
 .grid-container-editor {
     margin: 2rem;
-    width: 50%;
-    min-width: 320px;
+    width: 80%;
+    min-width: 290px;
     max-height: 90vh;
     outline: 4px solid black;
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
-    margin-left: 5rem;
+    z-index: -1;
 }
 
 .grid-row-editor {

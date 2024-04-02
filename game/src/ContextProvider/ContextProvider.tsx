@@ -10,6 +10,12 @@ interface BoxPosition {
     y: number;
 }
 
+type PlayedMap = {
+    mapId: number;
+    score: number;
+    elapsedTime: number;
+};
+
 interface HistoryState {
     mapData: string[][];
     playerPosition: { x: number; y: number };
@@ -24,6 +30,14 @@ export interface TokensMap {
 
 
 interface GameContextProps {
+    testingMap: boolean;
+    setTestingMap: (testingMap: boolean) => void;
+    gameReady: boolean;
+    setGameReady: (gameReady: boolean) => void;
+    introDone: boolean;
+    setIntroDone: (introDone: boolean) => void;
+    disableControls: boolean;
+    setDisableControls: (disableControls: boolean) => void;
     totalToken: number;
     setTotalToken: (totalToken: number) => void;
     playedMaps: { mapId: number; score: number; elapsedTime: number }[];
@@ -59,8 +73,8 @@ interface GameContextProps {
     setLevel: (level: number) => void;
     music: string;
     setMusic: (music: string) => void;
-    startTime: Date;
-    setStartTime: (startTime: Date) => void;
+    startTime: Date | null;
+    setStartTime: (startTime: Date | null) => void;
     gameRunning?: boolean;
     setGameRunning?: (gameRunning: boolean) => void;
     isMuted: boolean;
@@ -98,6 +112,10 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [testingMap, setTestingMap] = useState<boolean>(false);
+    const [gameReady, setGameReady] = useState<boolean>(false);
+    const [introDone, setIntroDone] = useState<boolean>(false);
+    const [disableControls, setDisableControls] = useState<boolean>(false);
     const [youAreDead, setYouAreDead] = useState<boolean>(false);
     const [youLost, setYouLost] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
@@ -118,12 +136,12 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
     const [level, setLevel] = useState<number>(0);
     const [music, setMusic] = useState<string>('');
-    const [startTime, setStartTime] = useState<Date>(new Date());
+    const [startTime, setStartTime] = useState<Date | null>(null);
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [isMuted, setMuted] = useState<boolean>(false);
     const [settings, toggleSettings] = useState<boolean>(false);
     const [showGameContainer, setShowGameContainer] = useState<boolean>(false);
-    const [playedMaps, setPlayedMaps] = useState<number[]>([]);
+    const [playedMaps, setPlayedMaps] = useState<PlayedMap[]>([]);
     const [highestScores, setHighestScores] = useState<{
         [level: string]: { score: number; elapsedTime: number };
     }>({});
@@ -152,10 +170,20 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setHistory([]);
         setPlayerGroundFloor('ground');
         setBoxGroundFloor('ground');
+        setIntroDone(false);
     };
 
 
     const value: GameContextProps = {
+        testingMap: testingMap,
+        setTestingMap: setTestingMap,
+        introDone: introDone,
+        setIntroDone,
+        setIntroDone,
+        gameReady: gameReady,
+        setGameReady: setGameReady,
+        disableControls: disableControls,
+        setDisableControls: setDisableControls,
         playedMaps: playedMaps,
         setPlayedMaps: setPlayedMaps,
         totalToken: totalToken,
