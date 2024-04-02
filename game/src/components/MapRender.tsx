@@ -40,9 +40,17 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
         playerGroundFloor,
         boxGroundFloor,
+        introDone,
+        setIntroDone,
     } = useContext(MyContext);
 
     const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIntroDone(true);
+        }, 1200);
+    });
 
     useEffect(() => {
         let oldToken = document.querySelector('.token');
@@ -206,11 +214,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
     return (
         <div
-            className={`grid-container ${showGameContainer ? '' : 'hide'} 
-      ${level >= 9 ? 'level10' : ''} 
-      ${level >= 19 ? 'level20' : ''} 
-      ${level >= 29 ? 'level30' : ''}
-      ${level >= 39 ? 'level40' : ''}`}
+            className={`grid-container ${introDone ? 'introdone' : ''}
+        ${showGameContainer ? '' : 'hide'}
+        ${level >= 9 ? 'level10' : ''} 
+        ${level >= 19 ? 'level20' : ''} 
+        ${level >= 29 ? 'level30' : ''}
+        ${level >= 39 ? 'level40' : ''}`}
         >
             {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
             <MoveChar

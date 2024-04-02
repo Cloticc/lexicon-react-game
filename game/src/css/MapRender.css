@@ -38,6 +38,10 @@ body,
     animation: intro 0.5s ease-out 1 forwards;
 }
 
+.introdone {
+    animation: none;
+}
+
 .hide {
     display: none;
 }
@@ -533,7 +537,7 @@ body,
 
 .drill {
     filter: brightness(1);
-    animation: drillanimation 1s 1 forwards !important;
+    animation: drillanimation 1.2s 1 forwards !important;
 }
 
 @keyframes drillanimation {
@@ -564,45 +568,69 @@ body,
     40% {
         filter: brightness(2);
     }
+    45% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(2);
+    }
+    55% {
+        filter: brightness(1);
+    }
+    60% {
+        filter: brightness(2);
+    }
+    65% {
+        filter: brightness(1);
+    }
+    70% {
+        filter: brightness(2);
+    }
     100% {
         filter: brightness(1);
     }
 }
 
 .gameshaker {
-    animation: gameshaker 1.2s 1 forwards;
+    animation: gameshaker 1.4s 1 forwards;
 }
 
 @keyframes gameshaker {
     0% {
-        rotate: 6deg;
+        rotate: 16deg;
+    }
+    5% {
+        rotate: -16deg;
     }
     10% {
-        rotate: -6deg;
+        rotate: 16deg;
+    }
+    15% {
+        rotate: -16deg;
     }
     20% {
-        rotate: 0.5deg;
+        rotate: 2deg;
     }
     30% {
-        rotate: -4deg;
-    }
-    40% {
         rotate: -8deg;
     }
+    40% {
+        rotate: -16deg;
+    }
     50% {
-        rotate: 8deg;
+        rotate: 16deg;
     }
     60% {
-        rotate: -2deg;
+        rotate: -3deg;
     }
     70% {
-        rotate: 1deg;
+        rotate: 5deg;
     }
     80% {
-        rotate: -1deg;
+        rotate: -5deg;
     }
     90% {
-        rotate: 0.5deg;
+        rotate: 3deg;
     }
     100% {
         rotate: 0deg;
@@ -1274,7 +1302,6 @@ body,
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     max-width: 800px;
-
     z-index: -1;
 }
 
