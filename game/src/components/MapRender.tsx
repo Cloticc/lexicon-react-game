@@ -213,7 +213,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     };
 
     // Function to calculate level class based on current level
-    const calculateLevelClass = (currentLevel) => {
+    const calculateLevelClass = (currentLevel: number) => {
         let levelIs = currentLevel + 1;
         const levels = ['', 'level10', 'level20', 'level30', 'level40'];
         const index = Math.floor(levelIs / 10) % levels.length;

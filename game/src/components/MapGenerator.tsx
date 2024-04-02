@@ -237,9 +237,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     }, []);
 
     function generateMap(): void {
-        const data: { mapdata: string[][]; html: string } = {
+        const data: { mapdata: string[][]; solution: string } = {
             mapdata: [],
-            html: '',
+            solution: '',
         };
 
         // Use a more specific selector to get the grid items directly
@@ -323,14 +323,6 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 'You must have the same amount of Box indicators as you have boxes, please fix...'
             );
             return;
-        }
-
-        const container = document.querySelector('#container');
-        if (container) {
-            const dataHTML = container.innerHTML;
-            data.html = dataHTML;
-        } else {
-            console.error("Element with id 'container' not found" + container);
         }
 
         // Convert the JSON data to a Blob
