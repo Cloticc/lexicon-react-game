@@ -42,11 +42,12 @@ function Toolbar({ onItemSelected }: ToolbarProps) {
                 onItemSelected(items[keyNumber - 1]);
 
                 const allButtons = document.querySelectorAll('.toolbar button');
-                allButtons.forEach((btn: HTMLButtonElement, index) => {
-                    btn.classList.remove('active');
+                allButtons.forEach((btn, index) => {
+                    const button = btn as HTMLButtonElement;
+                    button.classList.remove('active');
                     if (index === keyNumber - 1) {
-                        btn.classList.add('active');
-                        btn.focus();
+                        button.classList.add('active');
+                        button.focus();
                     }
                 });
 

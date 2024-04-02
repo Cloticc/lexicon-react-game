@@ -13,6 +13,12 @@ interface SelectLevelProps extends SelectPageProps {
     onLevelChange: () => void;
 }
 
+interface PlayedMap {
+    mapId: number;
+    score: number;
+    elapsedTime: number;
+}
+
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     const [mapFiles, setMapFiles] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -38,8 +44,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
             if (highestScores && Object.keys(highestScores).length > 0) {
                 const mapKeys = Object.keys(highestScores);
 
-                const updatedPlayedMaps = []; // Create a new array to avoid mutating state directly
-
+                const updatedPlayedMaps: PlayedMap[] = [];
                 mapKeys.forEach((key) => {
                     const highscoreEntry = highestScores[key];
                     updatedPlayedMaps.push({
@@ -136,7 +141,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
 
                             const classNames = [''];
 
-                            if (playedMaps.length < map) {
+                            if (playedMaps.length < (map ? parseInt(map) : 0)) {
                                 classNames.push('notplayable');
                             }
 

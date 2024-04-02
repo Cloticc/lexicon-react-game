@@ -10,6 +10,12 @@ interface BoxPosition {
     y: number;
 }
 
+type PlayedMap = {
+    mapId: number;
+    score: number;
+    elapsedTime: number;
+};
+
 interface HistoryState {
     mapData: string[][];
     playerPosition: { x: number; y: number };
@@ -58,8 +64,8 @@ interface GameContextProps {
     setLevel: (level: number) => void;
     music: string;
     setMusic: (music: string) => void;
-    startTime: Date;
-    setStartTime: (startTime: Date) => void;
+    startTime: Date | null;
+    setStartTime: (startTime: Date | null) => void;
     gameRunning?: boolean;
     setGameRunning?: (gameRunning: boolean) => void;
     isMuted: boolean;
@@ -116,12 +122,12 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
     const [level, setLevel] = useState<number>(0);
     const [music, setMusic] = useState<string>('');
-    const [startTime, setStartTime] = useState<Date>(new Date());
+    const [startTime, setStartTime] = useState<Date | null>(null);
     const [gameRunning, setGameRunning] = useState<boolean>(false);
     const [isMuted, setMuted] = useState<boolean>(false);
     const [settings, toggleSettings] = useState<boolean>(false);
     const [showGameContainer, setShowGameContainer] = useState<boolean>(false);
-    const [playedMaps, setPlayedMaps] = useState<number[]>([]);
+    const [playedMaps, setPlayedMaps] = useState<PlayedMap[]>([]);
     const [highestScores, setHighestScores] = useState<{
         [level: string]: { score: number; elapsedTime: number };
     }>({});

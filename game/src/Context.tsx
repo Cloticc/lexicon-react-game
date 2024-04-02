@@ -1,15 +1,23 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from 'react';
+interface GlobalStateType {
+    text: string;
+}
 
-const gameContext = createContext();
+interface ContextType {
+    state: GlobalStateType;
+    setState: React.Dispatch<React.SetStateAction<GlobalStateType>>;
+}
 
-const globalState = {
-	text: "from context",
+const gameContext = createContext<ContextType | undefined>(undefined);
+
+const globalState: GlobalStateType = {
+    text: 'from context',
 };
 
-const gameContextProvider = ({ children }) => {
-	const [state, setState] = useState(globalState);
+const gameContextProvider = ({ children }: { children: ReactNode }) => {
+    const [state, setState] = useState<GlobalStateType>(globalState);
 
-	return <gameContext.Provider value={{ state, setState }}>{children}</gameContext.Provider>;
+    return <gameContext.Provider value={{ state, setState }}>{children}</gameContext.Provider>;
 };
 
 export { gameContext, gameContextProvider };

@@ -173,14 +173,14 @@ export function MoveChar({
 
     const startGame = useCallback(() => {
         setStartTime(new Date());
-        setGameRunning(true);
+        setGameRunning?.(true);
         setWonGame(false);
         setDisableControls(false);
     }, []);
 
     const stopGame = useCallback(() => {
         setStartTime(null);
-        setGameRunning(false);
+        setGameRunning?.(false);
         setWonGame(true);
     }, []);
 
