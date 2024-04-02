@@ -4,6 +4,7 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 
 import { MapRender } from './MapRender';
 import { playSound } from './playSound';
+import { SaveMap } from './SaveMap';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
 
@@ -196,7 +197,8 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { mapData, setMapData, setMusic } = useContext(MyContext);
+    const { mapData, setMapData, setMusic, wonGame, youAreDead, youLost, setTestingMap } =
+        useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -237,9 +239,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     }, []);
 
     function generateMap(): void {
-        const data: { mapdata: string[][]; html: string } = {
+        const data: { mapdata: string[][]; solution: string } = {
             mapdata: [],
-            html: '',
+            solution: '',
         };
 
         // Use a more specific selector to get the grid items directly
@@ -306,6 +308,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             data.mapdata.push(row);
         }
 
+        /*
         if (playerAmount > 1 || playerAmount === 0) {
             alert('Can/must only have 1 player, please fix...');
             return;
@@ -324,14 +327,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             );
             return;
         }
-
-        const container = document.querySelector('#container');
-        if (container) {
-            const dataHTML = container.innerHTML;
-            data.html = dataHTML;
-        } else {
-            console.error("Element with id 'container' not found" + container);
-        }
+        */
 
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -477,17 +473,19 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             })
         );
 
+        setTestingMap(true);
         setDisableControls(false);
         playSound('click', 0.25);
         playSound('levelstart', 0.25);
         setMusic('play');
-        console.log(symbolArray);
+
         setMapData(symbolArray);
         setShowMapRender(true);
         setGameReady(true);
     };
 
     const goBack = () => {
+        setTestingMap(false);
         setMusic('create');
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
@@ -495,6 +493,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setGameReady(false);
     };
     const goHome = () => {
+        setTestingMap(false);
         setMusic('ui');
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
@@ -509,13 +508,13 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
     const handleHelp = () => {
         alert(
-            '1. Click on the grid to place items\n' +
-                '2. Use the toolbar/right click or 1-9Num to select an item\n' +
-                '5. Hold Shift to place/draw multiple items\n' +
-                "6. Click 'Download Map' to download the map\n" +
-                "7. Click 'Test Map' to test the map\n" +
-                "8. Click 'Go Back' to go back to the map editor\n" +
-                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to download map\n'
+            '1. Click on the grid to place items.\n' +
+                '2. Use the toolbar/right click or 1-9Num to select an item.\n' +
+                '5. Hold Shift to place/draw multiple items.\n' +
+                "6. Click the 'Play' icon to test the map and solve it to be able to save it.\n" +
+                "7. When completing your test of the map, click 'Save' icon to download the map.\n" +
+                "8. In the test play, click 'Back' icon to go back to the map editor.\n" +
+                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to save the map.\n'
         );
     };
 
@@ -524,6 +523,16 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             {/* < div className="map-render"> */}
             <h1 className="createmapheader">Test</h1>
             <MapRender initialMapData={mapData} />
+            {wonGame && (
+                <button
+                    className="button"
+                    id="btn-savemap"
+                    onClick={generateMap}
+                    onMouseOver={handleMouseOver}
+                ></button>
+            )}
+            {youAreDead && <h1 className="dead">You are dead</h1>}
+            {youLost && <h1 className="dead">You lost</h1>}
 
             <button
                 className="button"
@@ -557,11 +566,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     onClick={handleHelp}
                     onMouseOver={handleMouseOver}
                 ></button>
-                <button
-                    className="generate"
-                    onClick={generateMap}
-                    onMouseOver={handleMouseOver}
-                ></button>
+
                 {/* <button className="toggle" onClick={toggleGrid}>
 					Toggle Grid
 				</button> */}

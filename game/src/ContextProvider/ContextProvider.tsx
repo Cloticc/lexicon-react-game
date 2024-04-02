@@ -25,6 +25,8 @@ interface HistoryState {
 }
 
 interface GameContextProps {
+    testingMap: boolean;
+    setTestingMap: (testingMap: boolean) => void;
     gameReady: boolean;
     setGameReady: (gameReady: boolean) => void;
     introDone: boolean;
@@ -102,6 +104,7 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [testingMap, setTestingMap] = useState<boolean>(false);
     const [gameReady, setGameReady] = useState<boolean>(false);
     const [introDone, setIntroDone] = useState<boolean>(false);
     const [disableControls, setDisableControls] = useState<boolean>(false);
@@ -160,6 +163,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     };
 
     const value: GameContextProps = {
+        testingMap: testingMap,
+        setTestingMap: setTestingMap,
         introDone: introDone,
         setIntroDone,
         setIntroDone,
