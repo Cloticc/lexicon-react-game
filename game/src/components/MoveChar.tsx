@@ -71,6 +71,8 @@ export function MoveChar({
         setSelectedPosition,
         collectedTokens,
         setCollectedTokens,
+        totalToken,
+        setTotalToken,
     } = useContext(MyContext);
 
     function handleDeath() {
@@ -188,6 +190,7 @@ export function MoveChar({
             setCollectedTokens(updatedTokens);
         }
     };
+    
 
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
