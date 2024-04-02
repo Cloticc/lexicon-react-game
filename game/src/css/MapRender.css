@@ -569,6 +569,45 @@ body,
     }
 }
 
+.gameshaker {
+    animation: gameshaker 1.2s 1 forwards;
+}
+
+@keyframes gameshaker {
+    0% {
+        rotate: 6deg;
+    }
+    10% {
+        rotate: -6deg;
+    }
+    20% {
+        rotate: 0.5deg;
+    }
+    30% {
+        rotate: -4deg;
+    }
+    40% {
+        rotate: -8deg;
+    }
+    50% {
+        rotate: 8deg;
+    }
+    60% {
+        rotate: -2deg;
+    }
+    70% {
+        rotate: 1deg;
+    }
+    80% {
+        rotate: -1deg;
+    }
+    90% {
+        rotate: 0.5deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+}
 /* Hello there */
 
 /* Level 10 Add level10 class to gridcontainer */
