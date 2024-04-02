@@ -308,6 +308,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             data.mapdata.push(row);
         }
 
+        /*
         if (playerAmount > 1 || playerAmount === 0) {
             alert('Can/must only have 1 player, please fix...');
             return;
@@ -326,6 +327,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             );
             return;
         }
+        */
 
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
