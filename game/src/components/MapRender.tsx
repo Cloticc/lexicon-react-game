@@ -1,9 +1,10 @@
 import '../css/MapRender.css';
 
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 import { MoveChar } from './MoveChar';
 import { MyContext } from '../ContextProvider/ContextProvider';
+import { log } from 'console';
 import { playSound } from './../components/playSound';
 
 //Check if array is an array of arrays
@@ -45,9 +46,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setSelectedPosition,
         collectedTokens,
         setCollectedTokens,
+        totalToken,
+        setTotalToken,
     } = useContext(MyContext);
 
-
+    const [tokenPosition, setTokenPosition] = useState<{ x: number; y: number } | null>(null);
 
     // mount the map
     useEffect(() => {
@@ -183,7 +186,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             setCollectedTokens(JSON.parse(storedTokens));
         }
     }, []);
-    
+
     // Save the collectedTokens to localStorage
     useEffect(() => {
         localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
@@ -192,10 +195,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     // Define the placeToken function
     const placeToken = (position: { x: number; y: number }) => {
         const newMapData = [...mapData];
-        newMapData[position.x][position.y] = 'T';
+        newMapData[position.y][position.x] = 'T';
         setMapData(newMapData);
+        setTokenPosition(position);
     };
-
 
 
     // Place a token on the map when the level changes
@@ -223,18 +226,36 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     }, [mapData]);
 
+
     // Handle token collection
     useEffect(() => {
-        if (mapData[playerPosition.y][playerPosition.x] === 'T') {
+        // console.log('Checking if a token should be collected...');
+        // console.log('tokenPosition:', tokenPosition);
+        // console.log('playerPosition:', playerPosition);
+
+        if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
             const newMapData = mapData.map(row => [...row]);
-            newMapData[playerPosition.y][playerPosition.x] = ',';
+            newMapData[tokenPosition.y][tokenPosition.x] = ',';
             setMapData(newMapData);
+            setTokenPosition(null);
+
 
             const newCollectedTokens = { ...collectedTokensRef.current };
-            newCollectedTokens[level + 1] = (newCollectedTokens[level + 1] || 0) + 1;
+            newCollectedTokens[level + 1]
             setCollectedTokens(newCollectedTokens);
+
+
+            // Update totalTokens state
+            console.log('collectedTokens:', collectedTokens);
+            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
+            setTotalToken(total);
+            // console.log('total', total);
+            // console.log('totalToken', totalToken);
+            localStorage.setItem('totalToken', JSON.stringify(total));
         }
-    }, [playerPosition, mapData, level]);
+    }, [playerPosition, tokenPosition, mapData, level]);
+
+
 
     return (
         <div
