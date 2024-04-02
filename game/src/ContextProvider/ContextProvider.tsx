@@ -160,14 +160,14 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setPlayerGroundFloor('ground');
         setBoxGroundFloor('ground');
         setIntroDone(false);
+        setDisableControls(false);
     };
 
     const value: GameContextProps = {
         testingMap: testingMap,
         setTestingMap: setTestingMap,
         introDone: introDone,
-        setIntroDone,
-        setIntroDone,
+        setIntroDone: setIntroDone,
         gameReady: gameReady,
         setGameReady: setGameReady,
         disableControls: disableControls,

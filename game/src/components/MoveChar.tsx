@@ -261,6 +261,28 @@ export function MoveChar({
         setPlayerPosition(newPosition);
     };
 
+    function setDivClass(positionX: number, positionY: number, classname: string) {
+        const gridContainer = document.querySelector('.grid-container');
+
+        if (gridContainer) {
+            const gridItems = gridContainer.querySelectorAll('[class^="grid-item"]');
+
+            const x = positionY;
+            const y = positionX;
+            console.log(positionX, positionY, classname);
+            gridItems.forEach((gridItem, index) => {
+                const gridX = Math.floor(index / 10);
+                const gridY = index % 10;
+
+                if (gridX === x && gridY === y) {
+                    gridItem.classList.add(classname);
+                } else {
+                    gridItem.classList.remove(classname);
+                }
+            });
+        }
+    }
+
     const handlePlayerMove = useCallback(
         (direction: string) => {
             setPlayerDirection(direction.toLowerCase());
@@ -290,7 +312,10 @@ export function MoveChar({
 
                     if (checkMine) {
                         handleDeath('mine');
-                        setPlayerGroundFloor('explode');
+                        setTimeout(() => {
+                            setDivClass(newPosition.x, newPosition.y, 'explode');
+                        }, 10);
+                        // setPlayerGroundFloor('explode');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -311,12 +336,18 @@ export function MoveChar({
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
-                            setBoxGroundFloor('falling');
+                            // setBoxGroundFloor('falling');
+                            setTimeout(() => {
+                                setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'falling');
+                            }, 10);
                             handleLost();
                             return;
                         } else if (isMine(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
-                            setBoxGroundFloor('explode');
+                            // setBoxGroundFloor('explode');
+                            setTimeout(() => {
+                                setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'explode');
+                            }, 10);
                             handleLost('boxexplode');
                             return;
                         }
@@ -324,28 +355,11 @@ export function MoveChar({
                         if (checkCrackedWall) {
                             setDisableControls(true);
                             playSound('drill');
-
                             const gridContainer = document.querySelector('.grid-container');
+
+                            setDivClass(newPosition.x, newPosition.y, 'drill');
+
                             gridContainer?.classList.add('gameshaker');
-                            if (gridContainer) {
-                                const gridItems =
-                                    gridContainer.querySelectorAll('[class^="grid-item"]');
-
-                                const x = newPosition.y; // Assuming newPosition is an object with x and y properties
-                                const y = newPosition.x;
-
-                                gridItems.forEach((gridItem, index) => {
-                                    const gridX = Math.floor(index / 10); // Assuming 10 items per row
-                                    const gridY = index % 10;
-
-                                    if (gridX === x && gridY === y) {
-                                        gridItem.classList.add('drill');
-                                        gridItem.focus();
-                                    } else {
-                                        gridItem.classList.remove('drill');
-                                    }
-                                });
-                            }
                             setTimeout(() => {
                                 gridContainer?.classList.remove('gameshaker');
                                 movePlayer(newMapData, newPosition);
