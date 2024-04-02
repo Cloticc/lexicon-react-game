@@ -1,6 +1,7 @@
 export interface MapType {
     mapdata: any[]; // Update this with the actual type of mapdata
     html: string;
+    solution: any[];
 }
 
 const mapFiles = await import.meta.glob('../maps/*.json');
