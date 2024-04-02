@@ -154,6 +154,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setBoxGroundFloor('ground');
     };
 
+
     const value: GameContextProps = {
         playedMaps: playedMaps,
         setPlayedMaps: setPlayedMaps,
@@ -214,7 +215,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setBoxGroundFloor: setBoxGroundFloor,
         selectedPosition: selectedPosition,
         setSelectedPosition: setSelectedPosition,
-         collectedTokens: collectedTokens,
+        collectedTokens: collectedTokens,
         setCollectedTokens: setCollectedTokens,
     };
 
