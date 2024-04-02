@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef } from 'react';
 
 import { MoveChar } from './MoveChar';
 import { MyContext } from '../ContextProvider/ContextProvider';
-import { log } from 'console';
 import { playSound } from './../components/playSound';
 
 //Check if array is an array of arrays
@@ -197,24 +196,31 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     };
 
 
+
     // Place a token on the map when the level changes
     useEffect(() => {
         if (level % 6 === 0 && level !== 0) {
             const tokenExists = mapData.some(row => row.includes('T'));
             const tokenCollectedForLevel = collectedTokensRef.current[level] === 1;
 
-            if (!tokenExists && !tokenCollectedForLevel && !(collectedTokensRef.current[level] > 0)) {
+            if (!tokenExists && !tokenCollectedForLevel) {
                 const availablePositions = mapData.flatMap((row, x) =>
                     row.map((column, y) => column === ',' ? { x, y } : null)
                 ).filter(Boolean) as { x: number; y: number }[];
-
+                // console.log('availablePositions', availablePositions);
                 if (availablePositions.length > 0) {
                     const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
-                    placeToken(randomPosition);
+                    // check localstorage if user has collected token for this level
+                    if (collectedTokensRef.current[level + 1]) {
+                        console.log('Token already collected for this level');
+                    } else {
+                        console.log('Token not collected for this level');
+                        placeToken(randomPosition);
+                    }
                 }
             }
         }
-    }, [level]);
+    }, [mapData]);
 
     // Handle token collection
     useEffect(() => {
