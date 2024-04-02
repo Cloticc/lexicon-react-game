@@ -245,7 +245,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             setTotalToken(total);
             // console.log('total', total);
             // console.log('totalToken', totalToken);
-            localStorage.setItem('totalToken', JSON.stringify(total));
+            localStorage.setItem('totalTokens', JSON.stringify(total));
         }
     }, [playerPosition, tokenPosition, mapData, level]);
 
