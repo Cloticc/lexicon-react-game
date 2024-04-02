@@ -523,7 +523,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             <MapRender initialMapData={mapData} />
             {wonGame && (
                 <button
-                    className="generate"
+                    className="button"
+                    id="btn-savemap"
                     onClick={generateMap}
                     onMouseOver={handleMouseOver}
                 ></button>
