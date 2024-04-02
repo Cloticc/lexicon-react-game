@@ -4,7 +4,6 @@ import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
 import allMaps from './../maps/maps'
 import { playSound } from './../components/playSound';
-import allMaps from './../maps/maps';
 
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
@@ -48,8 +47,8 @@ export function Settings({ onPageChange }: SelectPageProps) {
         if (totalTokenLocalStorage) {
             setTotalToken(parseInt(totalTokenLocalStorage));
         } else {
-            // setTotalToken(3);
-            // localStorage.setItem('totaltokens', '3');
+            setTotalToken(3);
+            localStorage.setItem('totaltokens', '3');
         }
     }, [totalToken, setTotalToken]);
 
