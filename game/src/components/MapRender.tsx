@@ -176,17 +176,18 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         collectedTokensRef.current = collectedTokens;
     }, [collectedTokens]);
 
-    // Load and save the collectedTokens from/to localStorage
+    // Load the collectedTokens from localStorage
     useEffect(() => {
         const storedTokens = localStorage.getItem('collectedTokens');
         if (storedTokens) {
             setCollectedTokens(JSON.parse(storedTokens));
         }
-
-        return () => {
-            localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
-        };
     }, []);
+    
+    // Save the collectedTokens to localStorage
+    useEffect(() => {
+        localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
+    }, [collectedTokens]);
 
     // Define the placeToken function
     const placeToken = (position: { x: number; y: number }) => {
