@@ -20,7 +20,6 @@ interface MapRenderProps {
 export function MapRender({ initialMapData }: MapRenderProps) {
     const {
         level,
-        setLevel,
         showGameContainer,
         setShowGameContainer,
         setMusic,
@@ -38,15 +37,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setInitialBoxPositions,
         playerDirection,
         setPlayerDirection,
-        youAreDead,
-        youLost,
         playerGroundFloor,
         boxGroundFloor,
-        selectedPosition,
-        setSelectedPosition,
         collectedTokens,
         setCollectedTokens,
-        totalToken,
         setTotalToken,
     } = useContext(MyContext);
 
@@ -143,9 +137,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case '-':
                 return 'empty';
             case 'P':
-                return isIndicator
-                    ? 'boxindicator'
-                    : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+                return isIndicator ? 'boxindicator' : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
             case 'B':
                 return isIndicator && isBox ? 'box box-on-indicator' : `${boxGroundFloor} box`;
             case ',':
@@ -193,9 +185,31 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     }, [collectedTokens]);
 
     // Define the placeToken function
+    // const placeToken = (position: { x: number; y: number }) => {
+    //     const newMapData = [...mapData];
+    //     newMapData[position.y][position.x] = 'T';
+    //     setMapData(newMapData);
+    //     setTokenPosition(position);
+    // };
+
+    // Define the placeToken function
     const placeToken = (position: { x: number; y: number }) => {
-        const newMapData = [...mapData];
+        // Create a copy of the map data
+        const newMapData = mapData.map(row => [...row]);
+
+        // Remove any existing tokens from the map
+        for (let y = 0; y < newMapData.length; y++) {
+            for (let x = 0; x < newMapData[y].length; x++) {
+                if (newMapData[y][x] === 'T') {
+                    newMapData[y][x] = ',';
+                }
+            }
+        }
+
+        // Place the new token
         newMapData[position.y][position.x] = 'T';
+
+        // Update the map data and token position
         setMapData(newMapData);
         setTokenPosition(position);
     };
@@ -208,8 +222,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             const tokenCollectedForLevel = collectedTokensRef.current[level] === 1;
 
             if (!tokenExists && !tokenCollectedForLevel) {
-                const availablePositions = mapData.flatMap((row, x) =>
-                    row.map((column, y) => column === ',' ? { x, y } : null)
+                const availablePositions = mapData.flatMap((row, y) =>
+                    row.map((column, x) => column === ',' ? { x, y } : null)
                 ).filter(Boolean) as { x: number; y: number }[];
                 // console.log('availablePositions', availablePositions);
                 if (availablePositions.length > 0) {
@@ -224,7 +238,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 }
             }
         }
-    }, [mapData]);
+    }, [mapData, level]);
 
 
     // Handle token collection
@@ -236,18 +250,13 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
             const newMapData = mapData.map(row => [...row]);
             newMapData[tokenPosition.y][tokenPosition.x] = ',';
+            newMapData[playerPosition.y][playerPosition.x] = 'P';
             setMapData(newMapData);
             setTokenPosition(null);
 
 
-            const newCollectedTokens = { ...collectedTokensRef.current };
-            newCollectedTokens[level + 1] 
-            // newCollectedTokens[level + 1] = (newCollectedTokens[level + 1] || 0) + 1;
-            setCollectedTokens(newCollectedTokens);
-
-
             // Update totalTokens state
-            console.log('collectedTokens:', collectedTokens);
+            // console.log('collectedTokens:', collectedTokens);
             const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
             setTotalToken(total);
             // console.log('total', total);
@@ -256,7 +265,21 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     }, [playerPosition, tokenPosition, mapData, level]);
 
+    // Handle token collection
+    useEffect(() => {
+        if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
+            const newMapData = mapData.map(row => [...row]);
+            newMapData[tokenPosition.y][tokenPosition.x] = ',';
+            newMapData[playerPosition.y][playerPosition.x] = 'P';
+            setMapData(newMapData);
+            setTokenPosition(null);
 
+            // Update totalTokens state
+            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
+            setTotalToken(total);
+            localStorage.setItem('totalToken', JSON.stringify(total));
+        }
+    }, [playerPosition, tokenPosition, mapData, level]);
 
     return (
         <div
@@ -290,15 +313,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                                 key={columnIndex}
                                 className={`grid-item ${className}`}
                             >
-                                {className === 'boxindicator' && (
-                                    <div className="boxindicator-container"></div>
-                                )}
+                                {className === 'boxindicator' && (<div className="boxindicator-container"></div>)}
                                 {className === 'box' && <div className="box-container"></div>}
-                                {className === 'boxindicator' &&
-                                    playerPosition.x === columnIndex &&
-                                    playerPosition.y === rowIndex && (
-                                        <div className={`player-${playerDirection}`}></div>
-                                    )}
+                                {className === 'boxindicator' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
+
                             </div>
                         );
                     })}
