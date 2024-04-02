@@ -36,17 +36,6 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setInitialBoxPositions,
         playerDirection,
         setPlayerDirection,
-<<<<<<< HEAD
-        playerGroundFloor,
-        boxGroundFloor,
-        collectedTokens,
-        setCollectedTokens,
-        setTotalToken,
-    } = useContext(MyContext);
-
-    const [tokenPosition, setTokenPosition] = useState<{ x: number; y: number } | null>(null);
-=======
-
         playerGroundFloor,
         boxGroundFloor,
         collectedTokens,
@@ -56,66 +45,62 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setIntroDone,
     } = useContext(MyContext);
 
-    const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
 
+    const [tokenPosition, setTokenPosition] = useState<{ x: number; y: number } | null>(null);
     useEffect(() => {
         setTimeout(() => {
             setIntroDone(true);
         }, 1200);
     });
 
-    useEffect(() => {
-        let oldToken = document.querySelector('.token');
-        if (oldToken) {
-            oldToken.classList.remove('token');
-        }
-
-        if (level % 6 === 0 && level !== 0) {
-            var numberFromLevel = undefined;
-            var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
-            if (tokensArray !== undefined) {
-                numberFromLevel =
-                    tokensArray && tokensArray.find((token: number) => token === level);
-            } else {
-                tokensArray = [];
-            }
-
-            if (numberFromLevel === undefined) {
-                const availablePositions: { x: number; y: number }[] = [];
-
-                // Iterate through the mapData array
-                for (let x = 0; x < mapData.length; x++) {
-                    for (let y = 0; y < mapData[x].length; y++) {
-                        // Check if the value is ","
-                        if (mapData[x][y] === ',') {
-                            availablePositions.push({ x, y });
-                        }
-                    }
-                }
-
-                if (availablePositions.length > 0) {
-                    // Randomly select a position from available positions
-                    const randomIndex = Math.floor(Math.random() * availablePositions.length);
-                    const randomPosition = availablePositions[randomIndex];
-
-                    // Set the selected position
-                    setSelectedPosition(randomPosition);
-
-                    localStorage.setItem('tokens', JSON.stringify(tokensArray));
-                }
-            }
-        }
-    }, [level, setLevel]);
->>>>>>> origin/develop
 
     // mount the map
     useEffect(() => {
         setMapData(initialMapData);
     }, [setMapData, initialMapData]);
 
-    // const [mapData, setMapData] = useState(initialMapData);
+    // useEffect(() => {
+    //     let oldToken = document.querySelector('.token');
+    //     if (oldToken) {
+    //         oldToken.classList.remove('token');
+    //     }
 
-    // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
+    //     if (level % 6 === 0 && level !== 0) {
+    //         var numberFromLevel = undefined;
+    //         var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
+    //         if (tokensArray !== undefined) {
+    //             numberFromLevel =
+    //                 tokensArray && tokensArray.find((token: number) => token === level);
+    //         } else {
+    //             tokensArray = [];
+    //         }
+
+    //         if (numberFromLevel === undefined) {
+    //             const availablePositions: { x: number; y: number }[] = [];
+
+    //             // Iterate through the mapData array
+    //             for (let x = 0; x < mapData.length; x++) {
+    //                 for (let y = 0; y < mapData[x].length; y++) {
+    //                     // Check if the value is ","
+    //                     if (mapData[x][y] === ',') {
+    //                         availablePositions.push({ x, y });
+    //                     }
+    //                 }
+    //             }
+
+    //             if (availablePositions.length > 0) {
+    //                 // Randomly select a position from available positions
+    //                 const randomIndex = Math.floor(Math.random() * availablePositions.length);
+    //                 const randomPosition = availablePositions[randomIndex];
+
+    //                 // Set the selected position
+    //                 setSelectedPosition(randomPosition);
+
+    //                 localStorage.setItem('tokens', JSON.stringify(tokensArray));
+    //             }
+    //         }
+    //     }
+    // }, [level, setLevel]);
 
     //set useRef to store the initial positions of the player, boxes and indicators
     const playerStartPosition = useRef({ x: 5, y: 6 });
@@ -233,7 +218,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         return index >= 0 ? levels[index] : ''; // Ensure non-negative index
     };
 
-<<<<<<< HEAD
+
+
 
     const collectedTokensRef = useRef(collectedTokens);
 
@@ -337,16 +323,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     }, [playerPosition, tokenPosition, mapData, level]);
 
-=======
-    // Function to calculate level class based on current level
-    const calculateLevelClass = (currentLevel: number) => {
-        let levelIs = currentLevel + 1;
-        const levels = ['', 'level10', 'level20', 'level30', 'level40'];
-        const index = Math.floor(levelIs / 10) % levels.length;
-        return index >= 0 ? levels[index] : ''; // Ensure non-negative index
-    };
 
->>>>>>> origin/develop
+
     return (
         <div
             className={`grid-container ${introDone ? 'introdone' : ''}
