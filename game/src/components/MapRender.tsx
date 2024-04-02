@@ -241,7 +241,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
 
             const newCollectedTokens = { ...collectedTokensRef.current };
-            newCollectedTokens[level + 1]
+            newCollectedTokens[level + 1] 
+            // newCollectedTokens[level + 1] = (newCollectedTokens[level + 1] || 0) + 1;
             setCollectedTokens(newCollectedTokens);
 
 
