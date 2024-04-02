@@ -185,26 +185,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     }, [collectedTokens]);
 
     // Define the placeToken function
-    // const placeToken = (position: { x: number; y: number }) => {
-    //     const newMapData = [...mapData];
-    //     newMapData[position.y][position.x] = 'T';
-    //     setMapData(newMapData);
-    //     setTokenPosition(position);
-    // };
-
-    // Define the placeToken function
     const placeToken = (position: { x: number; y: number }) => {
-        // Create a copy of the map data
-        const newMapData = mapData.map(row => [...row]);
-
-        // Remove any existing tokens from the map
-        for (let y = 0; y < newMapData.length; y++) {
-            for (let x = 0; x < newMapData[y].length; x++) {
-                if (newMapData[y][x] === 'T') {
-                    newMapData[y][x] = ',';
-                }
-            }
-        }
+        // Create a copy of the map data and remove any existing tokens
+        const newMapData = mapData.map(row => row.map(cell => cell === 'T' ? ',' : cell));
 
         // Place the new token
         newMapData[position.y][position.x] = 'T';
@@ -225,21 +208,23 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 const availablePositions = mapData.flatMap((row, y) =>
                     row.map((column, x) => column === ',' ? { x, y } : null)
                 ).filter(Boolean) as { x: number; y: number }[];
-                // console.log('availablePositions', availablePositions);
+
                 if (availablePositions.length > 0) {
                     const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
-                    // check localstorage if user has collected token for this level
-                    if (collectedTokensRef.current[level + 1]) {
-                        console.log('Token already collected for this level');
-                    } else {
-                        console.log('Token not collected for this level');
-                        placeToken(randomPosition);
-                    }
+
+                    // Delay the token placement
+                    setTimeout(() => {
+                        if (collectedTokensRef.current[level + 1]) {
+                            console.log('Token already collected for this level');
+                        } else {
+                            console.log('Token not collected for this level');
+                            placeToken(randomPosition);
+                        }
+                    }, 50);
                 }
             }
         }
     }, [mapData, level]);
-
 
     // Handle token collection
     useEffect(() => {
