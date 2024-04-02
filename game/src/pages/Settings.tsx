@@ -7,7 +7,7 @@ import allMaps from './../maps/maps';
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
         gameReady,
-
+        testingMap,
         setShowGameContainer,
         isMuted,
         setMuted,
@@ -156,7 +156,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
                         ></button>
                     )}
 
-                    {gameReady && (
+                    {gameReady && !testingMap && (
                         <div
                             id="btn-solution"
                             className={`button ${totalToken <= 0 ? 'disabled' : ''}`}

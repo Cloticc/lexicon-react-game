@@ -646,6 +646,12 @@
     padding: 2rem;
 }
 
+#credits p {
+    max-width: 420px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 #credits h2 {
     margin-top: 2rem;
     font-family: 'Gajraj One', sans-serif;
