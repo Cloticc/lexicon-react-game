@@ -269,7 +269,7 @@ export function MoveChar({
 
             const x = positionY;
             const y = positionX;
-            console.log(positionX, positionY, classname);
+
             gridItems.forEach((gridItem, index) => {
                 const gridX = Math.floor(index / 10);
                 const gridY = index % 10;
@@ -314,7 +314,7 @@ export function MoveChar({
                         handleDeath('mine');
                         setTimeout(() => {
                             setDivClass(newPosition.x, newPosition.y, 'explode');
-                        }, 10);
+                        }, 1);
                         // setPlayerGroundFloor('explode');
                     }
 
@@ -333,13 +333,15 @@ export function MoveChar({
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
+                            const boxType = newMapData[newPosition.y][newPosition.x];
+                            console.log(boxType);
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                             // setBoxGroundFloor('falling');
                             setTimeout(() => {
                                 setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'falling');
-                            }, 10);
+                            }, 1);
                             handleLost();
                             return;
                         } else if (isMine(newMapData, beyondBoxPosition)) {
@@ -347,7 +349,7 @@ export function MoveChar({
                             // setBoxGroundFloor('explode');
                             setTimeout(() => {
                                 setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'explode');
-                            }, 10);
+                            }, 1);
                             handleLost('boxexplode');
                             return;
                         }
@@ -392,6 +394,7 @@ export function MoveChar({
             startGame,
         ]
     );
+
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (!disableControls) {
