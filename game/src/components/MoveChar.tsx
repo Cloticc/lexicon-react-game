@@ -176,65 +176,20 @@ export function MoveChar({
 
 
 
-    // Define the placeToken function
-    const placeToken = (position: { x: number; y: number }) => {
-        // Create a copy of the mapData array
-        const newMapData = [...mapData];
-        // Replace the selected position with a token
-        newMapData[position.x][position.y] = 'T'; // 'T' represents a token
-        // Update the mapData state
-        setMapData(newMapData);
-    };
 
-
-    useEffect(() => {
-        // Check if the level is a multiple of 6
-        if (level % 6 === 0 && level !== 0) {
-            // if (level !== 0) {
-            // Check if a token already exists on the map
-            const tokenExists = mapData.some(row => row.includes('T'));
-
-            // Check if the user has already collected a token from this level
-            // const tokenCollected = collectedTokens[level];
-            const tokenCollected = collectedTokens[Number(level + 1)];
-            // If a token doesn't exist and hasn't been collected, place a new one
-            if (!tokenExists && !tokenCollected) {
-                // Find all available positions on the map where a token can be placed
-                const availablePositions = mapData.flatMap((row, x) =>
-                    row.map((column, y) => column === ',' ? { x, y } : null)
-                ).filter(Boolean) as { x: number; y: number }[];
-
-                if (availablePositions.length > 0) {
-                    const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
-                    placeToken(randomPosition);
-                }
-            }
-        }
-    }, [level, mapData, collectedTokens]);
-
-
-    // Load the collectedTokens from localStorage when the component mounts
-    useEffect(() => {
-        const storedTokens = localStorage.getItem('collectedTokens');
-        if (storedTokens) {
-            console.log(`storedTokens: ${storedTokens}`);
-
-            setCollectedTokens(JSON.parse(storedTokens));
-        }
-    }, []);
-
-    // Save the collectedTokens to localStorage whenever it changes
-    useEffect(() => {
-        localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
-    }, [collectedTokens]);
-
-    // Define a function that updates the collectedTokens state
     const updateCollectedTokens = (level: number) => {
+        // Create a copy of the collectedTokens object
         const updatedTokens = { ...collectedTokens };
+        // Increment the token count for the current level
         const currentLevelTokens = updatedTokens[level] || 0;
-        updatedTokens[level + 1] = currentLevelTokens + 1;
-        setCollectedTokens(updatedTokens);
+        // Only increment the token count if a token hasn't been collected for this level
+        if (currentLevelTokens === 0) {
+            updatedTokens[level + 1] = currentLevelTokens + 1;
+            setCollectedTokens(updatedTokens);
+        }
     };
+
+
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (

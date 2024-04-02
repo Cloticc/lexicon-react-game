@@ -1,9 +1,10 @@
 import '../css/MapRender.css';
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 import { MoveChar } from './MoveChar';
 import { MyContext } from '../ContextProvider/ContextProvider';
+import { log } from 'console';
 import { playSound } from './../components/playSound';
 
 //Check if array is an array of arrays
@@ -43,50 +44,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         boxGroundFloor,
         selectedPosition,
         setSelectedPosition,
+        collectedTokens,
+        setCollectedTokens,
     } = useContext(MyContext);
 
-    // const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
 
-    useEffect(() => {
-        let oldToken = document.querySelector('.token');
-        if (oldToken) {
-            oldToken.classList.remove('token');
-        }
-
-        if (level % 6 === 0 && level !== 0) {
-            var numberFromLevel = undefined;
-            var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
-            if (tokensArray !== undefined) {
-                numberFromLevel = tokensArray && tokensArray.find((token) => token === level);
-            } else {
-                tokensArray = [];
-            }
-            if (numberFromLevel === undefined) {
-                const availablePositions: { x: number; y: number }[] = [];
-
-                // Iterate through the mapData array
-                for (let x = 0; x < mapData.length; x++) {
-                    for (let y = 0; y < mapData[x].length; y++) {
-                        // Check if the value is ","
-                        if (mapData[x][y] === ',') {
-                            availablePositions.push({ x, y });
-                        }
-                    }
-                }
-
-                if (availablePositions.length > 0) {
-                    // Randomly select a position from available positions
-                    const randomIndex = Math.floor(Math.random() * availablePositions.length);
-                    const randomPosition = availablePositions[randomIndex];
-
-                    // Set the selected position
-                    setSelectedPosition(randomPosition);
-
-                    localStorage.setItem('tokens', JSON.stringify(tokensArray));
-                }
-            }
-        }
-    }, [level, setLevel]);
 
     // mount the map
     useEffect(() => {
@@ -148,9 +110,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'R' || event.key === 'r') {
-                setMapData(initialMapData);
-                setBoxPositions(boxStartPositions.current);
-                setPlayerPosition(playerStartPosition.current);
+                // setMapData(initialMapData);
+                // setBoxPositions(boxStartPositions.current);
+                // setPlayerPosition(playerStartPosition.current);
                 playSound('click', 0.25);
                 playSound('reverse', 0.5);
                 setMusic('play');
@@ -206,6 +168,66 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 return '';
         }
     };
+
+
+    const collectedTokensRef = useRef(collectedTokens);
+
+    // Update the ref whenever collectedTokens changes
+    useEffect(() => {
+        collectedTokensRef.current = collectedTokens;
+    }, [collectedTokens]);
+
+    // Load and save the collectedTokens from/to localStorage
+    useEffect(() => {
+        const storedTokens = localStorage.getItem('collectedTokens');
+        if (storedTokens) {
+            setCollectedTokens(JSON.parse(storedTokens));
+        }
+
+        return () => {
+            localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
+        };
+    }, []);
+
+    // Define the placeToken function
+    const placeToken = (position: { x: number; y: number }) => {
+        const newMapData = [...mapData];
+        newMapData[position.x][position.y] = 'T';
+        setMapData(newMapData);
+    };
+
+
+    // Place a token on the map when the level changes
+    useEffect(() => {
+        if (level % 6 === 0 && level !== 0) {
+            const tokenExists = mapData.some(row => row.includes('T'));
+            const tokenCollectedForLevel = collectedTokensRef.current[level] === 1;
+
+            if (!tokenExists && !tokenCollectedForLevel && !(collectedTokensRef.current[level] > 0)) {
+                const availablePositions = mapData.flatMap((row, x) =>
+                    row.map((column, y) => column === ',' ? { x, y } : null)
+                ).filter(Boolean) as { x: number; y: number }[];
+
+                if (availablePositions.length > 0) {
+                    const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
+                    placeToken(randomPosition);
+                }
+            }
+        }
+    }, [level]);
+
+    // Handle token collection
+    useEffect(() => {
+        if (mapData[playerPosition.y][playerPosition.x] === 'T') {
+            const newMapData = mapData.map(row => [...row]);
+            newMapData[playerPosition.y][playerPosition.x] = ',';
+            setMapData(newMapData);
+
+            const newCollectedTokens = { ...collectedTokensRef.current };
+            newCollectedTokens[level + 1] = (newCollectedTokens[level + 1] || 0) + 1;
+            setCollectedTokens(newCollectedTokens);
+        }
+    }, [playerPosition, mapData, level]);
 
     return (
         <div
