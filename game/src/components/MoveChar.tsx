@@ -404,29 +404,31 @@ export function MoveChar({
         };
 
         const handleTouchMove = (event: TouchEvent) => {
-            if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
+            if (!disableControls) {
+                if (startTouchX === null || startTouchY === null) return; // Touch didn't start properly
 
-            const touch = event.touches[0];
-            const distX = touch.clientX - startTouchX;
-            const distY = touch.clientY - startTouchY;
+                const touch = event.touches[0];
+                const distX = touch.clientX - startTouchX;
+                const distY = touch.clientY - startTouchY;
 
-            // Check if the touch movement exceeds the threshold
-            if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
+                // Check if the touch movement exceeds the threshold
+                if (Math.abs(distX) < threshold && Math.abs(distY) < threshold) return;
 
-            let direction: Direction | null = null;
+                let direction: Direction | null = null;
 
-            // Determine the swipe direction
-            if (Math.abs(distX) > Math.abs(distY)) {
-                direction = distX > 0 ? 'RIGHT' : 'LEFT';
-            } else {
-                direction = distY > 0 ? 'DOWN' : 'UP';
-            }
+                // Determine the swipe direction
+                if (Math.abs(distX) > Math.abs(distY)) {
+                    direction = distX > 0 ? 'RIGHT' : 'LEFT';
+                } else {
+                    direction = distY > 0 ? 'DOWN' : 'UP';
+                }
 
-            if (direction) {
-                handlePlayerMove(direction);
-                // Reset the initial touch position after each successful move
-                startTouchX = touch.clientX;
-                startTouchY = touch.clientY;
+                if (direction) {
+                    handlePlayerMove(direction);
+                    // Reset the initial touch position after each successful move
+                    startTouchX = touch.clientX;
+                    startTouchY = touch.clientY;
+                }
             }
         };
 
