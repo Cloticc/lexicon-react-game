@@ -76,15 +76,12 @@ export function MoveChar({
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
-        if (youAreDead) {
-            setTimeout(() => {
-                setYouAreDead(false);
-                setDisableControls(false);
-                resetGame();
-            }, 3000);
-        } else {
+
+        setTimeout(() => {
+            setYouAreDead(false);
             setDisableControls(false);
-        }
+            resetGame();
+        }, 3000);
     }
 
     function handleLost(string?: string | null) {
@@ -96,15 +93,12 @@ export function MoveChar({
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
-        if (youLost) {
-            setTimeout(() => {
-                setYouLost(false);
-                setDisableControls(false);
-                resetGame();
-            }, 3000);
-        } else {
+
+        setTimeout(() => {
+            setYouLost(false);
             setDisableControls(false);
-        }
+            resetGame();
+        }, 3000);
     }
 
     /**
