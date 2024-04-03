@@ -3,9 +3,9 @@
 import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { MapRender } from './MapRender';
-import { playSound } from './playSound';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
+import { playSound } from './playSound';
 
 const ITEMS = [
     'empty',
@@ -151,13 +151,12 @@ function Emptydivs({
                     {row.map((item: any, j: number) => (
                         <div
                             key={j}
-                            className={`grid-item-editor ${
-                                item.type && item.type !== 'empty'
-                                    ? item.type === 'player'
-                                        ? 'ground player-down playerwalkdown'
-                                        : 'ground ' + item.type
-                                    : item.type
-                            }`}
+                            className={`grid-item-editor ${item.type && item.type !== 'empty'
+                                ? item.type === 'player'
+                                    ? 'ground player-down playerwalkdown'
+                                    : 'ground ' + item.type
+                                : item.type
+                                }`}
                             data-id={item.id}
                             onClick={(e) => handleGridClick(e, i, j)}
                             onMouseOver={(e) => handleGridClick(e, i, j)}
@@ -268,54 +267,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         let specialBoxAmount = 0;
         let doorAmount = 0;
 
-        gridItems.forEach((row) => {
-            const columns = row.querySelectorAll('.grid-item-editor');
-            const array: string[] = [];
-            data.mapdata.push(array);
-            columns.forEach((column) => {
-                let symbol;
-                if (column.classList.length <= 1 && column.classList.contains('grid-item-editor')) {
-                    symbol = '-';
-                } else if (column.classList.contains('undefined')) {
-                    symbol = '-';
-                } else if (column.classList.contains('player-down')) {
-                    symbol = 'P';
-                    ++playerAmount;
-                } else if (column.classList.contains('box')) {
-                    symbol = 'B';
-                    ++boxAmount;
-                } else if (column.classList.contains('boxindicator')) {
-                    symbol = 'I';
-                    ++boxIndicator;
-                } else if (column.classList.contains('wall')) {
-                    symbol = '#';
-                } else if (column.classList.contains('cracked')) {
-                    symbol = 'W';
-                } else if (column.classList.contains('mined')) {
-                    symbol = 'M';
-                } else if (column.classList.contains('specialboxed')) {
-                    symbol = 'O';
-                    ++specialBoxAmount;
-                } else if (column.classList.contains('special')) {
-                    let number = column.getAttribute('data-id');
-                    symbol = 'S' + number;
-                    ++specialBoxIndicator;
-                } else if (column.classList.contains('door')) {
-                    let number = column.getAttribute('data-id');
-                    symbol = 'D' + number;
-                    ++doorAmount;
-                } else if (column.classList.contains('ground')) {
-                    symbol = ',';
-                }
-                if (symbol === undefined) {
-                    symbol = '-';
-                }
-                array.push(symbol);
-            });
-        });
-        saveMap(data.mapdata);
 
-        /*
         // Define a temporary array to hold the current row
         let row: string[] = [];
 
@@ -366,28 +318,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         if (row.length > 0) {
             data.mapdata.push(row);
         }
-*/
-
-        /*
-        if (playerAmount > 1 || playerAmount === 0) {
-            alert('Can/must only have 1 player, please fix...');
-            return;
-        }
-
-        if (boxAmount === 0) {
-            alert('Must have at least one box, please fix...');
-            return;
-        }
-
-        // console.log(boxIndicator, boxAmount);
-
-        if (boxIndex === 0 || boxIndex !== boxAmount) {
-            alert(
-                'You must have the same amount of Box indicators as you have boxes, please fix...'
-            );
-            return;
-        }
-        */
+        saveMapToFile(data);
     }
 
     function saveMapToFile(data) {
@@ -436,54 +367,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         }
     };
 
-    // const handleGridClick = (
-    //     e: { stopPropagation: () => void; type: string },
-    //     i: string | number,
-    //     j: string | number
-    // ) => {
-    //     e.stopPropagation();
 
-    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
-    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
-    //         // Copy gridItems state
-    //         const newGridItems = [...gridItems];
-
-    //         // Update the class of the clicked grid item based on the selected item
-    //         if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
-    //             const id = prompt('Enter an ID (1-9) for this item:');
-    //             if (id && /^[1-9]$/.test(id)) { // Check if the input is a single digit between 1 and 9
-    //                 newGridItems[Number(i)][Number(j)] = selectedItem + '-' + id;
-    //             } else {
-    //                 alert('Invalid ID. Please enter a single digit between 1 and 9.');
-    //             }
-    //         } else {
-    //             newGridItems[Number(i)][Number(j)] = selectedItem;
-    //         }
-    //         console.log(newGridItems);
-    //         setGridItems(newGridItems);
-    //     }
-    // };
-
-    // const handleGridClick = (
-    //     e: { stopPropagation: () => void; type: string },
-    //     i: string | number,
-    //     j: string | number
-    // ) => {
-    //     e.stopPropagation();
-
-    //     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
-    //     if ((isMouseDown && isShiftDown) || e.type === 'click') {
-    //         // console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
-    //         // Copy gridItems state
-    //         const newGridItems = [...gridItems];
-
-    //         // Update the class of the clicked grid item based on the selected item
-    //         newGridItems[Number(i)][Number(j)] = selectedItem;
-
-    //         // Update gridItems state
-    //         setGridItems(newGridItems);
-    //     }
-    // };
 
     //dont remove this i to lazy to fix it
     const handleGridClickBack = () => {
@@ -577,12 +461,12 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     const handleHelp = () => {
         alert(
             '1. Click on the grid to place items.\n' +
-                '2. Use the toolbar/right click or 1-9Num to select an item.\n' +
-                '5. Hold Shift to place/draw multiple items.\n' +
-                "6. Click the 'Play' icon to test the map and solve it to be able to save it.\n" +
-                "7. When completing your test of the map, click 'Save' icon to download the map.\n" +
-                "8. In the test play, click 'Back' icon to go back to the map editor.\n" +
-                '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to save the map.\n'
+            '2. Use the toolbar/right click or 1-9Num to select an item.\n' +
+            '5. Hold Shift to place/draw multiple items.\n' +
+            "6. Click the 'Play' icon to test the map and solve it to be able to save it.\n" +
+            "7. When completing your test of the map, click 'Save' icon to download the map.\n" +
+            "8. In the test play, click 'Back' icon to go back to the map editor.\n" +
+            '9. You must have 1 player, 1 or more boxes, and the same amount of box indicators as boxes to save the map.\n'
         );
     };
 
@@ -595,7 +479,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 <button
                     className="button"
                     id="btn-savemap"
-                    onClick={saveMapToFile}
+                    onClick={() => saveMapToFile(savedMapData)} 
                     onMouseOver={handleMouseOver}
                 ></button>
             )}
@@ -671,3 +555,124 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         </>
     );
 }
+
+
+
+// gridItems.forEach((row) => {
+//     const columns = row.querySelectorAll('.grid-item-editor');
+//     const array: string[] = [];
+//     data.mapdata.push(array);
+//     columns.forEach((column) => {
+//         let symbol;
+//         if (column.classList.length <= 1 && column.classList.contains('grid-item-editor')) {
+//             symbol = '-';
+//         } else if (column.classList.contains('undefined')) {
+//             symbol = '-';
+//         } else if (column.classList.contains('player-down')) {
+//             symbol = 'P';
+//             ++playerAmount;
+//         } else if (column.classList.contains('box')) {
+//             symbol = 'B';
+//             ++boxAmount;
+//         } else if (column.classList.contains('boxindicator')) {
+//             symbol = 'I';
+//             ++boxIndicator;
+//         } else if (column.classList.contains('wall')) {
+//             symbol = '#';
+//         } else if (column.classList.contains('cracked')) {
+//             symbol = 'W';
+//         } else if (column.classList.contains('mined')) {
+//             symbol = 'M';
+//         } else if (column.classList.contains('specialboxed')) {
+//             symbol = 'O';
+//             ++specialBoxAmount;
+//         } else if (column.classList.contains('special')) {
+//             let number = column.getAttribute('data-id');
+//             symbol = 'S' + number;
+//             ++specialBoxIndicator;
+//         } else if (column.classList.contains('door')) {
+//             let number = column.getAttribute('data-id');
+//             symbol = 'D' + number;
+//             ++doorAmount;
+//         } else if (column.classList.contains('ground')) {
+//             symbol = ',';
+//         }
+//         if (symbol === undefined) {
+//             symbol = '-';
+//         }
+//         array.push(symbol);
+//     });
+// });
+// saveMap(data.mapdata);
+
+
+/*
+if (playerAmount > 1 || playerAmount === 0) {
+    alert('Can/must only have 1 player, please fix...');
+    return;
+}
+
+if (boxAmount === 0) {
+    alert('Must have at least one box, please fix...');
+    return;
+}
+
+// console.log(boxIndicator, boxAmount);
+
+if (boxIndex === 0 || boxIndex !== boxAmount) {
+    alert(
+        'You must have the same amount of Box indicators as you have boxes, please fix...'
+    );
+    return;
+}
+*/
+
+
+// const handleGridClick = (
+//     e: { stopPropagation: () => void; type: string },
+//     i: string | number,
+//     j: string | number
+// ) => {
+//     e.stopPropagation();
+
+//     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
+//     if ((isMouseDown && isShiftDown) || e.type === 'click') {
+//         // Copy gridItems state
+//         const newGridItems = [...gridItems];
+
+//         // Update the class of the clicked grid item based on the selected item
+//         if (selectedItem === 'door' || selectedItem === 'special' || selectedItem === 'specialboxed') {
+//             const id = prompt('Enter an ID (1-9) for this item:');
+//             if (id && /^[1-9]$/.test(id)) { // Check if the input is a single digit between 1 and 9
+//                 newGridItems[Number(i)][Number(j)] = selectedItem + '-' + id;
+//             } else {
+//                 alert('Invalid ID. Please enter a single digit between 1 and 9.');
+//             }
+//         } else {
+//             newGridItems[Number(i)][Number(j)] = selectedItem;
+//         }
+//         console.log(newGridItems);
+//         setGridItems(newGridItems);
+//     }
+// };
+
+// const handleGridClick = (
+//     e: { stopPropagation: () => void; type: string },
+//     i: string | number,
+//     j: string | number
+// ) => {
+//     e.stopPropagation();
+
+//     // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
+//     if ((isMouseDown && isShiftDown) || e.type === 'click') {
+//         // console.log(`Grid item clicked at (${i}, ${j}), placing item ${selectedItem}`);
+//         // Copy gridItems state
+//         const newGridItems = [...gridItems];
+
+//         // Update the class of the clicked grid item based on the selected item
+//         newGridItems[Number(i)][Number(j)] = selectedItem;
+
+//         // Update gridItems state
+//         setGridItems(newGridItems);
+//     }
+// };
