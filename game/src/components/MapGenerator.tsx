@@ -5,6 +5,7 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
+import { log } from 'console';
 import { playSound } from './playSound';
 
 const ITEMS = [
@@ -250,6 +251,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         console.log(savedMapData);
     }, [savedMapData]);
 
+
+
     function generateMap(): void {
         const data: { mapdata: string[][]; solution: string[][] } = {
             mapdata: [],
@@ -263,48 +266,34 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         let specialBoxAmount = 0;
         let doorAmount = 0;
 
+        type ClassToSymbol = {
+            [key: string]: {
+                symbol: string;
+                counter?: () => number;
+            };
+        };
+
+        const classToSymbol: ClassToSymbol = {
+            player: { symbol: 'P', counter: () => ++playerAmount },
+            box: { symbol: 'B', counter: () => ++boxAmount },
+            ground: { symbol: ',' },
+            boxindicator: { symbol: 'I', counter: () => ++boxIndex },
+            wall: { symbol: '#' },
+            specialboxed: { symbol: 'O', counter: () => ++specialBoxIndicator },
+            special: { symbol: 'S', counter: () => ++specialBoxAmount },
+            door: { symbol: 'D', counter: () => ++doorAmount },
+            cracked: { symbol: 'W' },
+            mined: { symbol: 'M' },
+        };
+
         gridItems.forEach((row) => {
             const newRow: string[] = [];
             row.forEach((item) => {
                 let symbol = '-';
-                if (item.type) {
-                    switch (item.type) {
-                        case 'player':
-                            symbol = 'P';
-                            playerAmount++;
-                            break;
-                        case 'box':
-                            symbol = 'B';
-                            boxAmount++;
-                            break;
-                        case 'ground':
-                            symbol = ',';
-                            break;
-                        case 'boxindicator':
-                            symbol = 'I';
-                            boxIndex++;
-                            break;
-                        case 'wall':
-                            symbol = '#';
-                            break;
-                        case 'specialboxed':
-                            symbol = 'O';
-                            specialBoxIndicator++;
-                            break;
-                        case 'special':
-                            symbol = 'S' + item.id;
-                            specialBoxAmount++;
-                            break;
-                        case 'door':
-                            symbol = 'D' + item.id;
-                            doorAmount++;
-                            break;
-                        case 'cracked':
-                            symbol = 'W';
-                            break;
-                        case 'mined':
-                            symbol = 'M';
-                            break;
+                if (item.type && classToSymbol[item.type]) {
+                    symbol = classToSymbol[item.type].symbol;
+                    if (classToSymbol[item.type].counter) {
+                        classToSymbol[item.type].counter!(); // should null check it
                     }
                 }
                 newRow.push(symbol);
@@ -313,9 +302,29 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         });
 
         saveMap(data.mapdata);
+        console.log(playerAmount, boxAmount, boxIndex, specialBoxAmount, specialBoxIndicator, doorAmount);
     }
 
     function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
+        let hasPlayer = false;
+        let hasBox = false;
+        let hasBoxIndicator = false;
+
+        for (const row of data.mapdata) {
+            for (const item of row) {
+                if (item === 'P') hasPlayer = true;
+                else if (item === 'B') hasBox = true;
+                else if (item === 'I') hasBoxIndicator = true;
+               
+                if (hasPlayer && hasBox && hasBoxIndicator) break;
+            }
+        }
+
+        if (!hasPlayer || !hasBox || !hasBoxIndicator) {
+            alert('You must have at least one player, one box, and one box indicator to save the map.');
+            return;
+        }
+
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         console.log(data);
@@ -358,6 +367,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             }
             playSound('add', 0.4);
             setGridItems(newGridItems);
+
+
         }
     };
 
