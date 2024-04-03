@@ -485,7 +485,7 @@ body,
     background-position: 91.5% 85%;
     background-repeat: no-repeat;
     background-size: 1690%;
-    z-index: 5;
+    z-index: 101;
     overflow: visible;
 }
 .explode:before {

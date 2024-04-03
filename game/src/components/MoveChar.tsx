@@ -16,6 +16,7 @@ interface MoveCharProps {
     boxPositions: { x: number; y: number }[];
     setBoxPositions: (positions: { x: number; y: number }[]) => void;
 }
+
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 const directionMap: Record<Direction, { x: number; y: number }> = {
@@ -63,6 +64,8 @@ export function MoveChar({
         resetGame,
         history,
         setHistory,
+        solution,
+        setSolution,
         youAreDead,
         youLost,
         setYouAreDead,
@@ -125,10 +128,30 @@ export function MoveChar({
             return [...prevHistory, newHistoryState];
         });
     };
-
-    /**
-     * Handles the undo functionality for the game history.
-     */
+    const addToSolution = (mapData: string[][], direction: string) => {
+        const newSolution = {
+            mapData: mapData, 
+            direction: direction.toLowerCase(), 
+        };
+        setSolution([...solution, newSolution]);
+    };
+    useEffect(() => {
+        console.log(solution);
+    }, [solution]);
+    const saveSolutionToJson = () => {
+        const Solution = solution.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }));
+        const jsonSolution = JSON.stringify(Solution);
+        const blob = new Blob([jsonSolution], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `map${level + 1}.json`;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(a.href);
+    };
     const handleHistoryUndo = useCallback(() => {
         if (history.length > 1) {
             const prevState = history[history.length - 1];
@@ -140,6 +163,7 @@ export function MoveChar({
             setBoxPositions(boxPositions);
             setCounter(counter);
             setHistory((prev) => prev.slice(0, -1));
+            setSolution((prev) => prev.slice(0, -1));
             playSound('reverse', 0.3);
             if (counter === 0) {
                 if (setGameRunning) {
@@ -296,6 +320,28 @@ export function MoveChar({
         setPlayerPosition(newPosition);
     };
 
+    function setDivClass(positionX: number, positionY: number, classname: string) {
+        const gridContainer = document.querySelector('.grid-container');
+
+        if (gridContainer) {
+            const gridItems = gridContainer.querySelectorAll('[class^="grid-item"]');
+
+            const x = positionY;
+            const y = positionX;
+
+            gridItems.forEach((gridItem, index) => {
+                const gridX = Math.floor(index / 10);
+                const gridY = index % 10;
+
+                if (gridX === x && gridY === y) {
+                    gridItem.classList.add(classname);
+                } else {
+                    gridItem.classList.remove(classname);
+                }
+            });
+        }
+    }
+
     const handlePlayerMove = useCallback(
         (direction: string) => {
             setPlayerDirection(direction.toLowerCase());
@@ -325,7 +371,10 @@ export function MoveChar({
 
                     if (checkMine) {
                         handleDeath('mine');
-                        setPlayerGroundFloor('explode');
+                        setTimeout(() => {
+                            setDivClass(newPosition.x, newPosition.y, 'explode');
+                        }, 1);
+                        // setPlayerGroundFloor('explode');
                     }
 
                     const boxIndex = boxPositions.findIndex(
@@ -343,15 +392,23 @@ export function MoveChar({
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
+                            const boxType = newMapData[newPosition.y][newPosition.x];
+                            console.log(boxType);
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
-                            setBoxGroundFloor('falling');
+                            // setBoxGroundFloor('falling');
+                            setTimeout(() => {
+                                setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'falling');
+                            }, 1);
                             handleLost();
                             return;
                         } else if (isMine(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
-                            setBoxGroundFloor('explode');
+                            // setBoxGroundFloor('explode');
+                            setTimeout(() => {
+                                setDivClass(beyondBoxPosition.x, beyondBoxPosition.y, 'explode');
+                            }, 1);
                             handleLost('boxexplode');
                             return;
                         }
@@ -359,28 +416,11 @@ export function MoveChar({
                         if (checkCrackedWall) {
                             setDisableControls(true);
                             playSound('drill');
-
                             const gridContainer = document.querySelector('.grid-container');
+
+                            setDivClass(newPosition.x, newPosition.y, 'drill');
+
                             gridContainer?.classList.add('gameshaker');
-                            if (gridContainer) {
-                                const gridItems =
-                                    gridContainer.querySelectorAll('[class^="grid-item"]');
-
-                                const x = newPosition.y; // Assuming newPosition is an object with x and y properties
-                                const y = newPosition.x;
-
-                                gridItems.forEach((gridItem, index) => {
-                                    const gridX = Math.floor(index / 10); // Assuming 10 items per row
-                                    const gridY = index % 10;
-
-                                    if (gridX === x && gridY === y) {
-                                        gridItem.classList.add('drill');
-                                        gridItem.focus();
-                                    } else {
-                                        gridItem.classList.remove('drill');
-                                    }
-                                });
-                            }
                             setTimeout(() => {
                                 gridContainer?.classList.remove('gameshaker');
                                 movePlayer(newMapData, newPosition);
@@ -395,6 +435,7 @@ export function MoveChar({
                         startGame();
                     }
                     addToHistory();
+                    addToSolution(newMapData, direction);
                 }
             }
         },
@@ -413,6 +454,7 @@ export function MoveChar({
             startGame,
         ]
     );
+
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (!disableControls) {
@@ -512,7 +554,8 @@ export function MoveChar({
         if (allIndicatorsCovered && gameRunning) {
             stopGame();
             setWonGame(true);
-
+            addToSolution(mapData, direction);
+            saveSolutionToJson();
             setLevelCompleted(true);
             setCurrentLevel(level.toString());
         }

@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
-import allMaps from './../maps/maps'
+import allMaps from './../maps/maps';
 import { playSound } from './../components/playSound';
 
 export function Settings({ onPageChange }: SelectPageProps) {
@@ -101,13 +101,16 @@ export function Settings({ onPageChange }: SelectPageProps) {
             for (let index = 0; index < allMaps[level].solution.length; index++) {
                 const mapData = allMaps[level].solution[index].mapdata;
                 const direction = allMaps[level].solution[index].direction;
+                console.log(mapData);
+                console.log(direction);
+                (direction);
                 setTimeout(() => {
                     setMapData(mapData);
                     setPlayerDirection(direction);
-                }, index * 500);
+                }, index * 250);
                 setTimeout(() => {
                     resetGame();
-                }, (allMaps[level].solution.length + 2) * 500);
+                }, (allMaps[level].solution.length + 2) * 250);
             }
             setMusic('play');
             playSound('collect');
