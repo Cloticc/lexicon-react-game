@@ -315,7 +315,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 if (item === 'P') hasPlayer = true;
                 else if (item === 'B') hasBox = true;
                 else if (item === 'I') hasBoxIndicator = true;
-               
+
                 if (hasPlayer && hasBox && hasBoxIndicator) break;
             }
         }
@@ -354,6 +354,17 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         // Only update the grid item if the mouse button is down and Shift is held, or if it's a click event (not a drag)
         if ((isMouseDown && isShiftDown) || e.type === 'click') {
             const newGridItems = [...gridItems];
+            if (selectedItem === 'player') {
+                for (const row of newGridItems) {
+                    for (let i = 0; i < row.length; i++) {
+                        if (row[i].type === 'player') {
+                            row[i] = { type: 'ground' }; // Replace the old player with ground
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Update the class of the clicked grid item based on the selected item
             if (selectedItem === 'door' || selectedItem === 'special') {
                 const id = prompt('Enter an ID (1-9) for this item:');
