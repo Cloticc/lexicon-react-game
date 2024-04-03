@@ -54,8 +54,6 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-        setLevel,
-        highestScores,
         setHighestScores,
         handleHistory,
         setHandleHistory,
@@ -67,7 +65,6 @@ export function MoveChar({
         setYouAreDead,
         setYouLost,
         setPlayerGroundFloor,
-        setBoxGroundFloor,
     } = useContext(MyContext);
 
     function handleDeath(string?: string | null) {

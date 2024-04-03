@@ -39,7 +39,7 @@ export function Highscore() {
 
     useEffect(() => {
         // Define the function to run when Enter key is pressed
-        const handleEnterPress = (event) => {
+        const handleEnterPress = (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
                 handleNextLevel();
             }
