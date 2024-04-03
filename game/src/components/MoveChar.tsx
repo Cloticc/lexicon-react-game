@@ -366,7 +366,7 @@ export function MoveChar({
         let doorPosition = null;
         if (specialBoxIndicator.some((pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y)) {
             // If it is, find the corresponding door
-            const doorNumber = specialIndicator.slice(1); // Get the number after 'S'
+            const doorNumber = specialIndicator.slice(1);
             const correspondingDoor = 'D' + doorNumber;
 
             // Find the position of the corresponding door
@@ -380,7 +380,7 @@ export function MoveChar({
                 if (doorPosition) break;
             }
 
-            // Update the map data to reflect the box moving onto the special indicator
+            // Update the map data to reflect the box moving onto the special indicator "Should"
             newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'O';
         } else {
             newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'O';
