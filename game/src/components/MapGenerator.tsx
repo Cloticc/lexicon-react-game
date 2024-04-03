@@ -212,7 +212,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [showMapRender, setShowMapRender] = useState(false);
 
-    const [savedMapData, saveMap] = useState([]);
+    const [savedMapData, saveMap] = useState<string[][]>([]);
 
     const { setDisableControls, setGameReady } = useContext(MyContext);
 
@@ -270,7 +270,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
         gridItems.forEach((row) => {
             const columns = row.querySelectorAll('.grid-item-editor');
-            const array = [];
+            const array: string[] = [];
             data.mapdata.push(array);
             columns.forEach((column) => {
                 let symbol;
@@ -306,6 +306,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     ++doorAmount;
                 } else if (column.classList.contains('ground')) {
                     symbol = ',';
+                }
+                if (symbol === undefined) {
+                    symbol = '-';
                 }
                 array.push(symbol);
             });
@@ -387,7 +390,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         */
     }
 
-    function saveMapToFile() {
+    function saveMapToFile(data) {
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         console.log(data);

@@ -37,7 +37,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setInitialBoxPositions,
         playerDirection,
         setPlayerDirection,
-        youAreaDead,
+        youAreDead,
         youLost,
         playerGroundFloor,
         boxGroundFloor,
@@ -156,7 +156,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'R' || event.key === 'r') {
-                if (!youAreaDead && !youLost) {
+                if (!youAreDead && !youLost) {
                     setMapData(initialMapData);
                     setBoxPositions(boxStartPositions.current);
                     setPlayerPosition(playerStartPosition.current);
