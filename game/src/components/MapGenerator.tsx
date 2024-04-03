@@ -402,6 +402,26 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             link.remove();
             window.URL.revokeObjectURL(link.href);
         }
+
+        function saveJsonToFile(data) {
+            fetch('../php/savemap.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to save file');
+                    }
+                    console.log('File saved successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving file:', error);
+                });
+        }
+        saveJsonToFile(data);
     }
 
     const handleGridClick = (
