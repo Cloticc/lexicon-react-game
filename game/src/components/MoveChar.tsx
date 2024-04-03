@@ -349,7 +349,7 @@ export function MoveChar({
         setPlayerPosition(newPosition);
     };
 
-
+//Just to trigger the door when the box is on the special indicator changes to ground
     const triggerDoor = (doorPosition: { x: number; y: number }, newMapData: string[][]) => {
         newMapData[doorPosition.y][doorPosition.x] = ',';
         setMapData(newMapData);
