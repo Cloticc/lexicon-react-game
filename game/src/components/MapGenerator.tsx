@@ -196,16 +196,8 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const {
-        mapData,
-        setMapData,
-        setIntroDone,
-        setMusic,
-        wonGame,
-        youAreDead,
-        youLost,
-        setTestingMap,
-    } = useContext(MyContext);
+    const { setMapData, setIntroDone, setMusic, wonGame, youAreDead, youLost, setTestingMap } =
+        useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -262,7 +254,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
-        let boxIndex = 0;
+
         let boxIndicator = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
@@ -390,7 +382,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         */
     }
 
-    function saveMapToFile(data) {
+    function saveMapToFile(data: any) {
+        // Rest of the function remains the same
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         console.log(data);
@@ -409,6 +402,26 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             link.remove();
             window.URL.revokeObjectURL(link.href);
         }
+
+        function saveJsonToFile(data) {
+            fetch('../php/savemap.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Failed to save file');
+                    }
+                    console.log('File saved successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving file:', error);
+                });
+        }
+        saveJsonToFile(data);
     }
 
     const handleGridClick = (
