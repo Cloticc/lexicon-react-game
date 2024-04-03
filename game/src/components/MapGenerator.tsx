@@ -206,7 +206,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         youLost,
         setTestingMap,
     } = useContext(MyContext);
-
+    const [usedDoorIds, setUsedDoorIds] = useState<string[]>([]);
+    const [usedSpecialIds, setUsedSpecialIds] = useState<string[]>([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
     const [isMouseDown, setIsMouseDown] = useState(false);
@@ -369,7 +370,18 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             if (selectedItem === 'door' || selectedItem === 'special') {
                 const id = prompt('Enter an ID (1-9) for this item:');
                 if (id && /^[1-9]$/.test(id)) {
-                    newGridItems[Number(i)][Number(j)] = { type: selectedItem, id };
+                    if (selectedItem === 'door' && usedDoorIds.includes(id)) {
+                        alert('This ID is already used for another door. Please enter a unique ID.');
+                    } else if (selectedItem === 'special' && usedSpecialIds.includes(id)) {
+                        alert('This ID is already used for another special item. Please enter a unique ID.');
+                    } else {
+                        newGridItems[Number(i)][Number(j)] = { type: selectedItem, id };
+                        if (selectedItem === 'door') {
+                            setUsedDoorIds([...usedDoorIds, id]);
+                        } else {
+                            setUsedSpecialIds([...usedSpecialIds, id]);
+                        }
+                    }
                 } else {
                     alert('Invalid ID. Please enter a single digit between 1 and 9.');
                 }
