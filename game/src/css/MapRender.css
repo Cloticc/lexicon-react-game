@@ -40,6 +40,7 @@ body,
 
 .introdone {
     animation: none;
+    scale: 1;
 }
 
 .hide {

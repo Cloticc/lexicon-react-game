@@ -167,6 +167,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setCounter(0);
         setElapsedTime(0);
         setWonGame(false);
+        setYouAreDead(false);
+        setYouLost(false);
         setMapData(initialMapData);
         setMusic('play');
         setStartTime(new Date());

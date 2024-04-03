@@ -4,7 +4,6 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 
 import { MapRender } from './MapRender';
 import { playSound } from './playSound';
-import { SaveMap } from './SaveMap';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
 
@@ -197,13 +196,23 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { mapData, setMapData, setMusic, wonGame, youAreDead, youLost, setTestingMap } =
-        useContext(MyContext);
+    const {
+        mapData,
+        setMapData,
+        setIntroDone,
+        setMusic,
+        wonGame,
+        youAreDead,
+        youLost,
+        setTestingMap,
+    } = useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
     const [isMouseDown, setIsMouseDown] = useState(false);
     const [showMapRender, setShowMapRender] = useState(false);
+
+    const [savedMapData, saveMap] = useState<string[][]>([]);
 
     const { setDisableControls, setGameReady } = useContext(MyContext);
 
@@ -238,25 +247,75 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(savedMapData);
+    }, [savedMapData]);
+
     function generateMap(): void {
-        const data: { mapdata: string[][]; solution: string } = {
+        const data: { mapdata: string[][]; solution: string[][] } = {
             mapdata: [],
-            solution: '',
+            solution: [],
         };
 
         // Use a more specific selector to get the grid items directly
-        const gridItems = document.querySelectorAll<HTMLDivElement>(
-            '.grid-row-editor .grid-item-editor'
-        );
-
+        const gridItems = document.querySelectorAll<HTMLDivElement>('.grid-row-editor');
         // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
         let boxIndex = 0;
+        let boxIndicator = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
         let doorAmount = 0;
 
+        gridItems.forEach((row) => {
+            const columns = row.querySelectorAll('.grid-item-editor');
+            const array: string[] = [];
+            data.mapdata.push(array);
+            columns.forEach((column) => {
+                let symbol;
+                if (column.classList.length <= 1 && column.classList.contains('grid-item-editor')) {
+                    symbol = '-';
+                } else if (column.classList.contains('undefined')) {
+                    symbol = '-';
+                } else if (column.classList.contains('player-down')) {
+                    symbol = 'P';
+                    ++playerAmount;
+                } else if (column.classList.contains('box')) {
+                    symbol = 'B';
+                    ++boxAmount;
+                } else if (column.classList.contains('boxindicator')) {
+                    symbol = 'I';
+                    ++boxIndicator;
+                } else if (column.classList.contains('wall')) {
+                    symbol = '#';
+                } else if (column.classList.contains('cracked')) {
+                    symbol = 'W';
+                } else if (column.classList.contains('mined')) {
+                    symbol = 'M';
+                } else if (column.classList.contains('specialboxed')) {
+                    symbol = 'O';
+                    ++specialBoxAmount;
+                } else if (column.classList.contains('special')) {
+                    let number = column.getAttribute('data-id');
+                    symbol = 'S' + number;
+                    ++specialBoxIndicator;
+                } else if (column.classList.contains('door')) {
+                    let number = column.getAttribute('data-id');
+                    symbol = 'D' + number;
+                    ++doorAmount;
+                } else if (column.classList.contains('ground')) {
+                    symbol = ',';
+                }
+                if (symbol === undefined) {
+                    symbol = '-';
+                }
+                array.push(symbol);
+            });
+        });
+        saveMap(data.mapdata);
+
+        /*
         // Define a temporary array to hold the current row
         let row: string[] = [];
 
@@ -307,6 +366,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         if (row.length > 0) {
             data.mapdata.push(row);
         }
+*/
 
         /*
         if (playerAmount > 1 || playerAmount === 0) {
@@ -328,7 +388,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             return;
         }
         */
+    }
 
+    function saveMapToFile(data) {
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         console.log(data);
@@ -439,6 +501,11 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         // setGridItems(newGridItems);
     };
 
+    function testPlayMap() {
+        generateMap();
+        generateSymbolArray();
+    }
+
     const generateSymbolArray = () => {
         const symbolArray = gridItems.map((row) =>
             row.map((item) => {
@@ -482,6 +549,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setMapData(symbolArray);
         setShowMapRender(true);
         setGameReady(true);
+        setIntroDone(false);
     };
 
     const goBack = () => {
@@ -522,12 +590,12 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         <>
             {/* < div className="map-render"> */}
             <h1 className="createmapheader">Test</h1>
-            <MapRender initialMapData={mapData} />
+            <MapRender initialMapData={savedMapData} />
             {wonGame && (
                 <button
                     className="button"
                     id="btn-savemap"
-                    onClick={generateMap}
+                    onClick={saveMapToFile}
                     onMouseOver={handleMouseOver}
                 ></button>
             )}
@@ -572,7 +640,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 				</button> */}
                 <button
                     className="generate-symbol-array"
-                    onClick={generateSymbolArray}
+                    onClick={testPlayMap}
                     onMouseOver={handleMouseOver}
                 ></button>
                 <div className="toolbar">

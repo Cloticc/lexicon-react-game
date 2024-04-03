@@ -56,8 +56,6 @@ export function MoveChar({
         startTime,
         setStartTime,
         level,
-        setLevel,
-        highestScores,
         setHighestScores,
         handleHistory,
         setHandleHistory,
@@ -89,6 +87,7 @@ export function MoveChar({
         setYouAreDead(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
+
         setTimeout(() => {
             setYouAreDead(false);
             setDisableControls(false);
@@ -105,6 +104,7 @@ export function MoveChar({
         setYouLost(true);
         playSound('lost', 0.4);
         playSound('gameover', 0.4);
+
         setTimeout(() => {
             setYouLost(false);
             setDisableControls(false);
@@ -392,8 +392,6 @@ export function MoveChar({
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I')
                         ) {
-                            const boxType = newMapData[newPosition.y][newPosition.x];
-                            console.log(boxType);
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         } else if (isEmptySpace(newMapData, beyondBoxPosition)) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
