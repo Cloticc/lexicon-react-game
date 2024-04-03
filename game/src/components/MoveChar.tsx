@@ -130,8 +130,8 @@ export function MoveChar({
     };
     const addToSolution = (mapData: string[][], direction: string) => {
         const newSolution = {
-            mapData: mapData, 
-            direction: direction.toLowerCase(), 
+            mapData: mapData,
+            direction: direction.toLowerCase(),
         };
         setSolution([...solution, newSolution]);
     };
@@ -230,7 +230,7 @@ export function MoveChar({
             playSound('collect', 0.4);
         }
     };
-    
+
 
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
@@ -291,6 +291,16 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
+        // // Check if the position beyond the box is a token
+        // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
+        //     // If it is, remove the token
+        //     newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = ',';
+
+        //     // Update the collectedTokens state
+        //     updateCollectedTokens(Number(level));
+        // }
+
+
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
@@ -386,7 +396,14 @@ export function MoveChar({
                             x: newPosition.x + directionMap[direction as Direction].x,
                             y: newPosition.y + directionMap[direction as Direction].y,
                         };
-
+                        if (
+                            isWithinBoundaries(beyondBoxPosition) &&
+                            (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') 
+                        ) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                        }
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
