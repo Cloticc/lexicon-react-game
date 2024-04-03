@@ -37,7 +37,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setInitialBoxPositions,
         playerDirection,
         setPlayerDirection,
-
+        youAreDead,
+        youLost,
         playerGroundFloor,
         boxGroundFloor,
         introDone,
@@ -49,7 +50,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         setTimeout(() => {
             setIntroDone(true);
-        }, 1200);
+        }, 1600);
     });
 
     useEffect(() => {
@@ -155,18 +156,20 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'R' || event.key === 'r') {
-                setMapData(initialMapData);
-                setBoxPositions(boxStartPositions.current);
-                setPlayerPosition(playerStartPosition.current);
-                playSound('click', 0.25);
-                playSound('reverse', 0.5);
-                setMusic('play');
-                setShowGameContainer(false);
-                setTimeout(() => {
-                    setShowGameContainer(true);
-                }, 1);
+                if (!youAreDead && !youLost) {
+                    setMapData(initialMapData);
+                    setBoxPositions(boxStartPositions.current);
+                    setPlayerPosition(playerStartPosition.current);
+                    playSound('click', 0.25);
+                    playSound('reverse', 0.35);
+                    setMusic('play');
+                    setShowGameContainer(false);
+                    setTimeout(() => {
+                        setShowGameContainer(true);
+                    }, 1);
 
-                resetGame();
+                    resetGame();
+                }
             }
         };
 

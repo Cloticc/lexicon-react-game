@@ -70,7 +70,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
 
     function handleReplay() {
         playSound('click', 0.25);
-        playSound('reverse', 0.25);
+        playSound('reverse', 0.35);
         setMapData(initialMapData);
         setPlayerPosition(initialPlayerPosition);
         console.log('Initial player Positions: ', initialPlayerPosition);
