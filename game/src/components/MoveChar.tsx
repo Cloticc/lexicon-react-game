@@ -2,7 +2,6 @@ import { MyContext, TokensMap } from '../ContextProvider/ContextProvider';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import HighScore from './highscore';
-import { log } from 'console';
 import { playSound } from '../components/playSound';
 
 interface MoveCharProps {
@@ -15,6 +14,13 @@ interface MoveCharProps {
     setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
     boxPositions: { x: number; y: number }[];
     setBoxPositions: (positions: { x: number; y: number }[]) => void;
+    specialBox: { x: number; y: number }[];
+    setSpecialBox: (positions: { x: number; y: number }[]) => void;
+    specialBoxIndicator: { x: number; y: number }[];
+    setSpecialBoxIndicator: (positions: { x: number; y: number }[]) => void;
+    specialDoor: { x: number; y: number }[];
+    setSpecialDoor: (positions: { x: number; y: number }[]) => void;
+
 }
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
@@ -35,6 +41,12 @@ export function MoveChar({
     indicatorPositions,
     boxPositions,
     setBoxPositions,
+    specialBox,
+    setSpecialBox,
+    specialBoxIndicator,
+    setSpecialBoxIndicator,
+    specialDoor,
+    setSpecialDoor,
 }: MoveCharProps) {
     const [currentLevel, setCurrentLevel] = useState<string>('1');
 
@@ -77,6 +89,8 @@ export function MoveChar({
         totalToken,
         setTotalToken,
     } = useContext(MyContext);
+
+
 
     function handleDeath(string?: string | null) {
         if (string === undefined || string === null || string === '') {
@@ -136,7 +150,7 @@ export function MoveChar({
         setSolution([...solution, newSolution]);
     };
     useEffect(() => {
-        console.log(solution);
+        // console.log(solution);
     }, [solution]);
     const saveSolutionToJson = () => {
         const Solution = solution.map((obj) => ({
@@ -259,6 +273,8 @@ export function MoveChar({
     };
 
 
+
+
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
         // Check if the new player position has a token
         if (newMapData[newPosition.y][newPosition.x] === 'T') {
@@ -270,11 +286,14 @@ export function MoveChar({
         }
 
         if (
-            indicatorPositions.some(
-                (pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
-            )
+            indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
         ) {
             newMapData[playerPosition.y][playerPosition.x] = 'I';
+        } else if (
+            specialBoxIndicator.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
+
+        ) {
+            newMapData[playerPosition.y][playerPosition.x] = 'S';
         } else {
             newMapData[playerPosition.y][playerPosition.x] = ',';
         }
@@ -329,6 +348,72 @@ export function MoveChar({
         setBoxPositions(newBoxPositions);
         setPlayerPosition(newPosition);
     };
+
+
+    const triggerDoor = (doorPosition: { x: number; y: number }, newMapData: string[][]) => {
+        newMapData[doorPosition.y][doorPosition.x] = ',';
+        setMapData(newMapData);
+    };
+
+    const moveSpecialBox = (
+        newMapData: string[][],
+        newPosition: { x: number; y: number },
+        beyondBoxPosition: { x: number; y: number },
+        boxIndex: number
+    ) => {
+        // Check if the new position of the special box is a special indicator
+        const specialIndicator = newMapData[beyondBoxPosition.y][beyondBoxPosition.x];
+        let doorPosition = null;
+        if (specialBoxIndicator.some((pos) => pos.x === beyondBoxPosition.x && pos.y === beyondBoxPosition.y)) {
+            // If it is, find the corresponding door
+            const doorNumber = specialIndicator.slice(1); // Get the number after 'S'
+            const correspondingDoor = 'D' + doorNumber;
+
+            // Find the position of the corresponding door
+            for (let y = 0; y < mapData.length; y++) {
+                for (let x = 0; x < mapData[y].length; x++) {
+                    if (mapData[y][x] === correspondingDoor) {
+                        doorPosition = { x, y };
+                        break;
+                    }
+                }
+                if (doorPosition) break;
+            }
+
+            // Update the map data to reflect the box moving onto the special indicator
+            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'O';
+        } else {
+            newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'O';
+        }
+
+
+        playSound('pushbox', 0.4);
+        playSound('walk', 0.3);
+
+        if (
+            indicatorPositions.some(
+                (pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
+            )
+        ) {
+            newMapData[playerPosition.y][playerPosition.x] = 'I';
+        } else {
+            newMapData[playerPosition.y][playerPosition.x] = ',';
+        }
+        newMapData[newPosition.y][newPosition.x] = 'P';
+        setCounter(counter + 1);
+        setMapData(newMapData);
+        const newSpecialBoxPositions = [...specialBox];
+        newSpecialBoxPositions[boxIndex] = beyondBoxPosition;
+        setSpecialBox(newSpecialBoxPositions);
+        setPlayerPosition(newPosition);
+        // If a door needs to be triggered, do it after updating the mapData state
+        if (doorPosition) {
+            triggerDoor(doorPosition, newMapData);
+        }
+    };
+
+
+
 
     function setDivClass(positionX: number, positionY: number, classname: string) {
         const gridContainer = document.querySelector('.grid-container');
@@ -391,7 +476,17 @@ export function MoveChar({
                         (pos) => pos.x === newPosition.x && pos.y === newPosition.y
                     );
 
-                    if (boxIndex !== -1) {
+                    // console.log('Box:', boxPositions);
+                    // console.log('Box Index:', boxIndex);
+
+                    const specialBoxIndex = specialBox.findIndex(
+                        (pos) => pos.x === newPosition.x && pos.y === newPosition.y
+                    );
+
+                    // console.log('Special Box:', specialBox);
+                    // console.log('Special Box Index:', specialBoxIndex);
+
+                    if (boxIndex !== -1 || specialBoxIndex !== -1) {
                         const beyondBoxPosition = {
                             x: newPosition.x + directionMap[direction as Direction].x,
                             y: newPosition.y + directionMap[direction as Direction].y,
@@ -400,9 +495,17 @@ export function MoveChar({
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') 
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T' ||
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S')
+                            )
                         ) {
-                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                            if (specialBoxIndex !== -1) {
+                                moveSpecialBox(newMapData, newPosition, beyondBoxPosition, specialBoxIndex);
+                                // console.log('move special box');
+                            } else {
+                                moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                                // console.log('move normal box');
+                            }
                         }
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
@@ -467,6 +570,12 @@ export function MoveChar({
             gameRunning,
             counter,
             startGame,
+            specialBox,
+            setSpecialBox,
+            specialBoxIndicator,
+            setSpecialBoxIndicator,
+            specialDoor,
+            setSpecialDoor,
         ]
     );
 
