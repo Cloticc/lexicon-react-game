@@ -1,8 +1,15 @@
 <?php
 // save-json.php
 
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+    // If not set to XMLHttpRequest, exit with an error message
+    header('HTTP/1.1 403 Forbidden');
+    echo 'Forbidden';
+    exit;
+}
+
 // Specify the directory where JSON files are stored
-$directory = '../';
+$directory = '../maps/';
 
 // Get all files with names matching the pattern 'map*.json' in the specified directory
 $files = glob($directory . 'map*.json');
