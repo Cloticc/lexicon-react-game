@@ -34,6 +34,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         resetGame,
         setInitialPlayerPosition,
         setInitialBoxPositions,
+        setInitialSpecialBox,
         playerDirection,
         setPlayerDirection,
         youAreDead,
@@ -45,6 +46,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         setTotalToken,
         introDone,
         setIntroDone,
+        specialBox,
+        setSpecialBox,
+        specialBoxIndicator,
+        setSpecialBoxIndicator,
+        specialDoor,
+        setSpecialDoor,
     } = useContext(MyContext);
 
 
@@ -108,6 +115,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     const playerStartPosition = useRef({ x: 5, y: 6 });
     const boxStartPositions = useRef<{ x: number; y: number }[]>([]);
     const IndicatorPositions = useRef<{ x: number; y: number }[]>([]);
+    const specialStartBoxIndicator = useRef<{ x: number; y: number }[]>([]);
+    const specialStartBox = useRef<{ x: number; y: number }[]>([]);
+    const specialStartDoor = useRef<{ x: number; y: number }[]>([]);
 
     useEffect(() => {
         // Calculate playerStartPosition
@@ -139,17 +149,53 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             }
         }
 
+        // Calculate specialStartBox
+        specialStartBox.current = [];
+        for (let y = 0; y < initialMapData.length; y++) {
+            for (let x = 0; x < initialMapData[y].length; x++) {
+                if (initialMapData[y][x] === 'O') {
+                    specialStartBox.current.push({ x, y });
+                }
+            }
+        }
+
+        // Calculate specialStartBoxIndicator
+        specialStartBoxIndicator.current = [];
+        for (let y = 0; y < initialMapData.length; y++) {
+            for (let x = 0; x < initialMapData[y].length; x++) {
+                if (initialMapData[y][x].startsWith('S')) {
+                    specialStartBoxIndicator.current.push({ x, y });
+                }
+            }
+        }
+
+        // Calculate specialStartDoor
+        specialStartDoor.current = [];
+        for (let y = 0; y < initialMapData.length; y++) {
+            for (let x = 0; x < initialMapData[y].length; x++) {
+                if (initialMapData[y][x].startsWith('D')) {
+                    specialStartDoor.current.push({ x, y });
+                }
+            }
+        }
+
+
         // Set the initial positions
         setPlayerPosition(playerStartPosition.current);
         setBoxPositions(boxStartPositions.current);
         setIndicatorPositions(IndicatorPositions.current);
-    }, [initialMapData, setPlayerPosition, setBoxPositions, setIndicatorPositions, level]);
+        setSpecialBoxIndicator(specialStartBoxIndicator.current);
+        setSpecialBox(specialStartBox.current);
+        setSpecialDoor(specialStartDoor.current);
+    }, [initialMapData, setPlayerPosition, setBoxPositions, setIndicatorPositions, setSpecialBoxIndicator, setSpecialBox, setSpecialDoor]);
+
 
     // Set the initial positions for the game to reset
     useEffect(() => {
         setInitialMapData(initialMapData);
         setInitialPlayerPosition(playerStartPosition.current);
         setInitialBoxPositions(boxStartPositions.current);
+        setInitialSpecialBox(specialStartBox.current);
     }, [initialMapData, setInitialMapData, setInitialPlayerPosition, setInitialBoxPositions]);
 
     useEffect(() => {
@@ -193,12 +239,22 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     const getClassNameForSymbol = (symbol: string, x: number, y: number) => {
         const isIndicator = indicatorPositions.some((pos) => pos.x === x && pos.y === y);
         const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
+        const isSpecialBox = specialBox.some((pos) => pos.x === x && pos.y === y);
+        const isSpecialBoxIndicator = specialBoxIndicator.some((pos) => pos.x === x && pos.y === y);
 
         switch (symbol[0]) {
             case '-':
                 return 'empty';
             case 'P':
-                return isIndicator ? 'boxindicator' : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+                // return isIndicator ? 'boxindicator' : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+                if (isSpecialBoxIndicator) {
+                    // return `special player-${playerDirection} playerwalk${playerDirection}`;
+                    return `special`;
+                } else if (isIndicator) {
+                    return 'boxindicator';
+                } else {
+                    return `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+                }
             case 'B':
                 return isIndicator && isBox ? 'box box-on-indicator' : `${boxGroundFloor} box`;
             case ',':
@@ -208,7 +264,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case '#':
                 return 'wall';
             case 'O':
-                return `${boxGroundFloor} specialboxed`;
+                if (isSpecialBox && isSpecialBoxIndicator) {
+                    return 'special specialon';
+                }
+                return 'specialboxed';
             case 'S':
                 return `${boxGroundFloor} special`;
             case 'D':
@@ -226,7 +285,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
     // Function to calculate level class based on current level
     const calculateLevelClass = (currentLevel: number) => {
-        let levelIs = currentLevel + 1;
+        // let levelIs = currentLevel + 1;
+        const levelIs = currentLevel + 1;
         const levels = ['', 'level10', 'level20', 'level30', 'level40'];
         const index = Math.floor(levelIs / 10) % levels.length;
         return index >= 0 ? levels[index] : ''; // Ensure non-negative index
@@ -337,6 +397,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     }, [playerPosition, tokenPosition, mapData, level]);
 
+    // console.log(mapData);
 
 
     return (
@@ -356,6 +417,12 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 setBoxPositions={setBoxPositions}
                 playerPosition={playerPosition}
                 setPlayerPosition={setPlayerPosition}
+                specialBox={specialBox}
+                setSpecialBox={setSpecialBox}
+                specialBoxIndicator={specialBoxIndicator}
+                setSpecialBoxIndicator={setSpecialBoxIndicator}
+                specialDoor={specialDoor}
+                setSpecialDoor={setSpecialDoor}
             />
 
             {mapData.map((row, rowIndex) => (
@@ -372,6 +439,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                                 {className === 'boxindicator' && (<div className="boxindicator-container"></div>)}
                                 {className === 'box' && <div className="box-container"></div>}
                                 {className === 'boxindicator' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
+                                {className === 'special' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
 
                             </div>
                         );
