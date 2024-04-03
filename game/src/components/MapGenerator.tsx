@@ -256,72 +256,66 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             solution: [],
         };
 
-        // Use a more specific selector to get the grid items directly
-        const gridItems = document.querySelectorAll<HTMLDivElement>('.grid-row-editor');
-        // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
         let boxIndex = 0;
-        let boxIndicator = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
         let doorAmount = 0;
 
-
-        // Define a temporary array to hold the current row
-        let row: string[] = [];
-
-        gridItems.forEach((item, index) => {
-            // If index is a multiple of 10, we're starting a new row
-            if (index % 10 === 0) {
-                // If row is not empty, push it to mapdata and start a new row
-                if (row.length > 0) {
-                    data.mapdata.push(row);
-                    row = [];
+        gridItems.forEach((row) => {
+            const newRow: string[] = [];
+            row.forEach((item) => {
+                let symbol = '-';
+                if (item.type) {
+                    switch (item.type) {
+                        case 'player':
+                            symbol = 'P';
+                            playerAmount++;
+                            break;
+                        case 'box':
+                            symbol = 'B';
+                            boxAmount++;
+                            break;
+                        case 'ground':
+                            symbol = ',';
+                            break;
+                        case 'boxindicator':
+                            symbol = 'I';
+                            boxIndex++;
+                            break;
+                        case 'wall':
+                            symbol = '#';
+                            break;
+                        case 'specialboxed':
+                            symbol = 'O';
+                            specialBoxIndicator++;
+                            break;
+                        case 'special':
+                            symbol = 'S' + item.id;
+                            specialBoxAmount++;
+                            break;
+                        case 'door':
+                            symbol = 'D' + item.id;
+                            doorAmount++;
+                            break;
+                        case 'cracked':
+                            symbol = 'W';
+                            break;
+                        case 'mined':
+                            symbol = 'M';
+                            break;
+                    }
                 }
-            }
-            // Determine the symbol based on the item's classes
-            type ClassToSymbol = {
-                [key: string]: {
-                    symbol: string;
-                    counter?: () => number;
-                };
-            };
-            //add more classes here to get more symbols in the map
-            const classToSymbol: ClassToSymbol = {
-                player: { symbol: 'P', counter: () => ++playerAmount },
-                box: { symbol: 'B', counter: () => ++boxAmount },
-                ground: { symbol: ',' },
-                boxindicator: { symbol: 'I', counter: () => ++boxIndex },
-                wall: { symbol: '#' },
-                specialboxed: { symbol: 'O', counter: () => ++specialBoxIndicator },
-                special: { symbol: 'S', counter: () => ++specialBoxAmount },
-                door: { symbol: 'D', counter: () => ++doorAmount },
-                cracked: { symbol: 'W' },
-                mined: { symbol: 'M' },
-            };
-
-            let symbol = '-';
-            for (const className in classToSymbol) {
-                if (item.classList.contains(className)) {
-                    symbol = classToSymbol[className].symbol;
-                    classToSymbol[className].counter?.();
-                    break;
-                }
-            }
-
-            // Add the symbol to the current row
-            row.push(symbol);
+                newRow.push(symbol);
+            });
+            data.mapdata.push(newRow);
         });
 
-        // Add the last row to mapdata
-        if (row.length > 0) {
-            data.mapdata.push(row);
-        }
-        saveMapToFile(data);
+        saveMap(data.mapdata);
     }
 
-    function saveMapToFile(data) {
+    function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         console.log(data);
@@ -479,7 +473,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 <button
                     className="button"
                     id="btn-savemap"
-                    onClick={() => saveMapToFile(savedMapData)} 
+                    onClick={() => saveMapToFile({ mapdata: savedMapData, solution: [] })}
                     onMouseOver={handleMouseOver}
                 ></button>
             )}
