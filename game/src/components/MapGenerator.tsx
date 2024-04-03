@@ -294,6 +294,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 if (item.type && classToSymbol[item.type]) {
                     symbol = classToSymbol[item.type].symbol;
                     if (classToSymbol[item.type].counter) {
+                        if (item.type === 'door' || item.type === 'special') {
+                            symbol += item.id; // Append the id to the symbol
+                        }
                         classToSymbol[item.type].counter!(); // should null check it
                     }
                 }
@@ -303,7 +306,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         });
 
         saveMap(data.mapdata);
-        console.log(playerAmount, boxAmount, boxIndex, specialBoxAmount, specialBoxIndicator, doorAmount);
+        console.log(data.mapdata);
+
     }
 
     function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
