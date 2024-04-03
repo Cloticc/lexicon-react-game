@@ -19,7 +19,6 @@ interface MapRenderProps {
 export function MapRender({ initialMapData }: MapRenderProps) {
     const {
         level,
-        setLevel,
         showGameContainer,
         setShowGameContainer,
         setMusic,
@@ -41,69 +40,69 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         youLost,
         playerGroundFloor,
         boxGroundFloor,
+        collectedTokens,
+        setCollectedTokens,
+        setTotalToken,
         introDone,
         setIntroDone,
     } = useContext(MyContext);
 
-    const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
 
+    const [tokenPosition, setTokenPosition] = useState<{ x: number; y: number } | null>(null);
     useEffect(() => {
         setTimeout(() => {
             setIntroDone(true);
         }, 1600);
     });
 
-    useEffect(() => {
-        let oldToken = document.querySelector('.token');
-        if (oldToken) {
-            oldToken.classList.remove('token');
-        }
-
-        if (level % 6 === 0 && level !== 0) {
-            var numberFromLevel = undefined;
-            var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
-            if (tokensArray !== undefined) {
-                numberFromLevel =
-                    tokensArray && tokensArray.find((token: number) => token === level);
-            } else {
-                tokensArray = [];
-            }
-
-            if (numberFromLevel === undefined) {
-                const availablePositions: { x: number; y: number }[] = [];
-
-                // Iterate through the mapData array
-                for (let x = 0; x < mapData.length; x++) {
-                    for (let y = 0; y < mapData[x].length; y++) {
-                        // Check if the value is ","
-                        if (mapData[x][y] === ',') {
-                            availablePositions.push({ x, y });
-                        }
-                    }
-                }
-
-                if (availablePositions.length > 0) {
-                    // Randomly select a position from available positions
-                    const randomIndex = Math.floor(Math.random() * availablePositions.length);
-                    const randomPosition = availablePositions[randomIndex];
-
-                    // Set the selected position
-                    setSelectedPosition(randomPosition);
-
-                    localStorage.setItem('tokens', JSON.stringify(tokensArray));
-                }
-            }
-        }
-    }, [level, setLevel]);
 
     // mount the map
     useEffect(() => {
         setMapData(initialMapData);
     }, [setMapData, initialMapData]);
 
-    // const [mapData, setMapData] = useState(initialMapData);
+    // useEffect(() => {
+    //     let oldToken = document.querySelector('.token');
+    //     if (oldToken) {
+    //         oldToken.classList.remove('token');
+    //     }
 
-    // const [boxPosition, setBoxPosition] = useState({ x: 5, y: 6 });
+    //     if (level % 6 === 0 && level !== 0) {
+    //         var numberFromLevel = undefined;
+    //         var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
+    //         if (tokensArray !== undefined) {
+    //             numberFromLevel =
+    //                 tokensArray && tokensArray.find((token: number) => token === level);
+    //         } else {
+    //             tokensArray = [];
+    //         }
+
+    //         if (numberFromLevel === undefined) {
+    //             const availablePositions: { x: number; y: number }[] = [];
+
+    //             // Iterate through the mapData array
+    //             for (let x = 0; x < mapData.length; x++) {
+    //                 for (let y = 0; y < mapData[x].length; y++) {
+    //                     // Check if the value is ","
+    //                     if (mapData[x][y] === ',') {
+    //                         availablePositions.push({ x, y });
+    //                     }
+    //                 }
+    //             }
+
+    //             if (availablePositions.length > 0) {
+    //                 // Randomly select a position from available positions
+    //                 const randomIndex = Math.floor(Math.random() * availablePositions.length);
+    //                 const randomPosition = availablePositions[randomIndex];
+
+    //                 // Set the selected position
+    //                 setSelectedPosition(randomPosition);
+
+    //                 localStorage.setItem('tokens', JSON.stringify(tokensArray));
+    //             }
+    //         }
+    //     }
+    // }, [level, setLevel]);
 
     //set useRef to store the initial positions of the player, boxes and indicators
     const playerStartPosition = useRef({ x: 5, y: 6 });
@@ -156,6 +155,16 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'R' || event.key === 'r') {
+                // setMapData(initialMapData);
+                // setBoxPositions(boxStartPositions.current);
+                // setPlayerPosition(playerStartPosition.current);
+                playSound('click', 0.25);
+                playSound('reverse', 0.5);
+                setMusic('play');
+                setShowGameContainer(false);
+                setTimeout(() => {
+                    setShowGameContainer(true);
+                }, 1);
                 if (!youAreDead && !youLost) {
                     setMapData(initialMapData);
                     setBoxPositions(boxStartPositions.current);
@@ -189,9 +198,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case '-':
                 return 'empty';
             case 'P':
-                return isIndicator
-                    ? 'boxindicator'
-                    : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
+                return isIndicator ? 'boxindicator' : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
             case 'B':
                 return isIndicator && isBox ? 'box box-on-indicator' : `${boxGroundFloor} box`;
             case ',':
@@ -210,6 +217,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 return 'cracked';
             case 'M':
                 return `${boxGroundFloor} mined`;
+            case 'T':
+                return `${boxGroundFloor} token`;
             default:
                 return '';
         }
@@ -222,6 +231,113 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         const index = Math.floor(levelIs / 10) % levels.length;
         return index >= 0 ? levels[index] : ''; // Ensure non-negative index
     };
+
+
+
+
+    const collectedTokensRef = useRef(collectedTokens);
+
+    // Update the ref whenever collectedTokens changes
+    useEffect(() => {
+        collectedTokensRef.current = collectedTokens;
+    }, [collectedTokens]);
+
+    // Load the collectedTokens from localStorage
+    useEffect(() => {
+        const storedTokens = localStorage.getItem('collectedTokens');
+        if (storedTokens) {
+            setCollectedTokens(JSON.parse(storedTokens));
+        }
+    }, []);
+
+    // Save the collectedTokens to localStorage
+    useEffect(() => {
+        localStorage.setItem('collectedTokens', JSON.stringify(collectedTokens));
+    }, [collectedTokens]);
+
+    // Define the placeToken function
+    const placeToken = (position: { x: number; y: number }) => {
+        // Create a copy of the map data and remove any existing tokens
+        const newMapData = mapData.map(row => row.map(cell => cell === 'T' ? ',' : cell));
+
+        // Place the new token
+        newMapData[position.y][position.x] = 'T';
+
+        // Update the map data and token position
+        setMapData(newMapData);
+        setTokenPosition(position);
+    };
+
+
+    // Place a token on the map when the level changes
+    useEffect(() => {
+        if (level % 6 === 0 && level !== 0) {
+            const tokenExists = mapData.some(row => row.includes('T'));
+            const tokenCollectedForLevel = collectedTokensRef.current[level] === 1;
+
+            if (!tokenExists && !tokenCollectedForLevel) {
+                const availablePositions = mapData.flatMap((row, y) =>
+                    row.map((column, x) => column === ',' ? { x, y } : null)
+                ).filter(Boolean) as { x: number; y: number }[];
+
+                if (availablePositions.length > 0) {
+                    const randomPosition = availablePositions[Math.floor(Math.random() * availablePositions.length)];
+
+                    // Delay the token placement
+                    setTimeout(() => {
+                        if (collectedTokensRef.current[level + 1]) {
+                            console.log('Token already collected for this level');
+                        } else {
+                            console.log('Token not collected for this level');
+                            placeToken(randomPosition);
+                        }
+                    }, 50);
+                }
+            }
+        }
+    }, [mapData, level]);
+
+    // Handle token collection
+    useEffect(() => {
+        // console.log('Checking if a token should be collected...');
+        // console.log('tokenPosition:', tokenPosition);
+        // console.log('playerPosition:', playerPosition);
+
+        if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
+            const newMapData = mapData.map(row => [...row]);
+            newMapData[tokenPosition.y][tokenPosition.x] = ',';
+            newMapData[playerPosition.y][playerPosition.x] = 'P';
+            setMapData(newMapData);
+            setTokenPosition(null);
+
+
+            // Update totalTokens state
+            // console.log('collectedTokens:', collectedTokens);
+            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
+            setTotalToken(total);
+            // console.log('total', total);
+            // console.log('totalToken', totalToken);
+            localStorage.setItem('totalTokens', JSON.stringify(total));
+        }
+    }, [playerPosition, tokenPosition, mapData, level]);
+
+    // Handle token collection
+    useEffect(() => {
+        if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
+            const newMapData = mapData.map(row => [...row]);
+            newMapData[tokenPosition.y][tokenPosition.x] = ',';
+            newMapData[playerPosition.y][playerPosition.x] = 'P';
+            setMapData(newMapData);
+            setTokenPosition(null);
+
+            // Update totalTokens state
+            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
+            setTotalToken(total);
+            localStorage.setItem('totalToken', JSON.stringify(total));
+        }
+    }, [playerPosition, tokenPosition, mapData, level]);
+
+
 
     return (
         <div
@@ -246,26 +362,17 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 <div key={rowIndex} className="grid-row">
                     {row.map((column: string, columnIndex: number) => {
                         const className = getClassNameForSymbol(column, columnIndex, rowIndex);
-                        const isTokenCell =
-                            selectedPosition &&
-                            selectedPosition.x === rowIndex &&
-                            selectedPosition.y === columnIndex;
-                        const tokenClass = isTokenCell ? 'token' : '';
+                        // const tokenClass = column === 'T' ? 'token' : '';
 
                         return (
                             <div
                                 key={columnIndex}
-                                className={`grid-item ${className} ${tokenClass}`}
+                                className={`grid-item ${className}`}
                             >
-                                {className === 'boxindicator' && (
-                                    <div className="boxindicator-container"></div>
-                                )}
+                                {className === 'boxindicator' && (<div className="boxindicator-container"></div>)}
                                 {className === 'box' && <div className="box-container"></div>}
-                                {className === 'boxindicator' &&
-                                    playerPosition.x === columnIndex &&
-                                    playerPosition.y === rowIndex && (
-                                        <div className={`player-${playerDirection}`}></div>
-                                    )}
+                                {className === 'boxindicator' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
+
                             </div>
                         );
                     })}

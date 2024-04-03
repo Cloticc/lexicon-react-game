@@ -24,6 +24,11 @@ interface HistoryState {
     direction: string;
 }
 
+export interface TokensMap {
+    [level: number]: number;
+}
+
+
 interface SolutionState {
     mapData: string[][];
     direction: string;
@@ -80,7 +85,6 @@ interface GameContextProps {
     setMuted: (setMuted: boolean) => void;
     showGameContainer: boolean;
     setShowGameContainer: (setShowGameContainer: boolean) => void;
-
     highestScores: {
         [level: string]: { score: number; elapsedTime: number };
     };
@@ -101,6 +105,10 @@ interface GameContextProps {
     setPlayerGroundFloor: (groundFloor: string) => void;
     boxGroundFloor: string;
     setBoxGroundFloor: (boxGroundFloor: string) => void;
+    selectedPosition: { x: number; y: number } | null;
+    setSelectedPosition: (selectedPosition: { x: number; y: number } | null) => void;
+    collectedTokens: TokensMap;
+    setCollectedTokens: (collectedTokens: TokensMap) => void;
 }
 
 interface ChildrenProps {
@@ -151,6 +159,9 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [totalToken, setTotalToken] = useState<number>(0);
     const [playerGroundFloor, setPlayerGroundFloor] = useState('ground');
     const [boxGroundFloor, setBoxGroundFloor] = useState('ground');
+    const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+    const [collectedTokens, setCollectedTokens] = useState<{ [level: number]: number }>({});
+
 
     const resetGame = () => {
         setCounter(0);
@@ -172,6 +183,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setIntroDone(false);
         setDisableControls(false);
     };
+
 
     const value: GameContextProps = {
         testingMap: testingMap,
@@ -225,7 +237,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         toggleSettings: toggleSettings,
         showGameContainer: showGameContainer,
         setShowGameContainer: setShowGameContainer,
-
         highestScores: highestScores,
         setHighestScores: setHighestScores,
         handleHistory: handleHistory,
@@ -242,6 +253,10 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setPlayerGroundFloor: setPlayerGroundFloor,
         boxGroundFloor: boxGroundFloor,
         setBoxGroundFloor: setBoxGroundFloor,
+        selectedPosition: selectedPosition,
+        setSelectedPosition: setSelectedPosition,
+        collectedTokens: collectedTokens,
+        setCollectedTokens: setCollectedTokens,
     };
 
     return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

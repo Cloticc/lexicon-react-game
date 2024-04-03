@@ -1,7 +1,8 @@
+import { MyContext, TokensMap } from '../ContextProvider/ContextProvider';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import HighScore from './highscore';
-import { MyContext } from '../ContextProvider/ContextProvider';
+import { log } from 'console';
 import { playSound } from '../components/playSound';
 
 interface MoveCharProps {
@@ -68,6 +69,13 @@ export function MoveChar({
         setYouAreDead,
         setYouLost,
         setPlayerGroundFloor,
+        setBoxGroundFloor,
+        selectedPosition,
+        setSelectedPosition,
+        collectedTokens,
+        setCollectedTokens,
+        totalToken,
+        setTotalToken,
     } = useContext(MyContext);
 
     function handleDeath(string?: string | null) {
@@ -122,8 +130,8 @@ export function MoveChar({
     };
     const addToSolution = (mapData: string[][], direction: string) => {
         const newSolution = {
-            mapData: mapData, 
-            direction: direction.toLowerCase(), 
+            mapData: mapData,
+            direction: direction.toLowerCase(),
         };
         setSolution([...solution, newSolution]);
     };
@@ -207,6 +215,24 @@ export function MoveChar({
         setWonGame(true);
     }, []);
 
+
+
+
+    const updateCollectedTokens = (level: number) => {
+        // Create a copy of the collectedTokens object
+        const updatedTokens = { ...collectedTokens };
+        // Increment the token count for the current level
+        const currentLevelTokens = updatedTokens[level + 1] || 0;
+        // Only increment the token count if a token hasn't been collected for this level
+        if (currentLevelTokens === 0) {
+            updatedTokens[level + 1] = currentLevelTokens + 1;
+            setCollectedTokens(updatedTokens);
+            playSound('collect', 0.4);
+        }
+    };
+
+
+
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
             position.x >= 0 &&
@@ -232,7 +258,17 @@ export function MoveChar({
         return newMapData[position.y][position.x] === 'W';
     };
 
+
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
+        // Check if the new player position has a token
+        if (newMapData[newPosition.y][newPosition.x] === 'T') {
+            // If it does, remove the token
+            newMapData[newPosition.y][newPosition.x] = ',';
+
+            // Update the collectedTokens state
+            updateCollectedTokens(Number(level));
+        }
+
         if (
             indicatorPositions.some(
                 (pos) => pos.x === playerPosition.x && pos.y === playerPosition.y
@@ -255,6 +291,16 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
+        // // Check if the position beyond the box is a token
+        // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
+        //     // If it is, remove the token
+        //     newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = ',';
+
+        //     // Update the collectedTokens state
+        //     updateCollectedTokens(Number(level));
+        // }
+
+
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
         playSound('walk', 0.3);
@@ -350,7 +396,14 @@ export function MoveChar({
                             x: newPosition.x + directionMap[direction as Direction].x,
                             y: newPosition.y + directionMap[direction as Direction].y,
                         };
-
+                        if (
+                            isWithinBoundaries(beyondBoxPosition) &&
+                            (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') 
+                        ) {
+                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                        }
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||

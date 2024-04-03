@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
-import { SelectPageProps } from './../components/InterfacePages';
+
 import { MyContext } from '../ContextProvider/ContextProvider';
-import { playSound } from './../components/playSound';
+import { SelectPageProps } from './../components/InterfacePages';
 import allMaps from './../maps/maps';
-import { Console } from 'console';
+import { playSound } from './../components/playSound';
 
 export function Settings({ onPageChange }: SelectPageProps) {
     const {
@@ -50,7 +50,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
             setTotalToken(3);
             localStorage.setItem('totaltokens', '3');
         }
-    }, [totalToken]);
+    }, [totalToken, setTotalToken]);
 
     function handleMouseOver() {
         playSound('hover', 0.15);
