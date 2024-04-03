@@ -247,6 +247,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         };
     }, []);
 
+    useEffect(() => {
+        console.log(savedMapData);
+    }, [savedMapData]);
+
     function generateMap(): void {
         const data: { mapdata: string[][]; solution: string[][] } = {
             mapdata: [],
@@ -255,18 +259,17 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
         // Use a more specific selector to get the grid items directly
         const gridItems = document.querySelectorAll<HTMLDivElement>('.grid-row-editor');
-
         // Define counters outside the loop
         let playerAmount = 0;
         let boxAmount = 0;
         let boxIndex = 0;
+        let boxIndicator = 0;
         let specialBoxIndicator = 0;
         let specialBoxAmount = 0;
         let doorAmount = 0;
 
         gridItems.forEach((row) => {
             const columns = row.querySelectorAll('.grid-item-editor');
-
             const array = [];
             data.mapdata.push(array);
             columns.forEach((column) => {
@@ -278,12 +281,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 } else if (column.classList.contains('player-down')) {
                     symbol = 'P';
                     ++playerAmount;
-                } else if (column.classList.contains('boxed')) {
+                } else if (column.classList.contains('box')) {
                     symbol = 'B';
                     ++boxAmount;
-                } else if (column.classList.contains('ground')) {
-                    symbol = ',';
-                } else if (column.classList.contains('indicator')) {
+                } else if (column.classList.contains('boxindicator')) {
                     symbol = 'I';
                     ++boxIndicator;
                 } else if (column.classList.contains('wall')) {
@@ -303,12 +304,14 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     let number = column.getAttribute('data-id');
                     symbol = 'D' + number;
                     ++doorAmount;
+                } else if (column.classList.contains('ground')) {
+                    symbol = ',';
                 }
                 array.push(symbol);
             });
-            saveMap(data);
         });
-        console.log(savedMapData);
+        saveMap(data.mapdata);
+
         /*
         // Define a temporary array to hold the current row
         let row: string[] = [];
@@ -495,8 +498,12 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         // setGridItems(newGridItems);
     };
 
-    const generateSymbolArray = () => {
+    function testPlayMap() {
         generateMap();
+        generateSymbolArray();
+    }
+
+    const generateSymbolArray = () => {
         const symbolArray = gridItems.map((row) =>
             row.map((item) => {
                 // Split the item string by '-' to get the item type and the ID
@@ -580,12 +587,12 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         <>
             {/* < div className="map-render"> */}
             <h1 className="createmapheader">Test</h1>
-            <MapRender initialMapData={mapData} />
+            <MapRender initialMapData={savedMapData} />
             {wonGame && (
                 <button
                     className="button"
                     id="btn-savemap"
-                    onClick={generateMap}
+                    onClick={saveMapToFile}
                     onMouseOver={handleMouseOver}
                 ></button>
             )}
@@ -630,7 +637,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 				</button> */}
                 <button
                     className="generate-symbol-array"
-                    onClick={generateSymbolArray}
+                    onClick={testPlayMap}
                     onMouseOver={handleMouseOver}
                 ></button>
                 <div className="toolbar">
