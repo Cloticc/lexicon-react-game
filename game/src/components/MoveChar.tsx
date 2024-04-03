@@ -15,6 +15,7 @@ interface MoveCharProps {
     boxPositions: { x: number; y: number }[];
     setBoxPositions: (positions: { x: number; y: number }[]) => void;
 }
+
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
 
 const directionMap: Record<Direction, { x: number; y: number }> = {
@@ -62,6 +63,8 @@ export function MoveChar({
         resetGame,
         history,
         setHistory,
+        solution,
+        setSolution,
         youAreDead,
         youLost,
         setYouAreDead,
@@ -118,10 +121,30 @@ export function MoveChar({
             return [...prevHistory, newHistoryState];
         });
     };
-
-    /**
-     * Handles the undo functionality for the game history.
-     */
+    const addToSolution = (mapData: string[][], direction: string) => {
+        const newSolution = {
+            mapData: mapData, 
+            direction: direction.toLowerCase(), 
+        };
+        setSolution([...solution, newSolution]);
+    };
+    useEffect(() => {
+        console.log(solution);
+    }, [solution]);
+    const saveSolutionToJson = () => {
+        const Solution = solution.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }));
+        const jsonSolution = JSON.stringify(Solution);
+        const blob = new Blob([jsonSolution], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `map${level + 1}.json`;
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(a.href);
+    };
     const handleHistoryUndo = useCallback(() => {
         if (history.length > 1) {
             const prevState = history[history.length - 1];
@@ -133,6 +156,7 @@ export function MoveChar({
             setBoxPositions(boxPositions);
             setCounter(counter);
             setHistory((prev) => prev.slice(0, -1));
+            setSolution((prev) => prev.slice(0, -1));
             playSound('reverse', 0.3);
             if (counter === 0) {
                 if (setGameRunning) {
@@ -376,6 +400,7 @@ export function MoveChar({
                         startGame();
                     }
                     addToHistory();
+                    addToSolution(newMapData, direction);
                 }
             }
         },
@@ -494,7 +519,8 @@ export function MoveChar({
         if (allIndicatorsCovered && gameRunning) {
             stopGame();
             setWonGame(true);
-
+            addToSolution(mapData, direction);
+            saveSolutionToJson();
             setLevelCompleted(true);
             setCurrentLevel(level.toString());
         }

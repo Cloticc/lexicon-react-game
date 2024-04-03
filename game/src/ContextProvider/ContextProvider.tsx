@@ -24,6 +24,10 @@ interface HistoryState {
     direction: string;
 }
 
+interface SolutionState {
+    mapData: string[][];
+    direction: string;
+}
 interface GameContextProps {
     testingMap: boolean;
     setTestingMap: (testingMap: boolean) => void;
@@ -89,6 +93,8 @@ interface GameContextProps {
     setPlayerDirection: (playerDirection: string) => void;
     history: HistoryState[];
     setHistory: React.Dispatch<React.SetStateAction<HistoryState[]>>;
+    solution: SolutionState[];
+    setSolution: React.Dispatch<React.SetStateAction<SolutionState[]>>;
     contextMenu: { visible: boolean; x: number; y: number };
     setContextMenu: (contextMenu: { visible: boolean; x: number; y: number }) => void;
     playerGroundFloor: string;
@@ -140,6 +146,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [handleHistory, setHandleHistory] = useState<boolean>(false);
     const [playerDirection, setPlayerDirection] = useState<string>('down');
     const [history, setHistory] = useState<HistoryState[]>([]);
+    const [solution, setSolution] = useState<HistoryState[]>([]);
     const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
     const [totalToken, setTotalToken] = useState<number>(0);
     const [playerGroundFloor, setPlayerGroundFloor] = useState('ground');
@@ -157,6 +164,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setBoxPositions(initialBoxPositions);
         setPlayerDirection('down');
         setHistory([]);
+        setSolution([]);
         setPlayerGroundFloor('ground');
         setBoxGroundFloor('ground');
         setIntroDone(false);
@@ -224,6 +232,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setPlayerDirection: setPlayerDirection,
         history: history,
         setHistory: setHistory,
+        solution: solution,
+        setSolution: setSolution,
         contextMenu: contextMenu,
         setContextMenu: setContextMenu,
         playerGroundFloor: playerGroundFloor,
