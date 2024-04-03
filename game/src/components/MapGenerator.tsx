@@ -4,7 +4,6 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 
 import { MapRender } from './MapRender';
 import { playSound } from './playSound';
-import { SaveMap } from './SaveMap';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
 
@@ -197,8 +196,16 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { mapData, setMapData, setMusic, wonGame, youAreDead, youLost, setTestingMap } =
-        useContext(MyContext);
+    const {
+        mapData,
+        setMapData,
+        setIntroDone,
+        setMusic,
+        wonGame,
+        youAreDead,
+        youLost,
+        setTestingMap,
+    } = useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -482,6 +489,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setMapData(symbolArray);
         setShowMapRender(true);
         setGameReady(true);
+        setIntroDone(false);
     };
 
     const goBack = () => {

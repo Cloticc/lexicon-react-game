@@ -49,7 +49,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         setTimeout(() => {
             setIntroDone(true);
-        }, 1200);
+        }, 1600);
     });
 
     useEffect(() => {
@@ -159,7 +159,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 setBoxPositions(boxStartPositions.current);
                 setPlayerPosition(playerStartPosition.current);
                 playSound('click', 0.25);
-                playSound('reverse', 0.5);
+                playSound('reverse', 0.35);
                 setMusic('play');
                 setShowGameContainer(false);
                 setTimeout(() => {
