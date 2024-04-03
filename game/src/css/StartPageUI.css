@@ -646,6 +646,12 @@
     padding: 2rem;
 }
 
+#credits p {
+    max-width: 420px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
 #credits h2 {
     margin-top: 2rem;
     font-family: 'Gajraj One', sans-serif;
@@ -909,6 +915,27 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 4rem;
+}
+
+#btn-savemap:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 0 white);
+    background-image: url('../assets/icon-download.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 4rem;
+}
+
+#btn-savemap {
+    position: absolute;
+    left: 3rem;
+    top: 11rem;
 }
 
 #btn-backtoedit {

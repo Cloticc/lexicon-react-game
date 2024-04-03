@@ -20,17 +20,13 @@ export const Music: React.FC<MusicProps> = ({ audio }) => {
         if (audio === 'ui') {
             setMusic(uiMusic);
         } else if (audio === 'play') {
-            if (level <= 8) {
-                setMusic(playMusic);
-            } else if (level > 8 && level <= 18) {
-                setMusic(playMusic2);
-            } else if (level > 18) {
-                setMusic(playMusic3);
-            }
+            const playMusicOptions = [playMusic, playMusic2, playMusic3];
+            const index = Math.floor(level / 9) % playMusicOptions.length; // Adjusted for zero-based indexing
+            setMusic(playMusicOptions[index]);
         } else if (audio === 'create') {
             setMusic(createMusic);
         }
-    }, [audio]);
+    }, [audio, level]);
 
     useEffect(() => {
         // Play music when music state changes

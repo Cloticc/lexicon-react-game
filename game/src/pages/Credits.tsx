@@ -17,6 +17,12 @@ export function Credits({ onPageChange }: SelectPageProps) {
             <div id="selectlevel">
                 <h1>Credits</h1>
                 <div id="credits">
+                    <p>
+                        <strong>Phoneix</strong> was the name of the group at{' '}
+                        <strong>Lexicon React course 2024 (Sweden)</strong>, where we got the task
+                        to make the Sokoban game in React. Hope you enjoy it and go make some maps
+                        for others to play.
+                    </p>
                     <h2>Graphics</h2>
                     <h4>
                         <a href="https://opengameart.org/content/sokoban-100-tiles" target="_blank">
@@ -27,16 +33,17 @@ export function Credits({ onPageChange }: SelectPageProps) {
                     <h4>
                         <a href="https://pixabay.com/">Pixabay</a>
                     </h4>
-                    <h2>HTML, CSS, JavaScript</h2>
+                    <h2>HTML, CSS, React</h2>
                     <h5>
                         <a href="https://diam.se" target="_blank">
                             Fredrik Berglund
                         </a>
                     </h5>
                     <h5>Andreas Isidorsson</h5>
-                    <h5>Konstantios</h5>
-                    <h5>Abbas Mansoori</h5>
                     <h5>Alireza Kafshdartoosi</h5>
+                    <h5>Abbas Mansoori</h5>
+                    <h5>Konstantios (Had to leave early)</h5>
+                    <br />
                 </div>
 
                 <div id="menubuttons">

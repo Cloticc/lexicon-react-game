@@ -212,14 +212,19 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     };
 
+    // Function to calculate level class based on current level
+    const calculateLevelClass = (currentLevel: number) => {
+        let levelIs = currentLevel + 1;
+        const levels = ['', 'level10', 'level20', 'level30', 'level40'];
+        const index = Math.floor(levelIs / 10) % levels.length;
+        return index >= 0 ? levels[index] : ''; // Ensure non-negative index
+    };
+
     return (
         <div
             className={`grid-container ${introDone ? 'introdone' : ''}
         ${showGameContainer ? '' : 'hide'}
-        ${level >= 9 ? 'level10' : ''} 
-        ${level >= 19 ? 'level20' : ''} 
-        ${level >= 29 ? 'level30' : ''}
-        ${level >= 39 ? 'level40' : ''}`}
+        ${calculateLevelClass(level)}`}
         >
             {/* <MoveChar handlePlayerMove={handlePlayerMove} /> */}
             <MoveChar
