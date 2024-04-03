@@ -14,6 +14,9 @@ interface MoveCharProps {
     setIndicatorPositions: (positions: { x: number; y: number }[]) => void;
     boxPositions: { x: number; y: number }[];
     setBoxPositions: (positions: { x: number; y: number }[]) => void;
+    specialBoxPositions: { x: number; y: number }[];
+    setSpecialBoxPositions: (positions: { x: number; y: number }[]) => void; // Add this line
+
 }
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
@@ -34,6 +37,8 @@ export function MoveChar({
     indicatorPositions,
     boxPositions,
     setBoxPositions,
+    specialBoxPositions,
+    setSpecialBoxPositions
 }: MoveCharProps) {
     const [currentLevel, setCurrentLevel] = useState<string>('1');
 
@@ -123,8 +128,8 @@ export function MoveChar({
     };
     const addToSolution = (mapData: string[][], direction: string) => {
         const newSolution = {
-            mapData: mapData, 
-            direction: direction.toLowerCase(), 
+            mapData: mapData,
+            direction: direction.toLowerCase(),
         };
         setSolution([...solution, newSolution]);
     };
@@ -285,6 +290,46 @@ export function MoveChar({
         setPlayerPosition(newPosition);
     };
 
+    //specialbox
+    const moveSpecialBox = (
+        newMapData: string[][],
+        newPosition: { x: number; y: number },
+        beyondSpecialBoxPosition: { x: number; y: number },
+        specialBoxIndex: number
+    ) => {
+        if (
+            isWithinBoundaries(beyondSpecialBoxPosition) &&
+            (isEmptySpace(mapData, beyondSpecialBoxPosition) ||
+                mapData[beyondSpecialBoxPosition.y][beyondSpecialBoxPosition.x] === 'I')
+        ) {
+            // Move the special box to the new position
+            newMapData[specialBoxPositions[specialBoxIndex].y][specialBoxPositions[specialBoxIndex].x] = ',';
+            newMapData[newPosition.y][newPosition.x] = 'O';
+    
+            // Update the special box positions array
+            const newSpecialBoxPositions = [...specialBoxPositions];
+            newSpecialBoxPositions[specialBoxIndex] = newPosition;
+    
+            // Update the map data state
+            setSpecialBoxPositions(newSpecialBoxPositions);
+            setMapData(newMapData);
+    
+            // Update the player position
+            setPlayerPosition(newPosition);
+        } else {
+            // Handle loss condition if there's a mine or the box cannot move
+            if (isMine(mapData, beyondSpecialBoxPosition)) {
+                handleLost('boxexplode');
+            } else {
+                // Special box cannot move
+                return;
+            }
+        }
+    };
+    
+    
+    //specialbox
+
     function setDivClass(positionX: number, positionY: number, classname: string) {
         const gridContainer = document.querySelector('.grid-container');
 
@@ -320,6 +365,37 @@ export function MoveChar({
                 x: playerPosition.x + directionMap[direction as Direction].x,
                 y: playerPosition.y + directionMap[direction as Direction].y,
             };
+
+            const specialBoxIndex = specialBoxPositions.findIndex(
+                (pos) => pos.x === newPosition.x && pos.y === newPosition.y
+            );
+    
+            if (specialBoxIndex !== -1) {
+                const beyondSpecialBoxPosition = {
+                    x: newPosition.x + directionMap[direction as Direction].x,
+                    y: newPosition.y + directionMap[direction as Direction].y,
+                };
+    
+                // Check if the position beyond the special box is within boundaries and empty
+                if (
+                    isWithinBoundaries(beyondSpecialBoxPosition) &&
+                    (isEmptySpace(mapData, beyondSpecialBoxPosition) ||
+                        mapData[beyondSpecialBoxPosition.y][beyondSpecialBoxPosition.x] === 'I')
+                ) {
+                    moveSpecialBox(mapData, newPosition, beyondSpecialBoxPosition, specialBoxIndex);
+                } else if (isMine(mapData, beyondSpecialBoxPosition)) {
+                    // Handle loss condition if there's a mine
+                    moveSpecialBox(mapData, newPosition, beyondSpecialBoxPosition, specialBoxIndex);
+                    setTimeout(() => {
+                        setDivClass(beyondSpecialBoxPosition.x, beyondSpecialBoxPosition.y, 'explode');
+                    }, 1);
+                    handleLost('boxexplode');
+                    return;
+                } else {
+                    // Special box cannot move
+                    return;
+                }
+            }
 
             if (mapData.length > 0 && mapData[0] && isWithinBoundaries(newPosition)) {
                 const newMapData = mapData.map((row: string[]) => [...row]);
@@ -406,17 +482,24 @@ export function MoveChar({
         },
         [
             youAreDead,
-            mapData,
-            playerPosition,
-            setPlayerDirection,
-            indicatorPositions,
-            setMapData,
-            setPlayerPosition,
-            setBoxPositions,
-            boxPositions,
-            gameRunning,
-            counter,
-            startGame,
+        youLost,
+        mapData,
+        playerPosition,
+        setPlayerDirection,
+        specialBoxPositions,
+        isWithinBoundaries,
+        isEmptySpace,
+        isMine,
+        isNotWall,
+        moveSpecialBox,
+        movePlayer,
+        handleDeath,
+        setPlayerGroundFloor,
+        gameRunning,
+        counter,
+        startGame,
+        addToHistory,
+        addToSolution,
         ]
     );
 

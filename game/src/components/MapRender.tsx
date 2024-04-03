@@ -45,6 +45,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     } = useContext(MyContext);
 
     const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
+    const [specialBoxPositions, setSpecialBoxPositions] = useState< { x: number; y: number }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -237,6 +238,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 setBoxPositions={setBoxPositions}
                 playerPosition={playerPosition}
                 setPlayerPosition={setPlayerPosition}
+                specialBoxPositions={specialBoxPositions}
+                setSpecialBoxPositions={setSpecialBoxPositions}
             />
 
             {mapData.map((row, rowIndex) => (
