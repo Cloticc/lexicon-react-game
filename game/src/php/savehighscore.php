@@ -47,41 +47,54 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
     }
 
     try {
-        $stmt = $pdo->prepare("SELECT steps, time FROM highscore WHERE BINARY alias = :alias AND level = :level");
-        $stmt->bindParam(':level', $level, PDO::PARAM_INT);
-        $stmt->bindParam(':alias', $alias, PDO::PARAM_STR);
-        $stmt->execute();
-        $existingScore = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Check if a record exists for the provided alias on the specified level
+    $existingStmt = $pdo->prepare("SELECT steps, time FROM highscore WHERE BINARY alias = :alias AND level = :level");
+    $existingStmt->bindParam(':level', $level, PDO::PARAM_INT);
+    $existingStmt->bindParam(':alias', $alias, PDO::PARAM_STR);
+    $existingStmt->execute();
+    $existingScore = $existingStmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$existingScore || ($steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && $time < $existingScore['time']))) {
+    if (!$existingScore) {
+        // If no existing record, insert the new score
 
-            // Remove all old high scores with the same alias
-            $deleteStmt = $pdo->prepare("DELETE FROM highscore WHERE level = :level AND alias = :alias");
-            $deleteStmt->bindParam(':level', $level, PDO::PARAM_INT);
-            $deleteStmt->bindParam(':alias', $alias, PDO::PARAM_STR);
-            $deleteStmt->execute();
+        // Insert the new high score
+        $insertStmt = $pdo->prepare("INSERT INTO highscore (level, alias, steps, time) VALUES (:level, :alias, :steps, :time)");
+        $insertStmt->bindParam(':level', $level, PDO::PARAM_INT);
+        $insertStmt->bindParam(':alias', $alias, PDO::PARAM_STR);
+        $insertStmt->bindParam(':steps', $steps, PDO::PARAM_INT);
+        $insertStmt->bindParam(':time', $time, PDO::PARAM_STR);
+        $insertStmt->execute();
 
+        $response['success'] = true;
+        $response['message'] = "High score added successfully";
+    } else {
+        // If existing record, check if new score is better
 
-            $insertStmt = $pdo->prepare("INSERT INTO highscore (level, alias, steps, time) VALUES (:level, :alias, :steps, :time)");
-            $insertStmt->bindParam(':level', $level, PDO::PARAM_INT);
-            $insertStmt->bindParam(':alias', $alias, PDO::PARAM_STR);
-            $insertStmt->bindParam(':steps', $steps, PDO::PARAM_INT);
-            $insertStmt->bindParam(':time', $time, PDO::PARAM_STR);
-            $insertStmt->execute();
+        if ($steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && $time < $existingScore['time'])) {
+            // If new score is better, update the existing record
+
+            // Update the existing high score
+            $updateStmt = $pdo->prepare("UPDATE highscore SET steps = :steps, time = :time WHERE level = :level AND alias = :alias");
+            $updateStmt->bindParam(':level', $level, PDO::PARAM_INT);
+            $updateStmt->bindParam(':alias', $alias, PDO::PARAM_STR);
+            $updateStmt->bindParam(':steps', $steps, PDO::PARAM_INT);
+            $updateStmt->bindParam(':time', $time, PDO::PARAM_STR);
+            $updateStmt->execute();
 
             $response['success'] = true;
-            $response['message'] = "High score added successfully";
+            $response['message'] = "High score updated successfully";
+        } else {
+            // If new score is not better, do nothing
 
-
-        }  else {
             $response['success'] = true;
-            $response['message'] = "No highscore added.";
+            $response['message'] = "No high score added or updated";
         }
-    } catch (PDOException $e) {
-       
-        $response['success'] = false;
-        $response['message'] = "Error: " . $e->getMessage();
     }
+} catch (PDOException $e) {
+    $response['success'] = false;
+    $response['message'] = "Error: " . $e->getMessage();
+}
+
 
 
     } else {
