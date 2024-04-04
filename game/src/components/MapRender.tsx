@@ -241,6 +241,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         const isBox = boxPositions.some((pos) => pos.x === x && pos.y === y);
         const isSpecialBox = specialBox.some((pos) => pos.x === x && pos.y === y);
         const isSpecialBoxIndicator = specialBoxIndicator.some((pos) => pos.x === x && pos.y === y);
+        const isSpecialBoxOnIndicator = specialBox.some((pos) => pos.x === x && pos.y === y) && specialBoxIndicator.some((pos) => pos.x === x && pos.y === y);
+
 
         switch (symbol[0]) {
             case '-':
@@ -269,7 +271,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                 }
                 return 'specialboxed';
             case 'S':
-                return `${boxGroundFloor} special`;
+                return isSpecialBoxOnIndicator ? 'specialon' : 'special';
+            // return `${boxGroundFloor} special`;
             case 'D':
                 return 'door';
             case 'W':
