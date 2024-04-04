@@ -88,8 +88,7 @@ export function MoveChar({
 
 
     function handleDeath(string?: string | null) {
-        if (string === undefined || string === null || string === '') {
-        } else if (string === 'mine') {
+        if (string === undefined || string === null || string === '') { /* empty */ } else if (string === 'mine') {
             playSound('mine', 0.8);
         }
         setDisableControls(true);
@@ -105,8 +104,7 @@ export function MoveChar({
     }
 
     function handleLost(string?: string | null) {
-        if (string === undefined || string === null || string === '') {
-        } else if (string === 'boxexplode') {
+        if (string === undefined || string === null || string === '') { /* empty */ } else if (string === 'boxexplode') {
             playSound('boxexplode', 0.8);
         }
         setDisableControls(true);
