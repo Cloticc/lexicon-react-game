@@ -1,10 +1,14 @@
 <?php
 // save-json.php
 
-if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
-    // If not set to XMLHttpRequest, exit with an error message
-    header('HTTP/1.1 403 Forbidden');
-    echo 'Forbidden';
+$isFetchRequest = isset($_SERVER['HTTP_FETCH_REQUEST']) && $_SERVER['HTTP_FETCH_REQUEST'] === 'true';
+
+$response = [];
+
+if (!$isFetchRequest) {
+    $response['success'] = false;
+    $response['message'] = "Forbidden: Fetch request expected";
+    echo json_encode($response);
     exit;
 }
 
@@ -32,13 +36,25 @@ $filePath = $directory . $newFileName;
 // Get the JSON data from the request body
 $jsonData = file_get_contents('php://input');
 
+ try {
+    $insertStmt = $pdo->prepare("INSERT INTO maps (mapdata) VALUES (:mapdata)");
+    $insertStmt->bindParam(':mapdata', $jsonData, PDO::PARAM_STR);
+    $insertStmt->execute();
+
+ } catch (PDOException $e) {
+    $response['message'] = "Error: " . $e->getMessage();
+}
+
 // Save the JSON data to the new file
 if (file_put_contents($filePath, $jsonData) !== false) {
     // If successful, send success response
-    echo json_encode(array('status' => 'success', 'file' => $newFileName));
+    $response['status'] = 'success';
+    $response['file'] = $newFileName;
 } else {
     // If error occurred, send error response
-    header('HTTP/1.1 500 Internal Server Error');
-    echo json_encode(array('status' => 'error', 'message' => 'Failed to save JSON data.'));
+    $response['status'] = 'error';
+    $response['message'] = 'Failed to save JSON data.';
 }
+
+echo json_encode($response);
 ?>

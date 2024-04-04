@@ -978,3 +978,38 @@
     z-index: 100;
     line-height: 3rem !important;
 }
+
+#setalias {
+    z-index: 10003;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.startoverlay {
+    z-index: 10000 !important;
+}
+
+#setalias input {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 0.4rem;
+    border: none;
+    background: black;
+    color: yellow;
+    outline: 4px solid white;
+}
+
+#enteralias {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    height: 3.5rem;
+    font-weight: bold;
+    width: 100%;
+    font-size: 1.2rem;
+}

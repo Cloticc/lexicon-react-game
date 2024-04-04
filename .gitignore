@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 
+php/dbconfig.php
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
