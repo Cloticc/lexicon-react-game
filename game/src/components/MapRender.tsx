@@ -43,6 +43,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         boxGroundFloor,
         collectedTokens,
         setCollectedTokens,
+        totalToken,
         setTotalToken,
         introDone,
         setIntroDone,
@@ -248,17 +249,21 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             case '-':
                 return 'empty';
             case 'P':
-                // return isIndicator ? 'boxindicator' : `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
-                if (isSpecialBoxIndicator) {
-                    // return `special player-${playerDirection} playerwalk${playerDirection}`;
-                    return `special`;
+                if (isSpecialBoxIndicator && !isBox) {
+                    return 'special';
                 } else if (isIndicator) {
                     return 'boxindicator';
                 } else {
                     return `${playerGroundFloor} player-${playerDirection} playerwalk${playerDirection}`;
                 }
             case 'B':
-                return isIndicator && isBox ? 'box box-on-indicator' : `${boxGroundFloor} box`;
+                if (isSpecialBoxIndicator && !isBox) {
+                    return 'special';
+                } else if (isIndicator && isBox) {
+                    return 'box box-on-indicator';
+                } else {
+                    return `${boxGroundFloor} box`;
+                }
             case ',':
                 return 'ground';
             case 'I':
@@ -349,9 +354,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                     // Delay the token placement
                     setTimeout(() => {
                         if (collectedTokensRef.current[level + 1]) {
-                            console.log('Token already collected for this level');
+                            // console.log('Token already collected for this level');
                         } else {
-                            console.log('Token not collected for this level');
+                            // console.log('Token not collected for this level');
                             placeToken(randomPosition);
                         }
                     }, 50);
@@ -360,29 +365,16 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         }
     }, [mapData, level]);
 
-    // Handle token collection
+    // Initialize totalToken
     useEffect(() => {
-        // console.log('Checking if a token should be collected...');
-        // console.log('tokenPosition:', tokenPosition);
-        // console.log('playerPosition:', playerPosition);
-
-        if (tokenPosition && playerPosition.x === tokenPosition.x && playerPosition.y === tokenPosition.y) {
-            const newMapData = mapData.map(row => [...row]);
-            newMapData[tokenPosition.y][tokenPosition.x] = ',';
-            newMapData[playerPosition.y][playerPosition.x] = 'P';
-            setMapData(newMapData);
-            setTokenPosition(null);
-
-
-            // Update totalTokens state
-            // console.log('collectedTokens:', collectedTokens);
-            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
-            setTotalToken(total);
-            // console.log('total', total);
-            // console.log('totalToken', totalToken);
-            localStorage.setItem('totalTokens', JSON.stringify(total));
+        const totalTokenLocalStorage = localStorage.getItem('totalTokens');
+        if (totalTokenLocalStorage) {
+            setTotalToken(parseInt(totalTokenLocalStorage));
+        } else {
+            setTotalToken(3);
+            localStorage.setItem('totalTokens', '3');
         }
-    }, [playerPosition, tokenPosition, mapData, level]);
+    }, [setTotalToken])
 
     // Handle token collection
     useEffect(() => {
@@ -393,15 +385,21 @@ export function MapRender({ initialMapData }: MapRenderProps) {
             setMapData(newMapData);
             setTokenPosition(null);
 
-            // Update totalTokens state
-            const total = Object.values(collectedTokens).reduce((a, b) => a + b, 0);
-            setTotalToken(total);
-            localStorage.setItem('totalToken', JSON.stringify(total));
+            // Create a copy of the collectedTokens object
+            const updatedTokens = { ...collectedTokens };
+            // Increment the token count for the current level
+            const currentLevelTokens = updatedTokens[level + 1] || 0;
+            updatedTokens[level + 1] = currentLevelTokens + 1;
+            setCollectedTokens(updatedTokens);
+            playSound('collect', 0.4);
+
+            // Increment the totalToken count
+            setTotalToken((prevTotal: number) => prevTotal + 1);
+
+            // Update totalTokens in local storage
+            localStorage.setItem('totalTokens', JSON.stringify(totalToken + 1));
         }
     }, [playerPosition, tokenPosition, mapData, level]);
-
-    // console.log(mapData);
-
 
     return (
         <div
@@ -439,11 +437,11 @@ export function MapRender({ initialMapData }: MapRenderProps) {
                                 key={columnIndex}
                                 className={`grid-item ${className}`}
                             >
-                                {className === 'boxindicator' && (<div className="boxindicator-container"></div>)}
                                 {className === 'box' && <div className="box-container"></div>}
+                                {className === 'boxindicator' && (<div className="boxindicator-container"></div>)}
                                 {className === 'boxindicator' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
+                                {className === 'special' && <div className="special-container"></div>}
                                 {className === 'special' && playerPosition.x === columnIndex && playerPosition.y === rowIndex && (<div className={`player-${playerDirection}`}></div>)}
-
                             </div>
                         );
                     })}
