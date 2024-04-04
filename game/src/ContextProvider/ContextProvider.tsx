@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface PlayerPosition {
     x: number;
@@ -261,7 +261,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         history: history,
         setHistory: setHistory,
         solution: solution,
-        setSolution: setSolution,
+        setSolution: setSolution as Dispatch<SetStateAction<SolutionState[]>>,
         contextMenu: contextMenu,
         setContextMenu: setContextMenu,
         playerGroundFloor: playerGroundFloor,
