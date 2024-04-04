@@ -142,9 +142,11 @@ export function MoveChar({
         };
         setSolution([...solution, newSolution]);
     };
+    
     useEffect(() => {
-        // console.log(solution);
     }, [solution]);
+
+
     const saveSolutionToJson = () => {
         const Solution = solution.map((obj) => ({
             mapdata: obj.mapData,
@@ -223,26 +225,6 @@ export function MoveChar({
     }, []);
 
 
-
-// const updateCollectedTokens = (level: number) => {
-//     // Retrieve the current totalToken state
-//     // const currentTotalTokens = totalToken;
-
-//     // Create a copy of the collectedTokens object
-//     const updatedTokens = { ...collectedTokens };
-//     // Increment the token count for the current level
-//     const currentLevelTokens = updatedTokens[level + 1] || 0;
-//     updatedTokens[level + 1] = currentLevelTokens + 1;
-//     setCollectedTokens(updatedTokens);
-//     playSound('collect', 0.4);
-
-//     // Increment the totalToken count
-//     // const newTotalTokens = currentTotalTokens + 1;
-//     // setTotalToken(newTotalTokens);
-    
-//     // localStorage.setItem('totalTokens', JSON.stringify(newTotalTokens));
-// };
-
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
             position.x >= 0 &&
@@ -282,9 +264,6 @@ export function MoveChar({
         if (newMapData[newPosition.y][newPosition.x] === 'T') {
             // If it does, remove the token
             newMapData[newPosition.y][newPosition.x] = ',';
-
-            // Update the collectedTokens state
-            // updateCollectedTokens(Number(level));
         }
 
         if (newMapData[newPosition.y][newPosition.x] === 'D') {
@@ -316,16 +295,6 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
-
-        // // Check if the position beyond the box is a token
-        // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
-        //     // If it is, remove the tokensource ~/.bashrc
-        //     newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = ',';
-
-        //     // Update the collectedTokens state
-        //     updateCollectedTokens(Number(level));
-        // }
-
 
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
