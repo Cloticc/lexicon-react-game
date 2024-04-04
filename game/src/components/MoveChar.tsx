@@ -88,7 +88,10 @@ export function MoveChar({
         setCollectedTokens,
         totalToken,
         setTotalToken,
+        initialMapData,
     } = useContext(MyContext);
+
+
 
 
 
@@ -258,7 +261,8 @@ export function MoveChar({
 
     const isNotWall = (newMapData: string[][], position: { x: number; y: number }) => {
         return newMapData[position.y][position.x] !== '#' &&
-            newMapData[position.y][position.x].startsWith('D') === false;
+            newMapData[position.y][position.x].startsWith('D') === false &&
+            newMapData[position.y][position.x].startsWith('S') === false;
     };
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
@@ -273,7 +277,11 @@ export function MoveChar({
         return newMapData[position.y][position.x] === 'W';
     };
 
-
+    // console log mapdata once ever move
+    // useEffect(() => {
+    //     console.log(mapData);
+    // }
+    // , [mapData]);
 
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
@@ -290,19 +298,18 @@ export function MoveChar({
             return;
         }
 
-
         if (
             indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
         ) {
             newMapData[playerPosition.y][playerPosition.x] = 'I';
         } else if (
             specialBoxIndicator.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
-
         ) {
             newMapData[playerPosition.y][playerPosition.x] = 'S';
         } else {
             newMapData[playerPosition.y][playerPosition.x] = ',';
         }
+
         newMapData[newPosition.y][newPosition.x] = 'P';
         setCounter(counter + 1);
         setMapData(newMapData);
@@ -316,7 +323,7 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
-  
+
         // // Check if the position beyond the box is a token
         // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
         //     // If it is, remove the tokensource ~/.bashrc
@@ -347,6 +354,8 @@ export function MoveChar({
         } else {
             newMapData[playerPosition.y][playerPosition.x] = ',';
         }
+
+
         newMapData[newPosition.y][newPosition.x] = 'P';
         setCounter(counter + 1);
         setMapData(newMapData);
@@ -522,9 +531,7 @@ export function MoveChar({
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T' ||
-                                // newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'O' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S')
-                            ) &&
+                                (newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S') && newMapData[newPosition.y][newPosition.x] === 'O')) &&
                             !newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('D')
                         ) {
 
