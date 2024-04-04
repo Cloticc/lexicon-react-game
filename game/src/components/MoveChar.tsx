@@ -81,14 +81,6 @@ export function MoveChar({
         setYouAreDead,
         setYouLost,
         setPlayerGroundFloor,
-        setBoxGroundFloor,
-        selectedPosition,
-        setSelectedPosition,
-        collectedTokens,
-        setCollectedTokens,
-        totalToken,
-        setTotalToken,
-        initialMapData,
     } = useContext(MyContext);
 
 
