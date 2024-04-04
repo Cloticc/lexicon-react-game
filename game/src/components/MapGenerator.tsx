@@ -5,7 +5,6 @@ import { SetStateAction, useContext, useEffect, useMemo, useState } from 'react'
 import { MapRender } from './MapRender';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { SelectPageProps } from './../components/InterfacePages';
-import { log } from 'console';
 import { playSound } from './playSound';
 
 const ITEMS = [
@@ -201,10 +200,13 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setIntroDone,
         setMusic,
         wonGame,
+        setGameRunning,
         youAreDead,
         youLost,
         setTestingMap,
         setLevel,
+        resetGame,
+        setWonGame,
     } = useContext(MyContext);
     const [usedDoorIds, setUsedDoorIds] = useState<string[]>([]);
     const [usedSpecialIds, setUsedSpecialIds] = useState<string[]>([]);
@@ -215,7 +217,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
     const [savedMapData, saveMap] = useState<string[][]>([]);
 
-    const { setDisableControls, setGameReady } = useContext(MyContext);
+    const { setDisableControls, setGameReady, setMapGeneratorRendering, setSolution, solution } =
+        useContext(MyContext);
 
     // const [mapData, setMapData] = useState<string[][]>([]);
     const [gridItems, setGridItems] = useState(
@@ -309,29 +312,41 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         console.log(data.mapdata);
     }
 
-    function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
-        let hasPlayer = false;
-        let hasBox = false;
-        let hasBoxIndicator = false;
+    // function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
+    //     let hasPlayer = false;
+    //     let hasBox = false;
+    //     let hasBoxIndicator = false;
 
-        for (const row of data.mapdata) {
-            for (const item of row) {
-                if (item === 'P') hasPlayer = true;
-                else if (item === 'B') hasBox = true;
-                else if (item === 'I') hasBoxIndicator = true;
+    //     for (const row of data.mapdata) {
+    //         for (const item of row) {
+    //             if (item === 'P') hasPlayer = true;
+    //             else if (item === 'B') hasBox = true;
+    //             else if (item === 'I') hasBoxIndicator = true;
 
-                if (hasPlayer && hasBox && hasBoxIndicator) break;
-            }
-        }
+    //             if (hasPlayer && hasBox && hasBoxIndicator) break;
+    //         }
+    //     }
 
-        if (!hasPlayer || !hasBox || !hasBoxIndicator) {
-            alert('You must have at least one player, one box, and one box indicator to save the map.');
-            return;
-        }
+    //     if (!hasPlayer || !hasBox || !hasBoxIndicator) {
+    //         alert('You must have at least one player, one box, and one box indicator to save the map.');
+    //         return;
+    //     }
 
+    function saveMapToFile() {
+        // Rest of the function remains the same
         // Convert the JSON data to a Blob
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        console.log(data);
+        const Solution = solution.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }));
+        const mergedData = {
+            mapdata: savedMapData,
+            solution: Solution,
+        };
+
+        /* // OLD STUFF
+        const blob = new Blob([JSON.stringify(mergedData, null, 2)], { type: 'application/json' });
+        console.log(mergedData);
         // Create a temporary link element
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
@@ -347,6 +362,31 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             link.remove();
             window.URL.revokeObjectURL(link.href);
         }
+        */
+
+        function saveJsonToFile(data: any) {
+            fetch('../php/savemap.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => response.json())
+                .then((result) => {
+                    // Check the status of the response
+                    if (result.success) {
+                        console.log('File saved successfully:', result.file);
+                    } else {
+                        throw new Error('Failed to save file');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error saving file:', error.message);
+                });
+        }
+
+        saveJsonToFile(mergedData);
     }
 
 
@@ -464,7 +504,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setMusic('play');
 
         setMapData(symbolArray);
+        setSolution([]);
         setShowMapRender(true);
+        setGameRunning(true);
+        setMapGeneratorRendering(true);
         setGameReady(true);
         setIntroDone(false);
     };
@@ -475,7 +518,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
+        setMapGeneratorRendering(false);
         setGameReady(false);
+        setWonGame(false);
+        // setGameRunning(false);
     };
     const goHome = () => {
         setTestingMap(false);
@@ -483,9 +529,17 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
+        setMapGeneratorRendering(false);
+        setWonGame(false);
+        // setGameRunning(false);
         onPageChange('start');
     };
-
+    useEffect(() => {
+        wonGame && setDisableControls(true);
+    }, [wonGame]);
+    useEffect(() => {
+        console.log(solution);
+    }, [setDisableControls]);
     const handleClearButton = () => {
         playSound('reverse', 0.3);
         setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')));
@@ -503,18 +557,49 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         );
     };
 
+    function handleReplay() {
+        setWonGame(false);
+        resetGame();
+    }
+
     return showMapRender ? (
         <>
             {/* < div className="map-render"> */}
             <h1 className="createmapheader">Test</h1>
             <MapRender initialMapData={savedMapData} />
             {wonGame && (
-                <button
-                    className="button"
-                    id="btn-savemap"
-                    onClick={() => saveMapToFile({ mapdata: savedMapData, solution: [] })}
-                    onMouseOver={handleMouseOver}
-                ></button>
+                // <button
+                //     className="button"
+                //     id="btn-savemap"
+                //     onClick={() => saveMapToFile({ mapdata: savedMapData, solution: [] })}
+                //     onMouseOver={handleMouseOver}
+                // ></button>
+                <>
+                    <div className="completedtest">
+                        <h1>Completed</h1>
+                        <h2>You've completed the test level successfully!</h2>
+                        <p>
+                            Click the save icon to store your solution. The map solution has been
+                            recorded, but if you think you can solve the level more efficiently, do
+                            replay it to save a better solution. The solution will be stored
+                            alongside your level. Occasionally, duplicates are removed, and if any
+                            level becomes too easy, it may be omitted. Keep challenging yourself!
+                        </p>
+                        <button
+                            className="button"
+                            id="btn-savemap"
+                            onClick={saveMapToFile}
+                            onMouseOver={handleMouseOver}
+                        ></button>
+                        <button
+                            className="button"
+                            id="btn-replay"
+                            onClick={handleReplay}
+                            onMouseOver={handleMouseOver}
+                        ></button>
+                    </div>
+                    <div id="darkoverlay"></div>
+                </>
             )}
             {youAreDead && <h1 className="dead">You are dead</h1>}
             {youLost && <h1 className="dead">You lost</h1>}

@@ -1,30 +1,80 @@
-# React + TypeScript + Vite
+# Sokoban Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sokoban is a classic puzzle game where the player pushes boxes around a maze, trying to put them in designated storage locations. This project is an implementation of Sokoban using React and TypeScript.
 
-Currently, two official plugins are available:
+![Sokoban Screenshot](../assets/MainScreen.jpg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+-   Classic Sokoban gameplay with intuitive controls.
+-   Multiple levels of increasing difficulty to challenge players.
+-   Undo functionality to revert moves and try again.
+-   Responsive design for playability across different devices, including mobile phones.
+-   Ability to generate new maps and provide solutions for them.
+-   Power-up features to enhance gameplay.
+-   Sound and color match the stage for an immersive experience.
+-   Highscore and history tracking to keep track of player progress.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+### Prerequisites
+
+-   Node.js installed on your machine
+-   npm package manager
+-   Vite installed globally
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/Cloticc/lexicon-react-game.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Navigate to the project directory:
+
+```bash
+cd .\lexicon-react-game\game\
+```
+
+3. Install dependencies:
+```bash
+npm install
+```
+3. Install dependencies:
+```bash
+npm install
+```
+### Building for Production
+
+To build the project for production, run:
+```bash
+npm run build
+```
+This will create an optimized build of the game in the dist directory.
+
+## Collaboration
+This is a team project, all parts of the project are developed collaboratively.
+<strong>Phoneix</strong> was the name of the group
+<strong>Lexicon React course 2024 (Sweden)</strong>, where we got the task
+to make the Sokoban game in React.
+
+## Team Members
+1. Fredrik Berglund
+2. Andreas Isidorsson
+3. Abbas Mansoori
+4. Alireza KafshdarToosi
+5. Konstantios (Had to leave early)
+
+
+## Future improvement
+1. 
+2. 
+3. 
+
+## Contributing
+
+
+## License

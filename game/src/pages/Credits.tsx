@@ -25,22 +25,30 @@ export function Credits({ onPageChange }: SelectPageProps) {
                     </p>
                     <h2>Graphics</h2>
                     <h4>
-                        <a href="https://opengameart.org/content/sokoban-100-tiles" target="_blank">
+                        <a
+                            href="https://opengameart.org/content/sokoban-100-tiles"
+                            target="_blank"
+                            onMouseOver={handleMouseOver}
+                        >
                             Kenny
                         </a>
                     </h4>
                     <h2>Sound</h2>
                     <h4>
-                        <a href="https://pixabay.com/">Pixabay</a>
+                        <a href="https://pixabay.com/" onMouseOver={handleMouseOver}>
+                            Pixabay
+                        </a>
                     </h4>
                     <h2>HTML, CSS, React</h2>
                     <h5>
-                        <a href="https://diam.se" target="_blank">
+                        <a href="https://diam.se" target="_blank" onMouseOver={handleMouseOver}>
                             Fredrik Berglund
                         </a>
                     </h5>
                     <h5>Andreas Isidorsson</h5>
-                    <h5>Alireza Kafshdartoosi</h5>
+                    <h5><a href="https://www.linkedin.com/in/alireza-kt/" target="_blank" onMouseOver={handleMouseOver}>
+                            Alireza Kafshdartoosi
+                        </a></h5>
                     <h5>Abbas Mansoori</h5>
                     <h5>Konstantios (Had to leave early)</h5>
                     <br />

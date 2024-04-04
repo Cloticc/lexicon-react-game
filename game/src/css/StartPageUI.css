@@ -735,7 +735,8 @@
 }
 
 #settings h1,
-#highscore h1 {
+#highscore h1,
+.completedtest h1 {
     position: absolute;
     top: -5rem;
     left: 50%;
@@ -763,6 +764,23 @@
     animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
 
+.completedtest h1 {
+    height: 9rem;
+    transform: translateX(-50%);
+    color: white;
+    font-size: clamp(2rem, 8vw, 6.5rem) !important;
+}
+.completedtest h2 {
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    color: white;
+
+    margin-top: -2rem;
+}
+.completedtest p {
+    padding: 2rem;
+    font-weight: 500;
+}
 #settings .content-container {
     margin-top: 4rem;
     display: flex;
@@ -932,10 +950,16 @@
     background-size: 4rem;
 }
 
-#btn-savemap {
+.completedtest #btn-savemap {
     position: absolute;
     left: 3rem;
-    top: 11rem;
+    bottom: 3rem;
+}
+
+.completedtest #btn-replay {
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
 }
 
 #btn-backtoedit {
@@ -953,4 +977,39 @@
     overflow: visible;
     z-index: 100;
     line-height: 3rem !important;
+}
+
+#setalias {
+    z-index: 10003;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.startoverlay {
+    z-index: 10000 !important;
+}
+
+#setalias input {
+    display: block;
+    font-size: 2rem;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 0.4rem;
+    border: none;
+    background: black;
+    color: yellow;
+    outline: 4px solid white;
+}
+
+#enteralias {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    height: 3.5rem;
+    font-weight: bold;
+    width: 100% !important;
+    font-size: 1.2rem;
 }

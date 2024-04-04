@@ -28,14 +28,17 @@ export interface TokensMap {
     [level: number]: number;
 }
 
-
 interface SolutionState {
     mapData: string[][];
     direction: string;
 }
 interface GameContextProps {
+    alias: string;
+    setAlias: (alias: string) => void;
     testingMap: boolean;
     setTestingMap: (testingMap: boolean) => void;
+    mapGeneratorRendering: boolean;
+    setMapGeneratorRendering: (mapGeneratorRendering: boolean) => void;
     gameReady: boolean;
     setGameReady: (gameReady: boolean) => void;
     introDone: boolean;
@@ -83,8 +86,8 @@ interface GameContextProps {
     setMusic: (music: string) => void;
     startTime: Date | null;
     setStartTime: (startTime: Date | null) => void;
-    gameRunning?: boolean;
-    setGameRunning?: (gameRunning: boolean) => void;
+    gameRunning: boolean;
+    setGameRunning: (gameRunning: boolean) => void;
     isMuted: boolean;
     setMuted: (setMuted: boolean) => void;
     showGameContainer: boolean;
@@ -132,7 +135,9 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [alias, setAlias] = useState(localStorage.getItem('playerName') || null);
     const [testingMap, setTestingMap] = useState<boolean>(false);
+    const [mapGeneratorRendering, setMapGeneratorRendering] = useState<boolean>(false);
     const [gameReady, setGameReady] = useState<boolean>(false);
     const [introDone, setIntroDone] = useState<boolean>(false);
     const [disableControls, setDisableControls] = useState<boolean>(false);
@@ -180,7 +185,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [specialBoxIndicator, setSpecialBoxIndicator] = useState<{ x: number; y: number }[]>([]);
     const [specialDoor, setSpecialDoor] = useState<{ x: number; y: number }[]>([]);
 
-
     const resetGame = () => {
         setCounter(0);
         setElapsedTime(0);
@@ -203,10 +207,13 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setDisableControls(false);
     };
 
-
     const value: GameContextProps = {
+        alias: alias || '',
+        setAlias: setAlias,
         testingMap: testingMap,
         setTestingMap: setTestingMap,
+        mapGeneratorRendering: mapGeneratorRendering,
+        setMapGeneratorRendering: setMapGeneratorRendering,
         introDone: introDone,
         setIntroDone: setIntroDone,
         gameReady: gameReady,

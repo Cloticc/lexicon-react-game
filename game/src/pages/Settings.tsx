@@ -27,6 +27,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
         setPlayerDirection,
         level,
         setCollectedTokens,
+        setAlias,
     } = useContext(MyContext);
 
     useEffect(() => {
@@ -106,7 +107,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
                 const direction = allMaps[level].solution[index].direction;
                 console.log(mapData);
                 console.log(direction);
-                (direction);
+                direction;
                 setTimeout(() => {
                     setMapData(mapData);
                     setPlayerDirection(direction);
@@ -127,6 +128,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
         );
         if (result) {
             // User clicked "OK"
+            setAlias('');
             localStorage.clear();
             setShowGameContainer(false);
             setTimeout(() => {
