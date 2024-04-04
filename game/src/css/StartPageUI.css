@@ -1013,3 +1013,30 @@
     width: 100% !important;
     font-size: 1.2rem;
 }
+
+.listhdb {
+    margin-top: 1rem;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.listhdb .row {
+    border-radius: 0.3rem;
+    margin-bottom: 1px;
+    display: grid;
+    grid-template-columns: 1fr 6fr 1fr 2fr;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 0.5rem;
+}
+
+.listhdb .row div {
+    text-align: left;
+}
+.listhdb .row div:nth-child(3) {
+    text-align: center;
+}
+.listhdb .row div:last-child {
+    text-align: right;
+}
