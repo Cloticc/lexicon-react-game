@@ -257,7 +257,8 @@ export function MoveChar({
     };
 
     const isNotWall = (newMapData: string[][], position: { x: number; y: number }) => {
-        return newMapData[position.y][position.x] !== '#';
+        // return newMapData[position.y][position.x] !== '#';
+        return newMapData[position.y][position.x] !== '#' && newMapData[position.y][position.x] !== 'D';
     };
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
@@ -312,7 +313,7 @@ export function MoveChar({
     ) => {
         // // Check if the position beyond the box is a token
         // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
-        //     // If it is, remove the token
+        //     // If it is, remove the tokensource ~/.bashrc
         //     newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = ',';
 
         //     // Update the collectedTokens state
@@ -349,7 +350,7 @@ export function MoveChar({
         setPlayerPosition(newPosition);
     };
 
-//Just to trigger the door when the box is on the special indicator changes to ground
+    //Just to trigger the door when the box is on the special indicator changes to ground
     const triggerDoor = (doorPosition: { x: number; y: number }, newMapData: string[][]) => {
         newMapData[doorPosition.y][doorPosition.x] = ',';
         setMapData(newMapData);
@@ -361,6 +362,8 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
+
+   
         // Check if the new position of the special box is a special indicator
         const specialIndicator = newMapData[beyondBoxPosition.y][beyondBoxPosition.x];
         let doorPosition = null;
@@ -482,6 +485,14 @@ export function MoveChar({
                     const specialBoxIndex = specialBox.findIndex(
                         (pos) => pos.x === newPosition.x && pos.y === newPosition.y
                     );
+
+                    if (specialBoxIndex !== -1) {
+                        const isSpecialBoxOnIndicator = specialBoxIndicator.some((pos) => pos.x === newPosition.x && pos.y === newPosition.y);
+                        if (isSpecialBoxOnIndicator) {
+                            // If the special box is on the indicator, don't allow the player to move it
+                            return;
+                        }
+                    }
 
                     // console.log('Special Box:', specialBox);
                     // console.log('Special Box Index:', specialBoxIndex);
