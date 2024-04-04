@@ -5,13 +5,13 @@ import { useContext, useEffect, useState } from 'react';
 
 import { Credits } from './pages/Credits';
 import { FullscreenToggle } from './components/fullscrenToggle';
+import { MapGenerator } from './components/MapGenerator';
 import { Music } from './components/Music';
 import { MyContext } from './ContextProvider/ContextProvider';
 import { Play } from './pages/Play';
 import { SelectLevel } from './pages/SelectLevel';
 import { Settings } from './pages/Settings';
 import { StartPageUI } from './pages/StartPageUI';
-import { MapGenerator } from './components/MapGenerator';
 import allMaps from './maps/maps';
 import { playSound } from './components/playSound';
 
@@ -29,7 +29,7 @@ function App() {
         // Simulate loading by setting a timeout
         const timeout = setTimeout(() => {
             setIsReady(true);
-        }, 1000); // Adjust the duration as needed
+        }, 1); // Adjust the duration as needed
 
         // Cleanup by clearing the timeout when the component unmounts
         return () => {

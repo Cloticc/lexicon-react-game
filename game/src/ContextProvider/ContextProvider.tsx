@@ -45,8 +45,10 @@ interface GameContextProps {
     setIntroDone: (introDone: boolean) => void;
     disableControls: boolean;
     setDisableControls: (disableControls: boolean) => void;
+    // totalToken: number;
+    // setTotalToken: (totalToken: number) => void;
     totalToken: number;
-    setTotalToken: (totalToken: number) => void;
+    setTotalToken: Dispatch<SetStateAction<number>>;
     playedMaps: { mapId: number; score: number; elapsedTime: number }[];
     setPlayedMaps: (playedMaps: { mapId: number; score: number; elapsedTime: number }[]) => void;
     youAreDead: boolean;
@@ -76,6 +78,8 @@ interface GameContextProps {
     setInitialPlayerPosition: (position: PlayerPosition) => void;
     initialBoxPositions: BoxPosition[];
     setInitialBoxPositions: (positions: BoxPosition[]) => void;
+    initialSpecialBox: { x: number; y: number }[];
+    setInitialSpecialBox: (specialBox: { x: number; y: number }[]) => void;
     level: number;
     setLevel: (level: number) => void;
     music: string;
@@ -91,6 +95,10 @@ interface GameContextProps {
     highestScores: {
         [level: string]: { score: number; elapsedTime: number };
     };
+    // setHighestScores: (highestScores: {
+    //     [level: string]: { score: number; elapsedTime: number };
+    // }) => void;
+// stet distpatch and setstateaction
     setHighestScores: Dispatch<SetStateAction<{
         [level: string]: { score: number; elapsedTime: number };
     }>>;
@@ -112,6 +120,12 @@ interface GameContextProps {
     setSelectedPosition: (selectedPosition: { x: number; y: number } | null) => void;
     collectedTokens: TokensMap;
     setCollectedTokens: (collectedTokens: TokensMap) => void;
+    specialBox: { x: number; y: number }[];
+    setSpecialBox: (specialbox: { x: number; y: number }[]) => void;
+    specialBoxIndicator: { x: number; y: number }[];
+    setSpecialBoxIndicator: (specialBoxIndicator: { x: number; y: number }[]) => void;
+    specialDoor: { x: number; y: number }[];
+    setSpecialDoor: (specialDoor: { x: number; y: number }[]) => void;
 }
 
 interface ChildrenProps {
@@ -145,6 +159,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         y: 0,
     });
     const [initialBoxPositions, setInitialBoxPositions] = useState<BoxPosition[]>([]);
+    const [initialSpecialBox, setInitialSpecialBox] = useState<{ x: number; y: number }[]>([]);
     const [level, setLevel] = useState<number>(0);
     const [music, setMusic] = useState<string>('');
     const [startTime, setStartTime] = useState<Date | null>(null);
@@ -166,6 +181,9 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [boxGroundFloor, setBoxGroundFloor] = useState('ground');
     const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
     const [collectedTokens, setCollectedTokens] = useState<{ [level: number]: number }>({});
+    const [specialBox, setSpecialBox] = useState<{ x: number; y: number }[]>([]);
+    const [specialBoxIndicator, setSpecialBoxIndicator] = useState<{ x: number; y: number }[]>([]);
+    const [specialDoor, setSpecialDoor] = useState<{ x: number; y: number }[]>([]);
 
     const resetGame = () => {
         setCounter(0);
@@ -179,6 +197,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setGameRunning(false);
         setPlayerPosition(initialPlayerPosition);
         setBoxPositions(initialBoxPositions);
+        setSpecialBox(initialSpecialBox);
         setPlayerDirection('down');
         setHistory([]);
         setSolution([]);
@@ -230,6 +249,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setInitialPlayerPosition: setInitialPlayerPosition,
         initialBoxPositions: initialBoxPositions,
         setInitialBoxPositions: setInitialBoxPositions,
+        initialSpecialBox: initialSpecialBox,
+        setInitialSpecialBox: setInitialSpecialBox,
         level: level,
         setLevel: setLevel,
         music: music,
@@ -253,7 +274,7 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         history: history,
         setHistory: setHistory,
         solution: solution,
-        setSolution: setSolution,
+        setSolution: setSolution as Dispatch<SetStateAction<SolutionState[]>>,
         contextMenu: contextMenu,
         setContextMenu: setContextMenu,
         playerGroundFloor: playerGroundFloor,
@@ -264,6 +285,13 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setSelectedPosition: setSelectedPosition,
         collectedTokens: collectedTokens,
         setCollectedTokens: setCollectedTokens,
+        specialBox: specialBox,
+        setSpecialBox: setSpecialBox,
+        specialBoxIndicator: specialBoxIndicator,
+        setSpecialBoxIndicator: setSpecialBoxIndicator,
+        specialDoor: specialDoor,
+        setSpecialDoor: setSpecialDoor,
+
     };
 
     return <MyContext.Provider value={value}>{children}</MyContext.Provider>;

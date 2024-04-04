@@ -26,7 +26,7 @@ export function Settings({ onPageChange }: SelectPageProps) {
         toggleSettings,
         setPlayerDirection,
         level,
-
+        setCollectedTokens,
         setAlias,
     } = useContext(MyContext);
 
@@ -44,15 +44,17 @@ export function Settings({ onPageChange }: SelectPageProps) {
         };
     }, []);
 
-    useEffect(() => {
-        const totalTokenLocalStorage = localStorage.getItem('totaltokens');
-        if (totalTokenLocalStorage) {
-            setTotalToken(parseInt(totalTokenLocalStorage));
-        } else {
-            setTotalToken(3);
-            localStorage.setItem('totaltokens', '3');
-        }
-    }, [totalToken, setTotalToken]);
+    // useEffect(() => {
+    //     const totalTokenLocalStorage = localStorage.getItem('totalTokens');
+    //     if (totalTokenLocalStorage) {
+    //         setTotalToken(parseInt(totalTokenLocalStorage));
+    //     } else {
+    //         setTotalToken(3);
+    //         localStorage.setItem('totalTokens', '3');
+    //     }
+    // }, [totalToken, setTotalToken]);
+
+
 
     function handleMouseOver() {
         playSound('hover', 0.15);
@@ -137,6 +139,13 @@ export function Settings({ onPageChange }: SelectPageProps) {
             setTotalToken(3);
             toggleSettings(false);
             setPlayedMaps([]);
+            // reset tokens and collectedtokens
+            localStorage.setItem('totalTokens', '3');
+            // Reset collectedTokens state and local storage
+            const resetCollectedTokens = {};
+            setCollectedTokens(resetCollectedTokens);
+            localStorage.setItem('collectedTokens', JSON.stringify(resetCollectedTokens));
+
         } else {
             // User clicked "Cancel"
             toggleSettings(false);

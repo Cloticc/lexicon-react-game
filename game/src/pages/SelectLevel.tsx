@@ -22,10 +22,9 @@ interface PlayedMap {
 export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     const [mapFiles, setMapFiles] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
-    const { resetGame, setLevel, setMusic, setGameReady, setDisableControls } =
-        useContext(MyContext);
+    const { resetGame, setLevel, setMusic, setGameReady, setDisableControls, playedMaps, setPlayedMaps } = useContext(MyContext);
 
-    var { playedMaps, setPlayedMaps } = useContext(MyContext);
+    // var { playedMaps, setPlayedMaps } = useContext(MyContext);
 
     useEffect(() => {
         setMusic('ui');
@@ -94,7 +93,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     };
 
     const handlePlayClick = () => {
-        let id = playedMaps.length;
+        const id = playedMaps.length;
         setLevel(id);
         resetGame();
         onPageChange('play');
@@ -117,7 +116,8 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
         const id: number = parseInt(idString);
 
         // Check if the level is unlocked
-
+        setLevel(-1);
+        resetGame();
         setLevel(id);
         playSound('click', 0.25);
         playSound('levelstart', 0.5);
@@ -126,61 +126,74 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
         setDisableControls(false);
         // console.log("Level: " ,id);
     }
+
+    function handleWheel(event: React.WheelEvent) {
+        if (event.deltaY < 0) {
+            handlePrevClick();
+        } else {
+            handleNextClick();
+        }
+    }
+
+
     return (
         <>
             <div id="selectlevel">
                 <h1>Select Level</h1>
+                <div className="levels" onWheel={handleWheel}>
+                    <div className="levels">
+                        <ul>
+                            {mapFiles.slice(startIndex, endIndex).map((map, index) => {
+                                // Find the corresponding highscore data for the current map
+                                const highscoreData = playedMaps.find(
+                                    (entry) => entry.mapId === Number(map)
+                                );
 
-                <div className="levels">
-                    <ul>
-                        {mapFiles.slice(startIndex, endIndex).map((map, index) => {
-                            // Find the corresponding highscore data for the current map
-                            const highscoreData = playedMaps.find(
-                                (entry) => entry.mapId === Number(map)
-                            );
+                                const classNames = [''];
 
-                            const classNames = [''];
+                                if (playedMaps.length < (map ? parseInt(map) : 0)) {
+                                    classNames.push('notplayable');
+                                }
 
-                            if (playedMaps.length < (map ? parseInt(map) : 0)) {
-                                classNames.push('notplayable');
-                            }
+                                if (highscoreData) {
+                                    classNames.push('done');
+                                }
+                                return (
+                                    <li
+                                        key={startIndex + index}
+                                        data-mapid={map}
+                                        onMouseOver={
+                                            playedMaps.length >= Number(map)
+                                                ? handleMouseOver
+                                                : undefined
+                                        }
+                                        onClick={
+                                            playedMaps.length >= Number(map)
+                                                ? handleMapClick
+                                                : undefined
+                                        }
+                                        className={classNames.join(' ')}
+                                    >
+                                        {startIndex + index + 1}
+                                        <div className="highest">
+                                            {highscoreData && (
+                                                <>
+                                                    <span className="highmoves">
+                                                        {highscoreData.score}
+                                                    </span>
+                                                    <span className="hightime">
+                                                        {formatElapsedTime(highscoreData.elapsedTime)}
+                                                    </span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </li>
 
-                            if (highscoreData) {
-                                classNames.push('done');
-                            }
-                            return (
-                                <li
-                                    key={startIndex + index}
-                                    data-mapid={map}
-                                    onMouseOver={
-                                        playedMaps.length >= Number(map)
-                                            ? handleMouseOver
-                                            : undefined
-                                    }
-                                    onClick={
-                                        playedMaps.length >= Number(map)
-                                            ? handleMapClick
-                                            : undefined
-                                    }
-                                    className={classNames.join(' ')}
-                                >
-                                    {startIndex + index + 1}
-                                    <div className="highest">
-                                        {highscoreData && (
-                                            <>
-                                                <span className="highmoves">
-                                                    {highscoreData.score}
-                                                </span>
-                                                <span className="hightime">
-                                                    {formatElapsedTime(highscoreData.elapsedTime)}
-                                                </span>
-                                            </>
-                                        )}
-                                    </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
+
+                                );
+                            })}
+                        </ul>
+                    </div>
                     <button
                         className="arrow prev"
                         onClick={handlePrevClick}
