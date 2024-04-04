@@ -196,8 +196,17 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { setMapData, setIntroDone, setMusic, wonGame, youAreDead, youLost, setTestingMap } =
-        useContext(MyContext);
+    const {
+        setMapData,
+        setIntroDone,
+        setMusic,
+        wonGame,
+        youAreDead,
+        youLost,
+        setTestingMap,
+        resetGame,
+        setWonGame,
+    } = useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -608,6 +617,11 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         );
     };
 
+    function handleReplay() {
+        setWonGame(false);
+        resetGame();
+    }
+
     return showMapRender ? (
         <>
             {/* < div className="map-render"> */}
@@ -634,7 +648,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                         <button
                             className="button"
                             id="btn-replay"
-                            onClick={saveMapToFile}
+                            onClick={handleReplay}
                             onMouseOver={handleMouseOver}
                         ></button>
                     </div>
