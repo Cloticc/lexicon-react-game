@@ -1,6 +1,7 @@
 @media screen and (max-width: 1600px) {
     #settings h1,
-    #highscore h1 {
+    #highscore h1,
+    .completedtest h1 {
         top: -5rem;
     }
 }
@@ -73,10 +74,7 @@
         top: 1rem !important;
         right: 1rem !important;
     }
-    #btn-savemap {
-        top: 7rem !important;
-        left: 1rem !important;
-    }
+
     #mapEditor,
     #btn-backtoedit {
         top: 1rem !important;
@@ -112,7 +110,8 @@
     }
     #selectlevel h1,
     #settings h1,
-    #highscore h1 {
+    #highscore h1,
+    .completedtest h1 {
         font-size: clamp(2rem, 8vw, 4rem) !important;
         top: -3.5rem !important;
     }
@@ -268,11 +267,6 @@
         right: 1rem !important;
     }
 
-    #btn-savemap {
-        top: 5rem !important;
-        left: 1rem !important;
-    }
-
     #btn-settings:after,
     #btn-fullscreen:after,
     #btn-sound:after,
@@ -375,7 +369,8 @@
     }
 
     #settings h1,
-    #highscore h1 {
+    #highscore h1,
+    .completedtest h1 {
         font-size: clamp(2.5rem, 7vw, 5rem) !important;
         top: -2rem !important;
     }

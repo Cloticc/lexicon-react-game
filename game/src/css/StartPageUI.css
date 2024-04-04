@@ -735,7 +735,8 @@
 }
 
 #settings h1,
-#highscore h1 {
+#highscore h1,
+.completedtest h1 {
     position: absolute;
     top: -5rem;
     left: 50%;
@@ -763,6 +764,23 @@
     animation: bg-shift 0.5s ease-in-out infinite alternate;
 }
 
+.completedtest h1 {
+    height: 9rem;
+    transform: translateX(-50%);
+    color: white;
+    font-size: clamp(2rem, 8vw, 6.5rem) !important;
+}
+.completedtest h2 {
+    filter: drop-shadow(0 0 1px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black)
+        drop-shadow(0 0 0px black) drop-shadow(0 0 0px black) drop-shadow(0 0 0px black);
+    color: white;
+
+    margin-top: -2rem;
+}
+.completedtest p {
+    padding: 2rem;
+    font-weight: 500;
+}
 #settings .content-container {
     margin-top: 4rem;
     display: flex;
@@ -932,10 +950,16 @@
     background-size: 4rem;
 }
 
-#btn-savemap {
+.completedtest #btn-savemap {
     position: absolute;
     left: 3rem;
-    top: 11rem;
+    bottom: 3rem;
+}
+
+.completedtest #btn-replay {
+    position: absolute;
+    right: 3rem;
+    bottom: 3rem;
 }
 
 #btn-backtoedit {
