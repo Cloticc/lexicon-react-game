@@ -316,6 +316,7 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
+  
         // // Check if the position beyond the box is a token
         // if (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') {
         //     // If it is, remove the tokensource ~/.bashrc
@@ -367,8 +368,6 @@ export function MoveChar({
         beyondBoxPosition: { x: number; y: number },
         boxIndex: number
     ) => {
-
-
         // Check if the new position of the special box is a special indicator
         const specialIndicator = newMapData[beyondBoxPosition.y][beyondBoxPosition.x];
         let doorPosition = null;
@@ -444,7 +443,7 @@ export function MoveChar({
             });
         }
     }
-
+    // console.log(mapData);
     const handlePlayerMove = useCallback(
         (direction: string) => {
             setPlayerDirection(direction.toLowerCase());
@@ -498,12 +497,17 @@ export function MoveChar({
                     );
 
                     if (specialBoxIndex !== -1) {
-                        const isSpecialBoxOnIndicator = specialBoxIndicator.some((pos) => pos.x === newPosition.x && pos.y === newPosition.y);
+                        const isSpecialBoxOnIndicator = specialBoxIndicator.some(
+                            (pos) => pos.x === newPosition.x && pos.y === newPosition.y
+                        );
+
+
                         if (isSpecialBoxOnIndicator) {
                             // If the special box is on the indicator, don't allow the player to move it
                             return;
                         }
                     }
+
 
                     // console.log('Special Box:', specialBox);
                     // console.log('Special Box Index:', specialBoxIndex);
@@ -518,10 +522,12 @@ export function MoveChar({
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T' ||
+                                // newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'O' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S')
                             ) &&
                             !newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('D')
                         ) {
+
 
                             if (specialBoxIndex !== -1) {
                                 //Move the special box
