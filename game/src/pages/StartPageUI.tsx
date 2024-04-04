@@ -39,7 +39,7 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
             return;
         }
         setAlias(playerName);
-        localStorage.setItem('playerName', alias);
+        localStorage.setItem('playerName', playerName);
     };
     const handleKeyDown = (e: { key: string }) => {
         if (e.key === 'Enter') {
@@ -48,10 +48,18 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
     };
 
     useEffect(() => {
-        renderInputField();
-        const inputElement = document.getElementById('aliasInput'); // Select the input element by its ID
+        const localAlias = localStorage.getItem('playerAlias');
+        if (localAlias) {
+            setAlias(localAlias);
+        }
+        renderInputField(); // Call renderInputField after setting alias
+    }, [alias]);
+
+    // Second useEffect block
+    useEffect(() => {
+        const inputElement = document.getElementById('aliasInput');
         if (inputElement) {
-            inputElement.focus(); // Focus the input field
+            inputElement.focus();
         }
     }, [alias]);
 

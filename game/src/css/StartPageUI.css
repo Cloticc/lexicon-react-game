@@ -1010,6 +1010,6 @@
     margin-top: 2rem;
     height: 3.5rem;
     font-weight: bold;
-    width: 100%;
+    width: 100% !important;
     font-size: 1.2rem;
 }
