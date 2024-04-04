@@ -28,12 +28,13 @@ export interface TokensMap {
     [level: number]: number;
 }
 
-
 interface SolutionState {
     mapData: string[][];
     direction: string;
 }
 interface GameContextProps {
+    alias: string;
+    setAlias: (alias: string) => void;
     testingMap: boolean;
     setTestingMap: (testingMap: boolean) => void;
     mapGeneratorRendering: boolean;
@@ -120,6 +121,7 @@ interface ChildrenProps {
 export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
+    const [alias, setAlias] = useState(localStorage.getItem('playerName') || null);
     const [testingMap, setTestingMap] = useState<boolean>(false);
     const [mapGeneratorRendering, setMapGeneratorRendering] = useState<boolean>(false);
     const [gameReady, setGameReady] = useState<boolean>(false);
@@ -165,7 +167,6 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [selectedPosition, setSelectedPosition] = useState<{ x: number; y: number } | null>(null);
     const [collectedTokens, setCollectedTokens] = useState<{ [level: number]: number }>({});
 
-
     const resetGame = () => {
         setCounter(0);
         setElapsedTime(0);
@@ -187,12 +188,13 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
         setDisableControls(false);
     };
 
-
     const value: GameContextProps = {
+        alias: alias || '',
+        setAlias: setAlias,
         testingMap: testingMap,
         setTestingMap: setTestingMap,
-        mapGeneratorRendering:mapGeneratorRendering,
-        setMapGeneratorRendering:setMapGeneratorRendering,
+        mapGeneratorRendering: mapGeneratorRendering,
+        setMapGeneratorRendering: setMapGeneratorRendering,
         introDone: introDone,
         setIntroDone: setIntroDone,
         gameReady: gameReady,

@@ -1,15 +1,15 @@
 import './../css/Map.css';
 import './../css/StartPageUI.css';
 
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { SelectPageProps } from './../components/InterfacePages';
 import { MyContext } from '../ContextProvider/ContextProvider';
 import { playSound } from './../components/playSound';
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
-    const { setGameReady, setMusic } = useContext(MyContext);
+    const { setGameReady, setMusic, alias, setAlias } = useContext(MyContext);
+    const [playerName, setPlayerName] = useState<string | null>(null);
 
-    const [alias, setAlias] = useState(localStorage.getItem('playerName') || '');
     const handleButtonClick = () => {
         onPageChange('selectlevel');
         playSound('click', 0.25);
@@ -28,31 +28,56 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
         setGameReady(false);
     };
 
-    const handleNameChange = (e: { target: { value: string; }; }) => {
+    const handleNameChange = (e: { target: { value: string } }) => {
         const newName = e.target.value;
-        setAlias(newName);
+        setPlayerName(newName);
     };
     const handleSetLocalStorage = () => {
-        localStorage.setItem('playerName', alias); 
+        playSound('click', 0.25);
+        if (playerName === '' || playerName === null) {
+            alert('You need to set an alias');
+            return;
+        }
+        setAlias(playerName);
+        localStorage.setItem('playerName', alias);
     };
-    const handleKeyDown = (e: { key: string; }) => {
+    const handleKeyDown = (e: { key: string }) => {
         if (e.key === 'Enter') {
             handleSetLocalStorage();
         }
     };
 
+    useEffect(() => {
+        renderInputField();
+        const inputElement = document.getElementById('aliasInput'); // Select the input element by its ID
+        if (inputElement) {
+            inputElement.focus(); // Focus the input field
+        }
+    }, [alias]);
+
     const renderInputField = () => {
-        if (!localStorage.getItem('playerName')) {
+        if (!alias) {
             return (
                 <>
-                    <input
-                        type="text"
-                        value={alias}
-                        onChange={handleNameChange}
-                        onKeyDown={handleKeyDown} 
-                        placeholder="Enter your name"
-                    />
-                    <button onClick={handleSetLocalStorage}>Enter name...</button>
+                    <div id="setalias">
+                        <input
+                            id="aliasInput"
+                            type="text"
+                            value={playerName}
+                            onChange={handleNameChange}
+                            onKeyDown={handleKeyDown}
+                            placeholder="Enter alias"
+                        />
+                        <div
+                            id="enteralias"
+                            onClick={handleSetLocalStorage}
+                            onMouseOver={handleMouseOver}
+                            className="button"
+                        >
+                            Enter
+                        </div>
+                    </div>
+                    <div id="darkoverlay" className="startoverlay"></div>
                 </>
             );
         }
@@ -60,9 +85,10 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
 
     return (
         <>
+            {renderInputField()}
             <div id="player">
                 <h1>Sokoban</h1>
-                {renderInputField()}
+
                 <div className="player playerwalkdown"></div>
             </div>
             <div id="startplay" onClick={handleButtonClick} onMouseOver={handleMouseOver}></div>
@@ -72,7 +98,6 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
                 onClick={handleButtonClick2}
                 onMouseOver={handleMouseOver}
             ></div>
-       
         </>
     );
 }
