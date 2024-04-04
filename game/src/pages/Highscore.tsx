@@ -92,7 +92,7 @@ export function Highscore() {
                 }
             };
             xhr.send();
-        }, 10);
+        }, 150);
     }, []); // Add level to the dependency array
 
     useEffect(() => {

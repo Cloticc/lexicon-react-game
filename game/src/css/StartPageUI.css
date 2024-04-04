@@ -1026,8 +1026,9 @@
     margin-bottom: 1px;
     display: grid;
     grid-template-columns: 1fr 6fr 1fr 2fr;
-    background: rgba(0, 0, 0, 0.5);
+    background: black;
     color: white;
+    font-weight: 600;
     padding: 0.5rem;
 }
 
