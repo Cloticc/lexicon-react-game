@@ -386,7 +386,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         // Rest of the function remains the same
         // Convert the JSON data to a Blob
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-        console.log(data);
+
         // Create a temporary link element
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
@@ -404,7 +404,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         }
 
         function saveJsonToFile(data) {
-            fetch('../php/savemap.php', {
+            fetch('../php/save-json.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -415,12 +415,21 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     if (!response.ok) {
                         throw new Error('Failed to save file');
                     }
-                    console.log('File saved successfully');
+                    return response.json(); // Parse JSON response
+                })
+                .then((result) => {
+                    // Check the status of the response
+                    if (result.status === 'success') {
+                        console.log('File saved successfully:', result.file);
+                    } else {
+                        throw new Error('Failed to save file');
+                    }
                 })
                 .catch((error) => {
-                    console.error('Error saving file:', error);
+                    console.error('Error saving file:', error.message);
                 });
         }
+
         saveJsonToFile(data);
     }
 

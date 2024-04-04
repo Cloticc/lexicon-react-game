@@ -33,7 +33,12 @@ $filePath = $directory . $newFileName;
 $jsonData = file_get_contents('php://input');
 
 // Save the JSON data to the new file
-file_put_contents($filePath, $jsonData);
-
-
+if (file_put_contents($filePath, $jsonData) !== false) {
+    // If successful, send success response
+    echo json_encode(array('status' => 'success', 'file' => $newFileName));
+} else {
+    // If error occurred, send error response
+    header('HTTP/1.1 500 Internal Server Error');
+    echo json_encode(array('status' => 'error', 'message' => 'Failed to save JSON data.'));
+}
 ?>
