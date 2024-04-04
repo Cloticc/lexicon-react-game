@@ -196,9 +196,18 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { setMapData, setIntroDone, setMusic, wonGame,setGameRunning, youAreDead, youLost, setTestingMap,resetGame,
-        setWonGame, } =
-        useContext(MyContext);
+    const {
+        setMapData,
+        setIntroDone,
+        setMusic,
+        wonGame,
+        setGameRunning,
+        youAreDead,
+        youLost,
+        setTestingMap,
+        resetGame,
+        setWonGame,
+    } = useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -207,7 +216,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
     const [savedMapData, saveMap] = useState<string[][]>([]);
 
-    const { setDisableControls, setGameReady,setMapGeneratorRendering,setSolution,solution } = useContext(MyContext);
+    const { setDisableControls, setGameReady, setMapGeneratorRendering, setSolution, solution } =
+        useContext(MyContext);
 
     // const [mapData, setMapData] = useState<string[][]>([]);
     const [gridItems, setGridItems] = useState(
@@ -394,6 +404,8 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             mapdata: savedMapData,
             solution: Solution,
         };
+
+        /* // OLD STUFF
         const blob = new Blob([JSON.stringify(mergedData, null, 2)], { type: 'application/json' });
         console.log(mergedData);
         // Create a temporary link element
@@ -411,24 +423,20 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             link.remove();
             window.URL.revokeObjectURL(link.href);
         }
+        */
 
         function saveJsonToFile(data: any) {
-            fetch('../php/save-json.php', {
+            fetch('../php/savemap.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Failed to save file');
-                    }
-                    return response.json(); // Parse JSON response
-                })
+                .then((response) => response.json())
                 .then((result) => {
                     // Check the status of the response
-                    if (result.status === 'success') {
+                    if (result.success) {
                         console.log('File saved successfully:', result.file);
                     } else {
                         throw new Error('Failed to save file');
@@ -439,7 +447,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                 });
         }
 
-        saveJsonToFile(data);
+        saveJsonToFile(mergedData);
     }
 
     const handleGridClick = (
@@ -595,7 +603,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setMapGeneratorRendering(false);
         setGameReady(false);
         setWonGame(false);
-       // setGameRunning(false);
+        // setGameRunning(false);
     };
     const goHome = () => {
         setTestingMap(false);
@@ -605,7 +613,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setShowMapRender(false);
         setMapGeneratorRendering(false);
         setWonGame(false);
-       // setGameRunning(false);
+        // setGameRunning(false);
         onPageChange('start');
     };
     useEffect(() => {
