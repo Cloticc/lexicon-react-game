@@ -42,8 +42,10 @@ interface GameContextProps {
     setIntroDone: (introDone: boolean) => void;
     disableControls: boolean;
     setDisableControls: (disableControls: boolean) => void;
+    // totalToken: number;
+    // setTotalToken: (totalToken: number) => void;
     totalToken: number;
-    setTotalToken: (totalToken: number) => void;
+    setTotalToken: Dispatch<SetStateAction<number>>;
     playedMaps: { mapId: number; score: number; elapsedTime: number }[];
     setPlayedMaps: (playedMaps: { mapId: number; score: number; elapsedTime: number }[]) => void;
     youAreDead: boolean;
