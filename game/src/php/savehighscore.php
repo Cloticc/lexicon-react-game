@@ -70,7 +70,9 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
     } else {
         // If existing record, check if new score is better
 
-        if ($steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && $time < $existingScore['time'])) {
+
+
+        if (!$existingScore || $steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && compareTimes($time, $existingScore['time']))) {
             // If new score is better, update the existing record
 
             // Update the existing high score
@@ -88,6 +90,17 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
 
             $response['success'] = true;
             $response['message'] = "No high score added or updated";
+        }
+
+        // Function to compare times in the format '0:423'
+        function compareTimes($newTime, $existingTime) {
+            $newTimeParts = explode(':', $newTime);
+            $existingTimeParts = explode(':', $existingTime);
+
+            $newTimeSeconds = ($newTimeParts[0] * 60) + $newTimeParts[1];
+            $existingTimeSeconds = ($existingTimeParts[0] * 60) + $existingTimeParts[1];
+
+            return $newTimeSeconds < $existingTimeSeconds;
         }
     }
 } catch (PDOException $e) {
