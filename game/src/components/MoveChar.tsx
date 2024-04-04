@@ -155,10 +155,12 @@ export function MoveChar({
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = `map${level + 1}.json`;
-        a.click();
+        // TODO: Uncomment this line to automatically download the solution filename
+        // a.click();
         a.remove();
         window.URL.revokeObjectURL(a.href);
     };
+    
     const handleHistoryUndo = useCallback(() => {
         if (history.length > 1) {
             const prevState = history[history.length - 1];
