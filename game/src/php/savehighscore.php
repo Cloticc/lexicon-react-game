@@ -4,7 +4,13 @@ require("db.php");
 
 $response = array();
 
-$isFetchRequest = isset($_SERVER['HTTP_FETCH_REQUEST']) && $_SERVER['HTTP_FETCH_REQUEST'] === 'true';
+// Set appropriate CORS headers
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, X-Fetch-Request"); // Allow X-Fetch-Request header
+
+$isFetchRequest = isset($_SERVER['HTTP_X_FETCH_REQUEST']) && $_SERVER['HTTP_X_FETCH_REQUEST'] === 'true';
+
 
 if (!$isFetchRequest) {
     $response['success'] = false;
@@ -67,7 +73,10 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
             $response['message'] = "High score added successfully";
 
 
-        } 
+        }  else {
+            $response['success'] = true;
+            $response['message'] = "No highscore added.";
+        }
     } catch (PDOException $e) {
        
         $response['success'] = false;

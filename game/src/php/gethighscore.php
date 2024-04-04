@@ -3,6 +3,12 @@ require("db.php");
 
 $response = array();
 
+// Set appropriate CORS headers
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type, X-Fetch-Request"); // Allow X-Fetch-Request header
+
+
 if(isset($_GET['level']) || isset($_POST['level'])) {
     if(isset($_GET['level'])) {
         $level = $_GET['level'];

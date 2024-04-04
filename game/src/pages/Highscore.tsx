@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { MyContext } from './../ContextProvider/ContextProvider';
 import { formatElapsedTime } from '../utils/TimeUtils';
@@ -16,12 +16,15 @@ export function Highscore() {
         initialPlayerPosition,
         initialBoxPositions,
         level,
+        alias,
         setLevel,
         highestScores,
         setHighestScores,
         setGameReady,
         setDisableControls,
     } = useContext(MyContext);
+
+    const [highscoreDB, setHighscoreDB] = useState<any[]>([]);
 
     useEffect(() => {
         const storedScores = localStorage.getItem('highestScores');
@@ -35,6 +38,61 @@ export function Highscore() {
         setMusic('ui');
         setGameReady(false);
         setDisableControls(true);
+
+        setTimeout(() => {
+            const encodedAlias = encodeURIComponent(alias);
+            const encodedTime = encodeURIComponent(
+                formatElapsedTime(highestScores[level].elapsedTime)
+            );
+            const encodedSteps = encodeURIComponent(highestScores[level].score);
+            const url = `https://diam.se/sokoban/src/php/savehighscore.php?level=${
+                level + 1
+            }&alias=${encodedAlias}&time=${encodedTime}&steps=${encodedSteps}`;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.setRequestHeader('X-Fetch-Request', 'true'); // Custom header
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            console.log('High score saved successfully:', data);
+
+                            const getHighScoreUrl = `https://diam.se/sokoban/src/php/gethighscore.php?level=${
+                                level + 1
+                            }`;
+                            const xhr2 = new XMLHttpRequest();
+                            xhr2.open('POST', getHighScoreUrl);
+                            xhr2.onreadystatechange = function () {
+                                if (xhr2.readyState === XMLHttpRequest.DONE) {
+                                    if (xhr2.status === 200) {
+                                        try {
+                                            const result = JSON.parse(xhr2.responseText);
+                                            console.log(result.highscores);
+                                            setHighscoreDB(result.highscores || []);
+                                        } catch (error) {
+                                            console.error(
+                                                'Error parsing high score response:',
+                                                error
+                                            );
+                                        }
+                                    } else {
+                                        console.error('Error fetching high score:', xhr2.status);
+                                    }
+                                }
+                            };
+                            xhr2.send();
+                        } catch (error) {
+                            console.error('Error parsing save high score response:', error);
+                        }
+                    } else {
+                        console.error('Error saving high score:', xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }, 150);
     }, []); // Add level to the dependency array
 
     useEffect(() => {
@@ -102,32 +160,16 @@ export function Highscore() {
             <div id="highscore">
                 <h1>Completed</h1>
                 <h2>Level {level + 1}</h2>
-                <h2>High Score</h2>
                 <div className="showhighscore">
                     <div className="result">
                         <div className="row thead">
-                            <div>Level</div>
+                            <div>Alias</div>
                             <div>Steps</div>
                             <div>Time</div>
                         </div>
                     </div>
                 </div>
-                {/* {Object.keys(highestScores)
-					.map(Number) 
-					.sort((a, b) => a - b) 
-					.map((level) => (
-						<div key={level} className="showhighscore">
-							<div className="result">
-								<div className="row">
-									<div>{level + 1}</div>
-									<div>{highestScores[level].score}</div>
-									<div>
-										{formatElapsedTime(highestScores[level].elapsedTime)}
-									</div>{" "}
-								</div>
-							</div>
-						</div>
-					))} */}
+                {/* Display highest scores for the current level */}
                 {Object.keys(highestScores)
                     .map(Number)
                     .filter((levelNumber) => levelNumber === level)
@@ -135,15 +177,27 @@ export function Highscore() {
                         <div key={level} className="showhighscore">
                             <div className="result">
                                 <div className="row">
-                                    <div>{level + 1}</div>
+                                    <div>{alias}</div>
                                     <div>{highestScores[level].score}</div>
-                                    <div>
-                                        {formatElapsedTime(highestScores[level].elapsedTime)}
-                                    </div>{' '}
+                                    <div>{formatElapsedTime(highestScores[level].elapsedTime)}</div>
                                 </div>
                             </div>
                         </div>
                     ))}
+
+                {/* Display high scores from the database */}
+                {highscoreDB &&
+                    highscoreDB.map((row, index) => (
+                        <div key={index} className="listhdb">
+                            <div className="row">
+                                <div>{index + 1}</div>
+                                <div>{row.alias}</div>
+                                <div>{row.steps}</div>
+                                <div>{row.time}</div>
+                            </div>
+                        </div>
+                    ))}
+
                 <div className="content-container">
                     <button
                         id="btn-replay-again"
