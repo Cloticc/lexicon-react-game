@@ -41,12 +41,17 @@ export function Highscore() {
 
         setTimeout(() => {
             const encodedAlias = encodeURIComponent(alias);
-            const encodedTime = highestScores[level]
-                ? encodeURIComponent(formatElapsedTime(highestScores[level].elapsedTime))
-                : '';
-            const encodedSteps = highestScores[level]
-                ? encodeURIComponent(highestScores[level].score)
-                : '';
+            // const encodedTime = highestScores[level]
+            //     ? encodeURIComponent(formatElapsedTime(highestScores[level].elapsedTime))
+            //     : '';
+            // const encodedSteps = highestScores[level]
+            //     ? encodeURIComponent(highestScores[level].score)
+            //     : '';
+            const encodedTime = encodeURIComponent(
+                formatElapsedTime(highestScores[level].elapsedTime)
+            );
+            const encodedSteps = encodeURIComponent(highestScores[level].score);
+
             const url = `https://diam.se/sokoban/src/php/savehighscore.php?level=${
                 level + 1
             }&alias=${encodedAlias}&time=${encodedTime}&steps=${encodedSteps}`;
