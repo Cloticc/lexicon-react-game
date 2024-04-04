@@ -8,7 +8,7 @@ import { playSound } from './../components/playSound';
 
 export function StartPageUI({ onPageChange }: SelectPageProps) {
     const { setGameReady, setMusic, alias, setAlias } = useContext(MyContext);
-    const [playerName, setPlayerName] = useState<string | null>(null);
+    const [playerName, setPlayerName] = useState<string >("");
 
     const handleButtonClick = () => {
         onPageChange('selectlevel');
@@ -34,7 +34,7 @@ export function StartPageUI({ onPageChange }: SelectPageProps) {
     };
     const handleSetLocalStorage = () => {
         playSound('click', 0.25);
-        if (playerName === '' || playerName === null) {
+        if (playerName === '' ) {
             alert('You need to set an alias');
             return;
         }
