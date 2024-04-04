@@ -36,6 +36,7 @@ interface SolutionState {
 interface GameContextProps {
     testingMap: boolean;
     setTestingMap: (testingMap: boolean) => void;
+    setMapGeneratorRendering: (mapGeneratorRendering: boolean) => void;
     gameReady: boolean;
     setGameReady: (gameReady: boolean) => void;
     introDone: boolean;
@@ -79,8 +80,8 @@ interface GameContextProps {
     setMusic: (music: string) => void;
     startTime: Date | null;
     setStartTime: (startTime: Date | null) => void;
-    gameRunning?: boolean;
-    setGameRunning?: (gameRunning: boolean) => void;
+    gameRunning: boolean;
+    setGameRunning: (gameRunning: boolean) => void;
     isMuted: boolean;
     setMuted: (setMuted: boolean) => void;
     showGameContainer: boolean;
@@ -119,6 +120,7 @@ export const MyContext = createContext({} as GameContextProps);
 
 export const GameContextProvider = ({ children }: ChildrenProps) => {
     const [testingMap, setTestingMap] = useState<boolean>(false);
+    const [mapGeneratorRendering, setMapGeneratorRendering] = useState<boolean>(false);
     const [gameReady, setGameReady] = useState<boolean>(false);
     const [introDone, setIntroDone] = useState<boolean>(false);
     const [disableControls, setDisableControls] = useState<boolean>(false);
@@ -188,6 +190,8 @@ export const GameContextProvider = ({ children }: ChildrenProps) => {
     const value: GameContextProps = {
         testingMap: testingMap,
         setTestingMap: setTestingMap,
+        mapGeneratorRendering:mapGeneratorRendering,
+        setMapGeneratorRendering:setMapGeneratorRendering,
         introDone: introDone,
         setIntroDone: setIntroDone,
         gameReady: gameReady,

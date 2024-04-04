@@ -76,6 +76,7 @@ export function MoveChar({
         setCollectedTokens,
         totalToken,
         setTotalToken,
+        mapGeneratorRendering,
     } = useContext(MyContext);
 
     function handleDeath(string?: string | null) {
@@ -215,9 +216,6 @@ export function MoveChar({
         setWonGame(true);
     }, []);
 
-
-
-
     const updateCollectedTokens = (level: number) => {
         // Create a copy of the collectedTokens object
         const updatedTokens = { ...collectedTokens };
@@ -230,8 +228,6 @@ export function MoveChar({
             playSound('collect', 0.4);
         }
     };
-
-
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
@@ -257,7 +253,6 @@ export function MoveChar({
     const isCrackedWall = (newMapData: string[][], position: { x: number; y: number }) => {
         return newMapData[position.y][position.x] === 'W';
     };
-
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
         // Check if the new player position has a token
@@ -299,7 +294,6 @@ export function MoveChar({
         //     // Update the collectedTokens state
         //     updateCollectedTokens(Number(level));
         // }
-
 
         newMapData[beyondBoxPosition.y][beyondBoxPosition.x] = 'B';
         playSound('pushbox', 0.4);
@@ -400,7 +394,7 @@ export function MoveChar({
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') 
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T')
                         ) {
                             moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                         }
@@ -570,7 +564,7 @@ export function MoveChar({
             stopGame();
             setWonGame(true);
             addToSolution(mapData, direction);
-            saveSolutionToJson();
+            !mapGeneratorRendering && saveSolutionToJson();
             setLevelCompleted(true);
             setCurrentLevel(level.toString());
         }
