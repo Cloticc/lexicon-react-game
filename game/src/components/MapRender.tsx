@@ -325,6 +325,10 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
     // Define the placeToken function
     const placeToken = (position: { x: number; y: number }) => {
+        // check if level == emty []
+        if (level === -1) {
+            return;
+        }
         // Create a copy of the map data and remove any existing tokens
         const newMapData = mapData.map(row => row.map(cell => cell === 'T' ? ',' : cell));
 
@@ -334,6 +338,7 @@ export function MapRender({ initialMapData }: MapRenderProps) {
         // Update the map data and token position
         setMapData(newMapData);
         setTokenPosition(position);
+
     };
 
 
