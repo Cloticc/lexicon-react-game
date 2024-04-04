@@ -234,21 +234,24 @@ export function MoveChar({
 
 
 
+// const updateCollectedTokens = (level: number) => {
+//     // Retrieve the current totalToken state
+//     // const currentTotalTokens = totalToken;
 
-    const updateCollectedTokens = (level: number) => {
-        // Create a copy of the collectedTokens object
-        const updatedTokens = { ...collectedTokens };
-        // Increment the token count for the current level
-        const currentLevelTokens = updatedTokens[level + 1] || 0;
-        // Only increment the token count if a token hasn't been collected for this level
-        if (currentLevelTokens === 0) {
-            updatedTokens[level + 1] = currentLevelTokens + 1;
-            setCollectedTokens(updatedTokens);
-            playSound('collect', 0.4);
-        }
-    };
+//     // Create a copy of the collectedTokens object
+//     const updatedTokens = { ...collectedTokens };
+//     // Increment the token count for the current level
+//     const currentLevelTokens = updatedTokens[level + 1] || 0;
+//     updatedTokens[level + 1] = currentLevelTokens + 1;
+//     setCollectedTokens(updatedTokens);
+//     playSound('collect', 0.4);
 
-
+//     // Increment the totalToken count
+//     // const newTotalTokens = currentTotalTokens + 1;
+//     // setTotalToken(newTotalTokens);
+    
+//     // localStorage.setItem('totalTokens', JSON.stringify(newTotalTokens));
+// };
 
     const isWithinBoundaries = (position: { x: number; y: number }) => {
         return (
@@ -291,7 +294,7 @@ export function MoveChar({
             newMapData[newPosition.y][newPosition.x] = ',';
 
             // Update the collectedTokens state
-            updateCollectedTokens(Number(level));
+            // updateCollectedTokens(Number(level));
         }
 
         if (newMapData[newPosition.y][newPosition.x] === 'D') {
