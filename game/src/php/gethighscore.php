@@ -29,7 +29,7 @@ if(isset($_GET['level']) || isset($_POST['level'])) {
     $response['success'] = false;
     $response['message'] = "Error: No level specified";
 }
-
+header('Content-Type: application/json');
 // Encode the response array as JSON and output it
 echo json_encode($response);
 ?>

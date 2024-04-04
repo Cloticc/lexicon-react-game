@@ -7,7 +7,7 @@ try {
     $pdo->exec("CREATE TABLE IF NOT EXISTS maps (
         id INT AUTO_INCREMENT PRIMARY KEY,
         alias VARCHAR(255) NULL,
-        mapdata TEXT NULL,
+        mapdata LONGTEXT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
 
