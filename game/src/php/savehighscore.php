@@ -41,7 +41,7 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
     }
 
     try {
-        $stmt = $pdo->prepare("SELECT steps, time FROM highscore WHERE alias = :alias AND level = :level");
+        $stmt = $pdo->prepare("SELECT steps, time FROM highscore WHERE BINARY alias = :alias AND level = :level");
         $stmt->bindParam(':level', $level, PDO::PARAM_INT);
         $stmt->bindParam(':alias', $alias, PDO::PARAM_STR);
         $stmt->execute();

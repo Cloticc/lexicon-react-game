@@ -8,7 +8,6 @@ try {
         id INT AUTO_INCREMENT PRIMARY KEY,
         alias VARCHAR(255) NULL,
         mapdata TEXT NULL,
-        mapsolution TEXT NULL,
         created DATETIME DEFAULT CURRENT_TIMESTAMP
     )");
 
