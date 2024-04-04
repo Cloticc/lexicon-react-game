@@ -519,9 +519,21 @@ export function MoveChar({
                             isWithinBoundaries(beyondBoxPosition) &&
                             (newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === ',' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
-                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T') 
+                                newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T' ||
+                                (newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S') && newMapData[newPosition.y][newPosition.x] === 'O')) &&
+                            !newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('D')
                         ) {
-                            moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+
+
+                            if (specialBoxIndex !== -1) {
+                                //Move the special box
+                                moveSpecialBox(newMapData, newPosition, beyondBoxPosition, specialBoxIndex);
+                                // console.log('move special box');
+                            } else {
+                                //Move the normal box
+                                moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
+                                // console.log('move normal box');
+                            }
                         }
                         if (
                             isWithinBoundaries(beyondBoxPosition) &&
