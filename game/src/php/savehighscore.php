@@ -70,9 +70,7 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
     } else {
         // If existing record, check if new score is better
 
-
-
-        if (!$existingScore || $steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && compareTimes($time, $existingScore['time']))) {
+        if ($steps < $existingScore['steps'] || ($steps == $existingScore['steps'] && compareTimes($time, $existingScore['time']))) {
             // If new score is better, update the existing record
 
             // Update the existing high score
@@ -107,8 +105,6 @@ if(isset($_GET['level']) && isset($_GET['alias']) && isset($_GET['steps']) && is
     $response['success'] = false;
     $response['message'] = "Error: " . $e->getMessage();
 }
-
-
 
     } else {
 
