@@ -197,7 +197,6 @@ function Emptydivs({
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
     const {
-        mapData,
         setMapData,
         setIntroDone,
         setMusic,
@@ -205,6 +204,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         youAreDead,
         youLost,
         setTestingMap,
+        setLevel,
     } = useContext(MyContext);
     const [usedDoorIds, setUsedDoorIds] = useState<string[]>([]);
     const [usedSpecialIds, setUsedSpecialIds] = useState<string[]>([]);
@@ -307,7 +307,6 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
         saveMap(data.mapdata);
         console.log(data.mapdata);
-
     }
 
     function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
@@ -349,6 +348,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             window.URL.revokeObjectURL(link.href);
         }
     }
+
 
     const handleGridClick = (
         e: { stopPropagation: () => void; type: string },
@@ -420,6 +420,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     function testPlayMap() {
         generateMap();
         generateSymbolArray();
+        setLevel(-1);
     }
 
     const generateSymbolArray = () => {
