@@ -196,7 +196,7 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { setMapData, setIntroDone, setMusic, wonGame,setWonGame,setGameRunning,gameRunning, youAreDead, youLost, setTestingMap,resetGame,
+    const { setMapData, setIntroDone, setMusic, wonGame,setGameRunning, youAreDead, youLost, setTestingMap,resetGame,
         setWonGame, } =
         useContext(MyContext);
 
