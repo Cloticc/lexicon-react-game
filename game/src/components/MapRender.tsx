@@ -68,50 +68,8 @@ export function MapRender({ initialMapData }: MapRenderProps) {
     useEffect(() => {
         setMapData(initialMapData);
     }, [setMapData, initialMapData]);
-
-    // useEffect(() => {
-    //     let oldToken = document.querySelector('.token');
-    //     if (oldToken) {
-    //         oldToken.classList.remove('token');
-    //     }
-
-    //     if (level % 6 === 0 && level !== 0) {
-    //         var numberFromLevel = undefined;
-    //         var tokensArray = JSON.parse(localStorage.getItem('tokens') || '[]');
-    //         if (tokensArray !== undefined) {
-    //             numberFromLevel =
-    //                 tokensArray && tokensArray.find((token: number) => token === level);
-    //         } else {
-    //             tokensArray = [];
-    //         }
-
-    //         if (numberFromLevel === undefined) {
-    //             const availablePositions: { x: number; y: number }[] = [];
-
-    //             // Iterate through the mapData array
-    //             for (let x = 0; x < mapData.length; x++) {
-    //                 for (let y = 0; y < mapData[x].length; y++) {
-    //                     // Check if the value is ","
-    //                     if (mapData[x][y] === ',') {
-    //                         availablePositions.push({ x, y });
-    //                     }
-    //                 }
-    //             }
-
-    //             if (availablePositions.length > 0) {
-    //                 // Randomly select a position from available positions
-    //                 const randomIndex = Math.floor(Math.random() * availablePositions.length);
-    //                 const randomPosition = availablePositions[randomIndex];
-
-    //                 // Set the selected position
-    //                 setSelectedPosition(randomPosition);
-
-    //                 localStorage.setItem('tokens', JSON.stringify(tokensArray));
-    //             }
-    //         }
-    //     }
-    // }, [level, setLevel]);
-
+  
+    
     //set useRef to store the initial positions of the player, boxes and indicators
     const playerStartPosition = useRef({ x: 5, y: 6 });
     const boxStartPositions = useRef<{ x: number; y: number }[]>([]);
