@@ -403,7 +403,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             window.URL.revokeObjectURL(link.href);
         }
 
-        function saveJsonToFile(data) {
+        function saveJsonToFile(data: any) {
             fetch('../php/save-json.php', {
                 method: 'POST',
                 headers: {
