@@ -116,7 +116,8 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
         const id: number = parseInt(idString);
 
         // Check if the level is unlocked
-
+        setLevel(-1);
+        resetGame();
         setLevel(id);
         playSound('click', 0.25);
         playSound('levelstart', 0.5);
