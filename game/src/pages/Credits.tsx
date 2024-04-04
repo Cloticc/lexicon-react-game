@@ -46,7 +46,9 @@ export function Credits({ onPageChange }: SelectPageProps) {
                         </a>
                     </h5>
                     <h5>Andreas Isidorsson</h5>
-                    <h5>Alireza Kafshdartoosi</h5>
+                    <h5><a href="https://www.linkedin.com/in/alireza-kt/" target="_blank" onMouseOver={handleMouseOver}>
+                            Alireza Kafshdartoosi
+                        </a></h5>
                     <h5>Abbas Mansoori</h5>
                     <h5>Konstantios (Had to leave early)</h5>
                     <br />

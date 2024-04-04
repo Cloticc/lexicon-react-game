@@ -196,17 +196,9 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const {
-        setMapData,
-        setIntroDone,
-        setMusic,
-        wonGame,
-        youAreDead,
-        youLost,
-        setTestingMap,
-        resetGame,
-        setWonGame,
-    } = useContext(MyContext);
+    const { setMapData, setIntroDone, setMusic, wonGame,setGameRunning, youAreDead, youLost, setTestingMap,resetGame,
+        setWonGame, } =
+        useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
     const [isShiftDown, setIsShiftDown] = useState(false);
@@ -215,7 +207,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
 
     const [savedMapData, saveMap] = useState<string[][]>([]);
 
-    const { setDisableControls, setGameReady } = useContext(MyContext);
+    const { setDisableControls, setGameReady,setMapGeneratorRendering,setSolution,solution } = useContext(MyContext);
 
     // const [mapData, setMapData] = useState<string[][]>([]);
     const [gridItems, setGridItems] = useState(
@@ -391,11 +383,19 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         */
     }
 
-    function saveMapToFile(data: any) {
+    function saveMapToFile() {
         // Rest of the function remains the same
         // Convert the JSON data to a Blob
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-
+        const Solution = solution.map((obj) => ({
+            mapdata: obj.mapData,
+            direction: obj.direction,
+        }));
+        const mergedData = {
+            mapdata: savedMapData,
+            solution: Solution,
+        };
+        const blob = new Blob([JSON.stringify(mergedData, null, 2)], { type: 'application/json' });
+        console.log(mergedData);
         // Create a temporary link element
         const link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
@@ -578,7 +578,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         setMusic('play');
 
         setMapData(symbolArray);
+        setSolution([]);
         setShowMapRender(true);
+        setGameRunning(true);
+        setMapGeneratorRendering(true);
         setGameReady(true);
         setIntroDone(false);
     };
@@ -589,7 +592,10 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
+        setMapGeneratorRendering(false);
         setGameReady(false);
+        setWonGame(false);
+       // setGameRunning(false);
     };
     const goHome = () => {
         setTestingMap(false);
@@ -597,9 +603,17 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         playSound('swoosh', 0.25);
         playSound('click', 0.25);
         setShowMapRender(false);
+        setMapGeneratorRendering(false);
+        setWonGame(false);
+       // setGameRunning(false);
         onPageChange('start');
     };
-
+    useEffect(() => {
+        wonGame && setDisableControls(true);
+    }, [wonGame]);
+    useEffect(() => {
+        console.log(solution);
+    }, [setDisableControls]);
     const handleClearButton = () => {
         playSound('reverse', 0.3);
         setGridItems(Array.from({ length: 10 }, () => new Array(10).fill('')));
