@@ -93,7 +93,7 @@ export function SelectLevel({ onPageChange, mapCount }: SelectLevelProps) {
     };
 
     const handlePlayClick = () => {
-        let id = playedMaps.length;
+        const id = playedMaps.length;
         setLevel(id);
         resetGame();
         onPageChange('play');
