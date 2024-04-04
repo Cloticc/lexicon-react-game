@@ -1,7 +1,7 @@
-import { MyContext, TokensMap } from '../ContextProvider/ContextProvider';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import HighScore from './highscore';
+import { MyContext } from '../ContextProvider/ContextProvider';
 import { playSound } from '../components/playSound';
 
 interface MoveCharProps {
@@ -142,7 +142,7 @@ export function MoveChar({
         };
         setSolution([...solution, newSolution]);
     };
-    
+
     useEffect(() => {
     }, [solution]);
 
