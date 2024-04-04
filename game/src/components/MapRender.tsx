@@ -65,9 +65,9 @@ export function MapRender({ initialMapData }: MapRenderProps) {
 
 
 
-    // useEffect(() => {
-    //     setMapData(initialMapData);
-    // }, [setMapData, initialMapData]);
+    useEffect(() => {
+        setMapData(initialMapData);
+    }, [setMapData, initialMapData]);
   
     //set useRef to store the initial positions of the player, boxes and indicators
     const playerStartPosition = useRef({ x: 5, y: 6 });
