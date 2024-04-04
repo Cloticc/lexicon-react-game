@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
 interface PlayerPosition {
     x: number;
@@ -90,9 +90,9 @@ interface GameContextProps {
     highestScores: {
         [level: string]: { score: number; elapsedTime: number };
     };
-    setHighestScores: (highestScores: {
+    setHighestScores: Dispatch<SetStateAction<{
         [level: string]: { score: number; elapsedTime: number };
-    }) => void;
+    }>>;
     handleHistory: boolean;
     setHandleHistory: (handleHistory: boolean) => void;
     playerDirection: string;
