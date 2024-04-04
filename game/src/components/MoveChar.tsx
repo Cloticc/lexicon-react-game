@@ -252,11 +252,11 @@ export function MoveChar({
         return newMapData[position.y][position.x] === 'W';
     };
 
-    // console log mapdata once ever move
-    // useEffect(() => {
-    //     console.log(mapData);
-    // }
-    // , [mapData]);
+
+    useEffect(() => {
+        console.log(mapData);
+    }
+    , [mapData]);
 
 
     const movePlayer = (newMapData: string[][], newPosition: { x: number; y: number }) => {
