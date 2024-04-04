@@ -196,7 +196,8 @@ function Emptydivs({
 }
 
 export function MapGenerator({ onPageChange }: SelectPageProps) {
-    const { setMapData, setIntroDone, setMusic, wonGame,setWonGame,setGameRunning,gameRunning, youAreDead, youLost, setTestingMap } =
+    const { setMapData, setIntroDone, setMusic, wonGame,setWonGame,setGameRunning,gameRunning, youAreDead, youLost, setTestingMap,resetGame,
+        setWonGame, } =
         useContext(MyContext);
 
     const [selectedItem, setSelectedItem] = useState(null);
@@ -630,18 +631,43 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         );
     };
 
+    function handleReplay() {
+        setWonGame(false);
+        resetGame();
+    }
+
     return showMapRender ? (
         <>
             {/* < div className="map-render"> */}
             <h1 className="createmapheader">Test</h1>
             <MapRender initialMapData={savedMapData} />
-            {wonGame  && (
-                <button
-                    className="button"
-                    id="btn-savemap"
-                    onClick={saveMapToFile}
-                    onMouseOver={handleMouseOver}
-                ></button>
+            {wonGame && (
+                <>
+                    <div className="completedtest">
+                        <h1>Completed</h1>
+                        <h2>You've completed the test level successfully!</h2>
+                        <p>
+                            Click the save icon to store your solution. The map solution has been
+                            recorded, but if you think you can solve the level more efficiently, do
+                            replay it to save a better solution. The solution will be stored
+                            alongside your level. Occasionally, duplicates are removed, and if any
+                            level becomes too easy, it may be omitted. Keep challenging yourself!
+                        </p>
+                        <button
+                            className="button"
+                            id="btn-savemap"
+                            onClick={saveMapToFile}
+                            onMouseOver={handleMouseOver}
+                        ></button>
+                        <button
+                            className="button"
+                            id="btn-replay"
+                            onClick={handleReplay}
+                            onMouseOver={handleMouseOver}
+                        ></button>
+                    </div>
+                    <div id="darkoverlay"></div>
+                </>
             )}
             {youAreDead && <h1 className="dead">You are dead</h1>}
             {youLost && <h1 className="dead">You lost</h1>}

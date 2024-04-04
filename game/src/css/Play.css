@@ -27,7 +27,8 @@
     z-index: 80;
 }
 
-#highscore {
+#highscore,
+.completedtest {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(0.5rem);
     width: 80vw;
@@ -49,6 +50,10 @@
     align-items: center;
     text-align: center;
     animation: animateblock 0.2s ease-in-out 1 forwards;
+}
+
+.completedtest {
+    justify-content: center;
 }
 
 #highscore h1 {
