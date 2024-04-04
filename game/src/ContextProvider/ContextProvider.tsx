@@ -92,9 +92,13 @@ interface GameContextProps {
     highestScores: {
         [level: string]: { score: number; elapsedTime: number };
     };
-    setHighestScores: (highestScores: {
+    // setHighestScores: (highestScores: {
+    //     [level: string]: { score: number; elapsedTime: number };
+    // }) => void;
+// stet distpatch and setstateaction
+    setHighestScores: Dispatch<SetStateAction<{
         [level: string]: { score: number; elapsedTime: number };
-    }) => void;
+    }>>;
     handleHistory: boolean;
     setHandleHistory: (handleHistory: boolean) => void;
     playerDirection: string;
