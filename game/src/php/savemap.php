@@ -1,8 +1,15 @@
 <?php
 // save-json.php
 
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+    // If not set to XMLHttpRequest, exit with an error message
+    header('HTTP/1.1 403 Forbidden');
+    echo 'Forbidden';
+    exit;
+}
+
 // Specify the directory where JSON files are stored
-$directory = '../';
+$directory = '../maps/';
 
 // Get all files with names matching the pattern 'map*.json' in the specified directory
 $files = glob($directory . 'map*.json');
@@ -26,7 +33,12 @@ $filePath = $directory . $newFileName;
 $jsonData = file_get_contents('php://input');
 
 // Save the JSON data to the new file
-file_put_contents($filePath, $jsonData);
-
-
+if (file_put_contents($filePath, $jsonData) !== false) {
+    // If successful, send success response
+    echo json_encode(array('status' => 'success', 'file' => $newFileName));
+} else {
+    // If error occurred, send error response
+    header('HTTP/1.1 500 Internal Server Error');
+    echo json_encode(array('status' => 'error', 'message' => 'Failed to save JSON data.'));
+}
 ?>

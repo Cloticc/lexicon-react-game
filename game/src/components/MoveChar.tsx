@@ -18,7 +18,10 @@ interface MoveCharProps {
 }
 
 type Direction = 'UP' | 'DOWN' | 'LEFT' | 'RIGHT';
-
+interface HighScores {
+    score: number;
+    elapsedTime: number;
+}
 const directionMap: Record<Direction, { x: number; y: number }> = {
     UP: { x: 0, y: -1 },
     DOWN: { x: 0, y: 1 },
@@ -77,7 +80,7 @@ export function MoveChar({
         totalToken,
         setTotalToken,
         mapGeneratorRendering,
-    } = useContext(MyContext);
+    } = useContext(MyContext) 
 
     function handleDeath(string?: string | null) {
         if (string === undefined || string === null || string === '') {

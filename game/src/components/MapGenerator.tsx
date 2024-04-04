@@ -410,9 +410,9 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
             link.remove();
             window.URL.revokeObjectURL(link.href);
         }
-        
-        function saveJsonToFile(data) {
-            fetch('../php/savemap.php', {
+
+        function saveJsonToFile(data: any) {
+            fetch('../php/save-json.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -423,13 +423,22 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
                     if (!response.ok) {
                         throw new Error('Failed to save file');
                     }
-                    console.log('File saved successfully');
+                    return response.json(); // Parse JSON response
+                })
+                .then((result) => {
+                    // Check the status of the response
+                    if (result.status === 'success') {
+                        console.log('File saved successfully:', result.file);
+                    } else {
+                        throw new Error('Failed to save file');
+                    }
                 })
                 .catch((error) => {
-                    console.error('Error saving file:', error);
+                    console.error('Error saving file:', error.message);
                 });
         }
-        saveJsonToFile(mergedData);
+
+        saveJsonToFile(data);
     }
 
     const handleGridClick = (

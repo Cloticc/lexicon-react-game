@@ -36,6 +36,7 @@ interface SolutionState {
 interface GameContextProps {
     testingMap: boolean;
     setTestingMap: (testingMap: boolean) => void;
+    mapGeneratorRendering: boolean;
     setMapGeneratorRendering: (mapGeneratorRendering: boolean) => void;
     gameReady: boolean;
     setGameReady: (gameReady: boolean) => void;
