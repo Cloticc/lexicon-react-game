@@ -256,19 +256,18 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     }, [savedMapData]);
 
 
-
     function generateMap(): void {
         const data: { mapdata: string[][]; solution: string[][] } = {
             mapdata: [],
             solution: [],
         };
+    let playerAmount = 0;
+    let boxAmount = 0;
+    let boxIndex = 0;
+    let specialBoxIndicator = 0;
+    let specialBoxAmount = 0;
+    let doorAmount = 0;
 
-        let playerAmount = 0;
-        let boxAmount = 0;
-        let boxIndex = 0;
-        let specialBoxIndicator = 0;
-        let specialBoxAmount = 0;
-        let doorAmount = 0;
 
         type ClassToSymbol = {
             [key: string]: {
@@ -309,7 +308,7 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
         });
 
         saveMap(data.mapdata);
-        console.log(data.mapdata);
+        // console.log(data.mapdata);
     }
 
     // function saveMapToFile(data: { mapdata: string[][]; solution: string[][] }) {
@@ -458,6 +457,34 @@ export function MapGenerator({ onPageChange }: SelectPageProps) {
     };
 
     function testPlayMap() {
+        let hasPlayer = false;
+        let hasBox = false;
+        let hasBoxIndicator = false;
+
+        for (const row of gridItems) {
+            for (const item of row) {
+                if (item.type === 'player') hasPlayer = true;
+                else if (item.type === 'box') hasBox = true;
+                else if (item.type === 'boxindicator') hasBoxIndicator = true;
+
+                if (hasPlayer && hasBox && hasBoxIndicator) break;
+            }
+            if (hasPlayer && hasBox && hasBoxIndicator) break;
+        }
+
+        if (!hasPlayer) {
+            alert('You must place down a player to save the map.');
+            return;
+        }
+        if (!hasBox) {
+            alert('You must place down a box to save the map.');
+            return;
+        }
+        if (!hasBoxIndicator) {
+            alert('You must place down a box indicator to save the map.');
+            return;
+        }
+
         generateMap();
         generateSymbolArray();
         setLevel(-1);
