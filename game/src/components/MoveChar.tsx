@@ -257,8 +257,8 @@ export function MoveChar({
     };
 
     const isNotWall = (newMapData: string[][], position: { x: number; y: number }) => {
-        // return newMapData[position.y][position.x] !== '#';
-        return newMapData[position.y][position.x] !== '#' && newMapData[position.y][position.x] !== 'D';
+        return newMapData[position.y][position.x] !== '#' &&
+            newMapData[position.y][position.x].startsWith('D') === false;
     };
 
     const isEmptySpace = (newMapData: string[][], position: { x: number; y: number }) => {
@@ -285,6 +285,11 @@ export function MoveChar({
             // Update the collectedTokens state
             updateCollectedTokens(Number(level));
         }
+
+        if (newMapData[newPosition.y][newPosition.x] === 'D') {
+            return;
+        }
+
 
         if (
             indicatorPositions.some((pos) => pos.x === playerPosition.x && pos.y === playerPosition.y)
@@ -363,7 +368,7 @@ export function MoveChar({
         boxIndex: number
     ) => {
 
-   
+
         // Check if the new position of the special box is a special indicator
         const specialIndicator = newMapData[beyondBoxPosition.y][beyondBoxPosition.x];
         let doorPosition = null;
@@ -462,6 +467,12 @@ export function MoveChar({
                     const checkMine = isMine(newMapData, newPosition);
                     const checkCrackedWall = isCrackedWall(newMapData, newPosition);
 
+                    // Check if the new position is a door
+                    if (newMapData[newPosition.y][newPosition.x] === 'D') {
+                        console.log('Door');
+                        return;
+                    }
+
                     if (checkEmptySpace) {
                         handleDeath();
                         setPlayerGroundFloor('falling');
@@ -508,12 +519,16 @@ export function MoveChar({
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'I' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x] === 'T' ||
                                 newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('S')
-                            )
+                            ) &&
+                            !newMapData[beyondBoxPosition.y][beyondBoxPosition.x].startsWith('D')
                         ) {
+
                             if (specialBoxIndex !== -1) {
+                                //Move the special box
                                 moveSpecialBox(newMapData, newPosition, beyondBoxPosition, specialBoxIndex);
                                 // console.log('move special box');
                             } else {
+                                //Move the normal box
                                 moveBox(newMapData, newPosition, beyondBoxPosition, boxIndex);
                                 // console.log('move normal box');
                             }
